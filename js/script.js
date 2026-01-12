@@ -270,6 +270,32 @@
             });
     }
 
+    // --- DÉTECTION DU LIVE ---
+    const liveBadge = document.getElementById('liveBadge');
+    const mainAvatar = document.getElementById('mainAvatar');
+    let isStreaming = false;
+
+    if (d.activities) {
+        for (const activity of d.activities) {
+            if (activity.type === 1 || (activity.name && activity.name.toLowerCase() === 'twitch')) {
+                isStreaming = true;
+                break;
+            }
+        }
+    }
+
+    // Affichage ou non du badge
+    if (liveBadge && mainAvatar) {
+        if (isStreaming) {
+            liveBadge.style.display = 'block';
+            mainAvatar.classList.add('streaming');
+            liveBadge.innerText = (currentLang === 'fr') ? "EN LIVE" : "LIVE";
+        } else {
+            liveBadge.style.display = 'none';
+            mainAvatar.classList.remove('streaming');
+        }
+    }
+
     // =====================================================
     // GESTION BANNIÈRE COOKIES (Compatible Mobile)
     // =====================================================

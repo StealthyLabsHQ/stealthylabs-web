@@ -31,14 +31,14 @@
             /* --- STYLE DU MENU PARAMÈTRES --- */
             .settings-panel {
                 position: absolute;
-                top: 70px; /* Juste en dessous de la barre */
+                top: 70px;
                 right: 40px;
                 background: var(--bg-card);
                 border: 1px solid var(--border-color);
                 padding: 15px;
                 border-radius: 12px;
                 z-index: 100;
-                display: none; /* Caché par défaut */
+                display: none; 
                 flex-direction: column;
                 gap: 10px;
                 box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -66,7 +66,6 @@
                 to { opacity: 1; transform: translateY(0); } 
             }
 
-            /* --- ANIMATION SPÉCIALE POUR MOBILE (Garde le centrage) --- */
             @keyframes fadeInMobile { 
                 from { opacity: 0; transform: translateX(50%) translateY(-10px); } 
                 to { opacity: 1; transform: translateX(50%) translateY(0); } 
@@ -93,15 +92,13 @@
                 .username { font-size: 1.3rem; }
                 .link-card, .discord-card, .creator-code { padding: 12px 14px; }
 
-                /* CORRECTION DU BUG DE SAUT ICI */
                 .settings-panel { 
                     right: 50%; 
-                    transform: translateX(50%); /* On le centre */
+                    transform: translateX(50%);
                     top: 60px; 
                 }
                 
                 .settings-panel.show { 
-                    /* On utilise l'animation spéciale qui n'efface pas le centrage */
                     animation: fadeInMobile 0.2s ease forwards; 
                 }
             }
@@ -344,14 +341,13 @@
                 text-overflow: ellipsis;
             }
 
-            /* Badge "E" (Explicit) style Spotify */
             .explicit-badge {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 border: 1px solid currentColor;
                 border-radius: 3px;
-                color: #b3b3b3; /* Gris clair Spotify */
+                color: #b3b3b3;
                 font-size: 9px;
                 line-height: 1;
                 padding: 1px 4px;
@@ -364,7 +360,6 @@
             }
 
             /* --- TOP BAR (HEURE + STEAM) --- */
-            /* Version Desktop */
             .top-bar {
                 position: absolute;
                 top: 30px;
@@ -391,7 +386,6 @@
             }
             .top-icon-btn:hover { color: var(--text-primary); transform: scale(1.1); }
             
-            /* AJOUT DE "img" DANS LE SELECTEUR POUR QUE TA PHOTO AIT LA BONNE TAILLE */
             .top-icon-btn svg {
                 width: 26px;
                 height: 26px;
@@ -402,7 +396,6 @@
                 width: 26px; 
                 height: 26px; 
                 object-fit: contain;
-                /* C'est cette ligne qui transforme le noir en blanc */
                 filter: invert(1) brightness(100%); 
             }
 
@@ -410,16 +403,15 @@
             @media (max-width: 850px) { 
                 body { 
                     padding-top: 20px; 
-                    justify-content: flex-start; /* Aligne le contenu en haut sur mobile */
+                    justify-content: flex-start;
                 }
 
                 .top-bar { 
-                    /* On remet la barre dans le flux normal */
                     position: relative; 
                     top: auto; 
                     right: auto; 
                     width: 100%;
-                    justify-content: flex-end; /* Garde les icônes à droite */
+                    justify-content: flex-end;
                     margin-bottom: 20px; 
                     padding-right: 10px;
                 }
@@ -431,25 +423,22 @@
 
         /* --- MODAL REDIRECTION --- */
 
-        /* Le fond noir qui couvre tout l'écran */
         .redirect-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); /* Fond noir transparent */
-            backdrop-filter: blur(5px);       /* Effet de flou */
-            z-index: 9999;                    /* Passe par-dessus tout */
-            display: none;                    /* CACHÉ PAR DÉFAUT */
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(5px);       
+            z-index: 9999;              
+            display: none;                   
             align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s ease;
         }
 
-        /* La classe qui active l'affichage */
         .redirect-overlay.show {
             display: flex;
             opacity: 1;
         }
 
-        /* La boîte au centre */
         .redirect-box {
             background: #000;
             border: 1px solid #ff0000;
@@ -472,7 +461,7 @@
         }
 
         .redirect-box h2 { margin-bottom: 10px; font-size: 1.2rem; color: #fff; }
-        .modal-desc { color: #888; font-size: 0.9rem; margin-bottom: 15px; } /* Vous aviez gardé ce nom dans votre HTML */
+        .modal-desc { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
 
         .redirect-url {
             color: #ff0000;
@@ -485,7 +474,6 @@
             font-size: 0.85rem;
         }
 
-        /* Vos boutons personnalisés */
         .redirect-buttons {
             display: flex; gap: 15px; justify-content: center; margin-top: 25px;
         }
@@ -495,7 +483,6 @@
             cursor: pointer; transition: all 0.2s ease; font-family: inherit;
         }
 
-        /* Bouton Annuler */
         .redirect-buttons button:first-child {
             background: transparent; border: 1px solid #333; color: #888;
         }
@@ -503,10 +490,50 @@
             border-color: #fff; color: #fff; background: rgba(255,255,255,0.05);
         }
 
-        /* Bouton Continuer */
         .redirect-buttons button:last-child {
             background: #ff0000; border: 1px solid #ff0000; color: #000;
         }
         .redirect-buttons button:last-child:hover {
             background: #e60000; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
+        }
+
+        /* --- BADGE LIVE --- */
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .live-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            
+            background-color: #ff0000;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 2px solid #000; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none;
+            
+            display: none;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            animation: pulseRed 2s infinite;
+        }
+
+        /* Animation de pulsation */
+        @keyframes pulseRed {
+            0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+
+        .avatar.streaming {
+            border-color: #9146ff !important;
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.3);
         }
