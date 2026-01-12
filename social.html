@@ -35,7 +35,7 @@
                 <img src="logos/steam.png" alt="Steam">
             </a>
 
-            <button class="top-icon-btn" onclick="toggleSettings()" title="Changer la police" style="background:none; border:none; cursor:pointer;">
+            <button class="top-icon-btn" onclick="toggleSettings(event)" title="Paramètres" style="background:none; border:none; cursor:pointer;">
                 <img src="logos/gear.png" alt="Settings">
             </button>
 
@@ -282,6 +282,12 @@
             
             <button onclick="acceptCookies()" data-key="cookie_ok" style="background: #fff; color: #000; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700;">OK</button>
         </div>
+
+        <div class="link-card socials-toggle" onclick="toggleBox('socialsWrapper')">
+            </div>
+
+        <div class="link-card music-toggle" onclick="toggleBox('musicWrapper')">
+            </div>
 
         <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
         <script src="js/script-social.js"></script>
