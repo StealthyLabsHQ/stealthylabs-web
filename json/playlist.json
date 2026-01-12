@@ -1,0 +1,20 @@
+[
+    { 
+        "title": "Macarena", 
+        "artist": "Los Del Rio", 
+        "file": "music/macarena.mp3", 
+        "cover": "albums/maduro.jpg" 
+    },
+    { 
+        "title": "AS IF IT'S YOUR LAST", 
+        "artist": "BLACKPINK", 
+        "file": "music/AS IF IT'S YOUR LAST.mp3",
+        "cover": "albums/bp-aiiyl.jpg"
+    },
+    { 
+        "title": "Macarena Remix", 
+        "artist": "Los Del Rio", 
+        "file": "music/macarena_2.mp3", 
+        "cover": "albums/maduro.jpg" 
+    }
+]

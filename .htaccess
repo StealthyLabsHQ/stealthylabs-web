@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# 1. Si quelqu'un tape /legal.html, on le force vers /legal (Redirection visible)
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R=301]
+
+# 2. Si quelqu'un tape /legal, le serveur va chercher legal.html en cachette (Réécriture interne)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
