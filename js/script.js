@@ -4,22 +4,16 @@
 let currentLang = 'fr'; 
 let currentTranslations = {};
 
-// IMPORTANT : Laisse vide '' si les fichiers .json sont au même endroit que index.html
-// Si tu les mets dans un dossier 'translations', remets 'translations/'
 const JSON_PATH = ''; 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Démarrer l'horloge TOUT DE SUITE (avant tout le reste)
     updateClock();
     setInterval(updateClock, 1000);
 
-    // 2. Détecter la langue et charger les textes
     detectAndApplyLanguage();
 
-    // 3. Charger la police sauvegardée
     loadSavedFont();
 
-    // 4. Lancer les modules (Discord, Serveur...)
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
 
@@ -27,10 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('discordActivity')) updateDiscordStatus();
     if (document.querySelector('.hero-title')) initTypewriter();
 
-    // 5. Gestion fermeture menu paramètres au clic extérieur
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        // On cible le bouton sur index (.settings-btn) OU social (.top-icon-btn avec settings-btn)
         const btn = document.querySelector('.settings-btn');
         if (panel && btn && panel.classList.contains('show')) {
             if (!panel.contains(event.target) && !btn.contains(event.target)) {
@@ -46,20 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function detectAndApplyLanguage() {
     const savedLang = localStorage.getItem('userLang');
-    const browserLang = navigator.language || navigator.userLanguage;
-
-    // Priorité : Sauvegarde > Navigateur > Défaut
     if (savedLang) {
         currentLang = savedLang;
     } else {
         currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
     }
 
-    // Mettre à jour le menu déroulant visuellement
     const langSelect = document.getElementById('languageSelector');
     if(langSelect) langSelect.value = currentLang;
 
-    // Charger le fichier JSON
     loadLanguageFile(currentLang);
 }
 
@@ -72,11 +59,10 @@ function loadLanguageFile(lang) {
         .then(data => {
             currentTranslations = data; 
             applyTranslations();     
-            updateClock(); // Met à jour le format (12h/24h) une fois la langue chargée
+            updateClock();
         })
         .catch(err => {
             console.error("Erreur chargement langue:", err);
-            // Même si ça plante, on garde l'horloge active
             updateClock();
         });
 }
@@ -87,12 +73,10 @@ function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            // innerHTML permet d'interpréter les balises <br> ou <strong> dans le JSON
             elem.innerHTML = currentTranslations[key];
         }
     });
-    
-    // Gestion spécifique de la carte "Guides" (Uniquement pour les FR)
+
     const guidesCard = document.getElementById('guidesCard');
     if (guidesCard) {
         guidesCard.style.display = (currentLang === 'fr') ? 'flex' : 'none';
@@ -101,7 +85,7 @@ function applyTranslations() {
 
 function changeLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('userLang', lang); // Sauvegarde le choix
+    localStorage.setItem('userLang', lang);
     loadLanguageFile(lang);
 }
 
@@ -218,7 +202,6 @@ function updateDiscordStatus() {
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
             if (statusDot) statusDot.className = 'discord-status-dot ' + status;
 
-            // Traduction du statut (En ligne, Inactif...)
             let statusText = status;
             if (currentTranslations && currentTranslations[`status_${status}`]) {
                 statusText = currentTranslations[`status_${status}`];
@@ -226,7 +209,6 @@ function updateDiscordStatus() {
                 
             let htmlContent = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
-            // Jeu ou Spotify
             let game = null;
             let spotify = null;
             if (d.activities) game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets);
