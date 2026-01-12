@@ -55,5 +55,21 @@
     "cookie_text": "🍪 This site uses local storage to save your preferences (Language & Font). ",
     "cookie_more": "Read more",
     "cookie_ok": "OK",
-    "legal_page_title": "Legal Notice - StealthyLabs"
+    "legal_page_title": "Legal Notice - StealthyLabs",
+    "nav_home": "Home",
+    "nav_social": "Social",
+    "nav_legal": "Legal",
+    "hero_title_1": "Welcome to",
+    "hero_title_2": "StealthyLabs",
+    "hero_description": "FPS gaming and content creation.",
+    "cta_button": "Discover",
+    "card_gaming_title": "FPS Gaming",
+    "card_gaming_desc": "Streams and FPS gameplay.",
+    "tag_twitch": "Twitch",
+    "tag_fps": "FPS",
+    "card_content_title": "Content Creation",
+    "card_content_desc": "Videos and clips.",
+    "tag_youtube": "YouTube",
+    "tag_tiktok": "TikTok",
+    "footer_text": "© 2026 StealthyLabs - Made with ❤️ by Stealthy"
 }

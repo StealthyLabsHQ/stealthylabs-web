@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StealthyLabs - Content Creator & Gamer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" type="image/png" href="logos/favicon.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Inter:wght@400;700&family=Roboto:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -25,14 +24,136 @@
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --glow-red: rgba(255, 0, 0, 0.5);
+            --main-font: 'Orbitron', sans-serif;
         }
 
         body {
-            font-family: 'Rajdhani', sans-serif;
+            font-family: var(--main-font), 'Rajdhani', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 2rem;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .time-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 0;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .time-badge svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-red);
+        }
+
+        .settings-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-red);
+        }
+
+        .settings-btn:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 20px var(--glow-red);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 70px;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 0, 0, 0.2);
+            border-radius: 0;
+            padding: 1.5rem;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .settings-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .settings-group {
+            margin-bottom: 1rem;
+        }
+
+        .settings-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .settings-select {
+            width: 100%;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 0;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .settings-select:hover,
+        .settings-select:focus {
+            border-color: var(--accent-red);
+            outline: none;
+        }
+
+        .settings-select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
         }
 
         /* Animated background effect */
@@ -69,7 +190,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 80px 2rem 0 2rem;
             position: relative;
             z-index: 1;
         }
@@ -450,13 +571,13 @@
 
             .nav-links {
                 position: fixed;
-                top: 0;
+                top: 60px;
                 right: -100%;
                 width: 70%;
-                height: 100vh;
+                height: calc(100vh - 60px);
                 background: var(--bg-secondary);
                 flex-direction: column;
-                padding: 5rem 2rem;
+                padding: 3rem 2rem;
                 transition: right 0.3s ease;
                 border-left: 2px solid var(--accent-red);
             }
@@ -464,10 +585,65 @@
             .nav-links.active {
                 right: 0;
             }
+
+            .top-bar {
+                padding: 0 1rem;
+            }
+
+            .time-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .settings-panel {
+                right: 1rem;
+                left: 1rem;
+                min-width: auto;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="time-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="clockDisplay">--:--</span>
+        </div>
+
+        <button class="settings-btn" onclick="toggleSettings()" title="Settings">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v6m0 6v6m5.196-13a6.5 6.5 0 0 1 0 10m-10.392 0a6.5 6.5 0 0 1 0-10"></path>
+            </svg>
+        </button>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_language">Langue</div>
+                <select id="languageSelector" class="settings-select" onchange="changeLanguage(this.value)">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_font">Police d'écriture</div>
+                <select id="fontSelector" class="settings-select" onchange="changeFont(this.value)">
+                    <option value="'Orbitron', sans-serif" selected data-key="font_default">Orbitron (Défaut)</option>
+                    <option value="'Rajdhani', sans-serif">Rajdhani</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Navigation -->
         <nav>
@@ -480,22 +656,22 @@
                 <span></span>
             </div>
             <ul class="nav-links">
-                <li><a href="#home">Accueil</a></li>
-                <li><a href="social.html">Social</a></li>
-                <li><a href="legal.html">Légal</a></li>
+                <li><a href="#home" data-key="nav_home">Accueil</a></li>
+                <li><a href="social.html" data-key="nav_social">Social</a></li>
+                <li><a href="legal.html" data-key="nav_legal">Légal</a></li>
             </ul>
         </nav>
 
         <!-- Hero Section -->
         <section class="hero" id="home">
             <h1 class="hero-title">
-                Bienvenue sur<br>
-                <span class="gradient-text">StealthyLabs</span>
+                <span data-key="hero_title_1">Bienvenue sur</span><br>
+                <span class="gradient-text" data-key="hero_title_2">StealthyLabs</span>
             </h1>
-            <p class="hero-description">
+            <p class="hero-description" data-key="hero_description">
                 Gaming FPS et création de contenu.
             </p>
-            <a href="social.html" class="cta-button">Découvrir</a>
+            <a href="social.html" class="cta-button" data-key="cta_button">Découvrir</a>
         </section>
 
         <!-- Content Section -->
@@ -505,13 +681,13 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-icon">🎮</div>
-                        <h3 class="card-title">Gaming FPS</h3>
-                        <p class="card-description">
+                        <h3 class="card-title" data-key="card_gaming_title">Gaming FPS</h3>
+                        <p class="card-description" data-key="card_gaming_desc">
                             Streams et gameplay FPS.
                         </p>
                         <div class="card-tags">
-                            <span class="tag">Twitch</span>
-                            <span class="tag">FPS</span>
+                            <span class="tag" data-key="tag_twitch">Twitch</span>
+                            <span class="tag" data-key="tag_fps">FPS</span>
                         </div>
                     </div>
                 </div>
@@ -520,13 +696,13 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-icon">📹</div>
-                        <h3 class="card-title">Création de Contenu</h3>
-                        <p class="card-description">
+                        <h3 class="card-title" data-key="card_content_title">Création de Contenu</h3>
+                        <p class="card-description" data-key="card_content_desc">
                             Vidéos et clips.
                         </p>
                         <div class="card-tags">
-                            <span class="tag">YouTube</span>
-                            <span class="tag">TikTok</span>
+                            <span class="tag" data-key="tag_youtube">YouTube</span>
+                            <span class="tag" data-key="tag_tiktok">TikTok</span>
                         </div>
                     </div>
                 </div>
@@ -535,17 +711,124 @@
 
         <!-- Footer -->
         <footer>
-            <p class="footer-text">© 2026 StealthyLabs - Made with ❤️ by Stealthy</p>
+            <p class="footer-text" data-key="footer_text">© 2026 StealthyLabs - Made with ❤️ by Stealthy</p>
             <div class="footer-links">
-                <a href="social.html">Réseaux Sociaux</a>
-                <a href="legal.html">Mentions Légales</a>
+                <a href="social.html" data-key="footer_social">Réseaux Sociaux</a>
+                <a href="legal.html" data-key="footer_legal">Mentions Légales</a>
                 <a href="https://github.com/StealthyLabsHQ" target="_blank">GitHub</a>
             </div>
         </footer>
     </div>
 
     <script>
-        // Mobile menu toggle
+        // =====================================================
+        // TRANSLATION SYSTEM
+        // =====================================================
+        let currentLang = 'fr';
+        let currentTranslations = {};
+
+        function detectLanguage() {
+            const savedLang = localStorage.getItem('userLang');
+            
+            if (savedLang) {
+                currentLang = savedLang;
+            } else {
+                const userLang = navigator.language || navigator.userLanguage;
+                if (userLang.startsWith('fr')) currentLang = 'fr';
+                else currentLang = 'en';
+            }
+
+            const langSelect = document.getElementById('languageSelector');
+            if(langSelect) langSelect.value = currentLang;
+
+            loadLanguageFile(currentLang);
+        }
+
+        function loadLanguageFile(lang) {
+            fetch(`translations/${lang}.json`)
+                .then(response => response.json())
+                .then(data => {
+                    currentTranslations = data; 
+                    applyTranslations();
+                    updateClock();
+                })
+                .catch(err => console.error("Error loading language:", err));
+        }
+
+        function applyTranslations() {
+            document.querySelectorAll('[data-key]').forEach(elem => {
+                const key = elem.getAttribute('data-key');
+                if (currentTranslations[key]) {
+                    elem.innerText = currentTranslations[key];
+                }
+            });
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('userLang', lang);
+            loadLanguageFile(lang);
+        }
+
+        // =====================================================
+        // SETTINGS PANEL
+        // =====================================================
+        function toggleSettings() {
+            document.getElementById('settingsPanel').classList.toggle('show');
+        }
+
+        // Close settings when clicking outside
+        document.addEventListener('click', function(event) {
+            const settingsPanel = document.getElementById('settingsPanel');
+            const settingsBtn = document.querySelector('.settings-btn');
+            
+            if (settingsPanel && settingsBtn) {
+                if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
+                    settingsPanel.classList.remove('show');
+                }
+            }
+        });
+
+        // =====================================================
+        // FONT MANAGEMENT
+        // =====================================================
+        function changeFont(fontFamily) {
+            document.documentElement.style.setProperty('--main-font', fontFamily);
+            localStorage.setItem('userFont', fontFamily);
+        }
+
+        function loadSavedFont() {
+            const savedFont = localStorage.getItem('userFont');
+            if (savedFont) {
+                document.documentElement.style.setProperty('--main-font', savedFont);
+                const fontSelector = document.getElementById('fontSelector');
+                if (fontSelector) fontSelector.value = savedFont;
+            }
+        }
+
+        // =====================================================
+        // CLOCK
+        // =====================================================
+        function updateClock() {
+            const now = new Date();
+            const clockEl = document.getElementById('clockDisplay');
+            
+            if (!clockEl) return;
+
+            let options = { hour: '2-digit', minute: '2-digit' };
+            
+            if (currentLang === 'fr') {
+                options.hour12 = false; 
+                clockEl.innerText = now.toLocaleTimeString('fr-FR', options);
+            } else {
+                options.hour12 = true;
+                clockEl.innerText = now.toLocaleTimeString('en-US', options);
+            }
+        }
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
@@ -558,7 +841,9 @@
             });
         });
 
-        // Smooth scroll for anchor links
+        // =====================================================
+        // SMOOTH SCROLL
+        // =====================================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -572,7 +857,9 @@
             });
         });
 
-        // Intersection Observer for scroll animations
+        // =====================================================
+        // SCROLL ANIMATIONS
+        // =====================================================
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -590,6 +877,17 @@
         // Observe all cards
         document.querySelectorAll('.card').forEach(card => {
             observer.observe(card);
+        });
+
+        // =====================================================
+        // INITIALIZATION
+        // =====================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            detectLanguage();
+            loadSavedFont();
+            
+            // Update clock every second
+            setInterval(updateClock, 1000);
         });
     </script>
 </body>
