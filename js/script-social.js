@@ -2,12 +2,15 @@
 // SCRIPT SOCIAL (Menu, Langue, Discord, Redirection)
 // =====================================================
 
-const JSON_PATH = 'translations/'; // Mets '' si tes fichiers json sont à la racine (pas dans un dossier)
+// ATTENTION : Si tes fichiers fr.json/en.json sont à la racine, laisse vide ''.
+// S'ils sont dans un dossier "translations", mets 'translations/'
+const JSON_PATH = ''; 
+
 let currentLang = 'fr';
 let currentTranslations = {};
-let pendingRedirectUrl = ''; // Stocke l'URL pour la redirection
+let pendingRedirectUrl = ''; 
 
-// Initialisation immédiate
+// --- INITIALISATION ---
 (function init() {
     updateClock();
     setInterval(updateClock, 1000);
@@ -20,29 +23,25 @@ let pendingRedirectUrl = ''; // Stocke l'URL pour la redirection
     setInterval(updateDiscordStatus, 30000);
     setInterval(updateServerStats, 60000);
 
-    // --- GESTION DES CLICS (Settings & Redirection) ---
+    // --- FERMETURE MENU AU CLIC EXTÉRIEUR ---
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        const settingsBtn = event.target.closest('.top-icon-btn'); // Sélecteur plus robuste
+        // On vérifie si on a cliqué sur le bouton (peu importe l'icône dedans)
+        const isBtn = event.target.closest('button[onclick="toggleSettings(event)"]');
         
-        // 1. Fermer le menu si on clique dehors
-        if (panel && panel.classList.contains('show')) {
-            // Si on ne clique ni dans le panneau, ni sur le bouton engrenage
-            if (!panel.contains(event.target) && (!settingsBtn || !settingsBtn.getAttribute('onclick')?.includes('toggleSettings'))) {
-                panel.classList.remove('show');
-            }
+        if (panel && panel.classList.contains('show') && !panel.contains(event.target) && !isBtn) {
+            panel.classList.remove('show');
         }
     });
 
-    // --- INTERCEPTION DES LIENS (Pour la redirection) ---
-    // On attend un peu que le DOM soit prêt pour cibler les liens
+    // --- GESTION REDIRECTION (Après chargement DOM) ---
     setTimeout(() => {
+        // Interception des liens externes
         const links = document.querySelectorAll('a[target="_blank"]');
         links.forEach(link => {
-            // On ignore les liens internes ou musicaux s'ils sont gérés autrement
+            // On ignore les liens du player musique et ceux marqués no-redirect
             if (!link.classList.contains('no-redirect') && !link.classList.contains('music-platform-btn')) {
                 link.addEventListener('click', (e) => {
-                    // Si c'est un lien externe (http), on intercepte
                     if (link.href.startsWith('http')) {
                         e.preventDefault();
                         openRedirect(link.href);
@@ -51,7 +50,7 @@ let pendingRedirectUrl = ''; // Stocke l'URL pour la redirection
             }
         });
         
-        // Gestionnaire du bouton "Continuer" de la modal
+        // Bouton Confirmer du Modal
         const confirmBtn = document.getElementById('confirmRedirectBtn');
         if(confirmBtn) {
             confirmBtn.onclick = () => {
@@ -65,64 +64,49 @@ let pendingRedirectUrl = ''; // Stocke l'URL pour la redirection
 })();
 
 // --- FONCTIONS REDIRECTION ---
-
 function openRedirect(url) {
     const modal = document.getElementById('redirectOverlay');
     const urlText = document.getElementById('redirectUrl');
-    
     if (modal && urlText) {
         pendingRedirectUrl = url;
         urlText.textContent = url;
         modal.classList.add('show');
     } else {
-        // Fallback si la modal n'existe pas
         window.open(url, '_blank');
     }
 }
 
 function closeRedirect() {
     const modal = document.getElementById('redirectOverlay');
-    if (modal) {
-        modal.classList.remove('show');
-    }
+    if (modal) modal.classList.remove('show');
 }
 
 // --- FONCTIONS UI ---
-
-function toggleSettings() {
+function toggleSettings(event) {
+    // Empêche le clic de se propager au document (qui fermerait le menu)
+    if(event) event.stopPropagation();
     const panel = document.getElementById('settingsPanel');
-    if (panel) {
-        panel.classList.toggle('show');
-    }
+    if (panel) panel.classList.toggle('show');
 }
 
 function toggleSocials() {
-    const wrap = document.getElementById('socialsWrapper');
-    if(wrap) wrap.classList.toggle('open');
-    const toggle = document.querySelector('.socials-toggle');
-    if(toggle) toggle.classList.toggle('active');
+    document.getElementById('socialsWrapper').classList.toggle('open');
+    document.querySelector('.socials-toggle').classList.toggle('active');
 }
 
 function copyCode() {
     navigator.clipboard.writeText("stealthylabs");
     const tooltip = document.getElementById("tooltip");
-    if(tooltip) {
-        tooltip.classList.add("show");
-        setTimeout(() => tooltip.classList.remove("show"), 2000);
-    }
+    tooltip.classList.add("show");
+    setTimeout(() => tooltip.classList.remove("show"), 2000);
 }
 
 // --- LOGIQUE LANGUE ---
-
 function detectAndApplyLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
-
-    if (savedLang) {
-        currentLang = savedLang;
-    } else {
-        currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
-    }
+    if (savedLang) currentLang = savedLang;
+    else currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
 
     const langSelect = document.getElementById('languageSelector');
     if(langSelect) langSelect.value = currentLang;
@@ -131,19 +115,27 @@ function detectAndApplyLanguage() {
 }
 
 function loadLanguageFile(lang) {
+    // Ajout d'une sécurité pour trouver le fichier
     fetch(`${JSON_PATH}${lang}.json`)
-        .then(res => res.json())
+        .then(res => {
+            if(!res.ok) throw new Error("Fichier langue introuvable");
+            return res.json();
+        })
         .then(data => {
             currentTranslations = data; 
             applyTranslations();
             updateClock();
-            updateDiscordStatus();
-            updateServerStats();
+            updateDiscordStatus(); // Mettre à jour les textes traduits
             
+            // Gestion Carte Guide (FR uniquement)
             const guidesCard = document.getElementById('guidesCard');
             if (guidesCard) guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
         })
-        .catch(console.error);
+        .catch(err => {
+            console.error("Erreur Langue:", err);
+            // Si ça plante, on garde au moins l'horloge
+            updateClock();
+        });
 }
 
 function applyTranslations() {
@@ -184,7 +176,6 @@ function updateClock() {
 }
 
 // --- DISCORD ---
-
 function updateDiscordStatus() {
     const userId = "1071461037741723648"; 
     fetch(`https://api.lanyard.rest/v1/users/${userId}`)
@@ -192,12 +183,9 @@ function updateDiscordStatus() {
         .then(data => {
             if (!data.success) return;
             const d = data.data;
-            
-            // Live Badge
             const liveBadge = document.getElementById('liveBadge');
             const mainAvatar = document.querySelector('.avatar');
-            let isStreaming = false;
-            if (d.activities) isStreaming = d.activities.some(a => a.type === 1 || (a.name && a.name.toLowerCase() === 'twitch'));
+            let isStreaming = d.activities.some(a => a.type === 1 || (a.name && a.name.toLowerCase() === 'twitch'));
 
             if (liveBadge && mainAvatar) {
                 if (isStreaming) {
@@ -224,25 +212,16 @@ function updateDiscordStatus() {
 
             if (d.listening_to_spotify && d.spotify) {
                 const s = d.spotify;
-                html += `<div class="rp-game-row" style="align-items: flex-start;">
-                        <img src="${s.album_art_url}" class="rp-game-icon" style="margin-top: 4px;">
-                        <div class="rp-game-info">
-                            <div class="rp-game-title" style="color: #fff; font-weight: 700;">${s.song}</div>
-                            <div class="rp-game-detail" style="color: #ccc;">${s.artist}</div>
-                        </div>
-                    </div>`;
+                html += `<div class="rp-game-row" style="align-items: flex-start;"><img src="${s.album_art_url}" class="rp-game-icon" style="margin-top: 4px;"><div class="rp-game-info"><div class="rp-game-title" style="color: #fff; font-weight: 700;">${s.song}</div><div class="rp-game-detail" style="color: #ccc;">${s.artist}</div></div></div>`;
             } else {
                 const game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets);
                 if (game) {
-                    let icon = game.assets.large_image.startsWith("mp:") 
-                        ? `https://media.discordapp.net/${game.assets.large_image.slice(3)}`
-                        : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
+                    let icon = game.assets.large_image.startsWith("mp:") ? `https://media.discordapp.net/${game.assets.large_image.slice(3)}` : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
                     html += `<div class="rp-game-row"><img src="${icon}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${game.name}</div><div class="rp-game-detail">${game.details || game.state || ""}</div></div></div>`;
                 }
             }
             if (activityEl) activityEl.innerHTML = html;
-        })
-        .catch(() => {});
+        }).catch(() => {});
 }
 
 function updateServerStats() {
@@ -252,16 +231,12 @@ function updateServerStats() {
         .then(data => {
             const statsEl = document.getElementById('serverStats');
             if (statsEl) {
-                const online = data.approximate_presence_count;
-                const total = data.approximate_member_count;
                 const green = `<span style="display:inline-block; width:8px; height:8px; background-color:#23a559; border-radius:50%; margin-right:4px;"></span>`;
                 const grey = `<span style="display:inline-block; width:8px; height:8px; background-color:#747f8d; border-radius:50%; margin-left:8px; margin-right:4px;"></span>`;
-                
-                if (currentLang === 'fr') statsEl.innerHTML = `${green} ${online} En ligne ${grey} ${total} Membres`;
-                else statsEl.innerHTML = `${green} ${online} Online ${grey} ${total} Members`;
+                if (currentLang === 'fr') statsEl.innerHTML = `${green} ${data.approximate_presence_count} En ligne ${grey} ${data.approximate_member_count} Membres`;
+                else statsEl.innerHTML = `${green} ${data.approximate_presence_count} Online ${grey} ${data.approximate_member_count} Members`;
             }
-        })
-        .catch(() => {});
+        }).catch(() => {});
 }
 
 // Exports
@@ -270,4 +245,4 @@ window.toggleSocials = toggleSocials;
 window.copyCode = copyCode;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
-window.closeRedirect = closeRedirect; // Export indispensable pour le bouton HTML
+window.closeRedirect = closeRedirect;

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadPlaylist();
     
-    // Toggle du lecteur
+    // Toggle visuel du lecteur
     window.toggleMusic = function() {
         const wrap = document.getElementById('musicWrapper');
         if(wrap) wrap.classList.toggle('open');
@@ -16,7 +16,6 @@ let isPlaying = false;
 const audio = new Audio();
 
 function loadPlaylist() {
-    // Si tes json sont à la racine, enlève "json/" ci-dessous :
     fetch('json/playlist.json') 
         .then(response => {
             if(!response.ok) throw new Error("Playlist introuvable");
@@ -26,14 +25,22 @@ function loadPlaylist() {
             playlistData = data; 
             initPlaylistUI();
             
-            // --- AUTOPLAY ---
+            // --- AUTO-LANCEMENT ALÉATOIRE ---
             if(playlistData.length > 0) {
-                // Choix aléatoire
+                // 1. Choisir un titre au hasard
                 currentTrack = Math.floor(Math.random() * playlistData.length);
                 loadTrack(currentTrack);
                 
-                // On essaie de jouer (peut être bloqué par Chrome/Firefox si pas de clic avant)
-                playTrack();
+                // 2. Tenter de jouer immédiatement
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        updatePlayIcons(true);
+                    }).catch(error => {
+                        console.log("Autoplay bloqué par le navigateur (sécurité). Clic nécessaire.");
+                    });
+                }
             }
         })
         .catch(err => console.error("Erreur playlist:", err));
@@ -64,7 +71,6 @@ function initPlaylistUI() {
             };
         });
     }
-
     setupPlayerControls();
 }
 
@@ -119,18 +125,12 @@ function loadTrack(i) {
 }
 
 function playTrack() { 
-    // Tentative de lecture (promesse)
     var playPromise = audio.play();
-
     if (playPromise !== undefined) {
         playPromise.then(_ => {
-            // Lecture réussie
             isPlaying = true; 
             updatePlayIcons(true);
-        })
-        .catch(error => {
-            // Bloqué par le navigateur (attente de clic)
-            console.log("Autoplay bloqué par le navigateur (sécurité). Clic nécessaire.");
+        }).catch(error => {
             isPlaying = false;
             updatePlayIcons(false);
         });
@@ -157,9 +157,8 @@ function nextTrack() {
 }
 
 function prevTrack() { 
-    if (audio.currentTime > 3) { 
-        audio.currentTime = 0; 
-    } else { 
+    if (audio.currentTime > 3) audio.currentTime = 0; 
+    else { 
         currentTrack = (currentTrack - 1 + playlistData.length) % playlistData.length; 
         loadTrack(currentTrack); 
     } 
