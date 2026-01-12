@@ -118,13 +118,12 @@
     }
 
     // =====================================================
-    // EFFET MACHINE À ÉCRIRE (TITRE ONGLET)
+    // TYPEWRITER
     // =====================================================
     document.addEventListener('DOMContentLoaded', () => {
         const targetTitle = "StealthyLabs | Content Creator"; 
         let index = 0;
-        const speed = 100;
-
+        const speed = 200;
         document.title = "_";
 
         function typeTitle() {
@@ -135,10 +134,10 @@
             } else {
                 setTimeout(() => { document.title = targetTitle + " "; }, 500);
                 setTimeout(() => { document.title = targetTitle + "_"; }, 1000);
-                setTimeout(() => { document.title = targetTitle + " "; }, 1500);
-                setTimeout(() => { document.title = targetTitle; }, 2000);
+                setTimeout(() => { document.title = targetTitle; }, 1500);
             }
         }
+
         setTimeout(typeTitle, 500);
     });
 
@@ -154,21 +153,6 @@
             .then(data => {
                 if (data.success) {
                     const d = data.data;
-
-                    const liveBadge = document.getElementById('liveBadge');
-                    const mainAvatar = document.getElementById('mainAvatar');
-                    let isStreaming = false;
-
-                    if (d.activities) {
-                        for (const activity of d.activities) {
-                            // Type 1 = Streaming (Twitch)
-                            if (activity.type === 1 || (activity.name && activity.name.toLowerCase() === 'twitch')) {
-                                isStreaming = true;
-                                break;
-                            }
-                        }
-                    }
-
                     if (liveBadge && mainAvatar) {
                         if (isStreaming) {
                             liveBadge.style.display = 'block';
