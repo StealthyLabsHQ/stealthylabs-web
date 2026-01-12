@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadPlaylist();
     
-    // Toggle visuel du lecteur
     window.toggleMusic = function() {
         const wrap = document.getElementById('musicWrapper');
         if(wrap) wrap.classList.toggle('open');
@@ -16,29 +15,39 @@ let isPlaying = false;
 const audio = new Audio();
 
 function loadPlaylist() {
+    // Vérifiez bien que le fichier est accessible à cette adresse
     fetch('json/playlist.json') 
         .then(response => {
-            if(!response.ok) throw new Error("Playlist introuvable");
+            if(!response.ok) throw new Error("Playlist introuvable (404)");
             return response.json();
         })
         .then(data => {
             playlistData = data; 
             initPlaylistUI();
             
-            // --- AUTO-LANCEMENT ALÉATOIRE ---
+            // --- AUTOPLAY FORCE ---
             if(playlistData.length > 0) {
-                // 1. Choisir un titre au hasard
                 currentTrack = Math.floor(Math.random() * playlistData.length);
                 loadTrack(currentTrack);
                 
-                // 2. Tenter de jouer immédiatement
+                // On essaie de jouer tout de suite
                 const playPromise = audio.play();
+                
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
+                        // Ça a marché !
                         isPlaying = true;
                         updatePlayIcons(true);
-                    }).catch(error => {
-                        console.log("Autoplay bloqué par le navigateur (sécurité). Clic nécessaire.");
+                    })
+                    .catch(error => {
+                        // Bloqué par le navigateur ? On attend un clic de l'utilisateur
+                        console.log("Autoplay bloqué. Attente d'un clic pour démarrer la musique...");
+                        document.addEventListener('click', function startAudio() {
+                            audio.play();
+                            isPlaying = true;
+                            updatePlayIcons(true);
+                            document.removeEventListener('click', startAudio);
+                        }, { once: true });
                     });
                 }
             }
@@ -76,15 +85,14 @@ function initPlaylistUI() {
 
 function setupPlayerControls() {
     const playBtn = document.getElementById("playBtn");
-    const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
-    const progressBar = document.getElementById("progressBar");
+    const prevBtn = document.getElementById("prevBtn");
     const volumeSlider = document.getElementById("volumeSlider");
+    const progressBar = document.getElementById("progressBar");
 
     if(playBtn) playBtn.onclick = () => isPlaying ? pauseTrack() : playTrack();
     if(nextBtn) nextBtn.onclick = nextTrack;
     if(prevBtn) prevBtn.onclick = prevTrack;
-    
     if(volumeSlider) volumeSlider.oninput = () => audio.volume = volumeSlider.value / 100;
     
     if(progressBar) progressBar.onclick = e => { 
@@ -125,16 +133,13 @@ function loadTrack(i) {
 }
 
 function playTrack() { 
-    var playPromise = audio.play();
-    if (playPromise !== undefined) {
-        playPromise.then(_ => {
-            isPlaying = true; 
-            updatePlayIcons(true);
-        }).catch(error => {
-            isPlaying = false;
-            updatePlayIcons(false);
-        });
-    }
+    audio.play().then(() => { 
+        isPlaying = true; 
+        updatePlayIcons(true);
+    }).catch(e => {
+        isPlaying = false;
+        updatePlayIcons(false);
+    });
 }
 
 function pauseTrack() { 
@@ -169,7 +174,6 @@ function updateProgress() {
     const progressFill = document.getElementById("progressFill");
     const timeCurrent = document.getElementById("timeCurrent");
     const timeTotal = document.getElementById("timeTotal");
-    
     if (audio.duration && isFinite(audio.duration)) { 
         if(progressFill) progressFill.style.width = (audio.currentTime / audio.duration * 100) + "%"; 
         if(timeCurrent) timeCurrent.textContent = fmt(audio.currentTime); 

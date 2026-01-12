@@ -1,92 +1,57 @@
 // =====================================================
-// SCRIPT SOCIAL (Menu, Langue, Discord, Redirection)
+// SCRIPT SOCIAL (Menu, Langue, Redirection)
 // =====================================================
 
-// ATTENTION : Si tes fichiers fr.json/en.json sont à la racine, laisse vide ''.
-// S'ils sont dans un dossier "translations", mets 'translations/'
-const JSON_PATH = ''; 
+// ATTENTION : Si vos fichiers json sont dans un dossier "translations", mettez 'translations/'
+// S'ils sont à côté de social.html, laissez vide ''
+const JSON_PATH = 'translations/'; 
 
 let currentLang = 'fr';
 let currentTranslations = {};
 let pendingRedirectUrl = ''; 
 
-// --- INITIALISATION ---
-(function init() {
+// --- INITIALISATION AU CHARGEMENT ---
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Script Social Démarré");
+
+    // 1. Démarrage des boucles (Horloge, Discord)
     updateClock();
     setInterval(updateClock, 1000);
+    
+    updateDiscordStatus();
+    setInterval(updateDiscordStatus, 30000);
+    
+    updateServerStats();
+    setInterval(updateServerStats, 60000);
 
+    // 2. Chargement préférences
     detectAndApplyLanguage();
     loadSavedFont();
 
-    updateDiscordStatus();
-    updateServerStats();
-    setInterval(updateDiscordStatus, 30000);
-    setInterval(updateServerStats, 60000);
+    // 3. Activation des Redirections (Pop-up)
+    setupRedirections();
 
-    // --- FERMETURE MENU AU CLIC EXTÉRIEUR ---
+    // 4. Gestionnaire "Fermer menu si clic ailleurs"
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        // On vérifie si on a cliqué sur le bouton (peu importe l'icône dedans)
-        const isBtn = event.target.closest('button[onclick="toggleSettings(event)"]');
-        
-        if (panel && panel.classList.contains('show') && !panel.contains(event.target) && !isBtn) {
+        // Si le menu est ouvert et qu'on ne clique PAS dedans
+        if (panel && panel.classList.contains('show') && !panel.contains(event.target)) {
             panel.classList.remove('show');
         }
     });
+});
 
-    // --- GESTION REDIRECTION (Après chargement DOM) ---
-    setTimeout(() => {
-        // Interception des liens externes
-        const links = document.querySelectorAll('a[target="_blank"]');
-        links.forEach(link => {
-            // On ignore les liens du player musique et ceux marqués no-redirect
-            if (!link.classList.contains('no-redirect') && !link.classList.contains('music-platform-btn')) {
-                link.addEventListener('click', (e) => {
-                    if (link.href.startsWith('http')) {
-                        e.preventDefault();
-                        openRedirect(link.href);
-                    }
-                });
-            }
-        });
-        
-        // Bouton Confirmer du Modal
-        const confirmBtn = document.getElementById('confirmRedirectBtn');
-        if(confirmBtn) {
-            confirmBtn.onclick = () => {
-                if(pendingRedirectUrl) {
-                    window.open(pendingRedirectUrl, '_blank');
-                    closeRedirect();
-                }
-            };
-        }
-    }, 500);
-})();
+// --- FONCTIONS UI (ENGRENAGE) ---
 
-// --- FONCTIONS REDIRECTION ---
-function openRedirect(url) {
-    const modal = document.getElementById('redirectOverlay');
-    const urlText = document.getElementById('redirectUrl');
-    if (modal && urlText) {
-        pendingRedirectUrl = url;
-        urlText.textContent = url;
-        modal.classList.add('show');
-    } else {
-        window.open(url, '_blank');
-    }
-}
-
-function closeRedirect() {
-    const modal = document.getElementById('redirectOverlay');
-    if (modal) modal.classList.remove('show');
-}
-
-// --- FONCTIONS UI ---
 function toggleSettings(event) {
-    // Empêche le clic de se propager au document (qui fermerait le menu)
-    if(event) event.stopPropagation();
+    // CRUCIAL : Empêche le clic de remonter au document et de refermer le menu tout de suite
+    if (event) event.stopPropagation();
+    
     const panel = document.getElementById('settingsPanel');
-    if (panel) panel.classList.toggle('show');
+    if (panel) {
+        panel.classList.toggle('show');
+        console.log("Menu Settings basculé"); // Pour vérifier dans la console (F12)
+    }
 }
 
 function toggleSocials() {
@@ -101,10 +66,58 @@ function copyCode() {
     setTimeout(() => tooltip.classList.remove("show"), 2000);
 }
 
+// --- FONCTIONS REDIRECTION ---
+
+function setupRedirections() {
+    const links = document.querySelectorAll('a[target="_blank"]');
+    links.forEach(link => {
+        // On exclut les boutons de musique et les liens internes
+        if (!link.classList.contains('music-platform-btn') && !link.classList.contains('no-redirect')) {
+            link.addEventListener('click', (e) => {
+                if (link.href.startsWith('http')) {
+                    e.preventDefault(); // Bloque le lien normal
+                    openRedirect(link.href); // Ouvre notre pop-up
+                }
+            });
+        }
+    });
+
+    // Bouton de confirmation dans la pop-up
+    const confirmBtn = document.getElementById('confirmRedirectBtn');
+    if (confirmBtn) {
+        confirmBtn.onclick = () => {
+            if (pendingRedirectUrl) {
+                window.open(pendingRedirectUrl, '_blank');
+                closeRedirect();
+            }
+        };
+    }
+}
+
+function openRedirect(url) {
+    const modal = document.getElementById('redirectOverlay');
+    const urlText = document.getElementById('redirectUrl');
+    if (modal && urlText) {
+        pendingRedirectUrl = url;
+        urlText.textContent = url;
+        modal.classList.add('show');
+    } else {
+        // Secours si la pop-up n'existe pas
+        window.open(url, '_blank');
+    }
+}
+
+function closeRedirect() {
+    const modal = document.getElementById('redirectOverlay');
+    if (modal) modal.classList.remove('show');
+}
+
 // --- LOGIQUE LANGUE ---
+
 function detectAndApplyLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
+    
     if (savedLang) currentLang = savedLang;
     else currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
 
@@ -115,27 +128,21 @@ function detectAndApplyLanguage() {
 }
 
 function loadLanguageFile(lang) {
-    // Ajout d'une sécurité pour trouver le fichier
     fetch(`${JSON_PATH}${lang}.json`)
         .then(res => {
-            if(!res.ok) throw new Error("Fichier langue introuvable");
+            if(!res.ok) throw new Error("Fichier langue introuvable (Vérifiez le dossier json/ ou translations/)");
             return res.json();
         })
         .then(data => {
             currentTranslations = data; 
             applyTranslations();
             updateClock();
-            updateDiscordStatus(); // Mettre à jour les textes traduits
+            updateDiscordStatus();
             
-            // Gestion Carte Guide (FR uniquement)
             const guidesCard = document.getElementById('guidesCard');
             if (guidesCard) guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
         })
-        .catch(err => {
-            console.error("Erreur Langue:", err);
-            // Si ça plante, on garde au moins l'horloge
-            updateClock();
-        });
+        .catch(err => console.error("Erreur Langue:", err));
 }
 
 function applyTranslations() {
@@ -176,6 +183,7 @@ function updateClock() {
 }
 
 // --- DISCORD ---
+
 function updateDiscordStatus() {
     const userId = "1071461037741723648"; 
     fetch(`https://api.lanyard.rest/v1/users/${userId}`)
@@ -183,41 +191,27 @@ function updateDiscordStatus() {
         .then(data => {
             if (!data.success) return;
             const d = data.data;
-            const liveBadge = document.getElementById('liveBadge');
-            const mainAvatar = document.querySelector('.avatar');
-            let isStreaming = d.activities.some(a => a.type === 1 || (a.name && a.name.toLowerCase() === 'twitch'));
-
-            if (liveBadge && mainAvatar) {
-                if (isStreaming) {
-                    liveBadge.style.display = 'block';
-                    mainAvatar.classList.add('streaming');
-                    liveBadge.innerText = (currentLang === 'fr') ? "EN LIVE" : "LIVE";
-                } else {
-                    liveBadge.style.display = 'none';
-                    mainAvatar.classList.remove('streaming');
-                }
-            }
-
+            const status = d.discord_status;
+            
             const avatarImg = document.getElementById('discordAvatar');
             const statusDot = document.getElementById('discordStatus');
             const activityEl = document.getElementById('discordActivity'); 
 
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${d.discord_user.avatar}.png?size=128`;
-            if (statusDot) statusDot.className = 'discord-status-dot ' + d.discord_status;
+            if (statusDot) statusDot.className = 'discord-status-dot ' + status;
 
-            let statusText = d.discord_status;
-            if (currentTranslations[`status_${d.discord_status}`]) statusText = currentTranslations[`status_${d.discord_status}`];
+            let statusText = status;
+            if (currentTranslations[`status_${status}`]) statusText = currentTranslations[`status_${status}`];
             
             let html = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
             if (d.listening_to_spotify && d.spotify) {
-                const s = d.spotify;
-                html += `<div class="rp-game-row" style="align-items: flex-start;"><img src="${s.album_art_url}" class="rp-game-icon" style="margin-top: 4px;"><div class="rp-game-info"><div class="rp-game-title" style="color: #fff; font-weight: 700;">${s.song}</div><div class="rp-game-detail" style="color: #ccc;">${s.artist}</div></div></div>`;
-            } else {
-                const game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets);
-                if (game) {
-                    let icon = game.assets.large_image.startsWith("mp:") ? `https://media.discordapp.net/${game.assets.large_image.slice(3)}` : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
-                    html += `<div class="rp-game-row"><img src="${icon}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${game.name}</div><div class="rp-game-detail">${game.details || game.state || ""}</div></div></div>`;
+                html += `<div class="rp-game-row" style="align-items: flex-start;"><img src="${d.spotify.album_art_url}" class="rp-game-icon" style="margin-top: 4px;"><div class="rp-game-info"><div class="rp-game-title" style="color: #fff; font-weight: 700;">${d.spotify.song}</div><div class="rp-game-detail" style="color: #ccc;">${d.spotify.artist}</div></div></div>`;
+            } else if (d.activities && d.activities.length > 0) {
+                const game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify");
+                if (game && game.assets) {
+                     let icon = game.assets.large_image.startsWith("mp:") ? `https://media.discordapp.net/${game.assets.large_image.slice(3)}` : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
+                     html += `<div class="rp-game-row"><img src="${icon}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${game.name}</div><div class="rp-game-detail">${game.details || game.state || ""}</div></div></div>`;
                 }
             }
             if (activityEl) activityEl.innerHTML = html;
@@ -239,7 +233,7 @@ function updateServerStats() {
         }).catch(() => {});
 }
 
-// Exports
+// Exports globaux indispensables pour le HTML onclick=""
 window.toggleSettings = toggleSettings;
 window.toggleSocials = toggleSocials;
 window.copyCode = copyCode;
