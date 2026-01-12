@@ -129,6 +129,32 @@
             .then(data => {
                 if (data.success) {
                     const d = data.data;
+
+                    const liveBadge = document.getElementById('liveBadge');
+                    const mainAvatar = document.getElementById('mainAvatar');
+                    let isStreaming = false;
+
+                    if (d.activities) {
+                        for (const activity of d.activities) {
+                            // Type 1 = Streaming (Twitch)
+                            if (activity.type === 1 || (activity.name && activity.name.toLowerCase() === 'twitch')) {
+                                isStreaming = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (liveBadge && mainAvatar) {
+                        if (isStreaming) {
+                            liveBadge.style.display = 'block';
+                            mainAvatar.classList.add('streaming');
+                            liveBadge.innerText = (currentLang === 'fr') ? "EN LIVE" : "LIVE";
+                        } else {
+                            liveBadge.style.display = 'none';
+                            mainAvatar.classList.remove('streaming');
+                        }
+                    }
+
                     const user = d.discord_user;
                     const status = d.discord_status;
                     
@@ -268,32 +294,6 @@
                 console.error("Erreur Stats Discord:", err);
                 document.getElementById('serverStats').innerText = currentTranslations.join_server || "Rejoindre le serveur";
             });
-    }
-
-    // --- DÉTECTION DU LIVE ---
-    const liveBadge = document.getElementById('liveBadge');
-    const mainAvatar = document.getElementById('mainAvatar');
-    let isStreaming = false;
-
-    if (d.activities) {
-        for (const activity of d.activities) {
-            if (activity.type === 1 || (activity.name && activity.name.toLowerCase() === 'twitch')) {
-                isStreaming = true;
-                break;
-            }
-        }
-    }
-
-    // Affichage ou non du badge
-    if (liveBadge && mainAvatar) {
-        if (isStreaming) {
-            liveBadge.style.display = 'block';
-            mainAvatar.classList.add('streaming');
-            liveBadge.innerText = (currentLang === 'fr') ? "EN LIVE" : "LIVE";
-        } else {
-            liveBadge.style.display = 'none';
-            mainAvatar.classList.remove('streaming');
-        }
     }
 
     // =====================================================
