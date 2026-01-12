@@ -1,27 +1,30 @@
 // =====================================================
-// 1. CONFIGURATION & GESTION GLOBALE
+// 1. CONFIGURATION & INITIALISATION
 // =====================================================
-let currentLang = 'fr';
+let currentLang = 'fr'; // Valeur par défaut de sécurité
 let currentTranslations = {};
-const JSON_PATH = 'translations/'; // Change en '' si les json sont à la racine
+const JSON_PATH = 'translations/'; // Assure-toi que le dossier s'appelle bien "translations"
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialisation
-    detectLanguage();
+    // 1. Détecter la langue (et appliquer la sauvegarde)
+    detectAndApplyLanguage();
+
+    // 2. Charger la police sauvegardée
     loadSavedFont();
-    updateClock();
-    
-    // Lancer les boucles
+
+    // 3. Lancer l'horloge immédiatement (sans attendre la trad)
+    updateClock(); 
     setInterval(updateClock, 1000);
+
+    // 4. Lancer les modules annexes
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
 
-    // Initialisation des modules (S'ils existent sur la page)
     if (document.getElementById('serverStats')) updateServerStats();
     if (document.getElementById('discordActivity')) updateDiscordStatus();
     if (document.querySelector('.hero-title')) initTypewriter();
 
-    // Fermeture du menu paramètres au clic extérieur
+    // 5. Gestion fermeture menu paramètres
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
         const btn = document.querySelector('.settings-btn');
@@ -34,47 +37,68 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =====================================================
-// 2. GESTION LANGUE & TRADUCTION
+// 2. LOGIQUE LANGUE (AUTO + SAUVEGARDE)
 // =====================================================
-function detectLanguage() {
+
+function detectAndApplyLanguage() {
+    // A. Vérifier si l'utilisateur a déjà choisi une langue (Sauvegarde)
     const savedLang = localStorage.getItem('userLang');
+    
+    // B. Sinon, vérifier la langue du navigateur
+    const browserLang = navigator.language || navigator.userLanguage;
+
     if (savedLang) {
+        // Priorité 1 : Le choix de l'utilisateur sauvegardé
         currentLang = savedLang;
     } else {
-        const userLang = navigator.language || navigator.userLanguage;
-        currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
+        // Priorité 2 : La langue du navigateur (Si commence par 'fr' -> fr, sinon -> en)
+        currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
     }
 
+    // C. Mettre à jour visuellement le sélecteur tout de suite
     const langSelect = document.getElementById('languageSelector');
-    if(langSelect) langSelect.value = currentLang;
+    if(langSelect) {
+        langSelect.value = currentLang;
+    }
 
+    // D. Charger le fichier de langue correspondant
     loadLanguageFile(currentLang);
 }
 
 function loadLanguageFile(lang) {
+    // Si on est en local sans serveur, fetch peut échouer. 
+    // Assure-toi d'utiliser Live Server ou d'héberger le site.
     fetch(`${JSON_PATH}${lang}.json`)
         .then(response => {
-            if (!response.ok) throw new Error("Fichier langue introuvable");
+            if (!response.ok) throw new Error(`Fichier ${lang}.json introuvable`);
             return response.json();
         })
         .then(data => {
             currentTranslations = data; 
             applyTranslations();     
-            updateClock(); // Mise à jour format heure
             
-            // Mise à jour modules spécifiques si présents
+            // Une fois la langue chargée, on met à jour l'horloge pour le format (12h/24h)
+            updateClock(); 
+            
+            // Modules spécifiques qui dépendent de la langue
             if (document.getElementById('serverStats')) updateServerStats();
             if (document.getElementById('discordActivity')) updateDiscordStatus();
         })
-        .catch(err => console.error("Erreur chargement langue:", err));
+        .catch(err => {
+            console.error("Erreur critique chargement langue:", err);
+            // Fallback : Si le chargement échoue, l'heure tourne quand même
+            updateClock();
+        });
 }
 
 function applyTranslations() {
     if (!currentTranslations) return;
+    
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            if (key === 'location' || key.includes('legal')) {
+            // Utilise innerHTML pour permettre le gras ou les liens dans le JSON
+            if (key === 'location' || key.includes('legal') || key.includes('desc') || key.includes('bio')) {
                 elem.innerHTML = currentTranslations[key];
             } else {
                 elem.innerText = currentTranslations[key];
@@ -85,13 +109,15 @@ function applyTranslations() {
 
 function changeLanguage(lang) {
     currentLang = lang;
+    // Sauvegarde le choix pour la prochaine fois
     localStorage.setItem('userLang', lang);
     loadLanguageFile(lang);
 }
 
 // =====================================================
-// 3. UI : MENU PARAMÈTRES & POLICE
+// 3. UI & FONTS
 // =====================================================
+
 function toggleSettings() {
     const panel = document.getElementById('settingsPanel');
     if (panel) panel.classList.toggle('show');
@@ -112,8 +138,9 @@ function loadSavedFont() {
 }
 
 // =====================================================
-// 4. HORLOGE
+// 4. HORLOGE (CORRIGÉE)
 // =====================================================
+
 function updateClock() {
     const clockEl = document.getElementById('clockDisplay');
     if (!clockEl) return;
@@ -121,25 +148,26 @@ function updateClock() {
     const now = new Date();
     let options = { hour: '2-digit', minute: '2-digit' };
     
-    if (currentLang === 'fr') {
-        options.hour12 = false; 
-        clockEl.innerText = now.toLocaleTimeString('fr-FR', options).replace(':', ':'); 
-    } else {
+    // Si la langue est 'en' (Anglais), on passe en 12h (AM/PM)
+    // Sinon (français ou par défaut), on reste en 24h
+    if (currentLang === 'en') {
         options.hour12 = true;
         clockEl.innerText = now.toLocaleTimeString('en-US', options);
+    } else {
+        options.hour12 = false; 
+        // Force le format 24h propre
+        clockEl.innerText = now.toLocaleTimeString('fr-FR', options).replace(':', ':'); 
     }
 }
 
 // =====================================================
-// 5. MODULES (DISCORD, TYPEWRITER)
+// 5. MODULES (Discord, Typewriter...)
 // =====================================================
 
 function initTypewriter() {
     const targetTitle = "StealthyLabs | Content Creator"; 
     let index = 0;
     const speed = 200;
-    
-    // Reset du titre pour éviter les conflits
     document.title = "_";
 
     function type() {
@@ -157,7 +185,6 @@ function initTypewriter() {
 }
 
 function updateDiscordStatus() {
-    // Si l'élément n'existe pas (ex: page accueil), on arrête
     if (!document.getElementById('discordActivity')) return;
 
     const userId = "1071461037741723648"; 
@@ -167,7 +194,7 @@ function updateDiscordStatus() {
             if (!data.success) return;
             const d = data.data;
             
-            // Gestion Badge Live
+            // Badge Live
             const liveBadge = document.getElementById('liveBadge');
             const mainAvatar = document.querySelector('.avatar');
             let isStreaming = false;
@@ -192,7 +219,7 @@ function updateDiscordStatus() {
                 }
             }
             
-            // Gestion Avatar & Status Discord
+            // Avatar & Status
             const user = d.discord_user;
             const status = d.discord_status;
             const avatarImg = document.getElementById('discordAvatar');
@@ -202,11 +229,14 @@ function updateDiscordStatus() {
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
             if (statusDot) statusDot.className = 'discord-status-dot ' + status;
 
-            // Texte Activité
-            const statusText = (currentTranslations[`status_${status}`]) || status;
+            // Traduction statut
+            const statusText = (currentTranslations && currentTranslations[`status_${status}`]) 
+                ? currentTranslations[`status_${status}`] 
+                : status;
+                
             let htmlContent = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
-            // Détection Jeu / Spotify
+            // Jeu / Spotify
             let game = null;
             let spotify = null;
             if (d.activities) game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets);
@@ -253,7 +283,6 @@ function updateServerStats() {
             const total = data.approximate_member_count;
             const statsEl = document.getElementById('serverStats');
             
-            // Mise à jour nom/icone serveur
             if (data.guild && document.getElementById('serverName')) {
                 document.getElementById('serverName').innerText = data.guild.name;
                 document.getElementById('serverIcon').src = `https://cdn.discordapp.com/icons/${data.guild.id}/${data.guild.icon}.png`;
@@ -271,7 +300,7 @@ function updateServerStats() {
         .catch(err => console.log("Erreur stats serveur"));
 }
 
-// Fonctions globales pour le HTML (onclick)
+// Exports pour HTML
 window.toggleSettings = toggleSettings;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
