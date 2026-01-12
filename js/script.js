@@ -276,7 +276,6 @@
     function checkCookieConsent() {
         if (!localStorage.getItem('cookieConsent')) {
             setTimeout(() => {
-                // On fait remonter la bannière (0% de décalage)
                 document.getElementById('cookieBanner').style.transform = 'translateY(0)';
             }, 1000);
         }
@@ -284,7 +283,6 @@
 
     function acceptCookies() {
         localStorage.setItem('cookieConsent', 'true');
-        // On la renvoie vers le bas (100% de sa hauteur)
         document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
     }
 
@@ -294,7 +292,6 @@
     // GESTION MODAL REDIRECTION (Mise à jour)
     // =====================================================
     let pendingUrl = "";
-    // On cible les nouveaux ID de votre HTML
     const overlay = document.getElementById('redirectOverlay'); 
     const urlDisplay = document.getElementById('redirectUrl');
     const confirmBtn = document.getElementById('confirmRedirectBtn');
@@ -336,16 +333,12 @@
     // =====================================================
     document.addEventListener('click', function(event) {
         const settingsPanel = document.getElementById('settingsPanel');
-        // On cible le bouton engrenage (celui qui a le onclick toggleSettings)
         const settingsBtn = document.querySelector('button[onclick="toggleSettings()"]');
 
         // Vérification de sécurité (si les éléments existent)
         if (settingsPanel && settingsBtn) {
-            // Si le menu est ouvert...
             if (settingsPanel.classList.contains('show')) {
-                // ...et que le clic n'est NI à l'intérieur du menu, NI sur le bouton engrenage
                 if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
-                    // Alors on le ferme
                     settingsPanel.classList.remove('show');
                 }
             }
@@ -355,15 +348,14 @@
     // =====================================================
     // LECTEUR AUDIO
     // =====================================================
-    let playlistData = []; // On commence avec une liste vide
+    let playlistData = [];
 
     function loadPlaylist() {
-        // On va chercher le fichier JSON
         fetch('json/playlist.json')
             .then(response => response.json())
             .then(data => {
-                playlistData = data; // On remplit la liste avec le fichier
-                initPlaylist();      // ET SEULEMENT MAINTENANT, on lance le lecteur
+                playlistData = data; 
+                initPlaylist();  
             })
             .catch(err => console.error("Erreur chargement playlist:", err));
     }
@@ -404,7 +396,6 @@
 
         loadTrack(currentTrack);
 
-        // Tentative d'Autoplay avec Fallback
         const playPromise = audio.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
@@ -427,7 +418,6 @@
         audio.src = t.file;
         
         playerTrack.textContent = t.title;
-        // Supprime le data-key pour empêcher la traduction d'écraser le titre
         playerTrack.removeAttribute('data-key'); 
 
         playerArtist.textContent = t.artist;
