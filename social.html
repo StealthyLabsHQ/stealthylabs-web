@@ -4,15 +4,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>StealthyLabs | Content Creator</title>
+
         <meta name="description" content="StealthyLabs - Content Creator">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://stealthylabs.eu/">
+        <meta property="og:site_name" content="StealthyLabs">
+        <meta property="og:title" content="/stealthylabs">
+        <meta property="og:description" content="access granted_ identity: stealthy status: observing">
+        <meta property="og:image" content="https://stealthylabs.eu/logos/embed.png">
         <meta name="theme-color" content="#00b0f4">
+
+        <meta name="twitter:card" content="summary_large_image">
         
         <link rel="icon" type="image/png" href="logos/favicon.png">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
         
-        <link rel="stylesheet" href="css/style-oth.css">
+    <link rel="stylesheet" href="css/style-oth.css">
     </head>
     <body>
         <div class="top-bar">
@@ -25,40 +35,39 @@
                 <img src="logos/steam.png" alt="Steam">
             </a>
 
-            <button class="top-icon-btn" onclick="toggleSettings(event)" title="Paramètres" style="background:none; border:none; cursor:pointer;">
+            <button class="top-icon-btn" onclick="toggleSettings()" title="Changer la police" style="background:none; border:none; cursor:pointer;">
                 <img src="logos/gear.png" alt="Settings">
             </button>
 
-            <div class="settings-panel" id="settingsPanel">
-                <div style="margin-bottom: 15px;">
-                    <div class="settings-label" data-key="settings_language">Langue</div>
-                    <select id="languageSelector" class="font-select" onchange="changeLanguage(this.value)">
-                        <option value="fr">Français</option>
-                        <option value="en">English</option>
-                    </select>
-                </div>
+        <div class="settings-panel" id="settingsPanel">
+            <div style="margin-bottom: 15px;">
+                <div class="settings-label" data-key="settings_language">Langue</div>
+                <select id="languageSelector" class="font-select" onchange="changeLanguage(this.value)">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
 
-                <div>
-                    <div class="settings-label" data-key="settings_font">Police d'écriture</div>
-                    <select id="fontSelector" class="font-select" onchange="changeFont(this.value)">
-                        <option value="'Raleway', sans-serif" data-key="font_default">Raleway (Défaut)</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Roboto', sans-serif">Roboto</option>
-                        <option value="'Open Sans', sans-serif">Open Sans</option>
-                        <option value="'Montserrat', sans-serif">Montserrat</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
-                        <option value="'Oswald', sans-serif">Oswald</option>
-                    </select>
-                </div>
-            </div> 
-        </div>     
-
+            <div>
+                <div class="settings-label" data-key="settings_font">Police d'écriture</div>
+                <select id="fontSelector" class="font-select" onchange="changeFont(this.value)">
+                    <option value="'Raleway', sans-serif" selected data-key="font_default">Raleway (Défaut)</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Oswald', sans-serif">Oswald</option>
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="'Comfortaa', cursive">Comfortaa</option>
+                    <option value="'Dancing Script', cursive">Dancing Script</option>
+                </select>
+            </div>
+        </div> </div>     <div class="container">
+            
         <div class="container">
             <header class="profile">
-                <div class="avatar-wrapper">
-                    <img src="avatar_2.png" alt="StealthyLabs" class="avatar">
-                    <div id="liveBadge" class="live-badge" style="display: none;">EN LIVE</div>
-                </div>
+                <img src="avatar_2.png" alt="StealthyLabs" class="avatar">
                 <h1 class="username">StealthyLabs</h1>
                 <div class="bio">
                     <p class="bio-title" data-key="bio">Content Creator & Streamer</p>
@@ -66,7 +75,11 @@
                 <p class="email">
                     <a href="#" onclick="openEmail()" data-key="email_text">[email protected]</a>
                 </p>
-                <div class="info-row" data-key="location">Paris, France</div>
+                
+                <div class="info-row" data-key="location">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    Paris, France
+                </div>
             </header>
 
             <section class="links">
@@ -77,9 +90,9 @@
                     </div>
                     <div class="discord-info">
                         <div class="discord-name" data-key="add_friend">StealthyLabs</div>
-                        <div id="discordActivity" class="rich-presence-text">Chargement...</div>
+                        <div id="discordActivity" class="rich-presence-text">ID: 107146...</div>
                     </div>
-                    <a href="https://discord.com/users/1071461037741723648" target="_blank" class="join-btn" data-key="btn_add">Ajouter</a>
+                    <a href="https://discord.com/users/1071461037741723648" target="_blank" rel="noopener" class="join-btn" data-key="btn_add">Ajouter</a>
                 </div>
 
                 <div class="discord-card">
@@ -87,36 +100,76 @@
                         <img id="serverIcon" src="logos/discord.png" alt="Discord Server">
                     </div>
                     <div class="discord-info">
-                        <div class="discord-name"><span id="serverName">StealthyLabs.</span></div>
-                        <div id="serverStats" style="font-size: 0.8rem; color: #888;" data-key="join_server">Chargement...</div>
+                        <div class="discord-name">
+                            <span id="serverName">StealthyLabs.</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#5865f2"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10zm-10 5.5l-5-5 1.41-1.41L12 14.67l3.59-3.58L17 12.5l-5 5z"/></svg>
+                        </div>
+                        <div id="serverStats" style="font-size: 0.8rem; color: #888;" data-key="join_server">
+                            Chargement...
+                        </div>
                     </div>
-                    <a href="https://discord.gg/7CJbppbFdw" target="_blank" class="join-btn" data-key="btn_join">Rejoindre</a>
+                    <a href="https://discord.gg/7CJbppbFdw" target="_blank" rel="noopener" class="join-btn" data-key="btn_join" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Rejoindre</a>
                 </div>
 
                 <div class="link-card socials-toggle" onclick="toggleSocials()">
                     <div class="link-icon socials">
-                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
                     </div>
                     <div class="link-content">
                         <div class="link-title" data-key="socials_title">Réseaux Sociaux</div>
                         <div class="link-desc" data-key="socials_desc">TikTok, YouTube, Twitch & plus</div>
                     </div>
-                    <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+                    <div class="link-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
                 </div>
 
                 <div class="socials-wrapper" id="socialsWrapper">
-                    <a href="https://tiktok.com/@stealthylabs" target="_blank" class="link-card">
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener" class="link-card">
                         <div class="link-icon tiktok"><img src="logos/tiktok.png" alt="TikTok"></div>
                         <div class="link-content"><div class="link-title">TikTok</div><div class="link-desc" data-key="tiktok_desc">Que des contenus shorts.</div></div>
+                        <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                     </a>
-                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" class="link-card">
+
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener" class="link-card">
                         <div class="link-icon youtube"><svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
                         <div class="link-content"><div class="link-title">YouTube</div><div class="link-desc" data-key="youtube_desc">Ma chaine principale</div></div>
+                        <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                     </a>
-                    <a href="https://twitch.tv/stealthylabs" target="_blank" class="link-card">
+
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener" class="link-card">
                         <div class="link-icon twitch"><svg viewBox="0 0 24 24" fill="white"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></div>
                         <div class="link-content"><div class="link-title">Twitch</div><div class="link-desc" data-key="twitch_desc">Je stream peut importe.</div></div>
+                        <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                     </a>
+
+                    <a href="https://www.instagram.com/stealthylabs.hq" target="_blank" rel="noopener" class="link-card">
+                        <div class="link-icon instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </div>
+                        <div class="link-content"><div class="link-title">Instagram</div><div class="link-desc" data-key="insta_desc">Bah des photos, des shorts ou des réels</div></div>
+                        <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    </a>
+
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener" class="link-card">
+                        <div class="link-icon twitter"><svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+                        <div class="link-content"><div class="link-title">X (ex-Twitter)</div><div class="link-desc" data-key="twitter_desc">Page dédié aux memes</div></div>
+                        <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    </a>
+                </div>
+
+                <div class="creator-code" onclick="copyCode()">
+                    <div class="link-icon epic"><img src="logos/epic_games.png" alt="Epic Games"></div>
+                    <div class="link-content"><div class="link-title" data-key="support_creator">Support the Creator</div><div class="link-desc">Code: stealthylabs</div></div>
+                    <button class="copy-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
                 </div>
                 
                 <a id="guidesCard" href="https://writer.zoho.eu/writer/open/njtjkf72da7e293fc47eeab2c350c8fc3b35a" target="_blank" class="link-card" style="cursor:pointer">
@@ -126,6 +179,9 @@
                     <div class="link-content">
                         <div class="link-title" data-key="guides_title">Guides & Ressources</div>
                         <div class="link-desc" data-key="guides_desc">Optimisation PC, FPS & Configs.</div>
+                    </div>
+                    <div class="link-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </div>
                 </a>
 
@@ -137,36 +193,67 @@
                         <div class="link-title" data-key="mp3_title">Lecteur MP3</div>
                         <div class="link-desc" data-key="mp3_desc">C'est ton choix.</div>
                     </div>
-                    <div class="link-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+                    <div class="link-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
                 </div>
 
                 <div class="music-wrapper" id="musicWrapper">
                     <div class="music-player">
                         <div class="player-header">
-                            <div class="player-artwork" id="playerArtwork"></div>
+                            <div class="player-artwork" id="playerArtwork">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            </div>
                             <div class="player-info">
-                                <div class="player-track" id="playerTrack">Sélectionner un morceau</div>
+                                <div class="player-track" id="playerTrack" data-key="select_track">Sélectionner un morceau</div>
                                 <div class="player-artist" id="playerArtist">--</div>
                             </div>
                         </div>
+                        
+                        <div class="player-progress">
+                            <span class="time-current" id="timeCurrent">0:00</span>
+                            <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                            <span class="time-total" id="timeTotal">0:00</span>
+                        </div>
+                        
                         <div class="player-controls">
-                            <button class="control-btn" id="prevBtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-                            <button class="control-btn play-btn" id="playBtn">
+                            <button class="control-btn" id="prevBtn" title="Précédent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                            <button class="control-btn play-btn" id="playBtn" title="Play">
                                 <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                                 <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                             </button>
-                            <button class="control-btn" id="nextBtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+                            <button class="control-btn" id="nextBtn" title="Suivant"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
                         </div>
+                        
                         <div class="player-volume">
-                             <input type="range" id="volumeSlider" min="0" max="100" value="80" class="volume-slider">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="80" class="volume-slider">
                         </div>
+                        
                         <div class="playlist" id="playlist"></div>
+
+                        <a href="https://soundcloud.com/stealthylabs" target="_blank" class="music-platform-btn soundcloud">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.43 8.35a3.81 3.81 0 0 0-1.89.5 4.38 4.38 0 0 0-1.11-1.22 4.41 4.41 0 0 0-1.42-.64 4.36 4.36 0 0 0-1.57-.06 4.39 4.39 0 0 0-1.47.46 4.37 4.37 0 0 0-1.18.9 4.3 4.3 0 0 0-.79 1.22 4.38 4.38 0 0 0-.29 1.48v5.52h-2V10.8a4.67 4.67 0 0 1 .15-1.19 4.54 4.54 0 0 1 .44-1.09 4.62 4.62 0 0 1 .71-1 4.6 4.6 0 0 1 .95-.76 4.62 4.62 0 0 1 1.15-.49 4.68 4.68 0 0 1 1.3-.18 4.64 4.64 0 0 1 1.38.2 4.68 4.68 0 0 1 1.25.59 4.58 4.58 0 0 1 1 .94 4.51 4.51 0 0 1 .72 1.22l.06.15a3.68 3.68 0 0 1 1.63-.37h.06a3.7 3.7 0 0 1 2.62 1.08 3.73 3.73 0 0 1 1.08 2.62v.56a3.72 3.72 0 0 1-1.08 2.62 3.7 3.7 0 0 1-2.62 1.08h-5.22v-2h5.22a1.72 1.72 0 0 0 1.22-.5 1.73 1.73 0 0 0 .5-1.22v-.56a1.73 1.73 0 0 0-.5-1.22 1.72 1.72 0 0 0-1.22-.5h-.11a1.7 1.7 0 0 0-1.21.5 1.72 1.72 0 0 0-.5 1.21v.57h-2v-.57a3.73 3.73 0 0 1 .29-1.47 3.7 3.7 0 0 1 .79-1.22 3.74 3.74 0 0 1 1.18-.9 3.8 3.8 0 0 1 1.47-.46zm-9.72.66v7.5H5.7v-4.6l.07-.3.14-.28.2-.23.25-.18.3-.12.33-.06.33.02.32.1.28.16.23.23zm-3.5 1.79v5.71H2.2v-2.34l.05-.24.12-.22.18-.18.22-.14.26-.09.28-.03.28.03.26.09.23.14.18.18.12.22zm16.79 3.92h1V17h-1z"/>
+                            </svg>
+                            <span data-key="soundcloud_btn">Écouter sur SoundCloud</span>
+                        </a>
+                        
+                        <a href="https://open.spotify.com/user/31podgv2k3tdxftbdsqzadaium2m" target="_blank" class="music-platform-btn spotify">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.308-1.758-8.796-.963-.335.077-.67-.133-.746-.467-.076-.335.132-.67.467-.746 3.808-.87 7.076-.496 9.664 1.085.294.18.385.562.206.856zm1.225-2.73c-.226.372-.71.492-1.08.265-2.705-1.662-6.83-2.144-10.024-1.175-.41.125-.845-.118-.97-.528-.124-.41.118-.845.528-.97 3.633-1.103 8.16-.574 11.26 1.33.37.225.49.71.264 1.08zM18.79 10.97c-3.245-1.927-8.597-2.105-11.7-1.163-.5.152-1.026-.13-1.178-.628-.15-.5.13-1.026.628-1.178 3.568-1.083 9.49-.877 13.24 1.35.446.265.59.845.325 1.29-.264.444-.844.59-1.29.324z"/>
+                            </svg>
+                            <span data-key="spotify_btn">Écouter sur Spotify</span>
+                        </a>
                     </div>
                 </div>
+
             </section>
 
             <footer class="footer">
                 <span data-key="footer">© 2026 StealthyLabs. All rights reserved.</span>
+                <br>
+                    <a href="legal" data-key="legal_link" style="color: #555; text-decoration: none; font-size: 0.75rem; margin-top: 5px; display:inline-block;">Mentions Légales</a>
             </footer>
         </div>
 
@@ -186,6 +273,17 @@
             </div>
         </div>
 
+        <div id="cookieBanner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111; border-top: 1px solid #333; padding: 15px; display: flex; align-items: center; justify-content: center; gap: 20px; z-index: 9998; transform: translateY(100%); transition: transform 0.5s ease; flex-wrap: wrap;">
+            <p style="color: #ccc; font-size: 0.85rem; margin: 0;">
+                <span data-key="cookie_text">🍪 Ce site utilise le stockage local pour sauvegarder vos préférences (Langue & Police). </span>
+                
+                <a href="legal" target="_blank" data-key="cookie_more" style="color: #fff; text-decoration: underline;">En savoir plus</a>.
+            </p>
+            
+            <button onclick="acceptCookies()" data-key="cookie_ok" style="background: #fff; color: #000; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 700;">OK</button>
+        </div>
+
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
         <script src="js/script-social.js"></script>
     </body>
 </html>

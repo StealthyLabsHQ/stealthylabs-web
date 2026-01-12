@@ -1,247 +1,490 @@
-// =====================================================
-// SCRIPT SOCIAL (Complet : Musique, Discord, Redir)
-// =====================================================
+    // =====================================================
+    // GESTION LANGUES (DÉCENTRALISÉE JSON)
+    // =====================================================
+    let currentLang = 'en';
+    let currentTranslations = {}; // Stockera les données chargées du JSON
 
-const JSON_PATH = 'translations/'; // Chemin vide (racine)
-let currentLang = 'fr';
-let currentTranslations = {};
-let pendingRedirectUrl = '';
+    function detectLanguage() {
+        // 1. Check sauvegarde
+        const savedLang = localStorage.getItem('userLang');
+        
+        if (savedLang) {
+            currentLang = savedLang;
+        } else {
+            // 2. Check navigateur
+            const userLang = navigator.language || navigator.userLanguage;
+            if (userLang.startsWith('fr')) currentLang = 'fr';
+            else currentLang = 'en';
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("🎮 Script Social Chargé");
+        // Mise à jour du sélecteur
+        const langSelect = document.getElementById('languageSelector');
+        if(langSelect) langSelect.value = currentLang;
 
-    detectLanguage();
-    loadSavedFont();
-    updateClock();
-    
-    // Modules spécifiques Social
-    loadPlaylist();
-    updateDiscordStatus();
-    updateServerStats();
+        // Chargement du fichier JSON
+        loadLanguageFile(currentLang);
+    }
+
+    function loadLanguageFile(lang) {
+        // On va chercher le fichier dans le dossier translations
+        // Note: le chemin est relatif à index.html
+        fetch(`translations/${lang}.json`)
+            .then(response => response.json())
+            .then(data => {
+                currentTranslations = data; // On stocke les données
+                applyTranslations();        // On applique les textes
+                
+                // Mise à jour des modules dynamiques
+                updateClock();
+                updateServerStats();
+                updateDiscordStatus();
+
+                // --- GESTION DU BLOC GUIDES ---
+                const guidesCard = document.getElementById('guidesCard');
+                if (guidesCard) {
+                    if (lang === 'fr') {
+                        guidesCard.style.display = 'flex'; // Affiche en Français
+                    } else {
+                        guidesCard.style.display = 'none'; // Cache en Anglais
+                    }
+                }
+            })
+        .catch(err => console.error("Erreur chargement langue:", err));
+    }
+
+    function applyTranslations() {
+        document.querySelectorAll('[data-key]').forEach(elem => {
+            const key = elem.getAttribute('data-key');
+            if (currentTranslations[key]) {
+                if (key === 'location') elem.innerHTML = currentTranslations[key];
+                else elem.innerText = currentTranslations[key];
+            }
+        });
+    }
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('userLang', lang);
+        loadLanguageFile(lang);
+    }
+
+    // =====================================================
+    // FONCTIONS UI (UI & ACCESSOIRE)
+    // =====================================================
+    function toggleMusic() {
+        document.getElementById('musicWrapper').classList.toggle('open');
+        document.querySelector('.music-toggle').classList.toggle('active');
+    }
+
+    function toggleSocials() {
+        document.getElementById('socialsWrapper').classList.toggle('open');
+        document.querySelector('.socials-toggle').classList.toggle('active');
+    }
+
+    function copyCode() {
+        navigator.clipboard.writeText("stealthylabs");
+        const tooltip = document.getElementById("tooltip");
+        tooltip.classList.add("show");
+        setTimeout(() => tooltip.classList.remove("show"), 2000);
+    }
+
+    // =====================================================
+    // GESTION DES POLICES
+    // =====================================================
+    function toggleSettings() {
+        document.getElementById('settingsPanel').classList.toggle('show');
+    }
+
+    function changeFont(fontFamily) {
+        document.documentElement.style.setProperty('--main-font', fontFamily);
+        localStorage.setItem('userFont', fontFamily);
+    }
+
+    function loadSavedFont() {
+        const savedFont = localStorage.getItem('userFont');
+        if (savedFont) {
+            document.documentElement.style.setProperty('--main-font', savedFont);
+            document.getElementById('fontSelector').value = savedFont;
+        }
+    }
+
+    // =====================================================
+    // HORLOGE DYNAMIQUE
+    // =====================================================
+    function updateClock() {
+        const now = new Date();
+        const clockEl = document.getElementById('clockDisplay');
+        
+        let options = { hour: '2-digit', minute: '2-digit' };
+        
+        if (currentLang === 'fr') {
+            options.hour12 = false; 
+            clockEl.innerText = now.toLocaleTimeString('fr-FR', options).replace(':', ':'); 
+        } else {
+            options.hour12 = true;
+            clockEl.innerText = now.toLocaleTimeString('en-US', options);
+        }
+    }
+
+    // =====================================================
+    // INTEGRATION DISCORD (LANYARD)
+    // =====================================================
+    function updateDiscordStatus() {
+        const userId = "1071461037741723648"; 
+        const apiUrl = `https://api.lanyard.rest/v1/users/${userId}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const d = data.data;
+                    const user = d.discord_user;
+                    const status = d.discord_status;
+                    
+                    const avatarImg = document.getElementById('discordAvatar');
+                    const statusDot = document.getElementById('discordStatus');
+                    const activityEl = document.getElementById('discordActivity'); 
+
+                    if (user.avatar) {
+                        avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
+                    }
+                    
+                    statusDot.className = 'discord-status-dot ' + status;
+
+                    const statusText = {
+                        online: currentTranslations.status_online || "Online",
+                        idle: currentTranslations.status_idle || "Idle",
+                        dnd: currentTranslations.status_dnd || "DND",
+                        offline: currentTranslations.status_offline || "Offline"
+                    }[status] || status;
+
+                    let game = null;
+                    let spotify = null;
+
+                    if (d.activities && d.activities.length > 0) {
+                        game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets && a.assets.large_image);
+                    }
+                    if (d.listening_to_spotify && d.spotify) {
+                        spotify = d.spotify;
+                    }
+
+                    let htmlContent = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
+
+                    if (spotify || (game && (game.name === 'foobar2000' || game.name === 'Music'))) {
+                        let artist, album, track, coverUrl;
+                        let explicitHtml = '';
+
+                        if (spotify) {
+                            artist = spotify.artist;
+                            album = spotify.album;
+                            track = spotify.song;
+                            coverUrl = spotify.album_art_url;
+                            if (spotify.explicit === true) { 
+                                explicitHtml = `<span class="explicit-badge" title="Explicit">E</span>`;
+                            }
+                        } else {
+                            artist = game.state || "Inconnu";
+                            album = game.assets.large_text || ""; 
+                            track = game.details || "";
+                            let assetId = game.assets.large_image;
+                            if (assetId.startsWith("mp:")) {
+                                coverUrl = `https://media.discordapp.net/${assetId.slice(3)}`;
+                            } else {
+                                coverUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${assetId}.png`;
+                            }
+                        }
+
+                        htmlContent += `
+                            <div class="rp-game-row" style="align-items: flex-start;">
+                                <img src="${coverUrl}" class="rp-game-icon" style="margin-top: 4px;">
+                                <div class="rp-game-info">
+                                    <div class="rp-game-title" style="color: #fff; font-weight: 700;">
+                                        ${track}${explicitHtml}
+                                    </div>
+                                    <div class="rp-game-detail" style="color: #ccc;">${album}</div>
+                                    <div class="rp-game-detail" style="color: #888;">${artist}</div>
+                                </div>
+                            </div>
+                        `;
+                    } 
+                    else if (game) {
+                        let assetId = game.assets.large_image;
+                        let gameImgUrl;
+                        if (assetId.startsWith("mp:")) {
+                            gameImgUrl = `https://media.discordapp.net/${assetId.slice(3)}`;
+                        } else {
+                            gameImgUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${assetId}.png`;
+                        }
+                        const details = game.details || game.state || "";
+                        htmlContent += `
+                            <div class="rp-game-row">
+                                <img src="${gameImgUrl}" class="rp-game-icon">
+                                <div class="rp-game-info">
+                                    <div class="rp-game-title">${game.name}</div>
+                                    <div class="rp-game-detail">${details}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    activityEl.innerHTML = htmlContent;
+                }
+            })
+        .catch(err => console.error("Erreur Lanyard:", err));
+    }
+
+    // =====================================================
+    // PROTECTION EMAIL
+    // =====================================================
+    function openEmail() {
+        const user = "contact";
+        const domain = "stealthylabs.eu";
+        window.location.href = `mailto:${user}@${domain}`;
+    }
+
+    // =====================================================
+    // STATS SERVEUR DISCORD
+    // =====================================================
+    function updateServerStats() {
+        const inviteCode = "7CJbppbFdw"; 
+        const apiUrl = `https://corsproxy.io/?https://discord.com/api/v9/invites/${inviteCode}?with_counts=true`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const guild = data.guild;
+                const onlineCount = data.approximate_presence_count;
+                const totalCount = data.approximate_member_count;
+
+                if (guild) {
+                    document.getElementById('serverName').innerText = guild.name;
+                    if (guild.icon) {
+                        const iconUrl = `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+                        document.getElementById('serverIcon').src = iconUrl;
+                    }
+                }
+
+                const statsEl = document.getElementById('serverStats');
+                const greenDot = `<span style="display:inline-block; width:8px; height:8px; background-color:#23a559; border-radius:50%; margin-right:4px;"></span>`;
+                const greyDot = `<span style="display:inline-block; width:8px; height:8px; background-color:#747f8d; border-radius:50%; margin-left:8px; margin-right:4px;"></span>`;
+
+                if (currentLang === 'fr') {
+                    statsEl.innerHTML = `${greenDot} ${onlineCount} En ligne ${greyDot} ${totalCount} Membres`;
+                } else {
+                    statsEl.innerHTML = `${greenDot} ${onlineCount} Online ${greyDot} ${totalCount} Members`;
+                }
+            })
+            .catch(err => {
+                console.error("Erreur Stats Discord:", err);
+                document.getElementById('serverStats').innerText = currentTranslations.join_server || "Rejoindre le serveur";
+            });
+    }
+
+    // =====================================================
+    // GESTION BANNIÈRE COOKIES (Compatible Mobile)
+    // =====================================================
+    function checkCookieConsent() {
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                // On fait remonter la bannière (0% de décalage)
+                document.getElementById('cookieBanner').style.transform = 'translateY(0)';
+            }, 1000);
+        }
+    }
+
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'true');
+        // On la renvoie vers le bas (100% de sa hauteur)
+        document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
+    }
+
     checkCookieConsent();
-    initRedirections();
 
+    // =====================================================
+    // GESTION MODAL REDIRECTION (Mise à jour)
+    // =====================================================
+    let pendingUrl = "";
+    // On cible les nouveaux ID de votre HTML
+    const overlay = document.getElementById('redirectOverlay'); 
+    const urlDisplay = document.getElementById('redirectUrl');
+    const confirmBtn = document.getElementById('confirmRedirectBtn');
+
+    // Fonction pour fermer (appelée par le bouton Annuler)
+    function closeRedirect() {
+        overlay.classList.remove('show');
+        setTimeout(() => { overlay.style.display = 'none'; }, 300);
+    }
+
+    // Fonction pour ouvrir
+    function openModal(url) {
+        pendingUrl = url;
+        urlDisplay.innerText = url; // Affiche l'URL
+        
+        overlay.style.display = 'flex'; // Prépare l'affichage
+        setTimeout(() => { overlay.classList.add('show'); }, 10); // Lance l'animation
+    }
+
+    // Clic sur "Continuer"
+    if(confirmBtn) {
+        confirmBtn.onclick = () => {
+            window.open(pendingUrl, '_blank');
+            closeRedirect();
+        };
+    }
+
+    // Intercepter tous les liens externes
+    document.addEventListener('DOMContentLoaded', () => {
+        // On cible tous les liens qui ouvrent un nouvel onglet
+        const links = document.querySelectorAll('a[target="_blank"]');
+        
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Si c'est un lien interne (ex: guides), on ignore
+                // (Ici on assume que tout target blank est externe, sinon ajoutez une condition)
+                e.preventDefault(); 
+                openModal(link.href);
+            });
+        });
+    });
+
+    // =====================================================
+    // FERMETURE DU MENU PARAMÈTRES AU CLIC EXTÉRIEUR
+    // =====================================================
+    document.addEventListener('click', function(event) {
+        const settingsPanel = document.getElementById('settingsPanel');
+        // On cible le bouton engrenage (celui qui a le onclick toggleSettings)
+        const settingsBtn = document.querySelector('button[onclick="toggleSettings()"]');
+
+        // Vérification de sécurité (si les éléments existent)
+        if (settingsPanel && settingsBtn) {
+            // Si le menu est ouvert...
+            if (settingsPanel.classList.contains('show')) {
+                // ...et que le clic n'est NI à l'intérieur du menu, NI sur le bouton engrenage
+                if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
+                    // Alors on le ferme
+                    settingsPanel.classList.remove('show');
+                }
+            }
+        }
+    });
+
+    // =====================================================
+    // LECTEUR AUDIO
+    // =====================================================
+    let playlistData = []; // On commence avec une liste vide
+
+    function loadPlaylist() {
+        // On va chercher le fichier JSON
+        fetch('json/playlist.json')
+            .then(response => response.json())
+            .then(data => {
+                playlistData = data; // On remplit la liste avec le fichier
+                initPlaylist();      // ET SEULEMENT MAINTENANT, on lance le lecteur
+            })
+            .catch(err => console.error("Erreur chargement playlist:", err));
+    }
+
+    let currentTrack = 0;
+    let isPlaying = false;
+    const audio = new Audio();
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressFill = document.getElementById("progressFill");
+    const timeCurrent = document.getElementById("timeCurrent");
+    const timeTotal = document.getElementById("timeTotal");
+    const playerTrack = document.getElementById("playerTrack");
+    const playerArtist = document.getElementById("playerArtist");
+    const playerArtwork = document.getElementById("playerArtwork");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const playlistEl = document.getElementById("playlist");
+    const defaultSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
+
+    function initPlaylist() {
+        currentTrack = Math.floor(Math.random() * playlistData.length);
+        
+        let html = '<div class="playlist-header">Playlist</div>';
+        playlistData.forEach((t, i) => {
+            html += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover ? `<img src="${t.cover}">` : defaultSVG}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
+        });
+        playlistEl.innerHTML = html;
+        
+        document.querySelectorAll(".playlist-item").forEach(el => {
+            el.onclick = () => { 
+                currentTrack = parseInt(el.dataset.i); 
+                loadTrack(currentTrack); 
+                playTrack(); 
+            };
+        });
+
+        loadTrack(currentTrack);
+
+        // Tentative d'Autoplay avec Fallback
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                document.querySelector(".icon-play").style.display = "none";
+                document.querySelector(".icon-pause").style.display = "block";
+            })
+            .catch(error => {
+                console.log("Autoplay bloqué. Attente clic...");
+                document.addEventListener('click', function startAudioOnFirstClick() {
+                    playTrack();
+                    document.removeEventListener('click', startAudioOnFirstClick);
+                }, { once: true });
+            });
+        }
+    }
+
+    function loadTrack(i) {
+        const t = playlistData[i];
+        audio.src = t.file;
+        
+        playerTrack.textContent = t.title;
+        // Supprime le data-key pour empêcher la traduction d'écraser le titre
+        playerTrack.removeAttribute('data-key'); 
+
+        playerArtist.textContent = t.artist;
+        playerArtwork.innerHTML = t.cover ? `<img src="${t.cover}">` : defaultSVG;
+        
+        document.querySelectorAll(".playlist-item").forEach((el, index) => {
+            el.classList.toggle("active", index === i);
+            const titleEl = el.querySelector('.playlist-item-title');
+            if (index === i) titleEl.style.color = '#1db954'; else titleEl.style.color = '#ffffff';
+        });
+    }
+
+    function playTrack() { 
+        audio.play().then(() => { isPlaying = true; document.querySelector(".icon-play").style.display = "none"; document.querySelector(".icon-pause").style.display = "block"; }).catch(e => {
+            document.addEventListener('click', function onFirstClick() { playTrack(); document.removeEventListener('click', onFirstClick); }, { once: true });
+        });
+    }
+    function pauseTrack() { audio.pause(); isPlaying = false; document.querySelector(".icon-play").style.display = "block"; document.querySelector(".icon-pause").style.display = "none"; }
+    function nextTrack() { currentTrack = (currentTrack + 1) % playlistData.length; loadTrack(currentTrack); if (isPlaying) playTrack(); }
+    function prevTrack() { if (audio.currentTime > 3) { audio.currentTime = 0; } else { currentTrack = (currentTrack - 1 + playlistData.length) % playlistData.length; loadTrack(currentTrack); } if (isPlaying) playTrack(); }
+    function fmt(s) { if (!isFinite(s)) return "0:00"; return Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0"); }
+
+    playBtn.onclick = () => isPlaying ? pauseTrack() : playTrack();
+    nextBtn.onclick = nextTrack;
+    prevBtn.onclick = prevTrack;
+    volumeSlider.oninput = () => audio.volume = volumeSlider.value / 100;
+    audio.ontimeupdate = () => { if (audio.duration && isFinite(audio.duration)) { progressFill.style.width = (audio.currentTime / audio.duration * 100) + "%"; timeCurrent.textContent = fmt(audio.currentTime); } };
+    audio.onloadedmetadata = () => timeTotal.textContent = fmt(audio.duration);
+    audio.onended = () => { nextTrack(); };
+    progressBar.onclick = e => { if (audio.duration && isFinite(audio.duration)) { const rect = progressBar.getBoundingClientRect(); const percent = (e.clientX - rect.left) / rect.width; audio.currentTime = percent * audio.duration; } };
+
+// =====================================================
+// LANCEMENT INITIAL
+// =====================================================
+    detectLanguage(); 
+    loadPlaylist();   
+    updateDiscordStatus(); 
+    updateClock();
+    updateServerStats();
+    loadSavedFont();
+
+    // Intervalles de mise à jour
     setInterval(updateClock, 1000);
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
-
-    // Gestionnaire Menu Settings
-    document.addEventListener('click', (event) => {
-        const panel = document.getElementById('settingsPanel');
-        const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
-        if (panel && panel.classList.contains('show') && !panel.contains(event.target) && !settingsBtn) {
-            panel.classList.remove('show');
-        }
-    });
-});
-
-// --- UI & CORE ---
-function toggleSettings(event) {
-    if(event) event.stopPropagation();
-    document.getElementById('settingsPanel').classList.toggle('show');
-}
-function toggleSocials() {
-    document.getElementById('socialsWrapper').classList.toggle('open');
-    document.querySelector('.socials-toggle').classList.toggle('active');
-}
-function toggleMusic() {
-    document.getElementById('musicWrapper').classList.toggle('open');
-    document.querySelector('.music-toggle').classList.toggle('active');
-}
-function copyCode() {
-    navigator.clipboard.writeText("stealthylabs");
-    const t = document.getElementById("tooltip");
-    t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2000);
-}
-function openEmail() { window.location.href = `mailto:contact@stealthylabs.eu`; }
-
-// --- LANGUE ---
-function detectLanguage() {
-    const saved = localStorage.getItem('userLang');
-    currentLang = saved ? saved : (navigator.language.startsWith('fr') ? 'fr' : 'en');
-    const sel = document.getElementById('languageSelector');
-    if(sel) sel.value = currentLang;
-    loadLanguageFile(currentLang);
-}
-function loadLanguageFile(lang) {
-    fetch(`${JSON_PATH}${lang}.json`)
-        .then(r => r.json())
-        .then(d => {
-            currentTranslations = d;
-            applyTranslations();
-            updateClock();
-            updateDiscordStatus();
-            const g = document.getElementById('guidesCard');
-            if(g) g.style.display = (lang === 'fr') ? 'flex' : 'none';
-        })
-        .catch(console.error);
-}
-function applyTranslations() {
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const k = el.getAttribute('data-key');
-        if(currentTranslations[k]) {
-            if(k === 'location') el.innerHTML = currentTranslations[k];
-            else el.innerText = currentTranslations[k];
-        }
-    });
-}
-function changeLanguage(l) { currentLang = l; localStorage.setItem('userLang', l); loadLanguageFile(l); }
-function changeFont(f) { document.documentElement.style.setProperty('--main-font', f); localStorage.setItem('userFont', f); }
-function loadSavedFont() {
-    const f = localStorage.getItem('userFont');
-    if(f) { document.documentElement.style.setProperty('--main-font', f); 
-    const sel = document.getElementById('fontSelector'); if(sel) sel.value = f; }
-}
-function updateClock() {
-    const el = document.getElementById('clockDisplay'); if(!el) return;
-    const now = new Date();
-    let opt = { hour: '2-digit', minute: '2-digit', hour12: (currentLang === 'en') };
-    let s = now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'fr-FR', opt);
-    if(currentLang!=='en') s = s.replace(':', ':');
-    el.innerText = s;
-}
-
-// --- REDIRECTION ---
-function initRedirections() {
-    document.querySelectorAll('a[target="_blank"]').forEach(l => {
-        if(!l.classList.contains('no-redirect') && !l.classList.contains('music-platform-btn')) {
-            l.addEventListener('click', e => {
-                if(l.href.startsWith('http')) { e.preventDefault(); openModal(l.href); }
-            });
-        }
-    });
-    const btn = document.getElementById('confirmRedirectBtn');
-    if(btn) btn.onclick = () => { window.open(pendingRedirectUrl, '_blank'); closeRedirect(); };
-}
-function openModal(url) {
-    pendingRedirectUrl = url;
-    document.getElementById('redirectUrl').innerText = url;
-    const o = document.getElementById('redirectOverlay');
-    o.classList.add('show'); o.style.display = 'flex';
-}
-function closeRedirect() {
-    const o = document.getElementById('redirectOverlay');
-    o.classList.remove('show'); setTimeout(() => o.style.display = 'none', 300);
-}
-
-// --- DISCORD & STATS ---
-function updateDiscordStatus() {
-    fetch(`https://api.lanyard.rest/v1/users/1071461037741723648`).then(r=>r.json()).then(data=>{
-        if(!data.success) return;
-        const d = data.data;
-        const status = d.discord_status;
-        document.getElementById('discordAvatar').src = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=128`;
-        document.getElementById('discordStatus').className = 'discord-status-dot ' + status;
-        
-        let txt = currentTranslations[`status_${status}`] || status;
-        let html = `<div style="color:#888; font-size:0.8rem;">${txt}</div>`;
-        
-        if(d.listening_to_spotify && d.spotify) {
-            html += `<div class="rp-game-row" style="align-items:flex-start;"><img src="${d.spotify.album_art_url}" class="rp-game-icon" style="margin-top:4px;"><div class="rp-game-info"><div class="rp-game-title" style="color:#fff;font-weight:700;">${d.spotify.song}</div><div class="rp-game-detail" style="color:#ccc;">${d.spotify.artist}</div></div></div>`;
-        } else if(d.activities.length > 0) {
-            const g = d.activities.find(a => a.type !== 4 && a.name !== "Spotify");
-            if(g && g.assets) {
-                let ico = g.assets.large_image.startsWith("mp:") ? `https://media.discordapp.net/${g.assets.large_image.slice(3)}` : `https://cdn.discordapp.com/app-assets/${g.application_id}/${g.assets.large_image}.png`;
-                html += `<div class="rp-game-row"><img src="${ico}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${g.name}</div><div class="rp-game-detail">${g.details||g.state||""}</div></div></div>`;
-            }
-        }
-        document.getElementById('discordActivity').innerHTML = html;
-        
-        // Live Badge
-        const isLive = d.activities.some(a => a.type===1 || (a.name && a.name.toLowerCase()==='twitch'));
-        const badge = document.getElementById('liveBadge');
-        if(badge) {
-            badge.style.display = isLive ? 'block' : 'none';
-            if(isLive) badge.innerText = currentLang==='fr' ? "EN LIVE" : "LIVE";
-        }
-    }).catch(()=>{});
-}
-function updateServerStats() {
-    fetch(`https://corsproxy.io/?https://discord.com/api/v9/invites/7CJbppbFdw?with_counts=true`).then(r=>r.json()).then(d=>{
-        const el = document.getElementById('serverStats');
-        if(el) {
-            const g = `<span style="display:inline-block;width:8px;height:8px;background:#23a559;border-radius:50%;margin-right:4px;"></span>`;
-            const gr = `<span style="display:inline-block;width:8px;height:8px;background:#747f8d;border-radius:50%;margin-left:8px;margin-right:4px;"></span>`;
-            el.innerHTML = currentLang==='fr' ? `${g} ${d.approximate_presence_count} En ligne ${gr} ${d.approximate_member_count} Membres` : `${g} ${d.approximate_presence_count} Online ${gr} ${d.approximate_member_count} Members`;
-        }
-    }).catch(()=>{});
-}
-function checkCookieConsent() {
-    if(!localStorage.getItem('cookieConsent')) setTimeout(()=>document.getElementById('cookieBanner').style.transform='translateY(0)',1000);
-}
-function acceptCookies() { localStorage.setItem('cookieConsent','true'); document.getElementById('cookieBanner').style.transform='translateY(100%)'; }
-
-// --- MUSIQUE ---
-let playlist=[], cur=0, isPlay=false;
-const aud = new Audio();
-function loadPlaylist() {
-    fetch('json/playlist.json').then(r=>r.json()).then(d=>{
-        playlist=d;
-        initPlayer();
-        // Autoplay Random
-        if(playlist.length>0) {
-            cur = Math.floor(Math.random()*playlist.length);
-            loadTrack(cur);
-            aud.play().then(()=>{ isPlay=true; updIcons(true); })
-               .catch(()=>{ console.log("Autoplay bloqué, clic requis"); document.addEventListener('click', ()=>{ aud.play(); isPlay=true; updIcons(true); }, {once:true}); });
-        }
-    }).catch(console.error);
-}
-function initPlayer() {
-    const el = document.getElementById("playlist");
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
-    let h = '<div class="playlist-header">Playlist</div>';
-    playlist.forEach((t,i) => {
-        h += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover?`<img src="${t.cover}">`:svg}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
-    });
-    el.innerHTML = h;
-    document.querySelectorAll(".playlist-item").forEach(e=>{
-        e.onclick=()=>{ cur=parseInt(e.dataset.i); loadTrack(cur); aud.play().then(()=>{isPlay=true; updIcons(true);}); };
-    });
-    setupControls();
-}
-function setupControls() {
-    document.getElementById("playBtn").onclick=()=>{ isPlay?pause():play(); };
-    document.getElementById("nextBtn").onclick=next;
-    document.getElementById("prevBtn").onclick=prev;
-    document.getElementById("volumeSlider").oninput=e=>aud.volume=e.target.value/100;
-    const bar = document.getElementById("progressBar");
-    bar.onclick=e=>{ if(aud.duration) aud.currentTime=(e.clientX-bar.getBoundingClientRect().left)/bar.offsetWidth*aud.duration; };
-    aud.ontimeupdate=updProg; aud.onended=next;
-}
-function loadTrack(i) {
-    aud.src=playlist[i].file;
-    document.getElementById("playerTrack").innerText=playlist[i].title;
-    document.getElementById("playerArtist").innerText=playlist[i].artist;
-    document.querySelectorAll(".playlist-item").forEach((e,idx)=>{
-        e.classList.toggle("active", idx===i);
-        e.querySelector('.playlist-item-title').style.color = idx===i ? '#1db954' : '#fff';
-    });
-}
-function play(){ aud.play().then(()=>{isPlay=true; updIcons(true);}); }
-function pause(){ aud.pause(); isPlay=false; updIcons(false); }
-function updIcons(p){ 
-    document.querySelector(".icon-play").style.display=p?"none":"block";
-    document.querySelector(".icon-pause").style.display=p?"block":"none";
-}
-function next(){ cur=(cur+1)%playlist.length; loadTrack(cur); if(isPlay) play(); }
-function prev(){ if(aud.currentTime>3) aud.currentTime=0; else cur=(cur-1+playlist.length)%playlist.length; loadTrack(cur); if(isPlay) play(); }
-function updProg(){
-    if(aud.duration){
-        document.getElementById("progressFill").style.width=(aud.currentTime/aud.duration*100)+"%";
-        document.getElementById("timeCurrent").innerText=fmt(aud.currentTime);
-        document.getElementById("timeTotal").innerText=fmt(aud.duration);
-    }
-}
-function fmt(s){ return Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0"); }
-
-// EXPORTS
-window.toggleSettings = toggleSettings;
-window.toggleSocials = toggleSocials;
-window.toggleMusic = toggleMusic;
-window.copyCode = copyCode;
-window.changeLanguage = changeLanguage;
-window.changeFont = changeFont;
-window.closeRedirect = closeRedirect;
-window.openEmail = openEmail;
-window.acceptCookies = acceptCookies;
