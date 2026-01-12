@@ -6,35 +6,30 @@ const JSON_PATH = 'translations/'; // Chemin vers les fichiers de langue
 let currentLang = 'en';
 let currentTranslations = {};
 
-// --- INITIALISATION ---
+// --- INITIALISATION IMMÉDIATE ---
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("🚀 Script Social chargé.");
+    console.log("✅ Script Social Démarré");
 
-    // 1. Initialiser les préférences
-    detectLanguage();
+    // 1. Lancement des modules
+    detectAndApplyLanguage();
     loadSavedFont();
-
-    // 2. Lancer les modules
     updateClock();
     updateDiscordStatus();
     updateServerStats();
-    loadPlaylist();     // Lance la musique
-    checkCookieConsent();
-    initRedirections(); // Active la pop-up sur les liens
+    loadPlaylist(); // Lancement Musique
+    initRedirections(); // Lancement Redirections
 
-    // 3. Boucles de mise à jour (Temps réel)
+    // 2. Boucles
     setInterval(updateClock, 1000);
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
 
-    // 4. Gestionnaire Fermeture Menu (Clic extérieur)
+    // 3. Gestionnaire Clic Global (Pour fermer le menu)
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        // On cherche le bouton, peu importe s'il s'appelle settings-btn ou top-icon-btn
         const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
         
         if (panel && panel.classList.contains('show')) {
-            // Si on ne clique ni dans le panneau ni sur le bouton, on ferme
             if (!panel.contains(event.target) && !settingsBtn) {
                 panel.classList.remove('show');
             }
@@ -115,8 +110,7 @@ function loadSavedFont() {
 // =====================================================
 
 function toggleSettings(event) {
-    // Empêche le clic de fermer le menu immédiatement
-    if (event) event.stopPropagation();
+    if (event) event.stopPropagation(); // Empêche le menu de se refermer
     document.getElementById('settingsPanel').classList.toggle('show');
 }
 
@@ -141,17 +135,13 @@ function openEmail() {
     window.location.href = `mailto:contact@stealthylabs.eu`;
 }
 
-// --- REDIRECTIONS (CORRIGÉ) ---
-let pendingRedirectUrl = "";
-
+// --- REDIRECTIONS ---
 function initRedirections() {
     const links = document.querySelectorAll('a[target="_blank"]');
-    
     links.forEach(link => {
-        // On ignore les boutons de musique et liens internes
-        if (!link.classList.contains('music-platform-btn') && !link.classList.contains('no-redirect')) {
+        // On exclut les boutons de musique et internes
+        if (!link.classList.contains('no-redirect') && !link.classList.contains('music-platform-btn')) {
             link.addEventListener('click', (e) => {
-                // Si c'est un lien http/https
                 if (link.href.startsWith('http')) {
                     e.preventDefault(); 
                     openModal(link.href);
@@ -160,11 +150,10 @@ function initRedirections() {
         }
     });
 
-    // Configuration du bouton confirmer
     const confirmBtn = document.getElementById('confirmRedirectBtn');
-    if(confirmBtn) {
+    if (confirmBtn) {
         confirmBtn.onclick = () => {
-            if(pendingRedirectUrl) {
+            if (pendingRedirectUrl) {
                 window.open(pendingRedirectUrl, '_blank');
                 closeRedirect();
             }
@@ -177,22 +166,18 @@ function openModal(url) {
     const overlay = document.getElementById('redirectOverlay');
     const urlDisplay = document.getElementById('redirectUrl');
     
-    if(overlay && urlDisplay) {
+    if (overlay && urlDisplay) {
         urlDisplay.innerText = url;
         overlay.classList.add('show');
         overlay.style.display = 'flex';
     } else {
-        // Fallback si la modal bug
-        window.open(url, '_blank');
+        window.open(url, '_blank'); // Fallback
     }
 }
 
 function closeRedirect() {
     const overlay = document.getElementById('redirectOverlay');
-    if(overlay) {
-        overlay.classList.remove('show');
-        setTimeout(() => { overlay.style.display = 'none'; }, 300);
-    }
+    if (overlay) overlay.classList.remove('show');
 }
 
 // =====================================================
@@ -365,13 +350,15 @@ function setupPlayerControls() {
 function loadTrack(i) {
     const t = playlistData[i];
     audio.src = t.file;
-    document.getElementById("playerTrack").textContent = t.title;
-    document.getElementById("playerTrack").removeAttribute('data-key'); // Stop traduction
-    document.getElementById("playerArtist").textContent = t.artist;
     
+    document.getElementById("playerTrack").innerText = t.title;
+    document.getElementById("playerArtist").innerText = t.artist;
+    
+    // Mise à jour visuelle playlist
     document.querySelectorAll(".playlist-item").forEach((el, index) => {
         el.classList.toggle("active", index === i);
-        el.querySelector('.playlist-item-title').style.color = (index === i) ? '#1db954' : '#ffffff';
+        const titleEl = el.querySelector('.playlist-item-title');
+        if(titleEl) titleEl.style.color = (index === i) ? '#1db954' : '#ffffff';
     });
 }
 
@@ -397,13 +384,16 @@ function updateProgress() {
 }
 function fmt(s) { return Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0"); }
 
-// --- EXPORTS ---
+// EXPORTS
 window.toggleSettings = toggleSettings;
 window.toggleSocials = toggleSocials;
 window.toggleMusic = toggleMusic;
 window.copyCode = copyCode;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
-window.acceptCookies = acceptCookies;
-window.openEmail = openEmail;
 window.closeRedirect = closeRedirect;
+window.openEmail = openEmail;
+window.acceptCookies = function() {
+    localStorage.setItem('cookieConsent', 'true');
+    document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
+};
