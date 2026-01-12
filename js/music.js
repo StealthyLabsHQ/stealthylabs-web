@@ -1,28 +1,10 @@
-// =====================================================
-// GESTION MUSIQUE & INTERFACE SOCIALE
-// =====================================================
-
 document.addEventListener('DOMContentLoaded', () => {
     loadPlaylist();
     
-    // Initialisation des toggles (pour les boites Social & Musique)
+    // Toggle du lecteur
     window.toggleMusic = function() {
         document.getElementById('musicWrapper').classList.toggle('open');
         document.querySelector('.music-toggle').classList.toggle('active');
-    };
-
-    window.toggleSocials = function() {
-        document.getElementById('socialsWrapper').classList.toggle('open');
-        document.querySelector('.socials-toggle').classList.toggle('active');
-    };
-
-    window.copyCode = function() {
-        navigator.clipboard.writeText("stealthylabs");
-        const tooltip = document.getElementById("tooltip");
-        if(tooltip) {
-            tooltip.classList.add("show");
-            setTimeout(() => tooltip.classList.remove("show"), 2000);
-        }
     };
 });
 
@@ -32,47 +14,52 @@ let isPlaying = false;
 const audio = new Audio();
 
 function loadPlaylist() {
-    fetch('json/playlist.json')
+    fetch('json/playlist.json') // Vérifie bien que ce fichier existe !
         .then(response => response.json())
         .then(data => {
             playlistData = data; 
-            initPlaylistUI();  
+            initPlaylistUI();
+            
+            // --- LANCEMENT ALÉATOIRE & AUTOPLAY ---
+            // 1. Choisir un index au hasard
+            currentTrack = Math.floor(Math.random() * playlistData.length);
+            
+            // 2. Charger la musique
+            loadTrack(currentTrack);
+            
+            // 3. Tenter de lancer la lecture (Autoplay)
+            // Note : Les navigateurs peuvent bloquer ça si l'utilisateur n'a pas interagi.
+            playTrack(); 
         })
-        .catch(err => console.error("Erreur chargement playlist:", err));
+        .catch(err => console.error("Erreur playlist:", err));
 }
 
 function initPlaylistUI() {
     const playlistEl = document.getElementById("playlist");
     const defaultSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
     
-    if (!playlistEl) return;
+    if (playlistEl) {
+        let html = '<div class="playlist-header">Playlist</div>';
+        playlistData.forEach((t, i) => {
+            html += `<div class="playlist-item" data-i="${i}">
+                        <div class="playlist-item-cover">${t.cover ? `<img src="${t.cover}">` : defaultSVG}</div>
+                        <div class="playlist-item-info">
+                            <div class="playlist-item-title">${t.title}</div>
+                            <div class="playlist-item-artist">${t.artist}</div>
+                        </div>
+                     </div>`;
+        });
+        playlistEl.innerHTML = html;
+        
+        document.querySelectorAll(".playlist-item").forEach(el => {
+            el.onclick = () => { 
+                currentTrack = parseInt(el.dataset.i); 
+                loadTrack(currentTrack); 
+                playTrack(); 
+            };
+        });
+    }
 
-    // Création de la liste
-    let html = '<div class="playlist-header">Playlist</div>';
-    playlistData.forEach((t, i) => {
-        html += `<div class="playlist-item" data-i="${i}">
-                    <div class="playlist-item-cover">${t.cover ? `<img src="${t.cover}">` : defaultSVG}</div>
-                    <div class="playlist-item-info">
-                        <div class="playlist-item-title">${t.title}</div>
-                        <div class="playlist-item-artist">${t.artist}</div>
-                    </div>
-                 </div>`;
-    });
-    playlistEl.innerHTML = html;
-    
-    // Clics sur la playlist
-    document.querySelectorAll(".playlist-item").forEach(el => {
-        el.onclick = () => { 
-            currentTrack = parseInt(el.dataset.i); 
-            loadTrack(currentTrack); 
-            playTrack(); 
-        };
-    });
-
-    // Chargement initial
-    loadTrack(Math.floor(Math.random() * playlistData.length));
-    
-    // Events Player
     setupPlayerControls();
 }
 
@@ -102,6 +89,7 @@ function setupPlayerControls() {
 }
 
 function loadTrack(i) {
+    if(!playlistData[i]) return;
     const t = playlistData[i];
     audio.src = t.file;
     
@@ -125,13 +113,22 @@ function loadTrack(i) {
 }
 
 function playTrack() { 
-    audio.play().then(() => { 
-        isPlaying = true; 
-        updatePlayIcons(true);
-    }).catch(e => {
-        // Autoplay bloqué : on attend un clic
-        console.log("Autoplay bloqué");
-    });
+    // Promesse de lecture pour gérer les blocages navigateurs
+    var playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            // Lecture commencée !
+            isPlaying = true; 
+            updatePlayIcons(true);
+        })
+        .catch(error => {
+            // Lecture bloquée par le navigateur
+            console.log("Autoplay empêché par le navigateur. Clic requis.");
+            isPlaying = false;
+            updatePlayIcons(false);
+        });
+    }
 }
 
 function pauseTrack() { 
@@ -150,7 +147,7 @@ function updatePlayIcons(playing) {
 function nextTrack() { 
     currentTrack = (currentTrack + 1) % playlistData.length; 
     loadTrack(currentTrack); 
-    if (isPlaying) playTrack(); 
+    playTrack(); 
 }
 
 function prevTrack() { 
@@ -160,7 +157,7 @@ function prevTrack() {
         currentTrack = (currentTrack - 1 + playlistData.length) % playlistData.length; 
         loadTrack(currentTrack); 
     } 
-    if (isPlaying) playTrack(); 
+    playTrack(); 
 }
 
 function updateProgress() {
