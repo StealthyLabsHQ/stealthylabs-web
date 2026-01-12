@@ -1,88 +1,71 @@
 // =====================================================
-// SCRIPT ACCUEIL (index.html uniquement)
+// SCRIPT ACCUEIL (Léger : Heure, Langue, Settings)
 // =====================================================
 
-// --- CONFIGURATION ---
-// Si tes fichiers .json sont dans un dossier "translations", garde "translations/"
-// S'ils sont à côté de index.html, mets juste ""
-const JSON_PATH = 'translations/'; 
-
+const JSON_PATH = 'translations/';
 let currentLang = 'fr';
 let currentTranslations = {};
 
-// --- INITIALISATION IMMÉDIATE ---
-(function init() {
-    // 1. Lancer l'horloge tout de suite (évite le --:--)
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("📍 Script Accueil Chargé");
+
+    // 1. Initialisation
+    detectLanguage();
+    loadSavedFont();
     updateClock();
     setInterval(updateClock, 1000);
 
-    // 2. Détecter la langue
-    detectAndApplyLanguage();
-
-    // 3. Charger la police
-    loadSavedFont();
-
-    // 4. Lancer l'effet machine à écrire (Titre)
-    initTypewriter();
-
-    // 5. Gestionnaire pour fermer le menu si on clique ailleurs
+    // 2. Gestionnaire Menu Settings (Spécifique Accueil)
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        const btn = document.querySelector('.settings-btn'); // Bouton spécifique à l'accueil
+        const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
         
-        if (panel && btn && panel.classList.contains('show')) {
-            if (!panel.contains(event.target) && !btn.contains(event.target)) {
+        if (panel && panel.classList.contains('show')) {
+            if (!panel.contains(event.target) && !settingsBtn) {
                 panel.classList.remove('show');
             }
         }
     });
-})();
+});
 
-// --- GESTION LANGUE ---
-function detectAndApplyLanguage() {
+// --- FONCTIONS CORE ---
+
+function toggleSettings(event) {
+    if(event) event.stopPropagation();
+    document.getElementById('settingsPanel').classList.toggle('show');
+}
+
+function detectLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
-
-    // Priorité : Sauvegarde > Navigateur > Français
-    if (savedLang) {
-        currentLang = savedLang;
-    } else {
-        currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
-    }
-
-    // Mettre à jour le menu déroulant
-    const langSelect = document.getElementById('languageSelector');
-    if(langSelect) langSelect.value = currentLang;
-
+    // On garde la mémoire partagée, c'est mieux pour l'utilisateur
+    currentLang = savedLang ? savedLang : (browserLang.startsWith('fr') ? 'fr' : 'en');
+    
+    const selector = document.getElementById('languageSelector');
+    if(selector) selector.value = currentLang;
+    
     loadLanguageFile(currentLang);
 }
 
 function loadLanguageFile(lang) {
     fetch(`${JSON_PATH}${lang}.json`)
-        .then(response => {
-            if (!response.ok) throw new Error(`Traduction introuvable: ${lang}`);
-            return response.json();
+        .then(res => {
+            if(!res.ok) throw new Error("Fichier langue introuvable");
+            return res.json();
         })
         .then(data => {
-            currentTranslations = data; 
+            currentTranslations = data;
             applyTranslations();
-            updateClock(); // Met à jour le format (12h/24h)
+            updateClock();
         })
-        .catch(err => {
-            console.error("Erreur chargement langue:", err);
-            // Si ça plante (ex: fichier introuvable), on force le sélecteur sur FR pour être cohérent
-            if(document.getElementById('languageSelector')) {
-                document.getElementById('languageSelector').value = 'fr';
-            }
-        });
+        .catch(console.error);
 }
 
 function applyTranslations() {
-    if (!currentTranslations) return;
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            elem.innerHTML = currentTranslations[key];
+            elem.innerHTML = currentTranslations[key]; // innerHTML pour le gras/liens
         }
     });
 }
@@ -93,63 +76,31 @@ function changeLanguage(lang) {
     loadLanguageFile(lang);
 }
 
-// --- FONCTIONS UI ---
-function toggleSettings() {
-    const panel = document.getElementById('settingsPanel');
-    if (panel) panel.classList.toggle('show');
-}
-
-function changeFont(fontFamily) {
-    document.documentElement.style.setProperty('--main-font', fontFamily);
-    localStorage.setItem('userFont', fontFamily);
+function changeFont(font) {
+    document.documentElement.style.setProperty('--main-font', font);
+    localStorage.setItem('userFont', font);
 }
 
 function loadSavedFont() {
-    const savedFont = localStorage.getItem('userFont');
-    if (savedFont) {
-        document.documentElement.style.setProperty('--main-font', savedFont);
-        const fontSel = document.getElementById('fontSelector');
-        if (fontSel) fontSel.value = savedFont;
+    const saved = localStorage.getItem('userFont');
+    if (saved) {
+        document.documentElement.style.setProperty('--main-font', saved);
+        const sel = document.getElementById('fontSelector');
+        if(sel) sel.value = saved;
     }
 }
 
 function updateClock() {
     const clockEl = document.getElementById('clockDisplay');
     if (!clockEl) return;
-
     const now = new Date();
-    let options = { hour: '2-digit', minute: '2-digit' };
-    
-    // Anglais = AM/PM, Français = 24h
-    if (currentLang === 'en') {
-        options.hour12 = true;
-        clockEl.innerText = now.toLocaleTimeString('en-US', options);
-    } else {
-        options.hour12 = false;
-        clockEl.innerText = now.toLocaleTimeString('fr-FR', options).replace(':', ':'); 
-    }
+    let options = { hour: '2-digit', minute: '2-digit', hour12: (currentLang === 'en') };
+    let timeStr = now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'fr-FR', options);
+    if(currentLang !== 'en') timeStr = timeStr.replace(':', ':');
+    clockEl.innerText = timeStr;
 }
 
-function initTypewriter() {
-    const targetTitle = "StealthyLabs | Content Creator"; 
-    let index = 0;
-    document.title = "_";
-
-    function type() {
-        if (index < targetTitle.length) {
-            document.title = targetTitle.substring(0, index + 1) + "_";
-            index++;
-            setTimeout(type, 200);
-        } else {
-            setTimeout(() => { document.title = targetTitle + " "; }, 500);
-            setTimeout(() => { document.title = targetTitle + "_"; }, 1000);
-            setTimeout(() => { document.title = targetTitle; }, 1500);
-        }
-    }
-    setTimeout(type, 500);
-}
-
-// Exports pour le HTML
+// Exports
 window.toggleSettings = toggleSettings;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;

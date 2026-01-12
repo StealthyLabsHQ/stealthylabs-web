@@ -1,388 +1,239 @@
 // =====================================================
-// SCRIPT SOCIAL TOUT-EN-UN (Musique + Core + UI)
+// SCRIPT SOCIAL (Complet : Musique, Discord, Redir)
 // =====================================================
 
-const JSON_PATH = 'translations/'; // Chemin vers les fichiers de langue
-let currentLang = 'en';
+const JSON_PATH = 'translations/'; // Chemin vide (racine)
+let currentLang = 'fr';
 let currentTranslations = {};
+let pendingRedirectUrl = '';
 
-// --- INITIALISATION IMMÉDIATE ---
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("✅ Script Social Démarré");
+    console.log("🎮 Script Social Chargé");
 
-    // 1. Lancement des modules
-    detectAndApplyLanguage();
+    detectLanguage();
     loadSavedFont();
     updateClock();
+    
+    // Modules spécifiques Social
+    loadPlaylist();
     updateDiscordStatus();
     updateServerStats();
-    loadPlaylist(); // Lancement Musique
-    initRedirections(); // Lancement Redirections
+    checkCookieConsent();
+    initRedirections();
 
-    // 2. Boucles
     setInterval(updateClock, 1000);
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
 
-    // 3. Gestionnaire Clic Global (Pour fermer le menu)
+    // Gestionnaire Menu Settings
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
         const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
-        
-        if (panel && panel.classList.contains('show')) {
-            if (!panel.contains(event.target) && !settingsBtn) {
-                panel.classList.remove('show');
-            }
+        if (panel && panel.classList.contains('show') && !panel.contains(event.target) && !settingsBtn) {
+            panel.classList.remove('show');
         }
     });
 });
 
-// =====================================================
-// 1. GESTION LANGUES & POLICE
-// =====================================================
-
-function detectLanguage() {
-    const savedLang = localStorage.getItem('userLang');
-    if (savedLang) {
-        currentLang = savedLang;
-    } else {
-        const userLang = navigator.language || navigator.userLanguage;
-        currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
-    }
-
-    const langSelect = document.getElementById('languageSelector');
-    if(langSelect) langSelect.value = currentLang;
-
-    loadLanguageFile(currentLang);
-}
-
-function loadLanguageFile(lang) {
-    fetch(`${JSON_PATH}${lang}.json`)
-        .then(res => {
-            if(!res.ok) throw new Error("Fichier langue introuvable");
-            return res.json();
-        })
-        .then(data => {
-            currentTranslations = data; 
-            applyTranslations();     
-            updateClock();
-            updateDiscordStatus();
-            
-            // Gestion carte Guides (FR uniquement)
-            const guidesCard = document.getElementById('guidesCard');
-            if (guidesCard) guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
-        })
-        .catch(console.error);
-}
-
-function applyTranslations() {
-    document.querySelectorAll('[data-key]').forEach(elem => {
-        const key = elem.getAttribute('data-key');
-        if (currentTranslations[key]) {
-            if (key === 'location') elem.innerHTML = currentTranslations[key];
-            else elem.innerText = currentTranslations[key];
-        }
-    });
-}
-
-function changeLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem('userLang', lang);
-    loadLanguageFile(lang);
-}
-
-function changeFont(fontFamily) {
-    document.documentElement.style.setProperty('--main-font', fontFamily);
-    localStorage.setItem('userFont', fontFamily);
-}
-
-function loadSavedFont() {
-    const savedFont = localStorage.getItem('userFont');
-    if (savedFont) {
-        document.documentElement.style.setProperty('--main-font', savedFont);
-        const selector = document.getElementById('fontSelector');
-        if(selector) selector.value = savedFont;
-    }
-}
-
-// =====================================================
-// 2. FONCTIONS UI & REDIRECTION
-// =====================================================
-
+// --- UI & CORE ---
 function toggleSettings(event) {
-    if (event) event.stopPropagation(); // Empêche le menu de se refermer
+    if(event) event.stopPropagation();
     document.getElementById('settingsPanel').classList.toggle('show');
 }
-
 function toggleSocials() {
     document.getElementById('socialsWrapper').classList.toggle('open');
     document.querySelector('.socials-toggle').classList.toggle('active');
 }
-
 function toggleMusic() {
     document.getElementById('musicWrapper').classList.toggle('open');
     document.querySelector('.music-toggle').classList.toggle('active');
 }
-
 function copyCode() {
     navigator.clipboard.writeText("stealthylabs");
-    const tooltip = document.getElementById("tooltip");
-    tooltip.classList.add("show");
-    setTimeout(() => tooltip.classList.remove("show"), 2000);
+    const t = document.getElementById("tooltip");
+    t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2000);
+}
+function openEmail() { window.location.href = `mailto:contact@stealthylabs.eu`; }
+
+// --- LANGUE ---
+function detectLanguage() {
+    const saved = localStorage.getItem('userLang');
+    currentLang = saved ? saved : (navigator.language.startsWith('fr') ? 'fr' : 'en');
+    const sel = document.getElementById('languageSelector');
+    if(sel) sel.value = currentLang;
+    loadLanguageFile(currentLang);
+}
+function loadLanguageFile(lang) {
+    fetch(`${JSON_PATH}${lang}.json`)
+        .then(r => r.json())
+        .then(d => {
+            currentTranslations = d;
+            applyTranslations();
+            updateClock();
+            updateDiscordStatus();
+            const g = document.getElementById('guidesCard');
+            if(g) g.style.display = (lang === 'fr') ? 'flex' : 'none';
+        })
+        .catch(console.error);
+}
+function applyTranslations() {
+    document.querySelectorAll('[data-key]').forEach(el => {
+        const k = el.getAttribute('data-key');
+        if(currentTranslations[k]) {
+            if(k === 'location') el.innerHTML = currentTranslations[k];
+            else el.innerText = currentTranslations[k];
+        }
+    });
+}
+function changeLanguage(l) { currentLang = l; localStorage.setItem('userLang', l); loadLanguageFile(l); }
+function changeFont(f) { document.documentElement.style.setProperty('--main-font', f); localStorage.setItem('userFont', f); }
+function loadSavedFont() {
+    const f = localStorage.getItem('userFont');
+    if(f) { document.documentElement.style.setProperty('--main-font', f); 
+    const sel = document.getElementById('fontSelector'); if(sel) sel.value = f; }
+}
+function updateClock() {
+    const el = document.getElementById('clockDisplay'); if(!el) return;
+    const now = new Date();
+    let opt = { hour: '2-digit', minute: '2-digit', hour12: (currentLang === 'en') };
+    let s = now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'fr-FR', opt);
+    if(currentLang!=='en') s = s.replace(':', ':');
+    el.innerText = s;
 }
 
-function openEmail() {
-    window.location.href = `mailto:contact@stealthylabs.eu`;
-}
-
-// --- REDIRECTIONS ---
+// --- REDIRECTION ---
 function initRedirections() {
-    const links = document.querySelectorAll('a[target="_blank"]');
-    links.forEach(link => {
-        // On exclut les boutons de musique et internes
-        if (!link.classList.contains('no-redirect') && !link.classList.contains('music-platform-btn')) {
-            link.addEventListener('click', (e) => {
-                if (link.href.startsWith('http')) {
-                    e.preventDefault(); 
-                    openModal(link.href);
-                }
+    document.querySelectorAll('a[target="_blank"]').forEach(l => {
+        if(!l.classList.contains('no-redirect') && !l.classList.contains('music-platform-btn')) {
+            l.addEventListener('click', e => {
+                if(l.href.startsWith('http')) { e.preventDefault(); openModal(l.href); }
             });
         }
     });
-
-    const confirmBtn = document.getElementById('confirmRedirectBtn');
-    if (confirmBtn) {
-        confirmBtn.onclick = () => {
-            if (pendingRedirectUrl) {
-                window.open(pendingRedirectUrl, '_blank');
-                closeRedirect();
-            }
-        };
-    }
+    const btn = document.getElementById('confirmRedirectBtn');
+    if(btn) btn.onclick = () => { window.open(pendingRedirectUrl, '_blank'); closeRedirect(); };
 }
-
 function openModal(url) {
     pendingRedirectUrl = url;
-    const overlay = document.getElementById('redirectOverlay');
-    const urlDisplay = document.getElementById('redirectUrl');
-    
-    if (overlay && urlDisplay) {
-        urlDisplay.innerText = url;
-        overlay.classList.add('show');
-        overlay.style.display = 'flex';
-    } else {
-        window.open(url, '_blank'); // Fallback
-    }
+    document.getElementById('redirectUrl').innerText = url;
+    const o = document.getElementById('redirectOverlay');
+    o.classList.add('show'); o.style.display = 'flex';
 }
-
 function closeRedirect() {
-    const overlay = document.getElementById('redirectOverlay');
-    if (overlay) overlay.classList.remove('show');
+    const o = document.getElementById('redirectOverlay');
+    o.classList.remove('show'); setTimeout(() => o.style.display = 'none', 300);
 }
 
-// =====================================================
-// 3. MODULES (Horloge, Discord, Cookies)
-// =====================================================
-
-function updateClock() {
-    const clockEl = document.getElementById('clockDisplay');
-    if (!clockEl) return;
-    const now = new Date();
-    let options = { hour: '2-digit', minute: '2-digit', hour12: (currentLang === 'en') };
-    let timeStr = now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'fr-FR', options);
-    if(currentLang !== 'en') timeStr = timeStr.replace(':', ':');
-    clockEl.innerText = timeStr;
-}
-
+// --- DISCORD & STATS ---
 function updateDiscordStatus() {
-    const userId = "1071461037741723648"; 
-    fetch(`https://api.lanyard.rest/v1/users/${userId}`)
-        .then(res => res.json())
-        .then(data => {
-            if (!data.success) return;
-            const d = data.data;
-            const user = d.discord_user;
-            const status = d.discord_status;
-            
-            // Avatar & Statut
-            document.getElementById('discordAvatar').src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
-            document.getElementById('discordStatus').className = 'discord-status-dot ' + status;
-
-            // Texte statut traduit
-            let statusKey = `status_${status}`;
-            let statusText = currentTranslations[statusKey] || status;
-            
-            // Construction HTML
-            let html = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
-
-            // Spotify / Jeu
-            if (d.listening_to_spotify && d.spotify) {
-                const s = d.spotify;
-                html += `<div class="rp-game-row" style="align-items: flex-start;">
-                    <img src="${s.album_art_url}" class="rp-game-icon" style="margin-top: 4px;">
-                    <div class="rp-game-info">
-                        <div class="rp-game-title" style="color: #fff; font-weight: 700;">${s.song}</div>
-                        <div class="rp-game-detail" style="color: #ccc;">${s.artist}</div>
-                    </div>
-                </div>`;
-            } else if (d.activities && d.activities.length > 0) {
-                const game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify");
-                if (game && game.assets) {
-                    let icon = game.assets.large_image.startsWith("mp:") 
-                        ? `https://media.discordapp.net/${game.assets.large_image.slice(3)}` 
-                        : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
-                    html += `<div class="rp-game-row"><img src="${icon}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${game.name}</div><div class="rp-game-detail">${game.details || game.state || ""}</div></div></div>`;
-                }
-            }
-            document.getElementById('discordActivity').innerHTML = html;
-        })
-        .catch(() => {});
-}
-
-function updateServerStats() {
-    const inviteCode = "7CJbppbFdw"; 
-    fetch(`https://corsproxy.io/?https://discord.com/api/v9/invites/${inviteCode}?with_counts=true`)
-        .then(res => res.json())
-        .then(data => {
-            const statsEl = document.getElementById('serverStats');
-            const green = `<span style="display:inline-block; width:8px; height:8px; background-color:#23a559; border-radius:50%; margin-right:4px;"></span>`;
-            const grey = `<span style="display:inline-block; width:8px; height:8px; background-color:#747f8d; border-radius:50%; margin-left:8px; margin-right:4px;"></span>`;
-            
-            if (currentLang === 'fr') statsEl.innerHTML = `${green} ${data.approximate_presence_count} En ligne ${grey} ${data.approximate_member_count} Membres`;
-            else statsEl.innerHTML = `${green} ${data.approximate_presence_count} Online ${grey} ${data.approximate_member_count} Members`;
-        })
-        .catch(() => {});
-}
-
-function checkCookieConsent() {
-    if (!localStorage.getItem('cookieConsent')) {
-        setTimeout(() => { document.getElementById('cookieBanner').style.transform = 'translateY(0)'; }, 1000);
-    }
-}
-function acceptCookies() {
-    localStorage.setItem('cookieConsent', 'true');
-    document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
-}
-
-// =====================================================
-// 4. LECTEUR MUSIQUE (INTÉGRÉ & ALÉATOIRE)
-// =====================================================
-let playlistData = [];
-let currentTrack = 0;
-let isPlaying = false;
-const audio = new Audio();
-
-function loadPlaylist() {
-    fetch('json/playlist.json')
-        .then(res => res.json())
-        .then(data => {
-            playlistData = data;
-            initPlaylist();
-        })
-        .catch(err => console.error("Erreur Playlist:", err));
-}
-
-function initPlaylist() {
-    const playlistEl = document.getElementById("playlist");
-    const defaultSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
-    
-    // Génération HTML
-    let html = '<div class="playlist-header">Playlist</div>';
-    playlistData.forEach((t, i) => {
-        html += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover ? `<img src="${t.cover}">` : defaultSVG}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
-    });
-    playlistEl.innerHTML = html;
-    
-    // Events Clic Playlist
-    document.querySelectorAll(".playlist-item").forEach(el => {
-        el.onclick = () => { 
-            currentTrack = parseInt(el.dataset.i); 
-            loadTrack(currentTrack); 
-            playTrack(); 
-        };
-    });
-
-    // --- LANCEMENT ALÉATOIRE ---
-    if(playlistData.length > 0) {
-        currentTrack = Math.floor(Math.random() * playlistData.length);
-        loadTrack(currentTrack);
+    fetch(`https://api.lanyard.rest/v1/users/1071461037741723648`).then(r=>r.json()).then(data=>{
+        if(!data.success) return;
+        const d = data.data;
+        const status = d.discord_status;
+        document.getElementById('discordAvatar').src = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=128`;
+        document.getElementById('discordStatus').className = 'discord-status-dot ' + status;
         
-        // --- AUTOPLAY ---
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                isPlaying = true;
-                updatePlayIcons(true);
-            }).catch(() => {
-                console.log("Autoplay bloqué. Clic requis.");
-                // Si bloqué, on attend le premier clic pour lancer
-                document.addEventListener('click', function startAudio() {
-                    playTrack();
-                    document.removeEventListener('click', startAudio);
-                }, { once: true });
-            });
+        let txt = currentTranslations[`status_${status}`] || status;
+        let html = `<div style="color:#888; font-size:0.8rem;">${txt}</div>`;
+        
+        if(d.listening_to_spotify && d.spotify) {
+            html += `<div class="rp-game-row" style="align-items:flex-start;"><img src="${d.spotify.album_art_url}" class="rp-game-icon" style="margin-top:4px;"><div class="rp-game-info"><div class="rp-game-title" style="color:#fff;font-weight:700;">${d.spotify.song}</div><div class="rp-game-detail" style="color:#ccc;">${d.spotify.artist}</div></div></div>`;
+        } else if(d.activities.length > 0) {
+            const g = d.activities.find(a => a.type !== 4 && a.name !== "Spotify");
+            if(g && g.assets) {
+                let ico = g.assets.large_image.startsWith("mp:") ? `https://media.discordapp.net/${g.assets.large_image.slice(3)}` : `https://cdn.discordapp.com/app-assets/${g.application_id}/${g.assets.large_image}.png`;
+                html += `<div class="rp-game-row"><img src="${ico}" class="rp-game-icon"><div class="rp-game-info"><div class="rp-game-title">${g.name}</div><div class="rp-game-detail">${g.details||g.state||""}</div></div></div>`;
+            }
         }
-    }
-    
-    setupPlayerControls();
+        document.getElementById('discordActivity').innerHTML = html;
+        
+        // Live Badge
+        const isLive = d.activities.some(a => a.type===1 || (a.name && a.name.toLowerCase()==='twitch'));
+        const badge = document.getElementById('liveBadge');
+        if(badge) {
+            badge.style.display = isLive ? 'block' : 'none';
+            if(isLive) badge.innerText = currentLang==='fr' ? "EN LIVE" : "LIVE";
+        }
+    }).catch(()=>{});
 }
-
-function setupPlayerControls() {
-    document.getElementById("playBtn").onclick = () => isPlaying ? pauseTrack() : playTrack();
-    document.getElementById("nextBtn").onclick = nextTrack;
-    document.getElementById("prevBtn").onclick = prevTrack;
-    document.getElementById("volumeSlider").oninput = (e) => audio.volume = e.target.value / 100;
-    
-    // Barre de progression
-    const progressBar = document.getElementById("progressBar");
-    progressBar.onclick = e => { 
-        if (audio.duration) { 
-            const rect = progressBar.getBoundingClientRect(); 
-            const percent = (e.clientX - rect.left) / rect.width; 
-            audio.currentTime = percent * audio.duration; 
-        } 
-    };
-
-    audio.ontimeupdate = updateProgress;
-    audio.onended = nextTrack;
+function updateServerStats() {
+    fetch(`https://corsproxy.io/?https://discord.com/api/v9/invites/7CJbppbFdw?with_counts=true`).then(r=>r.json()).then(d=>{
+        const el = document.getElementById('serverStats');
+        if(el) {
+            const g = `<span style="display:inline-block;width:8px;height:8px;background:#23a559;border-radius:50%;margin-right:4px;"></span>`;
+            const gr = `<span style="display:inline-block;width:8px;height:8px;background:#747f8d;border-radius:50%;margin-left:8px;margin-right:4px;"></span>`;
+            el.innerHTML = currentLang==='fr' ? `${g} ${d.approximate_presence_count} En ligne ${gr} ${d.approximate_member_count} Membres` : `${g} ${d.approximate_presence_count} Online ${gr} ${d.approximate_member_count} Members`;
+        }
+    }).catch(()=>{});
 }
+function checkCookieConsent() {
+    if(!localStorage.getItem('cookieConsent')) setTimeout(()=>document.getElementById('cookieBanner').style.transform='translateY(0)',1000);
+}
+function acceptCookies() { localStorage.setItem('cookieConsent','true'); document.getElementById('cookieBanner').style.transform='translateY(100%)'; }
 
+// --- MUSIQUE ---
+let playlist=[], cur=0, isPlay=false;
+const aud = new Audio();
+function loadPlaylist() {
+    fetch('json/playlist.json').then(r=>r.json()).then(d=>{
+        playlist=d;
+        initPlayer();
+        // Autoplay Random
+        if(playlist.length>0) {
+            cur = Math.floor(Math.random()*playlist.length);
+            loadTrack(cur);
+            aud.play().then(()=>{ isPlay=true; updIcons(true); })
+               .catch(()=>{ console.log("Autoplay bloqué, clic requis"); document.addEventListener('click', ()=>{ aud.play(); isPlay=true; updIcons(true); }, {once:true}); });
+        }
+    }).catch(console.error);
+}
+function initPlayer() {
+    const el = document.getElementById("playlist");
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
+    let h = '<div class="playlist-header">Playlist</div>';
+    playlist.forEach((t,i) => {
+        h += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover?`<img src="${t.cover}">`:svg}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
+    });
+    el.innerHTML = h;
+    document.querySelectorAll(".playlist-item").forEach(e=>{
+        e.onclick=()=>{ cur=parseInt(e.dataset.i); loadTrack(cur); aud.play().then(()=>{isPlay=true; updIcons(true);}); };
+    });
+    setupControls();
+}
+function setupControls() {
+    document.getElementById("playBtn").onclick=()=>{ isPlay?pause():play(); };
+    document.getElementById("nextBtn").onclick=next;
+    document.getElementById("prevBtn").onclick=prev;
+    document.getElementById("volumeSlider").oninput=e=>aud.volume=e.target.value/100;
+    const bar = document.getElementById("progressBar");
+    bar.onclick=e=>{ if(aud.duration) aud.currentTime=(e.clientX-bar.getBoundingClientRect().left)/bar.offsetWidth*aud.duration; };
+    aud.ontimeupdate=updProg; aud.onended=next;
+}
 function loadTrack(i) {
-    const t = playlistData[i];
-    audio.src = t.file;
-    
-    document.getElementById("playerTrack").innerText = t.title;
-    document.getElementById("playerArtist").innerText = t.artist;
-    
-    // Mise à jour visuelle playlist
-    document.querySelectorAll(".playlist-item").forEach((el, index) => {
-        el.classList.toggle("active", index === i);
-        const titleEl = el.querySelector('.playlist-item-title');
-        if(titleEl) titleEl.style.color = (index === i) ? '#1db954' : '#ffffff';
+    aud.src=playlist[i].file;
+    document.getElementById("playerTrack").innerText=playlist[i].title;
+    document.getElementById("playerArtist").innerText=playlist[i].artist;
+    document.querySelectorAll(".playlist-item").forEach((e,idx)=>{
+        e.classList.toggle("active", idx===i);
+        e.querySelector('.playlist-item-title').style.color = idx===i ? '#1db954' : '#fff';
     });
 }
-
-function playTrack() { 
-    audio.play().then(() => { isPlaying = true; updatePlayIcons(true); })
-         .catch(() => { isPlaying = false; updatePlayIcons(false); });
+function play(){ aud.play().then(()=>{isPlay=true; updIcons(true);}); }
+function pause(){ aud.pause(); isPlay=false; updIcons(false); }
+function updIcons(p){ 
+    document.querySelector(".icon-play").style.display=p?"none":"block";
+    document.querySelector(".icon-pause").style.display=p?"block":"none";
 }
-function pauseTrack() { audio.pause(); isPlaying = false; updatePlayIcons(false); }
-function updatePlayIcons(playing) {
-    document.querySelector(".icon-play").style.display = playing ? "none" : "block";
-    document.querySelector(".icon-pause").style.display = playing ? "block" : "none";
-}
-function nextTrack() { currentTrack = (currentTrack + 1) % playlistData.length; loadTrack(currentTrack); playTrack(); }
-function prevTrack() { if (audio.currentTime > 3) audio.currentTime = 0; else currentTrack = (currentTrack - 1 + playlistData.length) % playlistData.length; loadTrack(currentTrack); playTrack(); }
-
-function updateProgress() {
-    const progressFill = document.getElementById("progressFill");
-    if (audio.duration) { 
-        progressFill.style.width = (audio.currentTime / audio.duration * 100) + "%"; 
-        document.getElementById("timeCurrent").textContent = fmt(audio.currentTime); 
-        document.getElementById("timeTotal").textContent = fmt(audio.duration);
+function next(){ cur=(cur+1)%playlist.length; loadTrack(cur); if(isPlay) play(); }
+function prev(){ if(aud.currentTime>3) aud.currentTime=0; else cur=(cur-1+playlist.length)%playlist.length; loadTrack(cur); if(isPlay) play(); }
+function updProg(){
+    if(aud.duration){
+        document.getElementById("progressFill").style.width=(aud.currentTime/aud.duration*100)+"%";
+        document.getElementById("timeCurrent").innerText=fmt(aud.currentTime);
+        document.getElementById("timeTotal").innerText=fmt(aud.duration);
     }
 }
-function fmt(s) { return Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0"); }
+function fmt(s){ return Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0"); }
 
 // EXPORTS
 window.toggleSettings = toggleSettings;
@@ -393,7 +244,4 @@ window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
 window.closeRedirect = closeRedirect;
 window.openEmail = openEmail;
-window.acceptCookies = function() {
-    localStorage.setItem('cookieConsent', 'true');
-    document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
-};
+window.acceptCookies = acceptCookies;
