@@ -1,18 +1,47 @@
     // =====================================================
-    // GESTION LANGUES (DÉCENTRALISÉE JSON)
+    // 1. CONFIGURATION & GESTION LANGUES
     // =====================================================
     let currentLang = 'en';
     let currentTranslations = {};
 
+    const JSON_PATH = 'translations/'; 
+
+    document.addEventListener('DOMContentLoaded', () => {
+        detectLanguage();
+
+        loadSavedFont();
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        initMusicPlayer();
+        initDiscordStats();
+        initServerStats();
+
+        if (document.querySelector('.hero-title')) {
+            typeTitle();
+        }
+
+        document.addEventListener('click', (event) => {
+            const panel = document.getElementById('settingsPanel');
+            const btn = document.querySelector('.settings-btn');
+            if (panel && btn && panel.classList.contains('show')) {
+                if (!panel.contains(event.target) && !btn.contains(event.target)) {
+                    panel.classList.remove('show');
+                }
+            }
+        });
+    });
+
+    // --- LOGIQUE LANGUE ---
+
     function detectLanguage() {
         const savedLang = localStorage.getItem('userLang');
-        
         if (savedLang) {
             currentLang = savedLang;
         } else {
             const userLang = navigator.language || navigator.userLanguage;
-            if (userLang.startsWith('fr')) currentLang = 'fr';
-            else currentLang = 'en';
+            currentLang = userLang.startsWith('fr') ? 'fr' : 'en';
         }
 
         const langSelect = document.getElementById('languageSelector');
@@ -22,33 +51,41 @@
     }
 
     function loadLanguageFile(lang) {
-        fetch(`translations/${lang}.json`)
-            .then(response => response.json())
+        // Charge le fichier JSON (ex: translations/fr.json)
+        fetch(`${JSON_PATH}${lang}.json`)
+            .then(response => {
+                if (!response.ok) throw new Error("Fichier langue introuvable");
+                return response.json();
+            })
             .then(data => {
                 currentTranslations = data; 
                 applyTranslations();     
                 updateClock();
-                updateServerStats();
-                updateDiscordStatus();
-
+                
+                // Mise à jour des textes spécifiques si les modules sont actifs
+                if (document.getElementById('serverStats')) updateServerStatsFunc(data);
+                if (document.getElementById('discordActivity')) updateDiscordStatusFunc();
+                
+                // Gestion affichage carte Guides (spécifique FR)
                 const guidesCard = document.getElementById('guidesCard');
                 if (guidesCard) {
-                    if (lang === 'fr') {
-                        guidesCard.style.display = 'flex';
-                    } else {
-                        guidesCard.style.display = 'none';
-                    }
+                    guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
                 }
             })
-        .catch(err => console.error("Erreur chargement langue:", err));
+            .catch(err => console.error("Erreur chargement langue:", err));
     }
 
     function applyTranslations() {
+        if (!currentTranslations) return;
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.getAttribute('data-key');
             if (currentTranslations[key]) {
-                if (key === 'location') elem.innerHTML = currentTranslations[key];
-                else elem.innerText = currentTranslations[key];
+                // innerHTML pour gérer le gras ou les icônes dans le JSON
+                if (key === 'location' || key.includes('legal')) {
+                    elem.innerHTML = currentTranslations[key];
+                } else {
+                    elem.innerText = currentTranslations[key];
+                }
             }
         });
     }
