@@ -1,41 +1,91 @@
 // =====================================================
-// SCRIPT SOCIAL (Gestion Menu, Langue, Discord)
+// SCRIPT SOCIAL (Menu, Langue, Discord, Redirection)
 // =====================================================
 
-const JSON_PATH = 'translations/'; // Mets '' si les fichiers json sont à la racine
+const JSON_PATH = 'translations/'; // Mets '' si tes fichiers json sont à la racine (pas dans un dossier)
 let currentLang = 'fr';
 let currentTranslations = {};
+let pendingRedirectUrl = ''; // Stocke l'URL pour la redirection
 
 // Initialisation immédiate
 (function init() {
-    // 1. Démarrer Horloge
     updateClock();
     setInterval(updateClock, 1000);
 
-    // 2. Langue & Police
     detectAndApplyLanguage();
     loadSavedFont();
 
-    // 3. Discord & Serveur
     updateDiscordStatus();
     updateServerStats();
     setInterval(updateDiscordStatus, 30000);
     setInterval(updateServerStats, 60000);
 
-    // 4. Gestionnaire Menu Settings (Réparé)
+    // --- GESTION DES CLICS (Settings & Redirection) ---
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        // On cible le bouton spécifique de la page social
-        const btn = event.target.closest('button[onclick="toggleSettings()"]');
+        const settingsBtn = event.target.closest('.top-icon-btn'); // Sélecteur plus robuste
         
+        // 1. Fermer le menu si on clique dehors
         if (panel && panel.classList.contains('show')) {
-            // Si on clique dehors, on ferme
-            if (!panel.contains(event.target) && !btn) {
+            // Si on ne clique ni dans le panneau, ni sur le bouton engrenage
+            if (!panel.contains(event.target) && (!settingsBtn || !settingsBtn.getAttribute('onclick')?.includes('toggleSettings'))) {
                 panel.classList.remove('show');
             }
         }
     });
+
+    // --- INTERCEPTION DES LIENS (Pour la redirection) ---
+    // On attend un peu que le DOM soit prêt pour cibler les liens
+    setTimeout(() => {
+        const links = document.querySelectorAll('a[target="_blank"]');
+        links.forEach(link => {
+            // On ignore les liens internes ou musicaux s'ils sont gérés autrement
+            if (!link.classList.contains('no-redirect') && !link.classList.contains('music-platform-btn')) {
+                link.addEventListener('click', (e) => {
+                    // Si c'est un lien externe (http), on intercepte
+                    if (link.href.startsWith('http')) {
+                        e.preventDefault();
+                        openRedirect(link.href);
+                    }
+                });
+            }
+        });
+        
+        // Gestionnaire du bouton "Continuer" de la modal
+        const confirmBtn = document.getElementById('confirmRedirectBtn');
+        if(confirmBtn) {
+            confirmBtn.onclick = () => {
+                if(pendingRedirectUrl) {
+                    window.open(pendingRedirectUrl, '_blank');
+                    closeRedirect();
+                }
+            };
+        }
+    }, 500);
 })();
+
+// --- FONCTIONS REDIRECTION ---
+
+function openRedirect(url) {
+    const modal = document.getElementById('redirectOverlay');
+    const urlText = document.getElementById('redirectUrl');
+    
+    if (modal && urlText) {
+        pendingRedirectUrl = url;
+        urlText.textContent = url;
+        modal.classList.add('show');
+    } else {
+        // Fallback si la modal n'existe pas
+        window.open(url, '_blank');
+    }
+}
+
+function closeRedirect() {
+    const modal = document.getElementById('redirectOverlay');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+}
 
 // --- FONCTIONS UI ---
 
@@ -87,10 +137,9 @@ function loadLanguageFile(lang) {
             currentTranslations = data; 
             applyTranslations();
             updateClock();
-            updateDiscordStatus(); // Mettre à jour les statuts traduits
+            updateDiscordStatus();
             updateServerStats();
             
-            // Gestion Carte Guide (FR uniquement)
             const guidesCard = document.getElementById('guidesCard');
             if (guidesCard) guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
         })
@@ -161,7 +210,6 @@ function updateDiscordStatus() {
                 }
             }
 
-            // Infos
             const avatarImg = document.getElementById('discordAvatar');
             const statusDot = document.getElementById('discordStatus');
             const activityEl = document.getElementById('discordActivity'); 
@@ -169,13 +217,11 @@ function updateDiscordStatus() {
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${d.discord_user.avatar}.png?size=128`;
             if (statusDot) statusDot.className = 'discord-status-dot ' + d.discord_status;
 
-            // Statut
             let statusText = d.discord_status;
             if (currentTranslations[`status_${d.discord_status}`]) statusText = currentTranslations[`status_${d.discord_status}`];
             
             let html = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
-            // Jeu / Spotify
             if (d.listening_to_spotify && d.spotify) {
                 const s = d.spotify;
                 html += `<div class="rp-game-row" style="align-items: flex-start;">
@@ -224,3 +270,4 @@ window.toggleSocials = toggleSocials;
 window.copyCode = copyCode;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
+window.closeRedirect = closeRedirect; // Export indispensable pour le bouton HTML

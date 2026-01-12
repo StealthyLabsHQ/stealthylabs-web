@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Toggle du lecteur
     window.toggleMusic = function() {
-        document.getElementById('musicWrapper').classList.toggle('open');
-        document.querySelector('.music-toggle').classList.toggle('active');
+        const wrap = document.getElementById('musicWrapper');
+        if(wrap) wrap.classList.toggle('open');
+        const toggle = document.querySelector('.music-toggle');
+        if(toggle) toggle.classList.toggle('active');
     };
 });
 
@@ -14,22 +16,25 @@ let isPlaying = false;
 const audio = new Audio();
 
 function loadPlaylist() {
-    fetch('json/playlist.json') // Vérifie bien que ce fichier existe !
-        .then(response => response.json())
+    // Si tes json sont à la racine, enlève "json/" ci-dessous :
+    fetch('json/playlist.json') 
+        .then(response => {
+            if(!response.ok) throw new Error("Playlist introuvable");
+            return response.json();
+        })
         .then(data => {
             playlistData = data; 
             initPlaylistUI();
             
-            // --- LANCEMENT ALÉATOIRE & AUTOPLAY ---
-            // 1. Choisir un index au hasard
-            currentTrack = Math.floor(Math.random() * playlistData.length);
-            
-            // 2. Charger la musique
-            loadTrack(currentTrack);
-            
-            // 3. Tenter de lancer la lecture (Autoplay)
-            // Note : Les navigateurs peuvent bloquer ça si l'utilisateur n'a pas interagi.
-            playTrack(); 
+            // --- AUTOPLAY ---
+            if(playlistData.length > 0) {
+                // Choix aléatoire
+                currentTrack = Math.floor(Math.random() * playlistData.length);
+                loadTrack(currentTrack);
+                
+                // On essaie de jouer (peut être bloqué par Chrome/Firefox si pas de clic avant)
+                playTrack();
+            }
         })
         .catch(err => console.error("Erreur playlist:", err));
 }
@@ -109,22 +114,23 @@ function loadTrack(i) {
         el.classList.toggle("active", index === i);
         const tEl = el.querySelector('.playlist-item-title');
         if(tEl) tEl.style.color = (index === i) ? '#1db954' : '#ffffff';
+        else if(el.querySelector('.playlist-item-title')) el.querySelector('.playlist-item-title').style.color = '#ffffff';
     });
 }
 
 function playTrack() { 
-    // Promesse de lecture pour gérer les blocages navigateurs
+    // Tentative de lecture (promesse)
     var playPromise = audio.play();
 
     if (playPromise !== undefined) {
         playPromise.then(_ => {
-            // Lecture commencée !
+            // Lecture réussie
             isPlaying = true; 
             updatePlayIcons(true);
         })
         .catch(error => {
-            // Lecture bloquée par le navigateur
-            console.log("Autoplay empêché par le navigateur. Clic requis.");
+            // Bloqué par le navigateur (attente de clic)
+            console.log("Autoplay bloqué par le navigateur (sécurité). Clic nécessaire.");
             isPlaying = false;
             updatePlayIcons(false);
         });
