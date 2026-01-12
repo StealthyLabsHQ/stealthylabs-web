@@ -1,21 +1,21 @@
 // =====================================================
-// SCRIPT ACCUEIL (Léger : Heure, Langue, Settings)
+// SCRIPT ACCUEIL (Léger : Langue + Horloge)
 // =====================================================
 
-const JSON_PATH = 'translations/';
+const JSON_PATH = ''; // Vide car tes fichiers fr.json/en.json sont à la racine
 let currentLang = 'fr';
 let currentTranslations = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("📍 Script Accueil Chargé");
-
     // 1. Initialisation
     detectLanguage();
     loadSavedFont();
     updateClock();
+    
+    // 2. Boucle horloge uniquement
     setInterval(updateClock, 1000);
 
-    // 2. Gestionnaire Menu Settings (Spécifique Accueil)
+    // 3. Gestionnaire Menu Settings (Spécifique Accueil)
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
         const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
@@ -38,7 +38,6 @@ function toggleSettings(event) {
 function detectLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
-    // On garde la mémoire partagée, c'est mieux pour l'utilisateur
     currentLang = savedLang ? savedLang : (browserLang.startsWith('fr') ? 'fr' : 'en');
     
     const selector = document.getElementById('languageSelector');
@@ -49,10 +48,7 @@ function detectLanguage() {
 
 function loadLanguageFile(lang) {
     fetch(`${JSON_PATH}${lang}.json`)
-        .then(res => {
-            if(!res.ok) throw new Error("Fichier langue introuvable");
-            return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
             currentTranslations = data;
             applyTranslations();
@@ -65,14 +61,14 @@ function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            elem.innerHTML = currentTranslations[key]; // innerHTML pour le gras/liens
+            elem.innerHTML = currentTranslations[key];
         }
     });
 }
 
 function changeLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('userLang', lang);
+    localStorage.setItem('userLang', lang); // Sauvegarde pour les deux pages
     loadLanguageFile(lang);
 }
 
@@ -100,7 +96,7 @@ function updateClock() {
     clockEl.innerText = timeStr;
 }
 
-// Exports
+// Exports pour le HTML
 window.toggleSettings = toggleSettings;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
