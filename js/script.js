@@ -153,6 +153,20 @@
             .then(data => {
                 if (data.success) {
                     const d = data.data;
+                    const liveBadge = document.getElementById('liveBadge');
+                    const mainAvatar = document.querySelector('.avatar'); // ou getElementById('mainAvatar')
+                    let isStreaming = false;
+
+                    if (d.activities) {
+                        for (const activity of d.activities) {
+                            // Type 1 = Streaming
+                            if (activity.type === 1 || (activity.name && activity.name.toLowerCase() === 'twitch')) {
+                                isStreaming = true;
+                                break;
+                            }
+                        }
+                    }
+
                     if (liveBadge && mainAvatar) {
                         if (isStreaming) {
                             liveBadge.style.display = 'block';
@@ -340,8 +354,8 @@
         pendingUrl = url;
         urlDisplay.innerText = url; 
         
-        overlay.style.display = 'flex'; /
-        setTimeout(() => { overlay.classList.add('show'); }, 10); 
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.classList.add('show'); }, 10);
     }
 
     if(confirmBtn) {
