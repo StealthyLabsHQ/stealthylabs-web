@@ -118,6 +118,31 @@
     }
 
     // =====================================================
+    // EFFET MACHINE À ÉCRIRE (TITRE ONGLET)
+    // =====================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        const targetTitle = "StealthyLabs | Content Creator"; 
+        let index = 0;
+        const speed = 100;
+
+        document.title = "_";
+
+        function typeTitle() {
+            if (index < targetTitle.length) {
+                document.title = targetTitle.substring(0, index + 1) + "_";
+                index++;
+                setTimeout(typeTitle, speed);
+            } else {
+                setTimeout(() => { document.title = targetTitle + " "; }, 500);
+                setTimeout(() => { document.title = targetTitle + "_"; }, 1000);
+                setTimeout(() => { document.title = targetTitle + " "; }, 1500);
+                setTimeout(() => { document.title = targetTitle; }, 2000);
+            }
+        }
+        setTimeout(typeTitle, 500);
+    });
+
+    // =====================================================
     // INTEGRATION DISCORD (LANYARD)
     // =====================================================
     function updateDiscordStatus() {
