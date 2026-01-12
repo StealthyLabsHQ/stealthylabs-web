@@ -1,22 +1,25 @@
 // =====================================================
 // 1. CONFIGURATION & INITIALISATION
 // =====================================================
-let currentLang = 'fr'; // Valeur par défaut de sécurité
+let currentLang = 'fr'; 
 let currentTranslations = {};
-const JSON_PATH = 'translations/'; // Assure-toi que le dossier s'appelle bien "translations"
+
+// IMPORTANT : Laisse vide '' si les fichiers .json sont au même endroit que index.html
+// Si tu les mets dans un dossier 'translations', remets 'translations/'
+const JSON_PATH = ''; 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Détecter la langue (et appliquer la sauvegarde)
-    detectAndApplyLanguage();
-
-    // 2. Charger la police sauvegardée
-    loadSavedFont();
-
-    // 3. Lancer l'horloge immédiatement (sans attendre la trad)
-    updateClock(); 
+    // 1. Démarrer l'horloge TOUT DE SUITE (avant tout le reste)
+    updateClock();
     setInterval(updateClock, 1000);
 
-    // 4. Lancer les modules annexes
+    // 2. Détecter la langue et charger les textes
+    detectAndApplyLanguage();
+
+    // 3. Charger la police sauvegardée
+    loadSavedFont();
+
+    // 4. Lancer les modules (Discord, Serveur...)
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);
 
@@ -24,9 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('discordActivity')) updateDiscordStatus();
     if (document.querySelector('.hero-title')) initTypewriter();
 
-    // 5. Gestion fermeture menu paramètres
+    // 5. Gestion fermeture menu paramètres au clic extérieur
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
+        // On cible le bouton sur index (.settings-btn) OU social (.top-icon-btn avec settings-btn)
         const btn = document.querySelector('.settings-btn');
         if (panel && btn && panel.classList.contains('show')) {
             if (!panel.contains(event.target) && !btn.contains(event.target)) {
@@ -41,33 +45,25 @@ document.addEventListener('DOMContentLoaded', () => {
 // =====================================================
 
 function detectAndApplyLanguage() {
-    // A. Vérifier si l'utilisateur a déjà choisi une langue (Sauvegarde)
     const savedLang = localStorage.getItem('userLang');
-    
-    // B. Sinon, vérifier la langue du navigateur
     const browserLang = navigator.language || navigator.userLanguage;
 
+    // Priorité : Sauvegarde > Navigateur > Défaut
     if (savedLang) {
-        // Priorité 1 : Le choix de l'utilisateur sauvegardé
         currentLang = savedLang;
     } else {
-        // Priorité 2 : La langue du navigateur (Si commence par 'fr' -> fr, sinon -> en)
         currentLang = browserLang.startsWith('fr') ? 'fr' : 'en';
     }
 
-    // C. Mettre à jour visuellement le sélecteur tout de suite
+    // Mettre à jour le menu déroulant visuellement
     const langSelect = document.getElementById('languageSelector');
-    if(langSelect) {
-        langSelect.value = currentLang;
-    }
+    if(langSelect) langSelect.value = currentLang;
 
-    // D. Charger le fichier de langue correspondant
+    // Charger le fichier JSON
     loadLanguageFile(currentLang);
 }
 
 function loadLanguageFile(lang) {
-    // Si on est en local sans serveur, fetch peut échouer. 
-    // Assure-toi d'utiliser Live Server ou d'héberger le site.
     fetch(`${JSON_PATH}${lang}.json`)
         .then(response => {
             if (!response.ok) throw new Error(`Fichier ${lang}.json introuvable`);
@@ -76,17 +72,11 @@ function loadLanguageFile(lang) {
         .then(data => {
             currentTranslations = data; 
             applyTranslations();     
-            
-            // Une fois la langue chargée, on met à jour l'horloge pour le format (12h/24h)
-            updateClock(); 
-            
-            // Modules spécifiques qui dépendent de la langue
-            if (document.getElementById('serverStats')) updateServerStats();
-            if (document.getElementById('discordActivity')) updateDiscordStatus();
+            updateClock(); // Met à jour le format (12h/24h) une fois la langue chargée
         })
         .catch(err => {
-            console.error("Erreur critique chargement langue:", err);
-            // Fallback : Si le chargement échoue, l'heure tourne quand même
+            console.error("Erreur chargement langue:", err);
+            // Même si ça plante, on garde l'horloge active
             updateClock();
         });
 }
@@ -97,25 +87,26 @@ function applyTranslations() {
     document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            // Utilise innerHTML pour permettre le gras ou les liens dans le JSON
-            if (key === 'location' || key.includes('legal') || key.includes('desc') || key.includes('bio')) {
-                elem.innerHTML = currentTranslations[key];
-            } else {
-                elem.innerText = currentTranslations[key];
-            }
+            // innerHTML permet d'interpréter les balises <br> ou <strong> dans le JSON
+            elem.innerHTML = currentTranslations[key];
         }
     });
+    
+    // Gestion spécifique de la carte "Guides" (Uniquement pour les FR)
+    const guidesCard = document.getElementById('guidesCard');
+    if (guidesCard) {
+        guidesCard.style.display = (currentLang === 'fr') ? 'flex' : 'none';
+    }
 }
 
 function changeLanguage(lang) {
     currentLang = lang;
-    // Sauvegarde le choix pour la prochaine fois
-    localStorage.setItem('userLang', lang);
+    localStorage.setItem('userLang', lang); // Sauvegarde le choix
     loadLanguageFile(lang);
 }
 
 // =====================================================
-// 3. UI & FONTS
+// 3. UI & POLICE
 // =====================================================
 
 function toggleSettings() {
@@ -138,7 +129,7 @@ function loadSavedFont() {
 }
 
 // =====================================================
-// 4. HORLOGE (CORRIGÉE)
+// 4. HORLOGE (ROBUSTE)
 // =====================================================
 
 function updateClock() {
@@ -148,20 +139,18 @@ function updateClock() {
     const now = new Date();
     let options = { hour: '2-digit', minute: '2-digit' };
     
-    // Si la langue est 'en' (Anglais), on passe en 12h (AM/PM)
-    // Sinon (français ou par défaut), on reste en 24h
+    // Si Anglais = AM/PM, Sinon 24h
     if (currentLang === 'en') {
         options.hour12 = true;
         clockEl.innerText = now.toLocaleTimeString('en-US', options);
     } else {
         options.hour12 = false; 
-        // Force le format 24h propre
         clockEl.innerText = now.toLocaleTimeString('fr-FR', options).replace(':', ':'); 
     }
 }
 
 // =====================================================
-// 5. MODULES (Discord, Typewriter...)
+// 5. MODULES (DISCORD, TYPEWRITER, SERVEUR)
 // =====================================================
 
 function initTypewriter() {
@@ -194,7 +183,7 @@ function updateDiscordStatus() {
             if (!data.success) return;
             const d = data.data;
             
-            // Badge Live
+            // Badge Live & Avatar Streaming
             const liveBadge = document.getElementById('liveBadge');
             const mainAvatar = document.querySelector('.avatar');
             let isStreaming = false;
@@ -219,7 +208,7 @@ function updateDiscordStatus() {
                 }
             }
             
-            // Avatar & Status
+            // Avatar Discord & Statut
             const user = d.discord_user;
             const status = d.discord_status;
             const avatarImg = document.getElementById('discordAvatar');
@@ -229,14 +218,15 @@ function updateDiscordStatus() {
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
             if (statusDot) statusDot.className = 'discord-status-dot ' + status;
 
-            // Traduction statut
-            const statusText = (currentTranslations && currentTranslations[`status_${status}`]) 
-                ? currentTranslations[`status_${status}`] 
-                : status;
+            // Traduction du statut (En ligne, Inactif...)
+            let statusText = status;
+            if (currentTranslations && currentTranslations[`status_${status}`]) {
+                statusText = currentTranslations[`status_${status}`];
+            }
                 
             let htmlContent = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
-            // Jeu / Spotify
+            // Jeu ou Spotify
             let game = null;
             let spotify = null;
             if (d.activities) game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets);
@@ -300,7 +290,7 @@ function updateServerStats() {
         .catch(err => console.log("Erreur stats serveur"));
 }
 
-// Exports pour HTML
+// Exports globaux pour que le HTML puisse les utiliser
 window.toggleSettings = toggleSettings;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
