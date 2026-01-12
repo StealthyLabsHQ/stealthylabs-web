@@ -1,20 +1,16 @@
 // =====================================================
-// SCRIPT SOCIAL (Menu, Langue, Redirection)
+// SCRIPT SOCIAL (Menu, Langue, Redirection, Discord)
 // =====================================================
 
-// ATTENTION : Si vos fichiers json sont dans un dossier "translations", mettez 'translations/'
-// S'ils sont à côté de social.html, laissez vide ''
-const JSON_PATH = 'translations/'; 
-
+const JSON_PATH = 'translations/'; // Garde 'translations/' si tes fichiers sont dans ce dossier
 let currentLang = 'fr';
 let currentTranslations = {};
 let pendingRedirectUrl = ''; 
 
-// --- INITIALISATION AU CHARGEMENT ---
+// --- INITIALISATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Script Social Démarré");
-
-    // 1. Démarrage des boucles (Horloge, Discord)
+    
+    // 1. Démarrage des boucles
     updateClock();
     setInterval(updateClock, 1000);
     
@@ -28,61 +24,40 @@ document.addEventListener('DOMContentLoaded', () => {
     detectAndApplyLanguage();
     loadSavedFont();
 
-    // 3. Activation des Redirections (Pop-up)
+    // 3. Activation des Redirections (Le code qui manquait !)
     setupRedirections();
 
-    // 4. Gestionnaire "Fermer menu si clic ailleurs"
+    // 4. Fermeture du menu si on clique ailleurs
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
-        // Si le menu est ouvert et qu'on ne clique PAS dedans
-        if (panel && panel.classList.contains('show') && !panel.contains(event.target)) {
-            panel.classList.remove('show');
+        // On vérifie si le clic ne vient pas du bouton engrenage
+        const isSettingsButton = event.target.closest('.top-icon-btn[onclick*="toggleSettings"]');
+        
+        if (panel && panel.classList.contains('show')) {
+            if (!panel.contains(event.target) && !isSettingsButton) {
+                panel.classList.remove('show');
+            }
         }
     });
 });
 
-// --- FONCTIONS UI (ENGRENAGE) ---
-
-function toggleSettings(event) {
-    // CRUCIAL : Empêche le clic de remonter au document et de refermer le menu tout de suite
-    if (event) event.stopPropagation();
-    
-    const panel = document.getElementById('settingsPanel');
-    if (panel) {
-        panel.classList.toggle('show');
-        console.log("Menu Settings basculé"); // Pour vérifier dans la console (F12)
-    }
-}
-
-function toggleSocials() {
-    document.getElementById('socialsWrapper').classList.toggle('open');
-    document.querySelector('.socials-toggle').classList.toggle('active');
-}
-
-function copyCode() {
-    navigator.clipboard.writeText("stealthylabs");
-    const tooltip = document.getElementById("tooltip");
-    tooltip.classList.add("show");
-    setTimeout(() => tooltip.classList.remove("show"), 2000);
-}
-
-// --- FONCTIONS REDIRECTION ---
-
+// --- FONCTIONS REDIRECTION (C'est ici que ça se joue) ---
 function setupRedirections() {
     const links = document.querySelectorAll('a[target="_blank"]');
     links.forEach(link => {
-        // On exclut les boutons de musique et les liens internes
+        // On ignore les boutons musicaux et les liens marqués "no-redirect"
         if (!link.classList.contains('music-platform-btn') && !link.classList.contains('no-redirect')) {
             link.addEventListener('click', (e) => {
+                // Si c'est un lien web standard (http/https)
                 if (link.href.startsWith('http')) {
-                    e.preventDefault(); // Bloque le lien normal
-                    openRedirect(link.href); // Ouvre notre pop-up
+                    e.preventDefault(); // On bloque l'ouverture immédiate
+                    openRedirect(link.href); // On lance notre pop-up
                 }
             });
         }
     });
 
-    // Bouton de confirmation dans la pop-up
+    // Gestion du bouton "Continuer" dans la pop-up
     const confirmBtn = document.getElementById('confirmRedirectBtn');
     if (confirmBtn) {
         confirmBtn.onclick = () => {
@@ -97,12 +72,13 @@ function setupRedirections() {
 function openRedirect(url) {
     const modal = document.getElementById('redirectOverlay');
     const urlText = document.getElementById('redirectUrl');
+    
     if (modal && urlText) {
         pendingRedirectUrl = url;
         urlText.textContent = url;
-        modal.classList.add('show');
+        modal.classList.add('show'); // Affiche la pop-up
     } else {
-        // Secours si la pop-up n'existe pas
+        // Sécurité : si la pop-up n'existe pas, on ouvre quand même le lien
         window.open(url, '_blank');
     }
 }
@@ -112,8 +88,28 @@ function closeRedirect() {
     if (modal) modal.classList.remove('show');
 }
 
-// --- LOGIQUE LANGUE ---
+// --- FONCTIONS UI (Engrenage corrigé) ---
+function toggleSettings(event) {
+    // Empêche le clic de se propager et de fermer le menu immédiatement
+    if (event) event.stopPropagation();
+    
+    const panel = document.getElementById('settingsPanel');
+    if (panel) panel.classList.toggle('show');
+}
 
+function toggleSocials() {
+    document.getElementById('socialsWrapper').classList.toggle('open');
+    document.querySelector('.socials-toggle').classList.toggle('active');
+}
+
+function copyCode() {
+    navigator.clipboard.writeText("stealthylabs");
+    const tooltip = document.getElementById("tooltip");
+    tooltip.classList.add("show");
+    setTimeout(() => tooltip.classList.remove("show"), 2000);
+}
+
+// --- LOGIQUE LANGUE ---
 function detectAndApplyLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
@@ -129,20 +125,18 @@ function detectAndApplyLanguage() {
 
 function loadLanguageFile(lang) {
     fetch(`${JSON_PATH}${lang}.json`)
-        .then(res => {
-            if(!res.ok) throw new Error("Fichier langue introuvable (Vérifiez le dossier json/ ou translations/)");
-            return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
             currentTranslations = data; 
             applyTranslations();
             updateClock();
-            updateDiscordStatus();
+            updateDiscordStatus(); // Mise à jour des textes traduits
             
+            // Gestion Carte Guide (FR uniquement)
             const guidesCard = document.getElementById('guidesCard');
             if (guidesCard) guidesCard.style.display = (lang === 'fr') ? 'flex' : 'none';
         })
-        .catch(err => console.error("Erreur Langue:", err));
+        .catch(err => console.error("Erreur langue:", err));
 }
 
 function applyTranslations() {
@@ -183,7 +177,6 @@ function updateClock() {
 }
 
 // --- DISCORD ---
-
 function updateDiscordStatus() {
     const userId = "1071461037741723648"; 
     fetch(`https://api.lanyard.rest/v1/users/${userId}`)
@@ -196,6 +189,21 @@ function updateDiscordStatus() {
             const avatarImg = document.getElementById('discordAvatar');
             const statusDot = document.getElementById('discordStatus');
             const activityEl = document.getElementById('discordActivity'); 
+            const liveBadge = document.getElementById('liveBadge');
+            const mainAvatar = document.querySelector('.avatar');
+
+            // Badge Live
+            let isStreaming = d.activities.some(a => a.type === 1 || (a.name && a.name.toLowerCase() === 'twitch'));
+            if (liveBadge && mainAvatar) {
+                if (isStreaming) {
+                    liveBadge.style.display = 'block';
+                    mainAvatar.classList.add('streaming');
+                    liveBadge.innerText = (currentLang === 'fr') ? "EN LIVE" : "LIVE";
+                } else {
+                    liveBadge.style.display = 'none';
+                    mainAvatar.classList.remove('streaming');
+                }
+            }
 
             if (avatarImg) avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${d.discord_user.avatar}.png?size=128`;
             if (statusDot) statusDot.className = 'discord-status-dot ' + status;
@@ -205,6 +213,7 @@ function updateDiscordStatus() {
             
             let html = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
 
+            // Spotify / Jeu
             if (d.listening_to_spotify && d.spotify) {
                 html += `<div class="rp-game-row" style="align-items: flex-start;"><img src="${d.spotify.album_art_url}" class="rp-game-icon" style="margin-top: 4px;"><div class="rp-game-info"><div class="rp-game-title" style="color: #fff; font-weight: 700;">${d.spotify.song}</div><div class="rp-game-detail" style="color: #ccc;">${d.spotify.artist}</div></div></div>`;
             } else if (d.activities && d.activities.length > 0) {
@@ -233,7 +242,7 @@ function updateServerStats() {
         }).catch(() => {});
 }
 
-// Exports globaux indispensables pour le HTML onclick=""
+// Exports globaux
 window.toggleSettings = toggleSettings;
 window.toggleSocials = toggleSocials;
 window.copyCode = copyCode;

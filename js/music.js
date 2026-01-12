@@ -15,22 +15,23 @@ let isPlaying = false;
 const audio = new Audio();
 
 function loadPlaylist() {
-    // Vérifiez bien que le fichier est accessible à cette adresse
-    fetch('json/playlist.json') 
+    // Chemin vers ta playlist
+    fetch('json/playlist.json')
         .then(response => {
-            if(!response.ok) throw new Error("Playlist introuvable (404)");
+            if(!response.ok) throw new Error("Erreur 404: Playlist introuvable");
             return response.json();
         })
         .then(data => {
             playlistData = data; 
             initPlaylistUI();
             
-            // --- AUTOPLAY FORCE ---
+            // --- LOGIQUE AUTOPLAY ---
             if(playlistData.length > 0) {
+                // 1. Choix aléatoire
                 currentTrack = Math.floor(Math.random() * playlistData.length);
                 loadTrack(currentTrack);
                 
-                // On essaie de jouer tout de suite
+                // 2. Tentative de lecture immédiate
                 const playPromise = audio.play();
                 
                 if (playPromise !== undefined) {
@@ -38,10 +39,9 @@ function loadPlaylist() {
                         // Ça a marché !
                         isPlaying = true;
                         updatePlayIcons(true);
-                    })
-                    .catch(error => {
-                        // Bloqué par le navigateur ? On attend un clic de l'utilisateur
-                        console.log("Autoplay bloqué. Attente d'un clic pour démarrer la musique...");
+                    }).catch(error => {
+                        // Bloqué par Chrome/Firefox : on attend le premier clic
+                        console.log("Autoplay bloqué. Attente clic utilisateur.");
                         document.addEventListener('click', function startAudio() {
                             audio.play();
                             isPlaying = true;
@@ -85,8 +85,8 @@ function initPlaylistUI() {
 
 function setupPlayerControls() {
     const playBtn = document.getElementById("playBtn");
-    const nextBtn = document.getElementById("nextBtn");
     const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
     const volumeSlider = document.getElementById("volumeSlider");
     const progressBar = document.getElementById("progressBar");
 
@@ -133,13 +133,16 @@ function loadTrack(i) {
 }
 
 function playTrack() { 
-    audio.play().then(() => { 
-        isPlaying = true; 
-        updatePlayIcons(true);
-    }).catch(e => {
-        isPlaying = false;
-        updatePlayIcons(false);
-    });
+    var playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            isPlaying = true; 
+            updatePlayIcons(true);
+        }).catch(error => {
+            isPlaying = false;
+            updatePlayIcons(false);
+        });
+    }
 }
 
 function pauseTrack() { 
