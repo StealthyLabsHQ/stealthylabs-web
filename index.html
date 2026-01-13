@@ -18,6 +18,90 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
     </head>
+
+    <style>
+        /* --- MODAL REDIRECTION (Style forcé) --- */
+        .redirect-overlay {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: none; /* Caché par défaut */
+            align-items: center; 
+            justify-content: center;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+
+        /* Quand on ajoute la classe .show en JS, ça s'affiche */
+        .redirect-overlay.show { 
+            display: flex !important; 
+            opacity: 1; 
+        }
+
+        .redirect-box {
+            background: #000;
+            border: 1px solid #ff0000; /* Rouge */
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px; 
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transform: translateY(20px); 
+            transition: transform 0.3s ease;
+        }
+
+        .redirect-overlay.show .redirect-box { 
+            transform: translateY(0); 
+        }
+
+        .redirect-icon { font-size: 2rem; margin-bottom: 15px; color: #ff0000; }
+        .redirect-box h2 { margin-bottom: 10px; font-size: 1.2rem; color: #fff; }
+        .modal-desc { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
+
+        .redirect-url {
+            color: #ff0000;
+            font-family: monospace;
+            background: #111;
+            padding: 8px; 
+            border-radius: 6px;
+            margin-bottom: 20px;
+            word-break: break-all; 
+            font-size: 0.85rem;
+        }
+
+        .redirect-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+
+        .redirect-buttons button {
+            padding: 10px 24px; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; font-family: inherit;
+        }
+
+        /* Bouton Annuler */
+        .redirect-buttons button:first-child {
+            background: transparent; border: 1px solid #333; color: #888;
+        }
+        .redirect-buttons button:first-child:hover { border-color: #fff; color: #fff; }
+
+        /* Bouton Continuer */
+        .redirect-buttons button:last-child {
+            background: #ff0000; border: 1px solid #ff0000; color: #fff;
+        }
+        .redirect-buttons button:last-child:hover {
+            background: #cc0000; transform: translateY(-2px);
+        }
+    </style>
+</head> ```
+
+**Pourquoi ça va marcher ?**
+Le texte est en bas car il lui manque l'instruction `position: fixed` et `top: 0; left: 0;`. En mettant ce code directement dans le HTML, le navigateur est obligé de le lire et de placer la fenêtre au milieu de l'écran, par-dessus tout le reste.
+
+N'oublie pas de rafraîchir avec **CTRL + F5** une fois le fichier envoyé !
 <body>
 
     <div class="top-bar">
@@ -107,20 +191,6 @@
                 <a href="legal.html" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
-    </div>
-
-    <div id="redirectOverlay" class="redirect-overlay">
-        <div class="redirect-box">
-            <div class="redirect-icon">⚠️</div>
-            <h2 data-key="redirect_title">Attente de redirection</h2>
-            <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
-            <p id="redirectUrl" class="redirect-url">...</p>
-            
-            <div class="redirect-buttons">
-                <button onclick="closeRedirect()" data-key="btn_cancel">Annuler</button>
-                <button id="confirmRedirectBtn" data-key="btn_continue">Continuer</button>
-            </div>
-        </div>
     </div>
 
     <script src="js/index.js"></script>
