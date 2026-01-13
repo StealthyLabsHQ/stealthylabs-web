@@ -149,7 +149,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'monospace';
+    font-family: var(--main-font);
     
     transition: opacity 0.4s ease, visibility 0.4s ease;
 }
