@@ -44,14 +44,16 @@ const modal = document.getElementById('warningModal');
     }
 
     continueBtn.addEventListener('click', () => {
-        if (pendingUrl) {
-            if (pendingUrl.includes('looky-gta.cc')) {
-                window.open(pendingUrl, '_blank');
-                closeWarningModal(); 
-            }
-            else {
-                window.location.href = pendingUrl;
-            }
+    if (pendingUrl) {
+            const urlToGo = pendingUrl;
+            closeWarningModal();
+            setTimeout(() => {
+                if (urlToGo.includes('looky-gta.cc')) {
+                    window.open(urlToGo, '_blank');
+                } else {
+                    window.location.href = urlToGo;
+                }
+            }, 100);
         }
     });
 
@@ -146,6 +148,10 @@ function updateClock() {
     if(currentLang !== 'en') timeStr = timeStr.replace(':', ':');
     clockEl.innerText = timeStr;
 }
+
+window.addEventListener('pageshow', function(event) {
+    closeWarningModal();
+});
 
 // Exports pour le HTML
 window.toggleSettings = toggleSettings;
