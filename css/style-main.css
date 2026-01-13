@@ -65,9 +65,10 @@ body::after {
 }
 
 .settings-panel {
-    position: absolute; top: 60px; right: 20px;
+position: absolute; top: 60px; right: 20px;
     background: var(--card-bg); border: 1px solid var(--accent);
     padding: 15px; display: none; min-width: 200px;
+    z-index: 200;
 }
 .settings-panel.show { display: block; }
 .settings-group { margin-bottom: 10px; }
