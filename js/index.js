@@ -2,7 +2,7 @@
 // SCRIPT ACCUEIL (Léger : Langue + Horloge)
 // =====================================================
 
-const JSON_PATH = ''; // Vide car tes fichiers fr.json/en.json sont à la racine
+const JSON_PATH = '';
 let currentLang = 'fr';
 let currentTranslations = {};
 
@@ -68,7 +68,7 @@ function applyTranslations() {
 
 function changeLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('userLang', lang); // Sauvegarde pour les deux pages
+    localStorage.setItem('userLang', lang);
     loadLanguageFile(lang);
 }
 

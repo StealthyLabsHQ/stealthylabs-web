@@ -2,50 +2,40 @@
     // GESTION LANGUES (DÉCENTRALISÉE JSON)
     // =====================================================
     let currentLang = 'fr';
-    let currentTranslations = {}; // Stockera les données chargées du JSON
+    let currentTranslations = {};
 
     function detectLanguage() {
-        // 1. Check sauvegarde
         const savedLang = localStorage.getItem('userLang');
         
         if (savedLang) {
             currentLang = savedLang;
         } else {
-            // 2. Check navigateur
             const userLang = navigator.language || navigator.userLanguage;
             if (userLang.startsWith('fr')) currentLang = 'fr';
             else currentLang = 'en';
         }
-
-        // Mise à jour du sélecteur
         const langSelect = document.getElementById('languageSelector');
         if(langSelect) langSelect.value = currentLang;
-
-        // Chargement du fichier JSON
         loadLanguageFile(currentLang);
     }
 
     function loadLanguageFile(lang) {
-        // On va chercher le fichier dans le dossier translations
-        // Note: le chemin est relatif à index.html
         fetch(`translations/${lang}.json`)
             .then(response => response.json())
             .then(data => {
-                currentTranslations = data; // On stocke les données
-                applyTranslations();        // On applique les textes
+                currentTranslations = data;
+                applyTranslations();
                 
-                // Mise à jour des modules dynamiques
                 updateClock();
                 updateServerStats();
                 updateDiscordStatus();
 
-                // --- GESTION DU BLOC GUIDES ---
                 const guidesCard = document.getElementById('guidesCard');
                 if (guidesCard) {
                     if (lang === 'fr') {
-                        guidesCard.style.display = 'flex'; // Affiche en Français
+                        guidesCard.style.display = 'flex';
                     } else {
-                        guidesCard.style.display = 'none'; // Cache en Anglais
+                        guidesCard.style.display = 'none';
                     }
                 }
             })
@@ -285,7 +275,6 @@
     function checkCookieConsent() {
         if (!localStorage.getItem('cookieConsent')) {
             setTimeout(() => {
-                // On fait remonter la bannière (0% de décalage)
                 document.getElementById('cookieBanner').style.transform = 'translateY(0)';
             }, 1000);
         }
@@ -293,7 +282,6 @@
 
     function acceptCookies() {
         localStorage.setItem('cookieConsent', 'true');
-        // On la renvoie vers le bas (100% de sa hauteur)
         document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
     }
 
@@ -303,27 +291,23 @@
     // GESTION MODAL REDIRECTION (Mise à jour)
     // =====================================================
     let pendingUrl = "";
-    // On cible les nouveaux ID de votre HTML
     const overlay = document.getElementById('redirectOverlay'); 
     const urlDisplay = document.getElementById('redirectUrl');
     const confirmBtn = document.getElementById('confirmRedirectBtn');
 
-    // Fonction pour fermer (appelée par le bouton Annuler)
     function closeRedirect() {
         overlay.classList.remove('show');
         setTimeout(() => { overlay.style.display = 'none'; }, 300);
     }
 
-    // Fonction pour ouvrir
     function openModal(url) {
         pendingUrl = url;
-        urlDisplay.innerText = url; // Affiche l'URL
+        urlDisplay.innerText = url;
         
-        overlay.style.display = 'flex'; // Prépare l'affichage
-        setTimeout(() => { overlay.classList.add('show'); }, 10); // Lance l'animation
+        overlay.style.display = 'flex'; 
+        setTimeout(() => { overlay.classList.add('show'); }, 10);
     }
 
-    // Clic sur "Continuer"
     if(confirmBtn) {
         confirmBtn.onclick = () => {
             window.open(pendingUrl, '_blank');
@@ -331,15 +315,11 @@
         };
     }
 
-    // Intercepter tous les liens externes
     document.addEventListener('DOMContentLoaded', () => {
-        // On cible tous les liens qui ouvrent un nouvel onglet
         const links = document.querySelectorAll('a[target="_blank"]');
         
         links.forEach(link => {
             link.addEventListener('click', (e) => {
-                // Si c'est un lien interne (ex: guides), on ignore
-                // (Ici on assume que tout target blank est externe, sinon ajoutez une condition)
                 e.preventDefault(); 
                 openModal(link.href);
             });
@@ -351,16 +331,12 @@
     // =====================================================
     document.addEventListener('click', function(event) {
         const settingsPanel = document.getElementById('settingsPanel');
-        // On cible le bouton engrenage (celui qui a le onclick toggleSettings)
         const settingsBtn = document.querySelector('button[onclick="toggleSettings()"]');
 
-        // Vérification de sécurité (si les éléments existent)
         if (settingsPanel && settingsBtn) {
             // Si le menu est ouvert...
             if (settingsPanel.classList.contains('show')) {
-                // ...et que le clic n'est NI à l'intérieur du menu, NI sur le bouton engrenage
                 if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
-                    // Alors on le ferme
                     settingsPanel.classList.remove('show');
                 }
             }
@@ -370,15 +346,14 @@
     // =====================================================
     // LECTEUR AUDIO
     // =====================================================
-    let playlistData = []; // On commence avec une liste vide
+    let playlistData = [];
 
     function loadPlaylist() {
-        // On va chercher le fichier JSON
         fetch('json/playlist.json')
             .then(response => response.json())
             .then(data => {
-                playlistData = data; // On remplit la liste avec le fichier
-                initPlaylist();      // ET SEULEMENT MAINTENANT, on lance le lecteur
+                playlistData = data; 
+                initPlaylist();     
             })
             .catch(err => console.error("Erreur chargement playlist:", err));
     }
@@ -442,7 +417,6 @@
         audio.src = t.file;
         
         playerTrack.textContent = t.title;
-        // Supprime le data-key pour empêcher la traduction d'écraser le titre
         playerTrack.removeAttribute('data-key'); 
 
         playerArtist.textContent = t.artist;

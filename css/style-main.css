@@ -46,36 +46,30 @@ body::after {
     text-shadow: 0 0 10px var(--glow);
 }
 
-.settings-btn {
-    background: none; 
-    border: none; 
-    cursor: pointer; 
-    transition: transform 0.5s ease; /* Animation fluide */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* LE BOUTON (Conteneur) */
 .settings-btn {
     background: none; 
     border: none; 
     cursor: pointer; 
-    padding: 5px; /* Un peu d'espace autour */
+    padding: 5px; 
+    transition: transform 0.5s ease; 
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;  /* On force la taille du bouton lui-même */
+    width: 40px;  
     height: 40px;
 }
 
 /* L'IMAGE (L'engrenage) */
 .settings-btn img, .gear-icon-img {
-    width: 26px !important;  /* Le !important force la priorité */
+    width: 26px !important; 
     height: 26px !important;
     max-width: 26px;
     display: block;
     transition: transform 0.5s ease;
+    filter: brightness(200%) drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
+    filter: brightness(250%) drop-shadow(0 0 5px rgba(255, 255, 255, 1));
+    cursor: pointer;
 }
 
 /* L'ANIMATION */
