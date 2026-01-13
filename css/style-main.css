@@ -46,20 +46,6 @@ body::after {
     text-shadow: 0 0 10px var(--glow);
 }
 
-/* LE BOUTON (Conteneur) */
-.settings-btn {
-    background: none; 
-    border: none; 
-    cursor: pointer; 
-    padding: 5px; 
-    transition: transform 0.5s ease; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;  
-    height: 40px;
-}
-
 /* L'IMAGE (L'engrenage) */
 .settings-btn img, .gear-icon-img {
     width: 26px !important; 
