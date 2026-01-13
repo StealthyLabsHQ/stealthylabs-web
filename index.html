@@ -58,16 +58,32 @@
     <div class="container">
         <nav>
             <div class="logo">
-                <a>
+                <a href="/">
                     <img src="logos/logo.png" alt="StealthyLabs" style="height: 75px; width: auto; display: block;">
                 </a>
             </div>
-            <ul class="nav-links">
-                <li><a href="about" data-key="nav_about">A propos de moi</a></li>
+
+            <ul class="nav-links desktop-only">
+                <li><a href="about.html" data-key="nav_about">A propos de moi</a></li> 
                 <li><a href="network" data-key="nav_network">Network</a></li>
                 <li><a href="legal" data-key="nav_legal">Légal</a></li>
             </ul>
+
+            <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn" onclick="toggleMobileMenu()">&times;</button>
+            <div class="mobile-links">
+                <a href="about.html" data-key="nav_about" onclick="toggleMobileMenu()">About Me</a>
+                <a href="network" data-key="nav_network" onclick="toggleMobileMenu()">Network</a>
+                <a href="legal" data-key="nav_legal" onclick="toggleMobileMenu()">Legal</a>
+            </div>
+        </div>
 
         <section class="hero" id="home">
             <h1 class="hero-title">

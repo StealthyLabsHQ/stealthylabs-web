@@ -81,6 +81,11 @@ const modal = document.getElementById('warningModal');
         }
     });
 
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+}
+
 // --- FONCTIONS CORE ---
 
 function toggleSettings(event) {

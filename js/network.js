@@ -393,8 +393,6 @@
         });
 
         loadTrack(currentTrack);
-
-        // Tentative d'Autoplay avec Fallback
         const playPromise = audio.play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
