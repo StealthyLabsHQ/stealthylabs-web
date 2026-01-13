@@ -46,11 +46,23 @@ body::after {
     text-shadow: 0 0 10px var(--glow);
 }
 
-.settings-btn {
-    background: none; border: none; cursor: pointer; color: white;
-    transition: 0.5s;
+/* L'IMAGE (L'engrenage) */
+.settings-btn img, .gear-icon-img {
+    width: 26px !important; 
+    height: 26px !important;
+    max-width: 26px;
+    display: block;
+    transition: transform 0.5s ease;
+    filter: invert(1) brightness(100%);    
+    cursor: pointer;
 }
-.settings-btn:hover { color: var(--accent); transform: rotate(90deg); }
+
+/* L'ANIMATION */
+.settings-btn:hover img { 
+    transform: rotate(90deg);
+    filter: invert(1) brightness(100%); 
+    cursor: pointer;
+}
 
 .settings-panel {
     position: absolute; top: 60px; right: 20px;
