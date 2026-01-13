@@ -116,10 +116,14 @@ function loadLanguageFile(lang) {
 }
 
 function applyTranslations() {
-    document.querySelectorAll('[data-key]').forEach(elem => {
+document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
-            elem.innerHTML = currentTranslations[key];
+            if (elem.tagName === 'UL' || elem.tagName === 'SPAN' || elem.tagName === 'P' || elem.tagName === 'TITLE') {
+                elem.innerHTML = currentTranslations[key];
+            } else {
+                elem.innerText = currentTranslations[key];
+            }
         }
     });
 }

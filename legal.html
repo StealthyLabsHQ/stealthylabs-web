@@ -4,68 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="legal_page_title">Mentions Légales - StealthyLabs</title>
-    <link rel="icon" type="image/png" href="logos/favicon.png">
-    <link rel="stylesheet" href="css/style-oth.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
     
-    <style>
-        body { display: block; padding: 0; }
-        .legal-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; font-family: var(--main-font, 'Raleway', sans-serif); }
-        h1 { color: #fff; margin-bottom: 20px; font-size: 2rem; }
-        h2 { color: #b91d1d; margin-top: 30px; margin-bottom: 10px; font-size: 1.2rem; }
-        p, li { color: #ccc; margin-bottom: 15px; line-height: 1.6; }
-        ul { margin-bottom: 15px; }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: #888; text-decoration: none; font-size: 0.9rem; transition: color 0.2s;}
-        .back-btn:hover { color: #fff; }
-    </style>
+    <link rel="stylesheet" href="css/style-main.css">
+    <link rel="stylesheet" href="css/style-legal.css">
+    <link rel="icon" type="image/png" href="logos/favicon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="legal-container">
-        <a href="/" class="back-btn" data-key="legal_back">← Retour au site</a>
-        
-        <h1 data-key="legal_title">Mentions Légales & Confidentialité</h1>
 
-        <h2 data-key="legal_1_title">1. Éditeur du site</h2>
-        <p data-key="legal_1_text">Chargement...</p>
+    <div class="top-bar">
+        <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; color: #ffffff !important; opacity: 1; display: flex; align-items: center;" title="Retour à l'accueil">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span data-key="nav_home" style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Accueil</span>
+        </a>
 
-        <h2 data-key="legal_2_title">2. Hébergement</h2>
-        <p data-key="legal_2_text">Chargement...</p>
+        <div class="time-badge"><span id="clockDisplay">--:--</span></div>
 
-        <h2 data-key="legal_3_title">3. Données personnelles & Cookies</h2>
-        <p data-key="legal_3_text_1">Chargement...</p>
-        
-        <p data-key="legal_3_text_2">Chargement...</p>
-        <ul style="color:#ccc; margin-left:20px;">
-            <li data-key="legal_3_li_1">Langue</li>
-            <li data-key="legal_3_li_2">Police</li>
-        </ul>
-        <p data-key="legal_3_text_3">Chargement...</p>
+        <button class="settings-btn" onclick="toggleSettings()" style="background: transparent; border: none; cursor: pointer;">
+            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26" style="filter: invert(1);">
+        </button>
 
-        <h2 data-key="legal_4_title">4. Liens Externes</h2>
-        <p data-key="legal_4_text">Chargement...</p>
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_language">Langue</div>
+                <select id="languageSelector" onchange="changeLanguage(this.value)">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_font">Police</div>
+                <select id="fontSelector" onchange="changeFont(this.value)">
+                    <option value="'Raleway', sans-serif">Raleway</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    </select>
+            </div>
+        </div>
     </div>
 
-    <script>
-        let currentLang = localStorage.getItem('userLang') || (navigator.language.startsWith('fr') ? 'fr' : 'en');
-        
-        const savedFont = localStorage.getItem('userFont');
-        if (savedFont) document.documentElement.style.setProperty('--main-font', savedFont);
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <a href="/">
+                    <img src="logos/logo.png" alt="StealthyLabs" style="height: 75px; width: auto; display: block;">
+                </a>
+            </div>
+            <ul class="nav-links desktop-only">
+                <li><a href="about.html" data-key="nav_about">About</a></li>
+                <li><a href="network" data-key="nav_network">Network</a></li>
+                <li><a href="legal" data-key="nav_legal">Légal</a></li>
+            </ul>
+            <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
 
-        fetch(`translations/${currentLang}.json`)
-            .then(response => response.json())
-            .then(translations => {
-                document.querySelectorAll('[data-key]').forEach(elem => {
-                    const key = elem.getAttribute('data-key');
-                    if (translations[key]) {
-                        if (translations[key].includes('<')) {
-                            elem.innerHTML = translations[key];
-                        } else {
-                            elem.innerText = translations[key];
-                        }
-                    }
-                });
-            })
-            .catch(err => console.error("Erreur chargement langue:", err));
-    </script>
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn" onclick="toggleMobileMenu()">&times;</button>
+            <div class="mobile-links">
+                <a href="about.html" data-key="nav_about" onclick="toggleMobileMenu()">About Me</a>
+                <a href="network" data-key="nav_network" onclick="toggleMobileMenu()">Network</a>
+                <a href="legal" data-key="nav_legal" onclick="toggleMobileMenu()">Legal</a>
+            </div>
+        </div>
+
+        <section class="hero" style="padding: 40px 0 20px 0;">
+            <h1 class="hero-title" style="font-size: 3rem;">
+                <span data-key="legal_hero_1">Mentions Légales</span><br>
+                <span class="gradient-text" data-key="legal_hero_2">& Confidentialité</span>
+            </h1>
+        </section>
+
+        <div class="legal-content">
+            
+            <div class="legal-section">
+                <h2 data-key="legal_editor_title">1. Édition du Site</h2>
+                <p data-key="legal_editor_text">
+                    Le site internet <strong>StealthyLabs.eu</strong> est édité par <strong>StealthyLabs</strong> (Créateur de Contenu Numérique).<br>
+                    Contact : <a href="mailto:contact@stealthylabs.eu">contact@stealthylabs.eu</a>
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_hosting_title">2. Hébergement & Infrastructure</h2>
+                <p>
+                    <span data-key="legal_hosting_lws">Hébergeur principal (Nom de domaine & Services) :</span><br>
+                    <strong>LWS (Ligne Web Services)</strong><br>
+                    10, RUE PENTHIEVRE, 75008 PARIS, FRANCE.<br>
+                    Site web : <a href="https://www.lws.fr" target="_blank">www.lws.fr</a>
+                </p>
+                <p>
+                    <span data-key="legal_hosting_cloudflare">Réseau de diffusion de contenu (CDN) & Sécurité :</span><br>
+                    <strong>Cloudflare, Inc.</strong><br>
+                    101 Townsend St, San Francisco, CA 94107, USA.<br>
+                    <span data-key="legal_cloudflare_desc">Ce site utilise l'infrastructure de Cloudflare pour assurer la sécurité (protection DDoS), la performance et la distribution mondiale du contenu.</span>
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_privacy_title">3. Données Personnelles & Cookies (RGPD)</h2>
+                <p data-key="legal_privacy_intro">
+                    Conformément au Règlement Général sur la Protection des Données (RGPD), nous appliquons une politique de confidentialité stricte basée sur le principe de minimisation des données.
+                </p>
+                
+                <p><strong data-key="legal_privacy_point1_title">Absence de collecte de données (No-Log) :</strong></p>
+                <ul data-key="legal_privacy_point1_list">
+                    <li>Nous ne collectons <strong>aucune</strong> donnée personnelle (Nom, adresse, numéro de téléphone).</li>
+                    <li>Nous ne stockons <strong>pas</strong> votre adresse IP dans nos bases de données.</li>
+                    <li>Nous n'utilisons aucun traceur publicitaire (Pixel Facebook, Google Analytics, etc.).</li>
+                </ul>
+
+                <p><strong data-key="legal_privacy_point2_title">Stockage Local (Préférences) :</strong></p>
+                <p data-key="legal_privacy_point2_desc">
+                    Ce site n'utilise pas de cookies de suivi. Nous utilisons uniquement la technologie "Local Storage" de votre navigateur pour sauvegarder vos préférences d'affichage (Langue choisie et Police d'écriture). Ces données restent strictement sur votre appareil et ne sont jamais transmises à nos serveurs ni à des tiers.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_ip_title">4. Propriété Intellectuelle</h2>
+                <p data-key="legal_ip_text">
+                    L'ensemble des contenus (textes, images, graphismes, logos, vidéos) présents sur StealthyLabs.eu est la propriété exclusive de l'éditeur, sauf mention contraire (marques tierces, produits présentés). Toute reproduction totale ou partielle est interdite sans autorisation préalable.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_links_title">5. Liens Externes</h2>
+                <p data-key="legal_links_text">
+                    Ce site contient des liens hypertextes vers d'autres sites (YouTube, Twitch, Discord, Amazon, revendeurs, etc.). StealthyLabs n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur politique de confidentialité.
+                </p>
+            </div>
+
+        </div>
+
+        <footer>
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="network" data-key="nav_social">Social</a>
+                <a href="legal" data-key="nav_legal">Légal</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/index.js"></script>
 </body>
 </html>

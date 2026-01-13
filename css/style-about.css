@@ -1,0 +1,91 @@
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-align: left;
+            line-height: 1.6;
+            color: #ccc;
+            font-size: 1.1rem;
+            background: #0f0f0f;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #222;
+        }
+        
+        .setup-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .setup-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+        
+        .setup-card .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .setup-card .card:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+            background: #151515;
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .setup-card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .setup-price {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: auto;
+            padding-top: 15px;
+            display: block;
+        }
+        
+        .card h3 {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .card p {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
