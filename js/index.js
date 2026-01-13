@@ -28,6 +28,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// =====================================================
+// GESTION MODAL REDIRECTION
+// =====================================================
+let pendingUrl = "";
+const overlay = document.getElementById('redirectOverlay'); 
+const urlDisplay = document.getElementById('redirectUrl');
+const confirmBtn = document.getElementById('confirmRedirectBtn');
+
+// Fermer la modal
+function closeRedirect() {
+    if(!overlay) return;
+    overlay.classList.remove('show');
+    setTimeout(() => { overlay.style.display = 'none'; }, 300);
+}
+
+// Ouvrir la modal
+function openModal(url) {
+    if(!overlay) return;
+    pendingUrl = url;
+    if(urlDisplay) urlDisplay.innerText = url;
+    
+    overlay.style.display = 'flex'; 
+    setTimeout(() => { overlay.classList.add('show'); }, 10);
+}
+
+if(confirmBtn) {
+    confirmBtn.onclick = () => {
+        window.open(pendingUrl, '_blank');
+        closeRedirect();
+    };
+}
+
+window.closeRedirect = closeRedirect;
+
+// Intercepter les clics sur les liens externes
+document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a[target="_blank"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            openModal(link.href);
+        });
+    });
+});
+
 // --- FONCTIONS CORE ---
 
 function toggleSettings(event) {
