@@ -491,8 +491,8 @@
         .discord-card, 
         .creator-code, 
         .music-player {
-            border: 1px solid rgba(255, 0, 0, 0.6) !important;
-            box-shadow: 0 0 5px rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3) !important; 
+            box-shadow: 0 0 6px rgba(255, 0, 0, 0.15) !important; 
             transition: all 0.3s ease;
         }
 
@@ -500,14 +500,14 @@
         .creator-code:hover, 
         .music-player:hover,
         .discord-card:hover {
-            border-color: #ff0000 !important;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.35) !important;
+            border-color: rgba(255, 0, 0, 0.8) !important; 
+            /* Lueur nette autour */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4) !important; 
             transform: translateY(-2px);
-            background-color: rgba(255, 0, 0, 0.03);
+            background-color: rgba(255, 0, 0, 0.02);
         }
 
         .avatar {
             border: 3px solid #000000 !important;
             box-shadow: none !important;
-            background-color: #000;
         }

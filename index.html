@@ -132,16 +132,16 @@
                     </svg>
                 </div>
 
-                <h2>Redirection pending</h2>
-                <p>You are about to leave StealthyLabs for:</p>
+                <h2 data-key="redirect_title">Attente de redirection</h2>
+                <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
                 
                 <div class="url-container">
                     <span id="targetUrl">https://...</span>
                 </div>
 
                 <div class="modal-actions">
-                    <button class="btn-cancel" onclick="closeWarningModal()">Cancel</button>
-                    <button class="btn-continue" id="continueBtn">Continue</button>
+                    <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
+                    <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
                 </div>
             </div>
         </div>
