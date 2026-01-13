@@ -179,6 +179,20 @@
             </div>
         </div>
 
+        <div id="redirectOverlay" class="redirect-overlay">
+            <div class="redirect-box">
+                <div class="redirect-icon">⚠️</div>
+                <h2 data-key="redirect_title">Attente de redirection</h2>
+                <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
+                <p id="redirectUrl" class="redirect-url">...</p>
+                
+                <div class="redirect-buttons">
+                    <button onclick="closeRedirect()" data-key="btn_cancel">Annuler</button>
+                    <button id="confirmRedirectBtn" data-key="btn_continue">Continuer</button>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
             <div class="footer-links">
@@ -186,6 +200,14 @@
                 <a href="legal.html" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
+        </div> <div id="redirectOverlay" class="redirect-overlay">
+        <div class="redirect-box">
+           <div class="redirect-buttons">
+                <button onclick="closeRedirect()" data-key="btn_cancel">Annuler</button>
+                <button id="confirmRedirectBtn" data-key="btn_continue">Continuer</button>
+            </div>
+        </div>
+    </div>
     </div>
 
     <script src="js/index.js"></script>
