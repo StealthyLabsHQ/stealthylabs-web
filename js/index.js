@@ -3,7 +3,7 @@
 // =====================================================
 
 const JSON_PATH = '';
-let currentLang = 'fr';
+let currentLang = 'en';
 let currentTranslations = {};
 
 document.addEventListener('DOMContentLoaded', () => {
