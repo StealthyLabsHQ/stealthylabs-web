@@ -56,18 +56,32 @@ body::after {
     justify-content: center;
 }
 
-/* On définit la taille de ton image PNG ici */
-.gear-icon-img {
-    width: 26px;  /* Ajuste si tu veux plus gros ou plus petit */
-    height: 26px;
-    display: block;
+/* LE BOUTON (Conteneur) */
+.settings-btn {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    padding: 5px; /* Un peu d'espace autour */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  /* On force la taille du bouton lui-même */
+    height: 40px;
 }
 
-/* L'animation de rotation au survol */
-.settings-btn:hover { 
+/* L'IMAGE (L'engrenage) */
+.settings-btn img, .gear-icon-img {
+    width: 26px !important;  /* Le !important force la priorité */
+    height: 26px !important;
+    max-width: 26px;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* L'ANIMATION */
+.settings-btn:hover img { 
     transform: rotate(90deg); 
 }
-.settings-btn:hover { color: var(--accent); transform: rotate(90deg); }
 
 .settings-panel {
     position: absolute; top: 60px; right: 20px;
