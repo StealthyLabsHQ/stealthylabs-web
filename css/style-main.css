@@ -67,14 +67,13 @@ body::after {
     max-width: 26px;
     display: block;
     transition: transform 0.5s ease;
-    filter: brightness(200%) drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
-    cursor: pointer;
+    filter: invert(1) brightness(200%) drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));    cursor: pointer;
 }
 
 /* L'ANIMATION */
 .settings-btn:hover img { 
     transform: rotate(90deg);
-    filter: brightness(250%) drop-shadow(0 0 5px rgba(255, 255, 255, 1));
+    filter: invert(1) brightness(250%) drop-shadow(0 0 6px rgba(255, 255, 255, 1));
     cursor: pointer;
 }
 
