@@ -94,12 +94,14 @@
                     <span data-key="legal_hosting_lws">Hébergeur principal (Nom de domaine & Services) :</span><br>
                     <strong>LWS (Ligne Web Services)</strong><br>
                     10, RUE PENTHIEVRE, 75008 PARIS, FRANCE.<br>
-                    Site web : <a href="https://www.lws.fr" target="_blank">www.lws.fr</a>
+                    <span data-key="legal_website">Site web :</span> <a href="https://www.lws.fr" target="_blank">lws.fr</a>
                 </p>
                 <p>
                     <span data-key="legal_hosting_cloudflare">Réseau de diffusion de contenu (CDN) & Sécurité :</span><br>
                     <strong>Cloudflare, Inc.</strong><br>
                     101 Townsend St, San Francisco, CA 94107, USA.<br>
+                    <span data-key="legal_website">Site web :</span> <a href="https://www.cloudflare.com/" target="_blank">cloudflare.com</a>
+                    <br></br>
                     <span data-key="legal_cloudflare_desc">Ce site utilise l'infrastructure de Cloudflare pour assurer la sécurité (protection DDoS), la performance et la distribution mondiale du contenu.</span>
                 </p>
             </div>
@@ -136,7 +138,17 @@
                     Ce site contient des liens hypertextes vers d'autres sites (YouTube, Twitch, Discord, Amazon, revendeurs, etc.). StealthyLabs n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur politique de confidentialité.
                 </p>
             </div>
+            <div class="legal-section">
+                <h2 data-key="legal_law_title">6. Droit Applicable & Litiges</h2>
+                <p data-key="legal_law_text">
+                    Tout litige en relation avec l’utilisation du site <strong>StealthyLabs.eu</strong> est soumis au droit français. Il est fait attribution exclusive de juridiction aux tribunaux compétents de Paris.
+                </p>
+            </div>
 
+            <p style="text-align: right; color: #555; font-style: italic; font-size: 0.8rem; margin-top: 40px;">
+                <span data-key="legal_last_update">Dernière mise à jour :</span> 
+                <span data-key="legal_date">13/01/2026</span>
+            </p>
         </div>
 
         <footer>
@@ -147,6 +159,28 @@
         </footer>
     </div>
 
+    </div>
+        <div id="warningModal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-icon">
+                    <svg viewBox="0 0 24 24" width="50" height="50">
+                        <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+
+                <h2 data-key="redirect_title">Attente de redirection</h2>
+                <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
+                
+                <div class="url-container">
+                    <span id="targetUrl">https://...</span>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
+                    <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
+                </div>
+            </div>
+        </div>
     <script src="js/index.js"></script>
 </body>
 </html>

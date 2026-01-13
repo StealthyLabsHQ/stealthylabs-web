@@ -186,8 +186,26 @@ footer {
 .modal-box h2 { font-size: 22px; font-weight: 700; margin: 0 0 10px 0; color: #fff; }
 .modal-box p { color: #bbb; margin-bottom: 15px; font-size: 15px; }
 .url-container { background: #111; padding: 12px; border-radius: 6px; margin-bottom: 30px; font-family: monospace; color: #ff3333; word-break: break-all; font-size: 14px; border: 1px solid #333; }
-.modal-actions { display: flex; justify-content: center; gap: 15px; width: 100%; }
-.modal-actions button { padding: 12px 0; width: 120px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.modal-actions button {
+    padding: 12px 0;
+    width: 120px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.modal-actions button {
+    padding: 12px 0;
+    width: 120px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit; 
+    text-transform: uppercase;
+}
 .btn-cancel { background: transparent; border: 1px solid #555; color: #fff; }
 .btn-cancel:hover { background: #222; border-color: #fff; }
 .btn-continue { background: #ff0000; border: 1px solid #ff0000; color: #000; }
