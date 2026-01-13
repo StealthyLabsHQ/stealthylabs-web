@@ -133,8 +133,12 @@ footer {
     .nav-links { display: none; }
 }
 
+/* --- L'arrière-plan sombre --- */
 .modal-overlay {
-    display: none;
+    visibility: hidden; 
+    opacity: 0;
+    pointer-events: none;
+
     position: fixed;
     top: 0;
     left: 0;
@@ -142,16 +146,18 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.90);
     z-index: 99999;
+    display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Inter', sans-serif;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    font-family: 'monospace';
+    
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .modal-overlay.active {
-    display: flex;
+    visibility: visible;
     opacity: 1;
+    pointer-events: auto;
 }
 
 .modal-box {
@@ -165,71 +171,25 @@ footer {
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
     color: white;
     position: relative;
+
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.modal-icon svg {
-    display: block;
-    margin: 0 auto 20px auto;
+.modal-overlay.active .modal-box {
+    opacity: 1;
+    transform: scale(1) translateY(0);
 }
 
-.modal-box h2 {
-    font-size: 22px;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-    color: #fff;
-}
-
-.modal-box p {
-    color: #bbb;
-    margin-bottom: 15px;
-    font-size: 15px;
-}
-
-.url-container {
-    background: #111;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 30px;
-    font-family: monospace;
-    color: #ff3333;
-    word-break: break-all;
-    font-size: 14px;
-    border: 1px solid #333;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.modal-actions button {
-    padding: 12px 0;
-    width: 120px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-cancel {
-    background: transparent;
-    border: 1px solid #555;
-    color: #fff;
-}
-.btn-cancel:hover {
-    background: #222;
-    border-color: #fff;
-}
-
-.btn-continue {
-    background: #ff0000;
-    border: 1px solid #ff0000;
-    color: #000;
-}
-.btn-continue:hover {
-    background: #cc0000;
-    transform: scale(1.05);
-}
+/* (Le reste du CSS pour les icônes, textes et boutons ne change pas) */
+.modal-icon svg { display: block; margin: 0 auto 20px auto; }
+.modal-box h2 { font-size: 22px; font-weight: 700; margin: 0 0 10px 0; color: #fff; }
+.modal-box p { color: #bbb; margin-bottom: 15px; font-size: 15px; }
+.url-container { background: #111; padding: 12px; border-radius: 6px; margin-bottom: 30px; font-family: monospace; color: #ff3333; word-break: break-all; font-size: 14px; border: 1px solid #333; }
+.modal-actions { display: flex; justify-content: center; gap: 15px; width: 100%; }
+.modal-actions button { padding: 12px 0; width: 120px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-cancel { background: transparent; border: 1px solid #555; color: #fff; }
+.btn-cancel:hover { background: #222; border-color: #fff; }
+.btn-continue { background: #ff0000; border: 1px solid #ff0000; color: #000; }
+.btn-continue:hover { background: #cc0000; transform: scale(1.05); }
