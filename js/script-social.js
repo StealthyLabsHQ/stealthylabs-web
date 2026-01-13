@@ -3,7 +3,7 @@
 // =====================================================
 
 // CONFIGURATION
-const JSON_PATH = 'translations/'; // On garde ça car ton index fonctionne avec
+const JSON_PATH = ''; // On garde ça car ton index fonctionne avec
 let currentLang = 'fr';
 let currentTranslations = {};
 let pendingRedirectUrl = ''; 

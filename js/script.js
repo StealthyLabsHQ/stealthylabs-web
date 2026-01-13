@@ -1,7 +1,7 @@
     // =====================================================
     // GESTION LANGUES (DÉCENTRALISÉE JSON)
     // =====================================================
-    let currentLang = 'en';
+    let currentLang = 'fr';
     let currentTranslations = {}; // Stockera les données chargées du JSON
 
     function detectLanguage() {
