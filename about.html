@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
 
     <style>
-        /* --- STYLE SPÉCIFIQUE À LA PAGE ABOUT --- */
         
         .about-text {
             max-width: 800px;
@@ -37,12 +36,11 @@
             text-transform: uppercase;
         }
 
-        /* Liens sur toute la carte */
         .setup-card {
             text-decoration: none;
             color: inherit;
             display: block;
-            height: 100%; /* S'assure que toutes les cartes ont la même hauteur */
+            height: 100%;
         }
         
         .setup-card .card {
@@ -59,10 +57,9 @@
             background: #151515;
         }
 
-        /* NOUVEAU : Style pour les images de produits */
         .card-img-container {
             width: 100%;
-            height: 180px; /* Hauteur fixe pour l'uniformité */
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -76,11 +73,11 @@
         .card-img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* L'image s'adapte sans être coupée */
-            transition: transform 0.3s ease;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s ease;
         }
 
-        /* Zoom sur l'image au survol */
         .setup-card:hover .card-img {
             transform: scale(1.1);
         }
@@ -89,7 +86,7 @@
             color: #2ecc71;
             font-weight: bold;
             font-size: 0.9rem;
-            margin-top: auto; /* Pousse le bouton vers le bas */
+            margin-top: auto;
             padding-top: 15px;
             display: block;
         }
@@ -176,8 +173,6 @@
             <p data-key="about_who_text">
                 Salut ! Je suis StealthyLabs, un passionné de gaming FPS et de création de contenu numérique. 
                 Mon objectif est de partager ma passion à travers des gameplays intenses, des tutoriels techniques et des moments de détente.
-                <br><br>
-                Je passe la plupart de mon temps à optimiser des configurations, tester de nouveaux jeux et interagir avec la communauté.
             </p>
         </section>
 
