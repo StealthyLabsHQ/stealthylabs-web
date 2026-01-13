@@ -47,8 +47,25 @@ body::after {
 }
 
 .settings-btn {
-    background: none; border: none; cursor: pointer; color: white;
-    transition: 0.5s;
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    transition: transform 0.5s ease; /* Animation fluide */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* On définit la taille de ton image PNG ici */
+.gear-icon-img {
+    width: 26px;  /* Ajuste si tu veux plus gros ou plus petit */
+    height: 26px;
+    display: block;
+}
+
+/* L'animation de rotation au survol */
+.settings-btn:hover { 
+    transform: rotate(90deg); 
 }
 .settings-btn:hover { color: var(--accent); transform: rotate(90deg); }
 
