@@ -28,52 +28,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// =====================================================
-// GESTION MODAL REDIRECTION
-// =====================================================
-let pendingUrl = "";
-const overlay = document.getElementById('redirectOverlay'); 
-const urlDisplay = document.getElementById('redirectUrl');
-const confirmBtn = document.getElementById('confirmRedirectBtn');
+// --- Logique du Modal d'Avertissement ---
 
-// Fermer la modal
-function closeRedirect() {
-    if(!overlay) return;
-    overlay.classList.remove('show');
-    setTimeout(() => { overlay.style.display = 'none'; }, 300);
-}
+const modal = document.getElementById('warningModal');
+const targetUrlSpan = document.getElementById('targetUrl');
+const continueBtn = document.getElementById('continueBtn');
+let pendingUrl = '';
 
-// Ouvrir la modal
-function openModal(url) {
-    if(!overlay) return;
+function openWarningModal(e, url) {
+    e.preventDefault();
     pendingUrl = url;
-    if(urlDisplay) urlDisplay.innerText = url;
-    
-    overlay.style.display = 'flex'; 
-    setTimeout(() => { overlay.classList.add('show'); }, 10);
+    targetUrlSpan.textContent = url;
+    modal.style.display = 'flex';
 }
 
-if(confirmBtn) {
-    confirmBtn.onclick = () => {
-        window.open(pendingUrl, '_blank');
-        closeRedirect();
-    };
+// Fonction pour fermer le modal
+function closeWarningModal() {
+    modal.style.display = 'none';
+    pendingUrl = '';
 }
 
-window.closeRedirect = closeRedirect;
-
-// Intercepter les clics sur les liens externes
-document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('a[target="_blank"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            openModal(link.href);
-        });
-    });
+continueBtn.addEventListener('click', () => {
+    if (pendingUrl) {
+        window.location.href = pendingUrl;
+    }
 });
 
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeWarningModal();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const networkLink = document.querySelector('a[href="network"]');
+    if (networkLink) {
+        networkLink.addEventListener('click', (e) => {
+            openWarningModal(e, "https://stealthylabs.eu/network"); 
+        });
+    }
+
+    const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
+    if (lookyLink) {
+        lookyLink.addEventListener('click', (e) => {
+            openWarningModal(e, "https://looky-gta.cc");
+        });
+    }
+    
+    const ctaButton = document.querySelector('.cta-button[href="network"]');
+    if (ctaButton) {
+        ctaButton.addEventListener('click', (e) => {
+             openWarningModal(e, "https://stealthylabs.eu/network");
+        });
+    }
+});
 // --- FONCTIONS CORE ---
 
 function toggleSettings(event) {
