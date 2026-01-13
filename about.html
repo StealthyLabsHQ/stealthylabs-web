@@ -13,7 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
 
     <style>
-        /* Petits ajustements spécifiques pour la page About */
+        /* --- STYLE SPÉCIFIQUE À LA PAGE ABOUT --- */
+        
         .about-text {
             max-width: 800px;
             margin: 0 auto 60px auto;
@@ -36,25 +37,76 @@
             text-transform: uppercase;
         }
 
-        /* Style pour les cartes de setup */
+        /* Liens sur toute la carte */
         .setup-card {
-            text-decoration: none; /* Enlève le soulignement des liens */
+            text-decoration: none;
             color: inherit;
-            display: block; /* Rend tout le bloc cliquable */
+            display: block;
+            height: 100%; /* S'assure que toutes les cartes ont la même hauteur */
         }
         
+        .setup-card .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
         .setup-card .card:hover {
             border-color: #ff0000;
             transform: translateY(-5px);
-            cursor: pointer;
+            background: #151515;
+        }
+
+        /* NOUVEAU : Style pour les images de produits */
+        .card-img-container {
+            width: 100%;
+            height: 180px; /* Hauteur fixe pour l'uniformité */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .card-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* L'image s'adapte sans être coupée */
+            transition: transform 0.3s ease;
+        }
+
+        /* Zoom sur l'image au survol */
+        .setup-card:hover .card-img {
+            transform: scale(1.1);
         }
 
         .setup-price {
-            color: #2ecc71; /* Vert pour le prix ou "Check" */
+            color: #2ecc71;
             font-weight: bold;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-top: auto; /* Pousse le bouton vers le bas */
+            padding-top: 15px;
             display: block;
+        }
+        
+        .card h3 {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .card p {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -89,7 +141,12 @@
                 <select id="fontSelector" onchange="changeFont(this.value)">
                     <option value="'Raleway', sans-serif">Raleway</option>
                     <option value="'Inter', sans-serif">Inter</option>
-                    </select>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Oswald', sans-serif">Oswald</option>
+                </select>
             </div>
         </div>
     </div>
@@ -102,7 +159,7 @@
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="network" data-key="nav_social">Social</a></li>
+                <li><a href="network" data-key="nav_network">Network</a></li>
                 <li><a href="legal" data-key="nav_legal">Légal</a></li>
             </ul>
         </nav>
@@ -127,38 +184,45 @@
         <h2 class="setup-title" data-key="setup_title">Mon Setup</h2>
         
         <div class="cards-grid">
-            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+            <a href="https://www.endgamegear.com/en-us/gaming-mice/op1-8k-v2" class="setup-card" target="_blank">
                 <div class="card">
-                    <div class="card-icon">🖱️</div>
+                    <div class="card-img-container">
+                        <img src="logos/setup/mouse.jpg" alt="Mouse" class="card-img">
+                    </div>
                     <h3 data-key="setup_mouse">Souris</h3>
-                    <p>Logitech G Pro X Superlight</p>
+                    <p>Endgame Gear OP1 8K v2</p>
                     <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
                 </div>
             </a>
 
-            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+            <a href="https://www.luminkey.com/products/magger68-ultra-he-magnetic-gaming-keyboard" class="setup-card" target="_blank">
                 <div class="card">
-                    <div class="card-icon">⌨️</div>
+                    <div class="card-img-container">
+                        <img src="logos/setup/keyboard.jpg" alt="Keyboard" class="card-img">
+                    </div>
                     <h3 data-key="setup_keyboard">Clavier</h3>
-                    <p>Wooting 60HE</p>
+                    <p>Luminkey Magger 68 HE</p>
                     <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
                 </div>
             </a>
 
-            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+            <a href="https://www.maxgaming.com/en/mousepads/mousepad-fx-zero-soft-xl-daidai-orange" class="setup-card" target="_blank">
                 <div class="card">
-                    <div class="card-icon">🎧</div>
-                    <h3 data-key="setup_headset">Casque</h3>
-                    <p>Beyerdynamic DT 990 Pro</p>
+                    <div class="card-img-container">
+                        <img src="logos/setup/mousepad.jpg" alt="Mousepad" class="card-img">
+                    </div>
+                    <h3 data-key="setup_mousepad">Tapis</h3> <p>Artisan FX Zero XSoft XL</p>
                     <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
                 </div>
             </a>
 
-            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+            <a href="https://www.lg.com/fr/moniteurs/gaming/lg-27gs95qe-b/" class="setup-card" target="_blank">
                 <div class="card">
-                    <div class="card-icon">🖥️</div>
+                    <div class="card-img-container">
+                        <img src="logos/setup/monitor.png" alt="Monitor" class="card-img">
+                    </div>
                     <h3 data-key="setup_monitor">Écran</h3>
-                    <p>Zowie XL2546K 240Hz</p>
+                    <p>LG UltraGear OLED 240Hz</p>
                     <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
                 </div>
             </a>
@@ -196,13 +260,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // On cible tous les liens qui ont la classe "setup-card"
             const setupLinks = document.querySelectorAll('.setup-card');
-            
             setupLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
-                    // On appelle la fonction openWarningModal qui est dans js/index.js
-                    // Note: Assure-toi que openWarningModal est bien accessible globalement
                     if (typeof openWarningModal === 'function') {
                         openWarningModal(e, link.href);
                     }
