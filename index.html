@@ -78,6 +78,28 @@
             <a href="network" class="cta-button" data-key="cta_button">Découvrir</a>
         </section>
 
+        <div id="warningModal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-icon">
+                    <svg viewBox="0 0 24 24" width="50" height="50">
+                        <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+
+                <h2>Redirection pending</h2>
+                <p>You are about to leave StealthyLabs for:</p>
+                
+                <div class="url-container">
+                    <span id="targetUrl">https://...</span>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeWarningModal()">Cancel</button>
+                    <button class="btn-continue" id="continueBtn">Continue</button>
+                </div>
+            </div>
+        </div>
+
         <div class="cards-grid">
             <div class="card">
                 <div class="card-icon">🎮</div>
@@ -107,29 +129,6 @@
                 <a href="legal" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
-    </div>
-
-    <div id="warningModal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-icon">
-                <svg viewBox="0 0 24 24" width="48" height="48">
-                    <path fill="#FFC107" d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/>
-                    <path fill="#FFC107" d="M12,1 L24,22 L0,22 L12,1 Z M12,4 L2.5,21 L21.5,21 L12,4 Z M13,16 L13,18 L11,18 L11,16 L13,16 Z M13,10 L13,14 L11,14 L11,10 L13,10 Z" style="display:none;"/> <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" fill="#FFC107"/>
-                </svg>
-            </div>
-
-            <h2>Redirection pending</h2>
-            <p>You are about to leave StealthyLabs for:</p>
-            
-            <div class="url-container">
-                <span id="targetUrl">https://...</span>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeWarningModal()">Cancel</button>
-                <button class="btn-continue" id="continueBtn">Continue</button>
-            </div>
-        </div>
     </div>
     <script src="js/index.js"></script>
 </body>

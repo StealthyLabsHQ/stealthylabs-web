@@ -28,60 +28,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- Logique du Modal d'Avertissement ---
-
 const modal = document.getElementById('warningModal');
-const targetUrlSpan = document.getElementById('targetUrl');
-const continueBtn = document.getElementById('continueBtn');
-let pendingUrl = '';
+    const targetUrlSpan = document.getElementById('targetUrl');
+    const continueBtn = document.getElementById('continueBtn');
+    let pendingUrl = '';
 
-function openWarningModal(e, url) {
-    e.preventDefault();
-    pendingUrl = url;
-    targetUrlSpan.textContent = url;
-    modal.style.display = 'flex';
-}
-
-// Fonction pour fermer le modal
-function closeWarningModal() {
-    modal.style.display = 'none';
-    pendingUrl = '';
-}
-
-continueBtn.addEventListener('click', () => {
-    if (pendingUrl) {
-        window.location.href = pendingUrl;
+    function openWarningModal(e, url) {
+        e.preventDefault(); // Bloque le lien
+        pendingUrl = url;
+        targetUrlSpan.textContent = url;
+        modal.classList.add('active'); // Affiche le modal via CSS
     }
-});
 
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeWarningModal();
+    function closeWarningModal() {
+        modal.classList.remove('active'); // Cache le modal
+        pendingUrl = '';
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    const networkLink = document.querySelector('a[href="network"]');
-    if (networkLink) {
-        networkLink.addEventListener('click', (e) => {
-            openWarningModal(e, "https://stealthylabs.eu/network"); 
+    continueBtn.addEventListener('click', () => {
+        if (pendingUrl) {
+            window.location.href = pendingUrl;
+        }
+    });
+
+    // Fermer si on clique sur le fond noir
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeWarningModal();
+        }
+    });
+
+    // --- CIBLAGE DES LIENS ---
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Lien "Social" (href="network")
+        const networkLinks = document.querySelectorAll('a[href="network"]');
+        networkLinks.forEach(link => {
+            link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
         });
-    }
 
-    const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
-    if (lookyLink) {
-        lookyLink.addEventListener('click', (e) => {
-            openWarningModal(e, "https://looky-gta.cc");
-        });
-    }
-    
-    const ctaButton = document.querySelector('.cta-button[href="network"]');
-    if (ctaButton) {
-        ctaButton.addEventListener('click', (e) => {
-             openWarningModal(e, "https://stealthylabs.eu/network");
-        });
-    }
-});
+        // 2. Lien "Looky System" (href="https://looky-gta.cc")
+        const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
+        if (lookyLink) {
+            lookyLink.addEventListener('click', (e) => openWarningModal(e, "https://looky-gta.cc"));
+        }
+
+        // 3. Bouton "Découvrir" (qui pointe aussi vers network)
+        const ctaBtn = document.querySelector('.cta-button');
+        if(ctaBtn && ctaBtn.getAttribute('href') === 'network') {
+            ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
+        }
+    });
+
 // --- FONCTIONS CORE ---
 
 function toggleSettings(event) {

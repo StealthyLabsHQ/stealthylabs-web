@@ -133,89 +133,106 @@ footer {
     .nav-links { display: none; }
 }
 
-/* --- Styles Modal Avertissement --- */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    font-family: 'monospace';
-}
+/* CSS DIRECT POUR FORCER LE STYLE */
+    .modal-overlay {
+        display: none; /* Caché par défaut */
+        position: fixed; /* Fixé par rapport à l'écran */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.90); /* Fond très sombre */
+        z-index: 99999; /* Toujours au dessus de tout */
+        justify-content: center; /* Centrage horizontal */
+        align-items: center; /* Centrage vertical */
+        font-family: 'monospace';
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 
-.modal-box {
-    background-color: #050505;
-    border: 2px solid #ff0000;
-    border-radius: 20px;
-    padding: 40px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-    color: white;
-    position: relative;
-}
+    .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
 
-.modal-icon svg {
-    margin-bottom: 20px;
-}
+    .modal-box {
+        background-color: #000000;
+        border: 2px solid #ff0000; /* Bordure ROUGE */
+        border-radius: 12px;
+        padding: 40px;
+        width: 90%;
+        max-width: 450px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); /* Lueur rouge */
+        color: white;
+        position: relative;
+    }
 
-.modal-box h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #fff;
-}
+    .modal-icon {
+        margin-bottom: 20px;
+    }
+    
+    .modal-icon svg {
+        display: block;
+        margin: 0 auto;
+    }
 
-.modal-box p {
-    color: #aaa;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
+    .modal-box h2 {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        color: #fff;
+    }
 
-.url-container {
-    background: #111;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    word-break: break-all;
-    font-family: monospace;
-    color: #ff0000;
-}
+    .modal-box p {
+        color: #bbb;
+        margin-bottom: 15px;
+        font-size: 15px;
+    }
 
-.modal-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
+    .url-container {
+        background: #111;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        font-family: monospace;
+        color: #ff3333; /* URL en rouge */
+        word-break: break-all;
+        font-size: 14px;
+        border: 1px solid #333;
+    }
 
-.modal-actions button {
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
+    .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+    }
 
-.modal-actions button:hover {
-    transform: scale(1.05);
-}
+    .modal-actions button {
+        padding: 12px 0;
+        width: 120px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
 
-.btn-cancel {
-    background: transparent;
-    border: 1px solid #444;
-    color: #fff;
-}
+    .btn-cancel {
+        background: transparent;
+        border: 1px solid #555;
+        color: #fff;
+    }
+    .btn-cancel:hover {
+        background: #222;
+    }
 
-.btn-continue {
-    background: #ff0000;
-    border: none;
-    color: #000;
-}
+    .btn-continue {
+        background: #ff0000;
+        border: 1px solid #ff0000;
+        color: #000; /* Texte noir sur fond rouge */
+    }
+    .btn-continue:hover {
+        background: #cc0000;
+    }
