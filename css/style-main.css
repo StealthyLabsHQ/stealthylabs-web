@@ -133,106 +133,103 @@ footer {
     .nav-links { display: none; }
 }
 
-/* CSS DIRECT POUR FORCER LE STYLE */
-    .modal-overlay {
-        display: none; /* Caché par défaut */
-        position: fixed; /* Fixé par rapport à l'écran */
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.90); /* Fond très sombre */
-        z-index: 99999; /* Toujours au dessus de tout */
-        justify-content: center; /* Centrage horizontal */
-        align-items: center; /* Centrage vertical */
-        font-family: 'monospace';
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.90);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-    .modal-overlay.active {
-        display: flex;
-        opacity: 1;
-    }
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
 
-    .modal-box {
-        background-color: #000000;
-        border: 2px solid #ff0000; /* Bordure ROUGE */
-        border-radius: 12px;
-        padding: 40px;
-        width: 90%;
-        max-width: 450px;
-        text-align: center;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); /* Lueur rouge */
-        color: white;
-        position: relative;
-    }
+.modal-box {
+    background-color: #050505;
+    border: 2px solid #ff0000;
+    border-radius: 12px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    color: white;
+    position: relative;
+}
 
-    .modal-icon {
-        margin-bottom: 20px;
-    }
-    
-    .modal-icon svg {
-        display: block;
-        margin: 0 auto;
-    }
+.modal-icon svg {
+    display: block;
+    margin: 0 auto 20px auto;
+}
 
-    .modal-box h2 {
-        font-size: 22px;
-        font-weight: 700;
-        margin: 0 0 10px 0;
-        color: #fff;
-    }
+.modal-box h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #fff;
+}
 
-    .modal-box p {
-        color: #bbb;
-        margin-bottom: 15px;
-        font-size: 15px;
-    }
+.modal-box p {
+    color: #bbb;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
 
-    .url-container {
-        background: #111;
-        padding: 12px;
-        border-radius: 6px;
-        margin-bottom: 30px;
-        font-family: monospace;
-        color: #ff3333; /* URL en rouge */
-        word-break: break-all;
-        font-size: 14px;
-        border: 1px solid #333;
-    }
+.url-container {
+    background: #111;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    font-family: monospace;
+    color: #ff3333;
+    word-break: break-all;
+    font-size: 14px;
+    border: 1px solid #333;
+}
 
-    .modal-actions {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        width: 100%;
-    }
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
 
-    .modal-actions button {
-        padding: 12px 0;
-        width: 120px;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
+.modal-actions button {
+    padding: 12px 0;
+    width: 120px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
-    .btn-cancel {
-        background: transparent;
-        border: 1px solid #555;
-        color: #fff;
-    }
-    .btn-cancel:hover {
-        background: #222;
-    }
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #555;
+    color: #fff;
+}
+.btn-cancel:hover {
+    background: #222;
+    border-color: #fff;
+}
 
-    .btn-continue {
-        background: #ff0000;
-        border: 1px solid #ff0000;
-        color: #000; /* Texte noir sur fond rouge */
-    }
-    .btn-continue:hover {
-        background: #cc0000;
-    }
+.btn-continue {
+    background: #ff0000;
+    border: 1px solid #ff0000;
+    color: #000;
+}
+.btn-continue:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
