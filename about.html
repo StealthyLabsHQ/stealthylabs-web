@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StealthyLabs | À Propos</title>
+    
+    <link rel="stylesheet" href="css/style-main.css">
+    <link rel="icon" type="image/png" href="logos/favicon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+        /* Petits ajustements spécifiques pour la page About */
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-align: left;
+            line-height: 1.6;
+            color: #ccc;
+            font-size: 1.1rem;
+            background: #0f0f0f;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #222;
+        }
+        
+        .setup-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* Style pour les cartes de setup */
+        .setup-card {
+            text-decoration: none; /* Enlève le soulignement des liens */
+            color: inherit;
+            display: block; /* Rend tout le bloc cliquable */
+        }
+        
+        .setup-card .card:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .setup-price {
+            color: #2ecc71; /* Vert pour le prix ou "Check" */
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; color: #ffffff !important; opacity: 1; display: flex; align-items: center;" title="Retour à l'accueil">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span data-key="nav_home" style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Accueil</span>
+        </a>
+
+        <div class="time-badge">
+            <span id="clockDisplay">--:--</span>
+        </div>
+
+        <button class="settings-btn" onclick="toggleSettings()" style="background: transparent; border: none; cursor: pointer;">
+            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26" style="filter: invert(1);">
+        </button>
+
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_language">Langue</div>
+                <select id="languageSelector" onchange="changeLanguage(this.value)">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_font">Police</div>
+                <select id="fontSelector" onchange="changeFont(this.value)">
+                    <option value="'Raleway', sans-serif">Raleway</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <a href="/">
+                    <img src="logos/logo.png" alt="StealthyLabs" style="height: 75px; width: auto;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="network" data-key="nav_social">Social</a></li>
+                <li><a href="legal" data-key="nav_legal">Légal</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero" style="padding: 40px 0;">
+            <h1 class="hero-title" style="font-size: 3rem;">
+                <span data-key="about_title_1">À Propos de</span><br>
+                <span class="gradient-text" data-key="about_title_2">Moi</span>
+            </h1>
+        </section>
+
+        <section class="about-text">
+            <h3 style="color: white; margin-bottom: 15px;" data-key="about_who_title">Qui suis-je ?</h3>
+            <p data-key="about_who_text">
+                Salut ! Je suis StealthyLabs, un passionné de gaming FPS et de création de contenu numérique. 
+                Mon objectif est de partager ma passion à travers des gameplays intenses, des tutoriels techniques et des moments de détente.
+                <br><br>
+                Je passe la plupart de mon temps à optimiser des configurations, tester de nouveaux jeux et interagir avec la communauté.
+            </p>
+        </section>
+
+        <h2 class="setup-title" data-key="setup_title">Mon Setup</h2>
+        
+        <div class="cards-grid">
+            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+                <div class="card">
+                    <div class="card-icon">🖱️</div>
+                    <h3 data-key="setup_mouse">Souris</h3>
+                    <p>Logitech G Pro X Superlight</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+                <div class="card">
+                    <div class="card-icon">⌨️</div>
+                    <h3 data-key="setup_keyboard">Clavier</h3>
+                    <p>Wooting 60HE</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+                <div class="card">
+                    <div class="card-icon">🎧</div>
+                    <h3 data-key="setup_headset">Casque</h3>
+                    <p>Beyerdynamic DT 990 Pro</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://amazon.fr/..." class="setup-card" target="_blank">
+                <div class="card">
+                    <div class="card-icon">🖥️</div>
+                    <h3 data-key="setup_monitor">Écran</h3>
+                    <p>Zowie XL2546K 240Hz</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="network" data-key="nav_social">Social</a>
+                <a href="legal" data-key="nav_legal">Légal</a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                </svg>
+            </div>
+            <h2>Redirection pending</h2>
+            <p>You are about to leave StealthyLabs for:</p>
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeWarningModal()">Cancel</button>
+                <button class="btn-continue" id="continueBtn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // On cible tous les liens qui ont la classe "setup-card"
+            const setupLinks = document.querySelectorAll('.setup-card');
+            
+            setupLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // On appelle la fonction openWarningModal qui est dans js/index.js
+                    // Note: Assure-toi que openWarningModal est bien accessible globalement
+                    if (typeof openWarningModal === 'function') {
+                        openWarningModal(e, link.href);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

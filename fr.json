@@ -56,8 +56,8 @@
     "cookie_more": "En savoir plus",
     "cookie_ok": "OK",
     "legal_page_title": "Mentions Légales - StealthyLabs",
-    "nav_home": "Accueil",
-    "nav_social": "Social",
+    "nav_about": "A propos de moi",
+    "nav_network": "Network",
     "nav_legal": "Légal",
     "hero_title_1": "Bienvenue sur",
     "hero_title_2": "StealthyLabs",
@@ -73,5 +73,15 @@
     "tag_tiktok": "TikTok",
     "footer_text": "© 2026 StealthyLabs. All rights reserved.",
     "looky": "Looky System",
-    "footer_legal": "Mentions Légales"
+    "footer_legal": "Mentions Légales",
+    "about_title_1": "À Propos de",
+    "about_title_2": "Moi",
+    "about_who_title": "Qui suis-je ?",
+    "about_who_text": "Je suis StealthyLabs, créateur de contenu et passionné de FPS. Je partage mes configurations et mes gameplays.",
+    "setup_title": "Mon Setup",
+    "setup_mouse": "Souris",
+    "setup_keyboard": "Clavier",
+    "setup_headset": "Casque",
+    "setup_monitor": "Écran",
+    "btn_view": "Voir le produit →"
 }
