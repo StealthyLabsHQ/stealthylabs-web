@@ -14,3 +14,28 @@
         .legal-section strong { color: #fff; }
         .legal-section a { color: #ff0000; text-decoration: none; }
         .legal-section a:hover { text-decoration: underline; }
+
+        /* ========================================= */
+        /* MODE CLAIR (LIGHT MODE)                   */
+        /* ========================================= */
+
+        body.light-mode .legal-content {
+            background: #ffffff;
+            border-color: #e5e5e5;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        body.light-mode .legal-section h2 {
+            color: #000000;
+            border-left-color: #ff0000;
+        }
+
+        body.light-mode .legal-section p, 
+        body.light-mode .legal-section ul,
+        body.light-mode .legal-section li {
+            color: #333333;
+        }
+
+        body.light-mode .legal-section strong {
+            color: #000000;
+        }

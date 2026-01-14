@@ -40,9 +40,24 @@
             <div class="settings-group">
                 <div class="settings-label" data-key="settings_font">Police</div>
                 <select id="fontSelector" onchange="changeFont(this.value)">
-                    <option value="'Raleway', sans-serif">Raleway</option>
+                    <option value="'Raleway', sans-serif" selected data-key="font_default">Raleway (Défaut)</option>
                     <option value="'Inter', sans-serif">Inter</option>
-                    </select>
+                    <option value="'Roboto', sans-serif">Roboto</option>
+                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Oswald', sans-serif">Oswald</option>
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="'Comfortaa', cursive">Comfortaa</option>
+                    <option value="'Dancing Script', cursive">Dancing Script</option>
+                </select>
+            </div>
+            <div class="settings-group">
+            <div class="settings-label" data-key="settings_theme">Thème</div>
+                <select id="themeSelector" onchange="changeTheme(this.value)">
+                    <option value="dark">Dark Mode</option>
+                    <option value="light">Light Mode</option>
+                </select>
             </div>
         </div>
     </div>

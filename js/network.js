@@ -116,6 +116,33 @@
         }
     }
 
+    // =========================================
+    // GESTION DU THÈME (DARK / LIGHT)
+    // =========================================
+
+    function changeTheme(theme) {
+        const body = document.body;
+        const selector = document.getElementById('themeSelector');
+
+        if (theme === 'light') {
+            body.classList.add('light-mode');
+            localStorage.setItem('userTheme', 'light');
+        } else {
+            body.classList.remove('light-mode');
+            localStorage.setItem('userTheme', 'dark');
+        }
+        if (selector) selector.value = theme;
+    }
+
+    function loadSavedTheme() {
+        const savedTheme = localStorage.getItem('userTheme');
+        if (savedTheme === 'light') {
+            changeTheme('light');
+        } else {
+            changeTheme('dark');
+        }
+    }
+
     // =====================================================
     // INTEGRATION DISCORD (LANYARD)
     // =====================================================

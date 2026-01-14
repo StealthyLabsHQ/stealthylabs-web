@@ -514,3 +514,96 @@
             border: 3px solid #000000 !important;
             box-shadow: none !important;
         }
+
+/* ========================================= */
+/* MODE CLAIR (LIGHT MODE)                   */
+/* ========================================= */
+
+body.light-mode {
+    --bg-primary: #ffffff;
+    --bg-card: #f9f9f9;
+    --bg-card-hover: #f0f0f0;
+    --text-primary: #000000;
+    --text-secondary: #444444;
+    --text-muted: #666666;
+    --border-color: #e5e5e5;
+    --accent-green: #1db954; 
+}
+
+body.light-mode::after {
+    display: none !important;
+}
+
+body.light-mode .top-bar {
+    background: transparent !important;
+}
+body.light-mode .top-icon-btn img, 
+body.light-mode .settings-btn img {
+    filter: brightness(0) !important; 
+    opacity: 1 !important;
+}
+body.light-mode .top-icon-btn svg {
+    fill: #000000 !important;
+}
+
+body.light-mode .top-icon-btn img, 
+body.light-mode .settings-btn img {
+    filter: invert(1); 
+}
+
+body.light-mode .link-card, 
+body.light-mode .discord-card, 
+body.light-mode .music-player, 
+body.light-mode .creator-code {
+    background: #ffffff;
+    border-color: #e5e5e5 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+}
+
+body.light-mode .link-card:hover, 
+body.light-mode .creator-code:hover, 
+body.light-mode .music-player:hover {
+    background: #f8f8f8;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+body.light-mode .link-icon.tiktok img,
+body.light-mode .link-icon.epic img {
+    filter: none !important;
+}
+
+body.light-mode .link-icon.youtube svg,
+body.light-mode .link-icon.twitch svg,
+body.light-mode .link-icon.instagram svg,
+body.light-mode .link-icon.twitter svg,
+body.light-mode .link-icon.music-icon svg,
+body.light-mode .link-icon.socials svg {
+    fill: #ffffff !important;
+}
+body.light-mode .link-icon.twitter {
+    background: #000 !important;
+    border: none;
+}
+
+body.light-mode .playlist-item:not(.active) .playlist-item-title {
+    color: #000000 !important;
+}
+body.light-mode .playlist-item.active .playlist-item-title {
+    color: var(--accent-green) !important;
+}
+
+body.light-mode .avatar {
+    border-color: #000000 !important;
+}
+
+body.light-mode .link-icon.epic img,
+body.light-mode .link-icon.tiktok img {
+    filter: invert(1);
+}
+
+.link-icon.epic { background: transparent; }
+
+.link-icon.epic img {
+    filter: invert(1); 
+    opacity: 1;
+}

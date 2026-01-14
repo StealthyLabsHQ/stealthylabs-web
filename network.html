@@ -24,7 +24,7 @@
                 <span id="clockDisplay">--:--</span>
             </div>
 
-            <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; color: #ffffff !important; opacity: 1;" title="Retour à l'accueil">
+            <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; opacity: 1;" title="Retour à l'accueil">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                 </svg>
@@ -61,6 +61,13 @@
                     <option value="'Playfair Display', serif">Playfair Display</option>
                     <option value="'Comfortaa', cursive">Comfortaa</option>
                     <option value="'Dancing Script', cursive">Dancing Script</option>
+                </select>
+            </div>
+            <div class="settings-group">
+            <div class="settings-label" data-key="settings_theme">Thème</div>
+                <select id="themeSelector" class="font-select" onchange="changeTheme(this.value)">
+                    <option value="dark">Dark Mode</option>
+                    <option value="light">Light Mode</option>
                 </select>
             </div>
         </div> </div>     <div class="container">

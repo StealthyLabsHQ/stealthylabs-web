@@ -337,3 +337,36 @@ footer {
         color: #ff0000;
     }
 }
+
+/* ========================================= */
+/* MODE CLAIR (LIGHT MODE)                   */
+/* ========================================= */
+
+body.light-mode {
+    --bg-primary: #ffffff;  
+    --card-bg: #f8f8f8; 
+    --text-primary: #000000;
+    --text-muted: #555555;
+    --border: #e5e5e5; 
+    --glow: rgba(255, 0, 0, 0.1);
+}
+
+body.light-mode .top-bar {
+    background: #ffffff !important; 
+    border-bottom: 1px solid var(--border);
+}
+
+body.light-mode::after {
+    display: none !important;
+}
+
+body.light-mode .logo img {
+    filter: invert(1); 
+}
+
+body.light-mode .settings-btn img,
+body.light-mode .gear-icon-img,
+body.light-mode .top-icon-btn {
+    filter: invert(0) !important;
+    color: #000000 !important;    
+}

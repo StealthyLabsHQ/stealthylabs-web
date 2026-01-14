@@ -93,5 +93,6 @@
     "setup_keyboard": "Keyboard",
     "setup_headset": "Headset",
     "setup_monitor": "Monitor",
-    "btn_view": "View Product →"
+    "btn_view": "View Product →",
+    "settings_theme": "Theme"
 }
