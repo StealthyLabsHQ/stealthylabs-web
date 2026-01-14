@@ -1187,7 +1187,7 @@
             body.light-mode .music-player,
             body.light-mode .creator-code {
                 background: #ffffff !important;
-                border: 1px solid #e5e5e5 !important;
+                border: 1px solid #000000 !important;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
                 transform: none !important;
             }
