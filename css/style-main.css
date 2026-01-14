@@ -30,7 +30,14 @@ body::after {
     pointer-events: none; z-index: -1;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.container { 
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto;     
+    padding: 0 20px; 
+    position: relative;
+    z-index: 1;
+}
 
 /* --- BARRE DU HAUT --- */
 .top-bar {
