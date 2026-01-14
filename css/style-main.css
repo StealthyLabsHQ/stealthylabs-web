@@ -14,10 +14,15 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
     font-family: var(--main-font);
-    overflow-x: hidden;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;     
+    padding-top: 60px; 
+    align-items: center; 
 }
 
 /* --- FOND GRILLE (Effet visuel) --- */
@@ -86,8 +91,12 @@ select { width: 100%; background: #000; color: white; border: 1px solid #333; pa
 
 /* --- NAVIGATION --- */
 nav {
-    padding: 100px 0 20px;
-    display: flex; justify-content: space-between; align-items: center;
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    position: relative; 
+    z-index: 100;
 }
 .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
 .nav-links { list-style: none; display: flex; gap: 20px; }
