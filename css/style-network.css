@@ -1,4 +1,8 @@
-            * { margin: 0; padding: 0; box-sizing: border-box; }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
             :root {
                 --bg-primary: #000000;
@@ -15,13 +19,13 @@
             }
 
             body {
-                font-family: var(--main-font); 
+                font-family: var(--main-font);
                 background-color: var(--bg-primary);
                 color: var(--text-primary);
                 min-height: 100vh;
                 display: flex;
-                flex-direction: column; 
-                align-items: center; 
+                flex-direction: column;
+                align-items: center;
                 justify-content: center;
                 padding: 40px 20px;
                 line-height: 1.5;
@@ -40,13 +44,21 @@
                 display: none;
                 flex-direction: column;
                 gap: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
                 width: 200px;
             }
-            
-            .settings-panel.show { display: flex; animation: fadeIn 0.2s ease; }
 
-            .settings-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; }
+            .settings-panel.show {
+                display: flex;
+                animation: fadeIn 0.2s ease;
+            }
+
+            .settings-label {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
 
             .font-select {
                 width: 100%;
@@ -59,236 +71,791 @@
                 cursor: pointer;
             }
 
-            @keyframes fadeIn { 
-                from { opacity: 0; transform: translateY(-10px); } 
-                to { opacity: 1; transform: translateY(0); } 
-            }
-
-            @keyframes fadeInMobile { 
-                from { opacity: 0; transform: translateX(50%) translateY(-10px); } 
-                to { opacity: 1; transform: translateX(50%) translateY(0); } 
-            }
-            @media (max-width: 850px) {
-                body { 
-                    padding-top: 20px; 
-                    justify-content: flex-start; 
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
                 }
 
-                .top-bar { 
-                    position: relative; 
-                    top: auto; 
-                    right: auto; 
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeInMobile {
+                from {
+                    opacity: 0;
+                    transform: translateX(50%) translateY(-10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(50%) translateY(0);
+                }
+            }
+
+            @media (max-width: 850px) {
+                body {
+                    padding-top: 20px;
+                    justify-content: flex-start;
+                }
+
+                .top-bar {
+                    position: relative;
+                    top: auto;
+                    right: auto;
                     width: 100%;
-                    justify-content: flex-end; 
-                    margin-bottom: 20px; 
+                    justify-content: flex-end;
+                    margin-bottom: 20px;
                     padding-right: 10px;
                     z-index: 200 !important;
                     position: relative;
                 }
-                
-                .avatar { width: 100px; height: 100px; } 
-                .username { font-size: 1.3rem; }
-                .link-card, .discord-card, .creator-code { padding: 12px 14px; }
 
-                .settings-panel { 
-                    right: 50%; 
+                .avatar {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .username {
+                    font-size: 1.3rem;
+                }
+
+                .link-card,
+                .discord-card,
+                .creator-code {
+                    padding: 12px 14px;
+                }
+
+                .settings-panel {
+                    right: 50%;
                     transform: translateX(50%);
-                    top: 60px; 
+                    top: 60px;
                     z-index: 300 !important;
                 }
-                
-                .settings-panel.show { 
-                    animation: fadeInMobile 0.2s ease forwards; 
+
+                .settings-panel.show {
+                    animation: fadeInMobile 0.2s ease forwards;
                 }
             }
-            
-            .container { 
-                width: 100%; 
+
+            .container {
+                width: 100%;
                 max-width: 480px;
                 position: relative;
                 z-index: 1;
             }
-            
-            .profile { text-align: center; margin-bottom: 32px; }
 
-            .avatar {
-                width: 150px; height: 150px; border-radius: 16px;
-                object-fit: cover; margin-bottom: 16px; border: 2px solid var(--border-color);
+            .profile {
+                text-align: center;
+                margin-bottom: 32px;
             }
 
-            .username { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
-            .bio { margin-top: 12px; }
-            .bio-title { font-weight: 600; font-size: 0.95rem; }
-            .bio-subtitle { color: var(--text-secondary); font-size: 0.85rem; }
+            .avatar {
+                width: 150px;
+                height: 150px;
+                border-radius: 16px;
+                object-fit: cover;
+                margin-bottom: 16px;
+                border: 2px solid var(--border-color);
+            }
 
-            .email { color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; }
-            .email a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-            .email a:hover { color: var(--text-primary); }
+            .username {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 4px;
+            }
 
-            .info-row { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.85rem; margin-top: 8px; justify-content: center; }
-            .info-row svg { width: 14px; height: 14px; opacity: 0.7; }
+            .bio {
+                margin-top: 12px;
+            }
 
-            .links { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+            .bio-title {
+                font-weight: 600;
+                font-size: 0.95rem;
+            }
 
-            .link-card, .discord-card {
-                display: flex; align-items: center; gap: 14px; padding: 14px 18px;
-                background: var(--bg-card); border: 1px solid var(--border-color);
-                border-radius: 12px; text-decoration: none; color: var(--text-primary);
+            .bio-subtitle {
+                color: var(--text-secondary);
+                font-size: 0.85rem;
+            }
+
+            .email {
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                margin-top: 12px;
+            }
+
+            .email a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+            .email a:hover {
+                color: var(--text-primary);
+            }
+
+            .info-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--text-secondary);
+                font-size: 0.85rem;
+                margin-top: 8px;
+                justify-content: center;
+            }
+
+            .info-row svg {
+                width: 14px;
+                height: 14px;
+                opacity: 0.7;
+            }
+
+            .links {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 24px;
+            }
+
+            .link-card,
+            .discord-card {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 14px 18px;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                text-decoration: none;
+                color: var(--text-primary);
                 transition: all 0.2s ease;
                 cursor: pointer;
             }
-            
-            div.discord-card { cursor: default; }
-            div.discord-card:hover { border-color: #333; }
 
-            .link-card:hover, a.discord-card:hover { 
-                background: var(--bg-card-hover); 
-                border-color: #333; 
-                transform: translateY(-2px); 
+            div.discord-card {
+                cursor: default;
             }
 
-            .link-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
-            .link-icon svg { width: 22px; height: 22px; fill: currentColor; }
-            .link-icon img { width: 100%; height: 100%; object-fit: cover; }
+            div.discord-card:hover {
+                border-color: #333;
+            }
 
-            .link-icon.tiktok { background: transparent; }
-            .link-icon.youtube { background: #ff0000; }
-            .link-icon.twitch { background: #9146ff; }
-            .link-icon.twitter { background: #000; border: 1px solid #333; }
-            .link-icon.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-            .link-icon.epic { background: transparent; }
-            .link-icon.guides { background: #eab308; }
-            .link-icon.music-icon { background: linear-gradient(135deg, #1db954, #1ed760); }
-            .link-icon.socials { background: linear-gradient(135deg, #667eea, #764ba2); }
+            .link-card:hover,
+            a.discord-card:hover {
+                background: var(--bg-card-hover);
+                border-color: #333;
+                transform: translateY(-2px);
+            }
 
-            .link-content, .discord-info { flex: 1; min-width: 0; }
-            .link-title, .discord-name { font-weight: 600; font-size: 0.95rem; }
-            .link-desc { color: var(--text-secondary); font-size: 0.8rem; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .link-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                overflow: hidden;
+            }
 
-            .link-arrow { color: var(--text-muted); transition: transform 0.3s ease; }
-            .link-card:hover .link-arrow { color: var(--text-secondary); }
-            .link-arrow svg { width: 18px; height: 18px; }
+            .link-icon svg {
+                width: 22px;
+                height: 22px;
+                fill: currentColor;
+            }
 
-            .music-toggle.active .link-arrow, .socials-toggle.active .link-arrow { transform: rotate(180deg); }
+            .link-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-            .socials-wrapper, .music-wrapper {
-                max-height: 0; overflow: hidden;
-                transition: max-height 0.4s ease-out, opacity 0.4s ease, margin-top 0.4s ease;
+            .link-icon.tiktok {
+                background: transparent;
+            }
+
+            .link-icon.youtube {
+                background: #ff0000;
+            }
+
+            .link-icon.twitch {
+                background: #9146ff;
+            }
+
+            .link-icon.twitter {
+                background: #000;
+                border: 1px solid #333;
+            }
+
+            .link-icon.instagram {
+                background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            }
+
+            .link-icon.epic {
+                background: transparent;
+            }
+
+            .link-icon.guides {
+                background: #eab308;
+            }
+
+            .link-icon.music-icon {
+                background: linear-gradient(135deg, #1db954, #1ed760);
+            }
+
+            .link-icon.socials {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+            }
+
+            .link-content,
+            .discord-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .link-title,
+            .discord-name {
+                font-weight: 600;
+                font-size: 0.95rem;
+            }
+
+            .link-desc {
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                margin-top: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .link-arrow {
+                color: var(--text-muted);
+                transition: transform 0.3s ease;
+            }
+
+            .link-card:hover .link-arrow {
+                color: var(--text-secondary);
+            }
+
+            .link-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .music-toggle.active .link-arrow,
+            .socials-toggle.active .link-arrow {
+                transform: rotate(180deg);
+            }
+
+            .socials-wrapper,
+            .music-wrapper {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-out, opacity 0.4s ease, margin-top 0.4s ease, padding 0.4s ease;
                 opacity: 0;
+                padding: 0;
             }
-            .socials-wrapper.open, .music-wrapper.open {
-                max-height: 1200px; opacity: 1; margin-top: 12px;
+
+            .socials-wrapper.open,
+            .music-wrapper.open {
+                max-height: 1200px;
+                opacity: 1;
+                margin-top: 8px;
+                padding: 4px 0;
             }
-            .socials-wrapper .link-card, .socials-wrapper .discord-card { margin-bottom: 12px; }
-            .socials-wrapper .link-card:last-child, .socials-wrapper .discord-card:last-child { margin-bottom: 0; }
+
+            .socials-wrapper .link-card,
+            .socials-wrapper .discord-card {
+                margin-bottom: 12px;
+            }
+
+            .socials-wrapper .link-card:last-child,
+            .socials-wrapper .discord-card:last-child {
+                margin-bottom: 0;
+            }
 
             /* --- DISCORD SPECIFIC --- */
-            .discord-avatar { 
-                width: 44px; height: 44px; border-radius: 8px; 
-                overflow: hidden; display: flex; align-items: center; justify-content: center; 
-                position: relative; flex-shrink: 0; 
-                transition: all 0.3s ease; 
+            .discord-avatar {
+                width: 44px;
+                height: 44px;
+                border-radius: 8px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                flex-shrink: 0;
+                transition: all 0.3s ease;
             }
-            .discord-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
-            
-            .discord-name { display: flex; align-items: center; gap: 6px; }
+
+            .discord-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+            .discord-name {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
 
             .discord-status-dot {
-                position: absolute; bottom: 0; right: 0; width: 12px; height: 12px;
-                border-radius: 50%; border: 2px solid var(--bg-card);
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                border: 2px solid var(--bg-card);
                 background-color: #747f8d;
             }
-            .discord-status-dot.online { background-color: #23a559; }
-            .discord-status-dot.idle { background-color: #f0b232; }
-            .discord-status-dot.dnd { background-color: #f23f43; }
-            .discord-status-dot.offline { background-color: #80848e; }
+
+            .discord-status-dot.online {
+                background-color: #23a559;
+            }
+
+            .discord-status-dot.idle {
+                background-color: #f0b232;
+            }
+
+            .discord-status-dot.dnd {
+                background-color: #f23f43;
+            }
+
+            .discord-status-dot.offline {
+                background-color: #80848e;
+            }
 
             .rich-presence-text {
-                font-size: 0.8rem; color: #888; 
-                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                font-size: 0.8rem;
+                color: #888;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 display: block;
             }
 
-            .join-btn { 
-                padding: 8px 20px; background: transparent; border: 1px solid var(--border-color); 
-                border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; font-weight: 500; 
-                cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
+            .join-btn {
+                padding: 8px 20px;
+                background: transparent;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                color: var(--text-primary);
+                font-size: 0.85rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.2s;
+                text-decoration: none;
+                display: inline-block;
             }
-            .join-btn:hover { background: var(--text-primary); color: var(--bg-primary); }
 
-            .creator-code { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s ease; }
-            .creator-code:hover { background: var(--bg-card-hover); border-color: #333; }
+            .join-btn:hover {
+                background: var(--text-primary);
+                color: var(--bg-primary);
+            }
 
-            .copy-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 8px; transition: color 0.2s; }
-            .copy-btn:hover { color: var(--text-primary); }
-            .copy-btn svg { width: 18px; height: 18px; }
+            .creator-code {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 14px 18px;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .creator-code:hover {
+                background: var(--bg-card-hover);
+                border-color: #333;
+            }
+
+            .copy-btn {
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                cursor: pointer;
+                padding: 8px;
+                transition: color 0.2s;
+            }
+
+            .copy-btn:hover {
+                color: var(--text-primary);
+            }
+
+            .copy-btn svg {
+                width: 18px;
+                height: 18px;
+            }
 
             /* Music Player */
-            .music-player { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; transition: all 0.2s ease; }
-            .music-player:hover { border-color: #333; }
-            .player-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-            .player-artwork { width: 56px; height: 56px; border-radius: 8px; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; align-items: center; justify-content: center; color: var(--text-muted); flex-shrink: 0; overflow: hidden; }
-            .player-artwork svg { width: 28px; height: 28px; }
-            .player-artwork img { width: 100%; height: 100%; object-fit: cover; }
-            .player-info { flex: 1; min-width: 0; }
-            .player-track { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-            .player-artist { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
-            .player-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-            .time-current, .time-total { font-size: 0.75rem; color: var(--text-muted); min-width: 35px; }
-            .time-total { text-align: right; }
-            .progress-bar { flex: 1; height: 4px; background: var(--border-color); border-radius: 2px; cursor: pointer; position: relative; }
-            .progress-bar:hover { height: 6px; }
-            .progress-fill { height: 100%; background: var(--text-primary); border-radius: 2px; width: 0%; transition: width 0.1s linear; }
-            .player-controls { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; }
-            .control-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-            .control-btn:hover { color: var(--text-primary); background: var(--bg-card-hover); }
-            .control-btn svg { width: 20px; height: 20px; }
-            .control-btn.play-btn { background: var(--text-primary); color: var(--bg-primary); padding: 12px; }
-            .control-btn.play-btn:hover { transform: scale(1.05); background: #fff; }
-            .control-btn.play-btn svg { width: 24px; height: 24px; }
-            .control-btn.active { color: var(--accent-green); }
-            .player-volume { display: flex; align-items: center; gap: 8px; padding: 0 4px; margin-bottom: 14px; }
-            .player-volume svg { color: var(--text-muted); flex-shrink: 0; }
-            .volume-slider { flex: 1; height: 4px; -webkit-appearance: none; appearance: none; background: var(--border-color); border-radius: 2px; cursor: pointer; }
-            .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--text-primary); border-radius: 50%; cursor: pointer; }
-            .playlist { border-top: 1px solid var(--border-color); padding-top: 14px; max-height: 250px; overflow-y: auto; margin-bottom: 14px; }
-            .playlist-header { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-            .playlist-item { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-            .playlist-item:hover { background: var(--bg-card-hover); }
-            .playlist-item.active { background: var(--bg-card-hover); }
-            .playlist-item.active .playlist-item-title { color: var(--accent-green); }
-            .playlist-item-cover { width: 40px; height: 40px; border-radius: 4px; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-            .playlist-item-cover img { width: 100%; height: 100%; object-fit: cover; }
-            .playlist-item-cover svg { width: 18px; height: 18px; color: var(--text-muted); }
-            .playlist-item-info { flex: 1; min-width: 0; }
-            .playlist-item-title { font-size: 0.85rem; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-            .playlist-item-artist { font-size: 0.75rem; color: var(--text-muted); }
-            .playlist::-webkit-scrollbar { width: 6px; }
-            .playlist::-webkit-scrollbar-track { background: var(--bg-card); }
-            .playlist::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+            .music-player {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 18px;
+                transition: all 0.2s ease;
+            }
+
+            .music-player:hover {
+                border-color: #333;
+            }
+
+            .player-header {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                margin-bottom: 16px;
+            }
+
+            .player-artwork {
+                width: 56px;
+                height: 56px;
+                border-radius: 8px;
+                background: linear-gradient(135deg, #1a1a2e, #16213e);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-muted);
+                flex-shrink: 0;
+                overflow: hidden;
+            }
+
+            .player-artwork svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .player-artwork img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .player-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .player-track {
+                font-weight: 600;
+                font-size: 0.95rem;
+                color: var(--text-primary);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .player-artist {
+                font-size: 0.8rem;
+                color: var(--text-secondary);
+                margin-top: 2px;
+            }
+
+            .player-progress {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .time-current,
+            .time-total {
+                font-size: 0.75rem;
+                color: var(--text-muted);
+                min-width: 35px;
+            }
+
+            .time-total {
+                text-align: right;
+            }
+
+            .progress-bar {
+                flex: 1;
+                height: 4px;
+                background: var(--border-color);
+                border-radius: 2px;
+                cursor: pointer;
+                position: relative;
+            }
+
+            .progress-bar:hover {
+                height: 6px;
+            }
+
+            .progress-fill {
+                height: 100%;
+                background: var(--text-primary);
+                border-radius: 2px;
+                width: 0%;
+                transition: width 0.1s linear;
+            }
+
+            .player-controls {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+
+            .control-btn {
+                background: none;
+                border: none;
+                color: var(--text-secondary);
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 50%;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .control-btn:hover {
+                color: var(--text-primary);
+                background: var(--bg-card-hover);
+            }
+
+            .control-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .control-btn.play-btn {
+                background: var(--text-primary);
+                color: var(--bg-primary);
+                padding: 12px;
+            }
+
+            .control-btn.play-btn:hover {
+                transform: scale(1.05);
+                background: #fff;
+            }
+
+            .control-btn.play-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .control-btn.active {
+                color: var(--accent-green);
+            }
+
+            .player-volume {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 0 4px;
+                margin-bottom: 14px;
+            }
+
+            .player-volume svg {
+                color: var(--text-muted);
+                flex-shrink: 0;
+            }
+
+            .volume-slider {
+                flex: 1;
+                height: 4px;
+                -webkit-appearance: none;
+                appearance: none;
+                background: var(--border-color);
+                border-radius: 2px;
+                cursor: pointer;
+            }
+
+            .volume-slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 12px;
+                height: 12px;
+                background: var(--text-primary);
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .playlist {
+                border-top: 1px solid var(--border-color);
+                padding-top: 14px;
+                max-height: 250px;
+                overflow-y: auto;
+                margin-bottom: 14px;
+            }
+
+            .playlist-header {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .playlist-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 8px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .playlist-item:hover {
+                background: var(--bg-card-hover);
+            }
+
+            .playlist-item.active {
+                background: var(--bg-card-hover);
+            }
+
+            .playlist-item.active .playlist-item-title {
+                color: var(--accent-green);
+            }
+
+            .playlist-item-cover {
+                width: 40px;
+                height: 40px;
+                border-radius: 4px;
+                background: linear-gradient(135deg, #1a1a2e, #16213e);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                flex-shrink: 0;
+            }
+
+            .playlist-item-cover img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .playlist-item-cover svg {
+                width: 18px;
+                height: 18px;
+                color: var(--text-muted);
+            }
+
+            .playlist-item-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .playlist-item-title {
+                font-size: 0.85rem;
+                color: var(--text-primary);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .playlist-item-artist {
+                font-size: 0.75rem;
+                color: var(--text-muted);
+            }
+
+            .playlist::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .playlist::-webkit-scrollbar-track {
+                background: var(--bg-card);
+            }
+
+            .playlist::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 3px;
+            }
 
             .music-platform-btn {
-                display: flex; align-items: center; justify-content: center; gap: 10px;
-                width: 100%; padding: 10px; border-radius: 8px; text-decoration: none;
-                font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+                padding: 10px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 0.85rem;
+                font-weight: 600;
+                transition: all 0.2s ease;
+                margin-bottom: 8px;
             }
-            .music-platform-btn:last-child { margin-bottom: 0; }
-            .music-platform-btn.soundcloud { background: rgba(255, 85, 0, 0.1); border: 1px solid var(--accent-soundcloud); color: var(--accent-soundcloud); }
-            .music-platform-btn.soundcloud:hover { background: var(--accent-soundcloud); color: #ffffff; }
-            .music-platform-btn.spotify { background: rgba(29, 185, 84, 0.1); border: 1px solid var(--accent-spotify); color: var(--accent-spotify); }
-            .music-platform-btn.spotify:hover { background: var(--accent-spotify); color: #ffffff; }
-            .music-platform-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-            .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.8rem; }
-            .tooltip { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-primary); color: var(--bg-primary); padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; opacity: 0; transition: all 0.3s ease; pointer-events: none; }
-            .tooltip.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+            .music-platform-btn:last-child {
+                margin-bottom: 0;
+            }
+
+            .music-platform-btn.soundcloud {
+                background: rgba(255, 85, 0, 0.1);
+                border: 1px solid var(--accent-soundcloud);
+                color: var(--accent-soundcloud);
+            }
+
+            .music-platform-btn.soundcloud:hover {
+                background: var(--accent-soundcloud);
+                color: #ffffff;
+            }
+
+            .music-platform-btn.spotify {
+                background: rgba(29, 185, 84, 0.1);
+                border: 1px solid var(--accent-spotify);
+                color: var(--accent-spotify);
+            }
+
+            .music-platform-btn.spotify:hover {
+                background: var(--accent-spotify);
+                color: #ffffff;
+            }
+
+            .music-platform-btn svg {
+                width: 20px;
+                height: 20px;
+                fill: currentColor;
+            }
+
+            .footer {
+                text-align: center;
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid var(--border-color);
+                color: var(--text-muted);
+                font-size: 0.8rem;
+            }
+
+            .tooltip {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: var(--text-primary);
+                color: var(--bg-primary);
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: none;
+            }
+
+            .tooltip.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
 
             .discord-info {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 gap: 2px;
-                min-width: 0; 
+                min-width: 0;
             }
 
             .rp-game-row {
@@ -300,7 +867,7 @@
                 padding: 6px 10px;
                 border-radius: 6px;
                 border: 1px solid #333;
-                max-width: 100%; 
+                max-width: 100%;
             }
 
             .rp-game-icon {
@@ -308,23 +875,25 @@
                 height: 32px;
                 border-radius: 6px;
                 object-fit: cover;
-                flex-shrink: 0; 
+                flex-shrink: 0;
             }
+
             .rp-game-info {
                 display: flex;
                 flex-direction: column;
                 line-height: 1.2;
-                min-width: 0; 
-                flex: 1; 
+                min-width: 0;
+                flex: 1;
             }
+
             .rp-game-title {
                 font-weight: 600;
                 font-size: 0.8rem;
                 color: white;
-                
-                white-space: nowrap;     
-                overflow: hidden;        
-                text-overflow: ellipsis; 
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .rp-game-detail {
@@ -364,270 +933,349 @@
             }
 
             .time-badge {
-                display: flex; align-items: center; gap: 8px;
-                background: var(--bg-card); border: 1px solid var(--border-color);
-                padding: 8px 14px; border-radius: 8px;
-                font-family: 'Inter', monospace; font-size: 0.9rem;
-                color: var(--text-primary); font-variant-numeric: tabular-nums;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                padding: 8px 14px;
+                border-radius: 8px;
+                font-family: 'Inter', monospace;
+                font-size: 0.9rem;
+                color: var(--text-primary);
+                font-variant-numeric: tabular-nums;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             }
-            .time-badge svg { width: 16px; height: 16px; color: var(--accent-green); }
+
+            .time-badge svg {
+                width: 16px;
+                height: 16px;
+                color: var(--accent-green);
+            }
 
             .top-icon-btn {
-                color: var(--text-muted); transition: all 0.2s ease;
-                display: flex; align-items: center; justify-content: center;
+                color: var(--text-muted);
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
-            .top-icon-btn:hover { color: var(--text-primary); transform: scale(1.1); }
-            
+
+            .top-icon-btn:hover {
+                color: var(--text-primary);
+                transform: scale(1.1);
+            }
+
             .top-icon-btn svg {
                 width: 26px;
                 height: 26px;
                 fill: currentColor;
             }
 
-            .top-icon-btn img { 
-                width: 26px; 
-                height: 26px; 
+            .top-icon-btn img {
+                width: 26px;
+                height: 26px;
                 object-fit: contain;
-                filter: invert(1) brightness(100%); 
+                filter: invert(1) brightness(100%);
             }
 
-            @media (max-width: 850px) { 
-                body { 
-                    padding-top: 20px; 
-                    justify-content: flex-start; 
+            @media (max-width: 850px) {
+                body {
+                    padding-top: 20px;
+                    justify-content: flex-start;
                 }
 
-                .top-bar { 
-                    position: relative; 
-                    top: auto; 
-                    right: auto; 
+                .top-bar {
+                    position: relative;
+                    top: auto;
+                    right: auto;
                     width: 100%;
-                    justify-content: flex-end; 
-                    margin-bottom: 20px; 
+                    justify-content: flex-end;
+                    margin-bottom: 20px;
                     padding-right: 10px;
                 }
-                
-                .avatar { width: 100px; height: 100px; }
-                .username { font-size: 1.3rem; }
-                .link-card, .discord-card, .creator-code { padding: 12px 14px; }
+
+                .avatar {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .username {
+                    font-size: 1.3rem;
+                }
+
+                .link-card,
+                .discord-card,
+                .creator-code {
+                    padding: 12px 14px;
+                }
             }
 
-        .redirect-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(5px);   
-            z-index: 9999;               
-            display: none;                
-            align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .redirect-overlay.show {
-            display: flex;
-            opacity: 1;
-        }
-        .redirect-box {
-            background: #000;
-            border: 1px solid #ff0000;
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            transform: translateY(20px); transition: transform 0.3s ease;
-        }
+            .redirect-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(5px);
+                z-index: 9999;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
 
-        .redirect-overlay.show .redirect-box {
-            transform: translateY(0);
-        }
+            .redirect-overlay.show {
+                display: flex;
+                opacity: 1;
+            }
 
-        .redirect-icon {
-            font-size: 2rem; margin-bottom: 15px;
-            color: #ff0000;
-        }
+            .redirect-box {
+                background: #000;
+                border: 1px solid #ff0000;
+                padding: 30px;
+                border-radius: 16px;
+                text-align: center;
+                max-width: 500px;
+                width: 90%;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+                transform: translateY(20px);
+                transition: transform 0.3s ease;
+            }
 
-        .redirect-box h2 { margin-bottom: 10px; font-size: 1.2rem; color: #fff; }
-        .modal-desc { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
+            .redirect-overlay.show .redirect-box {
+                transform: translateY(0);
+            }
 
-        .redirect-url {
-            color: #ff0000;
-            font-family: monospace;
-            background: #111;
-            padding: 8px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            word-break: break-all;
-            font-size: 0.85rem;
-        }
+            .redirect-icon {
+                font-size: 2rem;
+                margin-bottom: 15px;
+                color: #ff0000;
+            }
 
-        .redirect-buttons {
-            display: flex; gap: 15px; justify-content: center; margin-top: 25px;
-        }
+            .redirect-box h2 {
+                margin-bottom: 10px;
+                font-size: 1.2rem;
+                color: #fff;
+            }
 
-        .redirect-buttons button {
-            padding: 10px 24px; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease; font-family: inherit;
-        }
+            .modal-desc {
+                color: #888;
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
 
-        .redirect-buttons button:first-child {
-            background: transparent; border: 1px solid #333; color: #888;
-        }
-        .redirect-buttons button:first-child:hover {
-            border-color: #fff; color: #fff; background: rgba(255,255,255,0.05);
-        }
+            .redirect-url {
+                color: #ff0000;
+                font-family: monospace;
+                background: #111;
+                padding: 8px;
+                border-radius: 6px;
+                margin-bottom: 20px;
+                word-break: break-all;
+                font-size: 0.85rem;
+            }
 
-        .redirect-buttons button:last-child {
-            background: #ff0000; border: 1px solid #ff0000; color: #000;
-        }
-        .redirect-buttons button:last-child:hover {
-            background: #e60000; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
-        }
+            .redirect-buttons {
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                margin-top: 25px;
+            }
 
-        .link-card, .discord-card, .creator-code, .music-player {
-            border: 1px solid #333333 !important;
-            background: var(--bg-card);
-            box-shadow: none !important;
-            transform: none !important;
-            transition: all 0.3s ease;
-        }
+            .redirect-buttons button {
+                padding: 10px 24px;
+                border-radius: 8px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-family: inherit;
+            }
 
-        @media (hover: hover) {
-            .link-card:hover, .creator-code:hover, .music-player:hover, .discord-card:hover {
-                border-color: #ff0000 !important; 
+            .redirect-buttons button:first-child {
+                background: transparent;
+                border: 1px solid #333;
+                color: #888;
+            }
+
+            .redirect-buttons button:first-child:hover {
+                border-color: #fff;
+                color: #fff;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .redirect-buttons button:last-child {
+                background: #ff0000;
+                border: 1px solid #ff0000;
+                color: #000;
+            }
+
+            .redirect-buttons button:last-child:hover {
+                background: #e60000;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
+            }
+
+            .link-card,
+            .discord-card,
+            .creator-code,
+            .music-player {
+                border: 1px solid #333333 !important;
+                background: var(--bg-card);
                 box-shadow: none !important;
-                transform: translateY(-2px) !important;
-                background-color: rgba(255, 255, 255, 0.03);
+                transform: none !important;
+                transition: all 0.3s ease;
             }
-        }
 
-        .avatar {
-            border: 3px solid #000000 !important;
-            box-shadow: none !important;
-        }
+            @media (hover: hover) {
 
-body.light-mode {
-    --bg-primary: #ffffff;
-    --bg-card: #f9f9f9;
-    --bg-card-hover: #f0f0f0;
-    --text-primary: #000000;
-    --text-secondary: #444444;
-    --text-muted: #666666;
-    --border-color: #e5e5e5;
-    --accent-green: #1db954; 
-}
+                .link-card:hover,
+                .creator-code:hover,
+                .music-player:hover,
+                .discord-card:hover {
+                    border-color: #ff0000 !important;
+                    box-shadow: none !important;
+                    transform: translateY(-2px) !important;
+                    background-color: rgba(255, 255, 255, 0.03);
+                }
+            }
 
-body.light-mode::after {
-    display: none !important;
-}
+            .avatar {
+                border: 3px solid #000000 !important;
+                box-shadow: none !important;
+            }
 
-body.light-mode .top-bar {
-    background: transparent !important;
-}
-body.light-mode .top-icon-btn img, 
-body.light-mode .settings-btn img {
-    filter: brightness(0) !important; 
-    opacity: 1 !important;
-}
-body.light-mode .top-icon-btn svg {
-    fill: #000000 !important;
-}
+            body.light-mode {
+                --bg-primary: #ffffff;
+                --bg-card: #f9f9f9;
+                --bg-card-hover: #f0f0f0;
+                --text-primary: #000000;
+                --text-secondary: #444444;
+                --text-muted: #666666;
+                --border-color: #e5e5e5;
+                --accent-green: #1db954;
+            }
 
-body.light-mode .top-icon-btn img, 
-body.light-mode .settings-btn img {
-    filter: invert(1); 
-}
+            body.light-mode::after {
+                display: none !important;
+            }
 
-body.light-mode .link-card, 
-body.light-mode .discord-card, 
-body.light-mode .music-player, 
-body.light-mode .creator-code {
-    background: #ffffff !important;
-    border: 1px solid #e5e5e5 !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
-    transform: none !important;
-}
+            body.light-mode .top-bar {
+                background: transparent !important;
+            }
 
-body.light-mode .link-card:hover, 
-body.light-mode .creator-code:hover, 
-body.light-mode .music-player:hover {
-    background: #f8f8f8;
-    border-color: rgba(255, 0, 0, 0.5) !important;
-}
+            body.light-mode .top-icon-btn img,
+            body.light-mode .settings-btn img {
+                filter: brightness(0) !important;
+                opacity: 1 !important;
+            }
 
-body.light-mode .link-icon.tiktok img,
-body.light-mode .link-icon.epic img {
-    filter: none !important;
-}
+            body.light-mode .top-icon-btn svg {
+                fill: #000000 !important;
+            }
 
-body.light-mode .link-icon.youtube svg,
-body.light-mode .link-icon.twitch svg,
-body.light-mode .link-icon.instagram svg,
-body.light-mode .link-icon.twitter svg,
-body.light-mode .link-icon.music-icon svg,
-body.light-mode .link-icon.socials svg {
-    fill: #ffffff !important;
-}
-body.light-mode .link-icon.twitter {
-    background: #000 !important;
-    border: none;
-}
+            body.light-mode .top-icon-btn img,
+            body.light-mode .settings-btn img {
+                filter: invert(1);
+            }
 
-body.light-mode .playlist-item:not(.active) .playlist-item-title {
-    color: #000000 !important;
-}
-body.light-mode .playlist-item.active .playlist-item-title {
-    color: var(--accent-green) !important;
-}
+            body.light-mode .link-card,
+            body.light-mode .discord-card,
+            body.light-mode .music-player,
+            body.light-mode .creator-code {
+                background: #ffffff !important;
+                border: 1px solid #e5e5e5 !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+                transform: none !important;
+            }
 
-body.light-mode .avatar {
-    border-color: #000000 !important;
-}
+            body.light-mode .link-card:hover,
+            body.light-mode .creator-code:hover,
+            body.light-mode .music-player:hover {
+                background: #f8f8f8;
+                border-color: rgba(255, 0, 0, 0.5) !important;
+            }
 
-body.light-mode .link-icon.epic img,
-body.light-mode .link-icon.tiktok img {
-    filter: invert(1);
-}
+            body.light-mode .link-icon.tiktok img,
+            body.light-mode .link-icon.epic img {
+                filter: none !important;
+            }
 
-.link-icon.epic { background: transparent; }
+            body.light-mode .link-icon.youtube svg,
+            body.light-mode .link-icon.twitch svg,
+            body.light-mode .link-icon.instagram svg,
+            body.light-mode .link-icon.twitter svg,
+            body.light-mode .link-icon.music-icon svg,
+            body.light-mode .link-icon.socials svg {
+                fill: #ffffff !important;
+            }
 
-.link-icon.epic img {
-    filter: invert(1); 
-    opacity: 1;
-}
+            body.light-mode .link-icon.twitter {
+                background: #000 !important;
+                border: none;
+            }
 
-body.light-mode .redirect-box {
-    background-color: #ffffff !important;
-    border: 1px solid #000000 !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
-}
+            body.light-mode .playlist-item:not(.active) .playlist-item-title {
+                color: #000000 !important;
+            }
 
-body.light-mode .redirect-box h2 {
-    color: #000000 !important;
-}
+            body.light-mode .playlist-item.active .playlist-item-title {
+                color: var(--accent-green) !important;
+            }
 
-body.light-mode .modal-desc {
-    color: #555555 !important;
-}
+            body.light-mode .avatar {
+                border-color: #000000 !important;
+            }
 
-body.light-mode .redirect-url {
-    background: #f4f4f4 !important;
-    color: #cc0000 !important;
-    border: 1px solid #ddd;
-}
+            body.light-mode .link-icon.epic img,
+            body.light-mode .link-icon.tiktok img {
+                filter: invert(1);
+            }
 
-body.light-mode .redirect-buttons button:first-child {
-    border-color: #ccc !important;
-    color: #333 !important;
-}
-body.light-mode .redirect-buttons button:first-child:hover {
-    background: #f0f0f0 !important;
-    color: #000 !important;
-    border-color: #bbb !important;
-}
+            .link-icon.epic {
+                background: transparent;
+            }
 
-body.light-mode .redirect-overlay {
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(5px);
-}
+            .link-icon.epic img {
+                filter: invert(1);
+                opacity: 1;
+            }
+
+            body.light-mode .redirect-box {
+                background-color: #ffffff !important;
+                border: 1px solid #000000 !important;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+            }
+
+            body.light-mode .redirect-box h2 {
+                color: #000000 !important;
+            }
+
+            body.light-mode .modal-desc {
+                color: #555555 !important;
+            }
+
+            body.light-mode .redirect-url {
+                background: #f4f4f4 !important;
+                color: #cc0000 !important;
+                border: 1px solid #ddd;
+            }
+
+            body.light-mode .redirect-buttons button:first-child {
+                border-color: #ccc !important;
+                color: #333 !important;
+            }
+
+            body.light-mode .redirect-buttons button:first-child:hover {
+                background: #f0f0f0 !important;
+                color: #000 !important;
+                border-color: #bbb !important;
+            }
+
+            body.light-mode .redirect-overlay {
+                background: rgba(255, 255, 255, 0.8) !important;
+                backdrop-filter: blur(5px);
+            }

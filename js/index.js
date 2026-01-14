@@ -44,7 +44,7 @@ const modal = document.getElementById('warningModal');
             const urlToGo = pendingUrl;
             closeWarningModal();
             setTimeout(() => {
-                if (urlToGo.includes('looky-gta.cc')) {
+                if (urlToGo.includes('looky-gta.cc') || urlToGo.includes('github.com')) {
                     window.open(urlToGo, '_blank');
                 } else {
                     window.location.href = urlToGo;
@@ -69,6 +69,11 @@ const modal = document.getElementById('warningModal');
         const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
         if (lookyLink) {
             lookyLink.addEventListener('click', (e) => openWarningModal(e, "https://looky-gta.cc"));
+        }
+
+        const githubLink = document.querySelector('a[href="https://github.com/StealthyLabsHQ"]');
+        if (githubLink) {
+            githubLink.addEventListener('click', (e) => openWarningModal(e, "https://github.com/StealthyLabsHQ"));
         }
 
         const ctaBtn = document.querySelector('.cta-button');

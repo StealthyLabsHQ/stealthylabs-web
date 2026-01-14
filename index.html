@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>StealthyLabs</title>
-        
-        <link rel="stylesheet" href="css/style-main.css">
-        <link rel="icon" type="image/png" href="logos/favicon.png">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://stealthylabs.eu/">
-        <meta property="og:site_name" content="StealthyLabs">
-        <meta property="og:title" content="/stealthylabs">
-        <meta property="og:description" content="access granted_ identity: stealthy status: observing">
-        <meta property="og:image" content="https://stealthylabs.eu/logos/embed.png">
-        
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StealthyLabs</title>
+
+    <link rel="stylesheet" href="css/style-main.css">
+    <link rel="icon" type="image/png" href="logos/favicon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stealthylabs.eu/">
+    <meta property="og:site_name" content="StealthyLabs">
+    <meta property="og:title" content="/stealthylabs">
+    <meta property="og:description" content="access granted_ identity: stealthy status: observing">
+    <meta property="og:image" content="https://stealthylabs.eu/logos/embed.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet">
+</head>
+
 <body>
 
     <div class="top-bar">
@@ -25,8 +29,10 @@
             <span id="clockDisplay">--:--</span>
         </div>
 
-        <button class="settings-btn" onclick="toggleSettings()" title="Paramètres" style="background: transparent !important; border: none !important; -webkit-appearance: none; padding: 0; cursor: pointer;">
-            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26" style="width: 26px; height: 26px; filter: invert(1); display: block;">
+        <button class="settings-btn" onclick="toggleSettings()" title="Paramètres"
+            style="background: transparent !important; border: none !important; -webkit-appearance: none; padding: 0; cursor: pointer;">
+            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26"
+                style="width: 26px; height: 26px; filter: invert(1); display: block;">
         </button>
 
         <div class="settings-panel" id="settingsPanel">
@@ -53,7 +59,7 @@
                 </select>
             </div>
             <div class="settings-group">
-            <div class="settings-label" data-key="settings_theme">Thème</div>
+                <div class="settings-label" data-key="settings_theme">Thème</div>
                 <select id="themeSelector" onchange="changeTheme(this.value)">
                     <option value="dark">Dark Mode</option>
                     <option value="light">Light Mode</option>
@@ -71,7 +77,7 @@
             </div>
 
             <ul class="nav-links desktop-only">
-                <li><a href="about.html" data-key="nav_about">A propos de moi</a></li> 
+                <li><a href="about.html" data-key="nav_about">A propos de moi</a></li>
                 <li><a href="network" data-key="nav_network">Network</a></li>
                 <li><a href="legal" data-key="nav_legal">Légal</a></li>
             </ul>
@@ -111,7 +117,7 @@
                     <span class="tag" data-key="tag_fps">FPS</span>
                 </div>
             </div>
-            
+
             <div class="card">
                 <div class="card-icon">📹</div>
                 <h3 data-key="card_content_title">Création de Contenu</h3>
@@ -127,31 +133,33 @@
             <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
             <div class="footer-links">
                 <a href="https://looky-gta.cc" target="_blank" data-key="looky">Looky System</a>
+                <a href="https://github.com/StealthyLabsHQ" target="_blank">GitHub</a>
                 <a href="legal" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
     </div>
-        <div id="warningModal" class="modal-overlay">
-            <div class="modal-box">
-                <div class="modal-icon">
-                    <svg viewBox="0 0 24 24" width="50" height="50">
-                        <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                    </svg>
-                </div>
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
+            </div>
 
-                <h2 data-key="redirect_title">Attente de redirection</h2>
-                <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
-                
-                <div class="url-container">
-                    <span id="targetUrl">https://...</span>
-                </div>
+            <h2 data-key="redirect_title">Attente de redirection</h2>
+            <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
 
-                <div class="modal-actions">
-                    <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
-                    <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
-                </div>
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
+                <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
             </div>
         </div>
+    </div>
     <script src="js/index.js"></script>
 </body>
+
 </html>

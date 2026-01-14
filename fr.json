@@ -93,6 +93,18 @@
     "setup_keyboard": "Clavier",
     "setup_headset": "Casque",
     "setup_monitor": "Écran",
+    "setup_monitor_sec": "Écran Secondaire",
+    "setup_earbuds": "Écouteurs",
+    "setup_mic": "Microphone",
     "btn_view": "Voir le produit →",
-    "settings_theme": "Thème"
+    "settings_theme": "Thème",
+    "pc_specs_title": "Configuration PC",
+    "cpu_label": "Processeur",
+    "ram_label": "RAM",
+    "cooling_label": "Watercooling",
+    "mobo_label": "Carte Mère",
+    "gpu_label": "Carte Graphique",
+    "ssd_label": "Stockage (SSD)",
+    "case_label": "Boitier",
+    "psu_label": "Alimentation"
 }

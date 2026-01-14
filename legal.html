@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="legal_page_title">Mentions Légales - StealthyLabs</title>
-    
+
     <link rel="stylesheet" href="css/style-main.css">
     <link rel="stylesheet" href="css/style-legal.css">
     <link rel="icon" type="image/png" href="logos/favicon.png">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <div class="top-bar">
-        <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; opacity: 1; display: flex; align-items: center;" title="Retour à l'accueil">
+        <a href="/" class="top-icon-btn"
+            style="text-decoration: none; margin-right: 20px; opacity: 1; display: flex; align-items: center;"
+            title="Retour à l'accueil">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
             </svg>
-            <span data-key="nav_home" style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Accueil</span>
+            <span data-key="nav_home"
+                style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Accueil</span>
         </a>
 
         <div class="time-badge"><span id="clockDisplay">--:--</span></div>
 
-        <button class="settings-btn" onclick="toggleSettings()" style="background: transparent; border: none; cursor: pointer;">
-            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26" style="filter: invert(1);">
+        <button class="settings-btn" onclick="toggleSettings()"
+            style="background: transparent; border: none; cursor: pointer;">
+            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26"
+                style="filter: invert(1);">
         </button>
 
         <div class="settings-panel" id="settingsPanel">
@@ -53,7 +62,7 @@
                 </select>
             </div>
             <div class="settings-group">
-            <div class="settings-label" data-key="settings_theme">Thème</div>
+                <div class="settings-label" data-key="settings_theme">Thème</div>
                 <select id="themeSelector" onchange="changeTheme(this.value)">
                     <option value="dark">Dark Mode</option>
                     <option value="light">Light Mode</option>
@@ -94,11 +103,12 @@
         </section>
 
         <div class="legal-content">
-            
+
             <div class="legal-section">
                 <h2 data-key="legal_editor_title">1. Édition du Site</h2>
                 <p data-key="legal_editor_text">
-                    Le site internet <strong>StealthyLabs.eu</strong> est édité par <strong>StealthyLabs</strong> (Créateur de Contenu Numérique).<br>
+                    Le site internet <strong>StealthyLabs.eu</strong> est édité par <strong>StealthyLabs</strong>
+                    (Créateur de Contenu Numérique).<br>
                     Contact : <a href="mailto:contact@stealthylabs.eu">contact@stealthylabs.eu</a>
                 </p>
             </div>
@@ -109,59 +119,73 @@
                     <span data-key="legal_hosting_lws">Hébergeur principal (Nom de domaine & Services) :</span><br>
                     <strong>LWS (Ligne Web Services)</strong><br>
                     10, RUE PENTHIEVRE, 75008 PARIS, FRANCE.<br>
-                    <span data-key="legal_website">Site web :</span> <a href="https://www.lws.fr" target="_blank">lws.fr</a>
+                    <span data-key="legal_website">Site web :</span> <a href="https://www.lws.fr"
+                        target="_blank">lws.fr</a>
                 </p>
                 <p>
-                    <span data-key="legal_hosting_cloudflare">Réseau de diffusion de contenu (CDN) & Sécurité :</span><br>
+                    <span data-key="legal_hosting_cloudflare">Réseau de diffusion de contenu (CDN) & Sécurité
+                        :</span><br>
                     <strong>Cloudflare, Inc.</strong><br>
                     101 Townsend St, San Francisco, CA 94107, USA.<br>
-                    <span data-key="legal_website">Site web :</span> <a href="https://www.cloudflare.com/" target="_blank">cloudflare.com</a>
+                    <span data-key="legal_website">Site web :</span> <a href="https://www.cloudflare.com/"
+                        target="_blank">cloudflare.com</a>
                     <br></br>
-                    <span data-key="legal_cloudflare_desc">Ce site utilise l'infrastructure de Cloudflare pour assurer la sécurité (protection DDoS), la performance et la distribution mondiale du contenu.</span>
+                    <span data-key="legal_cloudflare_desc">Ce site utilise l'infrastructure de Cloudflare pour assurer
+                        la sécurité (protection DDoS), la performance et la distribution mondiale du contenu.</span>
                 </p>
             </div>
 
             <div class="legal-section">
                 <h2 data-key="legal_privacy_title">3. Données Personnelles & Cookies (RGPD)</h2>
                 <p data-key="legal_privacy_intro">
-                    Conformément au Règlement Général sur la Protection des Données (RGPD), nous appliquons une politique de confidentialité stricte basée sur le principe de minimisation des données.
+                    Conformément au Règlement Général sur la Protection des Données (RGPD), nous appliquons une
+                    politique de confidentialité stricte basée sur le principe de minimisation des données.
                 </p>
-                
+
                 <p><strong data-key="legal_privacy_point1_title">Absence de collecte de données (No-Log) :</strong></p>
                 <ul data-key="legal_privacy_point1_list">
-                    <li>Nous ne collectons <strong>aucune</strong> donnée personnelle (Nom, adresse, numéro de téléphone).</li>
+                    <li>Nous ne collectons <strong>aucune</strong> donnée personnelle (Nom, adresse, numéro de
+                        téléphone).</li>
                     <li>Nous ne stockons <strong>pas</strong> votre adresse IP dans nos bases de données.</li>
                     <li>Nous n'utilisons aucun traceur publicitaire (Pixel Facebook, Google Analytics, etc.).</li>
                 </ul>
 
                 <p><strong data-key="legal_privacy_point2_title">Stockage Local (Préférences) :</strong></p>
                 <p data-key="legal_privacy_point2_desc">
-                    Ce site n'utilise pas de cookies de suivi. Nous utilisons uniquement la technologie "Local Storage" de votre navigateur pour sauvegarder vos préférences d'affichage (Langue choisie et Police d'écriture). Ces données restent strictement sur votre appareil et ne sont jamais transmises à nos serveurs ni à des tiers.
+                    Ce site n'utilise pas de cookies de suivi. Nous utilisons uniquement la technologie "Local Storage"
+                    de votre navigateur pour sauvegarder vos préférences d'affichage (Langue choisie et Police
+                    d'écriture). Ces données restent strictement sur votre appareil et ne sont jamais transmises à nos
+                    serveurs ni à des tiers.
                 </p>
             </div>
 
             <div class="legal-section">
                 <h2 data-key="legal_ip_title">4. Propriété Intellectuelle</h2>
                 <p data-key="legal_ip_text">
-                    L'ensemble des contenus (textes, images, graphismes, logos, vidéos) présents sur StealthyLabs.eu est la propriété exclusive de l'éditeur, sauf mention contraire (marques tierces, produits présentés). Toute reproduction totale ou partielle est interdite sans autorisation préalable.
+                    L'ensemble des contenus (textes, images, graphismes, logos, vidéos) présents sur StealthyLabs.eu est
+                    la propriété exclusive de l'éditeur, sauf mention contraire (marques tierces, produits présentés).
+                    Toute reproduction totale ou partielle est interdite sans autorisation préalable.
                 </p>
             </div>
 
             <div class="legal-section">
                 <h2 data-key="legal_links_title">5. Liens Externes</h2>
                 <p data-key="legal_links_text">
-                    Ce site contient des liens hypertextes vers d'autres sites (YouTube, Twitch, Discord, Amazon, revendeurs, etc.). StealthyLabs n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou leur politique de confidentialité.
+                    Ce site contient des liens hypertextes vers d'autres sites (YouTube, Twitch, Discord, Amazon,
+                    revendeurs, etc.). StealthyLabs n'exerce aucun contrôle sur ces sites et décline toute
+                    responsabilité quant à leur contenu ou leur politique de confidentialité.
                 </p>
             </div>
             <div class="legal-section">
                 <h2 data-key="legal_law_title">6. Droit Applicable & Litiges</h2>
                 <p data-key="legal_law_text">
-                    Tout litige en relation avec l’utilisation du site <strong>StealthyLabs.eu</strong> est soumis au droit français. Il est fait attribution exclusive de juridiction aux tribunaux compétents de Paris.
+                    Tout litige en relation avec l’utilisation du site <strong>StealthyLabs.eu</strong> est soumis au
+                    droit français. Il est fait attribution exclusive de juridiction aux tribunaux compétents de Paris.
                 </p>
             </div>
 
             <p style="text-align: right; color: #555; font-style: italic; font-size: 0.8rem; margin-top: 40px;">
-                <span data-key="legal_last_update">Dernière mise à jour :</span> 
+                <span data-key="legal_last_update">Dernière mise à jour :</span>
                 <span data-key="legal_date">13/01/2026</span>
             </p>
         </div>
@@ -169,33 +193,36 @@
         <footer>
             <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
             <div class="footer-links">
-                <a href="network" data-key="nav_network">Network</a>
+                <a href="https://looky-gta.cc" target="_blank" data-key="looky">Looky System</a>
+                <a href="https://github.com/StealthyLabsHQ" target="_blank">GitHub</a>
+                <a href="legal" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
     </div>
 
     </div>
-        <div id="warningModal" class="modal-overlay">
-            <div class="modal-box">
-                <div class="modal-icon">
-                    <svg viewBox="0 0 24 24" width="50" height="50">
-                        <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                    </svg>
-                </div>
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
+            </div>
 
-                <h2 data-key="redirect_title">Attente de redirection</h2>
-                <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
-                
-                <div class="url-container">
-                    <span id="targetUrl">https://...</span>
-                </div>
+            <h2 data-key="redirect_title">Attente de redirection</h2>
+            <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
 
-                <div class="modal-actions">
-                    <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
-                    <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
-                </div>
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeWarningModal()" data-key="btn_cancel">Annuler</button>
+                <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
             </div>
         </div>
+    </div>
     <script src="js/index.js"></script>
 </body>
+
 </html>
