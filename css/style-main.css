@@ -1,8 +1,8 @@
 /* --- CONFIGURATION GLOBALE --- */
 :root {
-    --bg-color: #050505;
+    --bg-primary: #050505;
     --card-bg: #0f0f0f;
-    --text-main: #ffffff;
+    --text-primary: #ffffff;
     --text-muted: #a0a0a0;
     --accent: #ff0000;
     --accent-dark: #cc0000;
@@ -14,15 +14,15 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: var(--main-font);
+font-family: var(--main-font);
     background-color: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;     
-    padding-top: 60px; 
-    align-items: center; 
+    justify-content: flex-start;
+    padding-top: 0;     
+    align-items: center;
 }
 
 /* --- FOND GRILLE (Effet visuel) --- */
@@ -46,10 +46,15 @@ body::after {
 
 /* --- BARRE DU HAUT --- */
 .top-bar {
-    display: flex; justify-content: flex-end; align-items: center;
-    padding: 10px 20px; background: rgba(0,0,0,0.8);
+    display: flex; 
+    justify-content: flex-end; 
+    align-items: center;
+    
+    padding: 5px 20px; 
+    
+    background: rgba(0,0,0,0.8);
     border-bottom: 1px solid var(--border);
-    position: fixed; top: 0; width: 100%; z-index: 100;
+    width: 100%; 
     z-index: 200 !important;
     position: relative;
 }
@@ -91,14 +96,21 @@ select { width: 100%; background: #000; color: white; border: 1px solid #333; pa
 
 /* --- NAVIGATION --- */
 nav {
-display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    
+    padding: 0 0 20px 0;
+    margin-top: -10px;
+
     position: relative; 
     z-index: 100;
 }
-.logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
+.logo { 
+    font-weight: 800; 
+    font-size: 1.5rem; 
+    letter-spacing: -1px; 
+}
 .nav-links { list-style: none; display: flex; gap: 20px; }
 .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; transition: 0.3s; }
 .nav-links a:hover { color: white; text-shadow: 0 0 5px var(--glow); }
@@ -106,7 +118,7 @@ display: flex;
 /* --- HERO --- */
 .hero { 
     text-align: center;
-    margin-top: -80px; 
+    margin-top: -20px; 
     padding: 20px; 
     position: relative;
     z-index: 2;
