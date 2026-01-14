@@ -223,6 +223,31 @@
         </div>
     </div>
     <script src="js/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const from = urlParams.get('from');
+            const backBtn = document.getElementById('backButton');
+
+            if (backBtn && from) {
+                // Common Back Icon
+                const backIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>';
+                const backText = '<span style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Retour</span>';
+
+                if (from === 'network') {
+                    backBtn.href = 'network';
+                    backBtn.innerHTML = backIcon + backText;
+                    backBtn.title = "Retour";
+                } else if (from === 'about') {
+                    backBtn.href = 'about.html';
+                    backBtn.innerHTML = backIcon + backText;
+                    backBtn.title = "Retour";
+                }
+                // 'index' or default goes to '/' (Home), keeping default Home icon/text is fine or we can change to Back/Retour too. 
+                // Given "Revenir sur la page principale", "Accueil" is appropriate.
+            }
+        });
+    </script>
 </body>
 
 </html>
