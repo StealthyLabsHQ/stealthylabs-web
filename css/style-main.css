@@ -496,3 +496,44 @@ body.light-mode .top-icon-btn {
     filter: invert(0) !important; color: #000 !important; 
 }
 body.light-mode .top-icon-btn svg { fill: #000 !important; }
+
+body.light-mode .nav-links a:hover {
+    color: #ff0000 !important; 
+    text-shadow: none !important;
+    background-color: transparent !important;
+}
+
+body.light-mode .modal-box {
+    background-color: #ffffff !important;
+    border: 1px solid #000000 !important; 
+    color: #000000 !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15) !important;
+}
+
+body.light-mode .modal-box h2 {
+    color: #000000 !important;
+}
+
+body.light-mode .modal-box p {
+    color: #555555 !important;
+}
+
+body.light-mode .url-container {
+    background: #f5f5f5 !important;
+    border: 1px solid #dddddd !important;
+    color: #d32f2f !important;
+}
+
+body.light-mode .btn-cancel {
+    border-color: #cccccc !important;
+    color: #444444 !important;
+}
+body.light-mode .btn-cancel:hover {
+    background: #eeeeee !important;
+    color: #000000 !important;
+}
+
+body.light-mode .modal-overlay {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(8px) !important;
+}

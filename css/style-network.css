@@ -485,24 +485,21 @@
             background: #e60000; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
         }
 
-        .link-card, 
-        .discord-card, 
-        .creator-code, 
-        .music-player {
-            border: 1px solid rgba(255, 0, 0, 0.3) !important; 
-            box-shadow: 0 0 6px rgba(255, 0, 0, 0.15) !important; 
+        .link-card, .discord-card, .creator-code, .music-player {
+            border: 1px solid #333333 !important;
+            background: var(--bg-card);
+            box-shadow: none !important;
+            transform: none !important;
             transition: all 0.3s ease;
         }
 
-        .link-card:hover, 
-        .creator-code:hover, 
-        .music-player:hover,
-        .discord-card:hover {
-            border-color: rgba(255, 0, 0, 0.8) !important; 
-            /* Lueur nette autour */
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4) !important; 
-            transform: translateY(-2px);
-            background-color: rgba(255, 0, 0, 0.02);
+        @media (hover: hover) {
+            .link-card:hover, .creator-code:hover, .music-player:hover, .discord-card:hover {
+                border-color: #ff0000 !important; 
+                box-shadow: none !important;
+                transform: translateY(-2px) !important;
+                background-color: rgba(255, 255, 255, 0.03);
+            }
         }
 
         .avatar {
@@ -546,9 +543,10 @@ body.light-mode .link-card,
 body.light-mode .discord-card, 
 body.light-mode .music-player, 
 body.light-mode .creator-code {
-    background: #ffffff;
-    border-color: #e5e5e5 !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e5e5 !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+    transform: none !important;
 }
 
 body.light-mode .link-card:hover, 
@@ -597,4 +595,39 @@ body.light-mode .link-icon.tiktok img {
 .link-icon.epic img {
     filter: invert(1); 
     opacity: 1;
+}
+
+body.light-mode .redirect-box {
+    background-color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .redirect-box h2 {
+    color: #000000 !important;
+}
+
+body.light-mode .modal-desc {
+    color: #555555 !important;
+}
+
+body.light-mode .redirect-url {
+    background: #f4f4f4 !important;
+    color: #cc0000 !important;
+    border: 1px solid #ddd;
+}
+
+body.light-mode .redirect-buttons button:first-child {
+    border-color: #ccc !important;
+    color: #333 !important;
+}
+body.light-mode .redirect-buttons button:first-child:hover {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+    border-color: #bbb !important;
+}
+
+body.light-mode .redirect-overlay {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(5px);
 }
