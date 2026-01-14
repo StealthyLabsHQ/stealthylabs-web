@@ -1,7 +1,3 @@
-// =====================================================
-// SCRIPT ACCUEIL
-// =====================================================
-
 const JSON_PATH = '';
 let currentLang = 'en';
 let currentTranslations = {};
@@ -86,8 +82,6 @@ function toggleMobileMenu() {
     menu.classList.toggle('active');
 }
 
-// --- FONCTIONS CORE ---
-
 function toggleSettings(event) {
     if(event) event.stopPropagation();
     document.getElementById('settingsPanel').classList.toggle('show');
@@ -148,10 +142,6 @@ function loadSavedFont() {
     }
 }
 
-// =========================================
-// GESTION DU THÈME (DARK / LIGHT)
-// =========================================
-
 function changeTheme(theme) {
     const body = document.body;
     const selector = document.getElementById('themeSelector');
@@ -191,7 +181,7 @@ window.addEventListener('pageshow', function(event) {
     closeWarningModal();
 });
 
-// Exports pour le HTML
+// Export HTML
 window.toggleSettings = toggleSettings;
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;

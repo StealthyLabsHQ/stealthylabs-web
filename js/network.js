@@ -1,6 +1,3 @@
-    // =====================================================
-    // GESTION LANGUES (DÉCENTRALISÉE JSON)
-    // =====================================================
     let currentLang = 'en';
     let currentTranslations = {};
 
@@ -58,9 +55,6 @@
         loadLanguageFile(lang);
     }
 
-    // =====================================================
-    // FONCTIONS UI (UI & ACCESSOIRE)
-    // =====================================================
     function toggleMusic() {
         document.getElementById('musicWrapper').classList.toggle('open');
         document.querySelector('.music-toggle').classList.toggle('active');
@@ -78,9 +72,6 @@
         setTimeout(() => tooltip.classList.remove("show"), 2000);
     }
 
-    // =====================================================
-    // GESTION DES POLICES
-    // =====================================================
     function toggleSettings() {
         document.getElementById('settingsPanel').classList.toggle('show');
     }
@@ -98,9 +89,6 @@
         }
     }
 
-    // =====================================================
-    // HORLOGE DYNAMIQUE
-    // =====================================================
     function updateClock() {
         const now = new Date();
         const clockEl = document.getElementById('clockDisplay');
@@ -115,10 +103,6 @@
             clockEl.innerText = now.toLocaleTimeString('en-US', options);
         }
     }
-
-    // =========================================
-    // GESTION DU THÈME (DARK / LIGHT)
-    // =========================================
 
     function changeTheme(theme) {
         const body = document.body;
@@ -248,19 +232,12 @@
             })
         .catch(err => console.error("Erreur Lanyard:", err));
     }
-
-    // =====================================================
-    // PROTECTION EMAIL
-    // =====================================================
     function openEmail() {
         const user = "contact";
         const domain = "stealthylabs.eu";
         window.location.href = `mailto:${user}@${domain}`;
     }
 
-    // =====================================================
-    // STATS SERVEUR DISCORD
-    // =====================================================
     function updateServerStats() {
         const inviteCode = "7CJbppbFdw"; 
         const apiUrl = `https://corsproxy.io/?https://discord.com/api/v9/invites/${inviteCode}?with_counts=true`;
@@ -296,9 +273,6 @@
             });
     }
 
-    // =====================================================
-    // GESTION BANNIÈRE COOKIES (Compatible Mobile)
-    // =====================================================
     function checkCookieConsent() {
         if (!localStorage.getItem('cookieConsent')) {
             setTimeout(() => {
@@ -314,9 +288,6 @@
 
     checkCookieConsent();
 
-    // =====================================================
-    // GESTION MODAL REDIRECTION (Mise à jour)
-    // =====================================================
     let pendingUrl = "";
     const overlay = document.getElementById('redirectOverlay'); 
     const urlDisplay = document.getElementById('redirectUrl');
@@ -353,9 +324,6 @@
         });
     });
 
-    // =====================================================
-    // FERMETURE DU MENU PARAMÈTRES AU CLIC EXTÉRIEUR
-    // =====================================================
     document.addEventListener('click', function(event) {
         const settingsPanel = document.getElementById('settingsPanel');
         const settingsBtn = document.querySelector('button[onclick="toggleSettings()"]');
@@ -370,9 +338,6 @@
         }
     });
 
-    // =====================================================
-    // LECTEUR AUDIO
-    // =====================================================
     let playlistData = [];
 
     function loadPlaylist() {
@@ -473,17 +438,12 @@
     audio.onended = () => { nextTrack(); };
     progressBar.onclick = e => { if (audio.duration && isFinite(audio.duration)) { const rect = progressBar.getBoundingClientRect(); const percent = (e.clientX - rect.left) / rect.width; audio.currentTime = percent * audio.duration; } };
 
-// =====================================================
-// LANCEMENT INITIAL
-// =====================================================
     detectLanguage(); 
     loadPlaylist();   
     updateDiscordStatus(); 
     updateClock();
     updateServerStats();
     loadSavedFont();
-
-    // Intervalles de mise à jour
     setInterval(updateClock, 1000);
     setInterval(updateServerStats, 60000);
     setInterval(updateDiscordStatus, 30000);

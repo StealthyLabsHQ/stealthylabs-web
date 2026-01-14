@@ -283,7 +283,6 @@
             .tooltip { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-primary); color: var(--bg-primary); padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; opacity: 0; transition: all 0.3s ease; pointer-events: none; }
             .tooltip.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-            /* --- CSS POUR LE BLOC JEU (RICH PRESENCE) --- */
             .discord-info {
                 display: flex;
                 flex-direction: column;
@@ -354,8 +353,6 @@
                 opacity: 0.8;
             }
 
-            /* --- TOP BAR (HEURE + STEAM) --- */
-            /* Version Desktop */
             .top-bar {
                 position: absolute;
                 top: 30px;
@@ -395,7 +392,6 @@
                 filter: invert(1) brightness(100%); 
             }
 
-            /* --- ADAPTATION MOBILE --- */
             @media (max-width: 850px) { 
                 body { 
                     padding-top: 20px; 
@@ -417,7 +413,6 @@
                 .link-card, .discord-card, .creator-code { padding: 12px 14px; }
             }
 
-        /* --- MODAL REDIRECTION --- */
         .redirect-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -514,10 +509,6 @@
             border: 3px solid #000000 !important;
             box-shadow: none !important;
         }
-
-/* ========================================= */
-/* MODE CLAIR (LIGHT MODE)                   */
-/* ========================================= */
 
 body.light-mode {
     --bg-primary: #ffffff;

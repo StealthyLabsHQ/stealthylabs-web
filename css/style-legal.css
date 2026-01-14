@@ -15,10 +15,6 @@
         .legal-section a { color: #ff0000; text-decoration: none; }
         .legal-section a:hover { text-decoration: underline; }
 
-        /* ========================================= */
-        /* MODE CLAIR (LIGHT MODE)                   */
-        /* ========================================= */
-
         body.light-mode .legal-content {
             background: #ffffff;
             border-color: #e5e5e5;
@@ -38,4 +34,11 @@
 
         body.light-mode .legal-section strong {
             color: #000000;
+        }
+
+        body.light-mode .top-icon-btn {
+            color: #000000 !important;
+        }
+        body.light-mode .top-icon-btn svg {
+            fill: #000000 !important;
         }
