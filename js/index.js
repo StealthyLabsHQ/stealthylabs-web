@@ -44,7 +44,7 @@ continueBtn.addEventListener('click', () => {
         const urlToGo = pendingUrl;
         closeWarningModal();
         setTimeout(() => {
-            if (urlToGo.includes('looky-gta.cc') || urlToGo.includes('github.com')) {
+            if (urlToGo.includes('looky-gta.cc') || urlToGo.includes('github.com') || urlToGo.includes('discord.gg')) {
                 window.open(urlToGo, '_blank');
             } else {
                 window.location.href = urlToGo;
@@ -59,8 +59,7 @@ modal.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-
+function setupLinkListeners() {
     const networkLinks = document.querySelectorAll('a[href="network/"], a[href="../network/"], a[data-key="nav_network"]');
     networkLinks.forEach(link => {
         link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
@@ -76,11 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
         githubLink.addEventListener('click', (e) => openWarningModal(e, "https://github.com/StealthyLabsHQ"));
     }
 
+    const discordLink = document.querySelector('a[href="https://discord.gg/7CJbppbFdw"]');
+    if (discordLink) {
+        discordLink.addEventListener('click', (e) => openWarningModal(e, "https://discord.gg/7CJbppbFdw"));
+    }
+
     const ctaBtn = document.querySelector('.cta-button');
     if (ctaBtn && ctaBtn.getAttribute('href') === 'network/') {
         ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
     }
-});
+}
+
+document.addEventListener('DOMContentLoaded', setupLinkListeners);
 
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
