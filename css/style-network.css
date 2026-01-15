@@ -979,37 +979,7 @@
                 filter: invert(1) brightness(100%);
             }
 
-            @media (max-width: 850px) {
-                body {
-                    padding-top: 20px;
-                    justify-content: flex-start;
-                }
 
-                .top-bar {
-                    position: relative;
-                    top: auto;
-                    right: auto;
-                    width: 100%;
-                    justify-content: flex-end;
-                    margin-bottom: 20px;
-                    padding-right: 10px;
-                }
-
-                .avatar {
-                    width: 100px;
-                    height: 100px;
-                }
-
-                .username {
-                    font-size: 1.3rem;
-                }
-
-                .link-card,
-                .discord-card,
-                .creator-code {
-                    padding: 12px 14px;
-                }
-            }
 
             .redirect-overlay {
                 position: fixed;
@@ -1230,10 +1200,7 @@
                 border-color: #000000 !important;
             }
 
-            body.light-mode .link-icon.epic img,
-            body.light-mode .link-icon.tiktok img {
-                filter: invert(1);
-            }
+
 
             .link-icon.epic {
                 background: transparent;

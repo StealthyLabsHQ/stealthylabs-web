@@ -96,14 +96,6 @@
             margin-bottom: 10px;
         }
 
-        body.light-mode .top-icon-btn {
-            color: #000000 !important;
-        }
-
-        body.light-mode .top-icon-btn svg {
-            fill: #000000 !important;
-        }
-
         body.light-mode .about-text {
             background-color: #ffffff;
             color: #333333;

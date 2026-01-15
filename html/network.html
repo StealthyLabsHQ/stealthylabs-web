@@ -11,14 +11,15 @@
 
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" type="image/png" href="logos/favicon.png">
+    <link rel="icon" type="image/png" href="../logos/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style-network.css">
+    <script>window.SITE_ROOT = '../';</script>
+    <link rel="stylesheet" href="../css/style-network.css">
 </head>
 
 <body>
@@ -32,7 +33,7 @@
             <span id="clockDisplay">--:--</span>
         </div>
 
-        <a href="/" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; opacity: 1;"
+        <a href="../index.html" class="top-icon-btn" style="text-decoration: none; margin-right: 20px; opacity: 1;"
             title="Retour à l'accueil">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -42,12 +43,12 @@
         </a>
 
         <a href="https://steamcommunity.com/id/stealthylabs/" target="_blank" class="top-icon-btn" title="Steam">
-            <img src="logos/steam.png" alt="Steam">
+            <img src="../logos/steam.png" alt="Steam">
         </a>
 
         <button class="top-icon-btn" onclick="toggleSettings()" title="Changer la police"
             style="background:none; border:none; cursor:pointer;">
-            <img src="logos/gear.png" alt="Settings">
+            <img src="../logos/gear.png" alt="Settings">
         </button>
 
         <div class="settings-panel" id="settingsPanel">
@@ -88,7 +89,7 @@
 
         <div class="container">
             <header class="profile">
-                <img src="avatar.png" alt="StealthyLabs" class="avatar">
+                <img src="../avatar.png" alt="StealthyLabs" class="avatar">
                 <h1 class="username">StealthyLabs</h1>
                 <div class="bio">
                     <p class="bio-title" data-key="bio">Content Creator & Streamer</p>
@@ -110,7 +111,7 @@
             <section class="links">
                 <div class="discord-card discord-card-main">
                     <div class="discord-avatar" style="background: #2b2d31;">
-                        <img id="discordAvatar" src="logos/discord.png" alt="Avatar">
+                        <img id="discordAvatar" src="../logos/discord.png" alt="Avatar">
                         <div id="discordStatus" class="discord-status-dot"></div>
                     </div>
                     <div class="discord-info">
@@ -123,7 +124,7 @@
 
                 <div class="discord-card">
                     <div class="discord-avatar">
-                        <img id="serverIcon" src="logos/discord.png" alt="Discord Server">
+                        <img id="serverIcon" src="../logos/discord.png" alt="Discord Server">
                     </div>
                     <div class="discord-info">
                         <div class="discord-name">
@@ -167,7 +168,7 @@
 
                 <div class="socials-wrapper" id="socialsWrapper">
                     <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener" class="link-card">
-                        <div class="link-icon tiktok"><img src="logos/tiktok.png" alt="TikTok"></div>
+                        <div class="link-icon tiktok"><img src="../logos/tiktok.png" alt="TikTok"></div>
                         <div class="link-content">
                             <div class="link-title">TikTok</div>
                             <div class="link-desc" data-key="tiktok_desc">Que des contenus shorts.</div>
@@ -245,7 +246,7 @@
                 </div>
 
                 <div class="creator-code" onclick="copyCode()">
-                    <div class="link-icon epic"><img src="logos/epic_games.png" alt="Epic Games"></div>
+                    <div class="link-icon epic"><img src="../logos/epic_games.png" alt="Epic Games"></div>
                     <div class="link-content">
                         <div class="link-title" data-key="support_creator">Support the Creator</div>
                         <div class="link-desc">Code: stealthylabs</div>
@@ -377,7 +378,7 @@
             <footer class="footer">
                 <span data-key="footer">© 2026 StealthyLabs. All rights reserved.</span>
                 <br>
-                <a href="legal?from=network" data-key="legal_link"
+                <a href="legal.html?from=network" data-key="legal_link"
                     style="color: #555; text-decoration: none; font-size: 0.75rem; margin-top: 5px; display:inline-block;">Mentions
                     Légales</a>
             </footer>
@@ -405,7 +406,7 @@
                 <span data-key="cookie_text">🍪 Ce site utilise le stockage local pour sauvegarder vos préférences
                     (Langue & Police). </span>
 
-                <a href="legal" target="_blank" data-key="cookie_more"
+                <a href="legal.html" target="_blank" data-key="cookie_more"
                     style="color: #fff; text-decoration: underline;">En savoir plus</a>.
             </p>
 
@@ -414,7 +415,7 @@
         </div>
 
         <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-        <script src="js/network.js"></script>
+        <script src="../js/network.js"></script>
 </body>
 
 </html>

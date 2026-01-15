@@ -17,7 +17,7 @@ function detectLanguage() {
 }
 
 function loadLanguageFile(lang) {
-    fetch(`translations/${lang}.json`)
+    fetch(`${window.SITE_ROOT || ''}translations/${lang}.json`)
         .then(response => response.json())
         .then(data => {
             currentTranslations = data;
@@ -356,7 +356,7 @@ document.addEventListener('click', function (event) {
 let playlistData = [];
 
 function loadPlaylist() {
-    fetch('json/playlist.json')
+    fetch(`${window.SITE_ROOT || ''}json/playlist.json`)
         .then(response => response.json())
         .then(data => {
             playlistData = data;
@@ -387,7 +387,7 @@ function initPlaylist() {
 
     let html = '<div class="playlist-header">Playlist</div>';
     playlistData.forEach((t, i) => {
-        html += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover ? `<img src="${t.cover}">` : defaultSVG}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
+        html += `<div class="playlist-item" data-i="${i}"><div class="playlist-item-cover">${t.cover ? `<img src="${window.SITE_ROOT || ''}${t.cover}">` : defaultSVG}</div><div class="playlist-item-info"><div class="playlist-item-title">${t.title}</div><div class="playlist-item-artist">${t.artist}</div></div></div>`;
     });
     playlistEl.innerHTML = html;
 
@@ -419,13 +419,13 @@ function initPlaylist() {
 
 function loadTrack(i) {
     const t = playlistData[i];
-    audio.src = t.file;
+    audio.src = (window.SITE_ROOT || '') + t.file;
 
     playerTrack.textContent = t.title;
     playerTrack.removeAttribute('data-key');
 
     playerArtist.textContent = t.artist;
-    playerArtwork.innerHTML = t.cover ? `<img src="${t.cover}">` : defaultSVG;
+    playerArtwork.innerHTML = t.cover ? `<img src="${window.SITE_ROOT || ''}${t.cover}">` : defaultSVG;
 
     document.querySelectorAll(".playlist-item").forEach((el, index) => {
         el.classList.toggle("active", index === i);

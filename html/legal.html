@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="legal_page_title">Mentions Légales - StealthyLabs</title>
 
-    <link rel="stylesheet" href="css/style-main.css">
-    <link rel="stylesheet" href="css/style-legal.css">
-    <link rel="icon" type="image/png" href="logos/favicon.png">
+    <link rel="stylesheet" href="../css/style-main.css">
+    <link rel="stylesheet" href="../css/style-legal.css">
+    <link rel="icon" type="image/png" href="../logos/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap"
         rel="stylesheet">
+    <script>window.SITE_ROOT = '../';</script>
 </head>
 
 <body>
 
     <div class="top-bar">
-        <a href="/" id="backButton" class="top-icon-btn"
+        <a href="../index.html" id="backButton" class="top-icon-btn"
             style="text-decoration: none; margin-right: 20px; opacity: 1; display: flex; align-items: center;"
             title="Retour à l'accueil">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
@@ -34,7 +35,7 @@
 
         <button class="settings-btn" onclick="toggleSettings()"
             style="background: transparent; border: none; cursor: pointer;">
-            <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26"
+            <img src="../logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26"
                 style="filter: invert(1);">
         </button>
 
@@ -75,13 +76,13 @@
     <div class="container">
         <nav>
             <div class="logo">
-                <a href="/">
-                    <img src="logos/logo.png" alt="StealthyLabs" style="height: 75px; width: auto; display: block;">
+                <a href="../index.html">
+                    <img src="../logos/logo.png" alt="StealthyLabs" style="height: 75px; width: auto; display: block;">
                 </a>
             </div>
             <ul class="nav-links desktop-only">
                 <li><a href="about.html" data-key="nav_about">About</a></li>
-                <li><a href="network" data-key="nav_network">Network</a></li>
+                <li><a href="network.html" data-key="nav_network">Network</a></li>
             </ul>
             <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
                 <span></span><span></span><span></span>
@@ -92,7 +93,7 @@
             <button class="close-menu-btn" onclick="toggleMobileMenu()">&times;</button>
             <div class="mobile-links">
                 <a href="about.html" data-key="nav_about" onclick="toggleMobileMenu()">About Me</a>
-                <a href="network" data-key="nav_network" onclick="toggleMobileMenu()">Network</a>
+                <a href="network.html" data-key="nav_network" onclick="toggleMobileMenu()">Network</a>
             </div>
         </div>
 
@@ -196,7 +197,7 @@
             <div class="footer-links">
                 <a href="https://looky-gta.cc" target="_blank" data-key="looky">Looky System</a>
                 <a href="https://github.com/StealthyLabsHQ" target="_blank">GitHub</a>
-                <a href="legal" data-key="footer_legal">Mentions Légales</a>
+                <a href="legal.html" data-key="footer_legal">Mentions Légales</a>
             </div>
         </footer>
     </div>
@@ -223,7 +224,7 @@
             </div>
         </div>
     </div>
-    <script src="js/index.js"></script>
+    <script src="../js/index.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -236,7 +237,7 @@
                 const backText = '<span style="margin-left: 8px; font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">Retour</span>';
 
                 if (from === 'network') {
-                    backBtn.href = 'network';
+                    backBtn.href = 'network.html';
                     backBtn.innerHTML = backIcon + backText;
                     backBtn.title = "Retour";
                 } else if (from === 'about') {

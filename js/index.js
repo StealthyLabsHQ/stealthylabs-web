@@ -1,4 +1,4 @@
-const JSON_PATH = 'translations/';
+const JSON_PATH = (window.SITE_ROOT || '') + 'translations/';
 let currentLang = 'en';
 let currentTranslations = {};
 
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const networkLinks = document.querySelectorAll('a[href="network"]');
     networkLinks.forEach(link => {
-        link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
+        link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/html/network.html"));
     });
 
     const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const ctaBtn = document.querySelector('.cta-button');
     if (ctaBtn && ctaBtn.getAttribute('href') === 'network') {
-        ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
+        ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/html/network.html"));
     }
 });
 
