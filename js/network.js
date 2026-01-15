@@ -130,7 +130,7 @@ function loadSavedTheme() {
     if (savedTheme) {
         changeTheme(savedTheme);
     } else {
-        changeTheme('dark');
+        changeTheme('system');
     }
 }
 
@@ -458,7 +458,9 @@ loadPlaylist();
 updateDiscordStatus();
 updateClock();
 updateServerStats();
+updateServerStats();
 loadSavedFont();
+loadSavedTheme();
 setInterval(updateClock, 1000);
 setInterval(updateServerStats, 60000);
 setInterval(updateDiscordStatus, 30000);
