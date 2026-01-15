@@ -106,5 +106,13 @@
     "gpu_label": "Carte Graphique",
     "ssd_label": "Stockage (SSD)",
     "case_label": "Boitier",
-    "psu_label": "Alimentation"
+    "psu_label": "Alimentation",
+    "cpu_value": "AMD Ryzen 7 9800X3D",
+    "ram_value": "Lexar ARES RGB 32Go Blanc (2x16) DDR5 6400 CAS32",
+    "cooling_value": "Corsair iCUE Link Titan 360 RX",
+    "mobo_value": "GIGABYTE AORUS B650E STEALTH ICE",
+    "gpu_value": "Gigabyte GeForce RTX 5070 Ti AERO 16Go GDDR7",
+    "ssd_value": "2x WD SN7100 2To <br> Samsung 970 EVO Plus 2To <br> WD SA500 SATA 4To",
+    "case_value": "Corsair 4000D Frame Blanc",
+    "psu_value": "MSI MPG A850G PCIe 5.0"
 }
