@@ -61,7 +61,7 @@ modal.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const networkLinks = document.querySelectorAll('a[href="network"]');
+    const networkLinks = document.querySelectorAll('a[href="network/"]');
     networkLinks.forEach(link => {
         link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
     });
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const ctaBtn = document.querySelector('.cta-button');
-    if (ctaBtn && ctaBtn.getAttribute('href') === 'network') {
+    if (ctaBtn && ctaBtn.getAttribute('href') === 'network/') {
         ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
     }
 });
