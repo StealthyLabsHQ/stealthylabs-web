@@ -1256,3 +1256,47 @@
                     animation: fadeInMobile 0.2s ease forwards;
                 }
             }
+
+            /* Home Button Bottom */
+            .home-button-pill {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                padding: 12px 30px;
+                border-radius: 50px;
+                color: var(--text-primary);
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 0.9rem;
+                margin: 20px auto 0 auto;
+                width: fit-content;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .home-button-pill:hover {
+                background: var(--bg-card-hover);
+                border-color: var(--text-primary);
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            .home-button-pill svg {
+                margin-bottom: 2px;
+            }
+
+            body.light-mode .home-button-pill {
+                background: #ffffff;
+                border-color: #000000;
+                color: #000000;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            body.light-mode .home-button-pill:hover {
+                background: #f8f8f8;
+                border-color: var(--accent-green);
+                color: var(--accent-green);
+            }
