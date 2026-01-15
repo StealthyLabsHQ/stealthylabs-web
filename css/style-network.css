@@ -106,11 +106,10 @@
                     top: auto;
                     right: auto;
                     width: 100%;
-                    justify-content: flex-end;
+                    justify-content: space-between;
                     margin-bottom: 20px;
-                    padding-right: 10px;
+                    padding: 0 20px;
                     z-index: 200 !important;
-                    position: relative;
                 }
 
                 .avatar {
