@@ -106,10 +106,19 @@
                     top: auto;
                     right: auto;
                     width: 100%;
-                    justify-content: space-between;
-                    margin-bottom: 20px;
-                    padding: 0 20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+                    align-items: center;
+                    margin-bottom: 30px;
+                    padding: 10px 20px;
                     z-index: 200 !important;
+                    background: transparent;
+                }
+
+                /* Push the first link (Home) and subsequent items to the right */
+                .top-bar>a:first-of-type {
+                    margin-left: auto;
                 }
 
                 .avatar {
