@@ -30,7 +30,7 @@
         </div>
 
         <button class="settings-btn" onclick="toggleSettings()" title="Paramètres"
-            style="background: transparent !important; border: none !important; -webkit-appearance: none; padding: 0; cursor: pointer;">
+            style="background: transparent !important; border: none !important; -webkit-appearance: none; appearance: none; padding: 0; cursor: pointer;">
             <img src="logos/gear.png" alt="Settings" class="gear-icon-img" width="26" height="26"
                 style="width: 26px; height: 26px; filter: invert(1); display: block;">
         </button>
@@ -63,6 +63,7 @@
                 <select id="themeSelector" onchange="changeTheme(this.value)">
                     <option value="dark">Dark Mode</option>
                     <option value="light">Light Mode</option>
+                    <option value="system">System</option>
                 </select>
             </div>
         </div>

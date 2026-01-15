@@ -1,4 +1,4 @@
-const JSON_PATH = '';
+const JSON_PATH = 'translations/';
 let currentLang = 'en';
 let currentTranslations = {};
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (event) => {
         const panel = document.getElementById('settingsPanel');
         const settingsBtn = event.target.closest('button[onclick*="toggleSettings"]');
-        
+
         if (panel && panel.classList.contains('show')) {
             if (!panel.contains(event.target) && !settingsBtn) {
                 panel.classList.remove('show');
@@ -23,64 +23,64 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const modal = document.getElementById('warningModal');
-    const targetUrlSpan = document.getElementById('targetUrl');
-    const continueBtn = document.getElementById('continueBtn');
-    let pendingUrl = '';
+const targetUrlSpan = document.getElementById('targetUrl');
+const continueBtn = document.getElementById('continueBtn');
+let pendingUrl = '';
 
-    function openWarningModal(e, url) {
-        e.preventDefault();
-        pendingUrl = url;
-        targetUrlSpan.textContent = url;
-        modal.classList.add('active');
-    }
+function openWarningModal(e, url) {
+    e.preventDefault();
+    pendingUrl = url;
+    targetUrlSpan.textContent = url;
+    modal.classList.add('active');
+}
 
-    function closeWarningModal() {
-        modal.classList.remove('active');
-        pendingUrl = '';
-    }
+function closeWarningModal() {
+    modal.classList.remove('active');
+    pendingUrl = '';
+}
 
-    continueBtn.addEventListener('click', () => {
+continueBtn.addEventListener('click', () => {
     if (pendingUrl) {
-            const urlToGo = pendingUrl;
-            closeWarningModal();
-            setTimeout(() => {
-                if (urlToGo.includes('looky-gta.cc') || urlToGo.includes('github.com')) {
-                    window.open(urlToGo, '_blank');
-                } else {
-                    window.location.href = urlToGo;
-                }
-            }, 100);
-        }
+        const urlToGo = pendingUrl;
+        closeWarningModal();
+        setTimeout(() => {
+            if (urlToGo.includes('looky-gta.cc') || urlToGo.includes('github.com')) {
+                window.open(urlToGo, '_blank');
+            } else {
+                window.location.href = urlToGo;
+            }
+        }, 100);
+    }
+});
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeWarningModal();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const networkLinks = document.querySelectorAll('a[href="network"]');
+    networkLinks.forEach(link => {
+        link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
     });
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeWarningModal();
-        }
-    });
+    const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
+    if (lookyLink) {
+        lookyLink.addEventListener('click', (e) => openWarningModal(e, "https://looky-gta.cc"));
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    const githubLink = document.querySelector('a[href="https://github.com/StealthyLabsHQ"]');
+    if (githubLink) {
+        githubLink.addEventListener('click', (e) => openWarningModal(e, "https://github.com/StealthyLabsHQ"));
+    }
 
-        const networkLinks = document.querySelectorAll('a[href="network"]');
-        networkLinks.forEach(link => {
-            link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
-        });
-
-        const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
-        if (lookyLink) {
-            lookyLink.addEventListener('click', (e) => openWarningModal(e, "https://looky-gta.cc"));
-        }
-
-        const githubLink = document.querySelector('a[href="https://github.com/StealthyLabsHQ"]');
-        if (githubLink) {
-            githubLink.addEventListener('click', (e) => openWarningModal(e, "https://github.com/StealthyLabsHQ"));
-        }
-
-        const ctaBtn = document.querySelector('.cta-button');
-        if(ctaBtn && ctaBtn.getAttribute('href') === 'network') {
-            ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
-        }
-    });
+    const ctaBtn = document.querySelector('.cta-button');
+    if (ctaBtn && ctaBtn.getAttribute('href') === 'network') {
+        ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
+    }
+});
 
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
@@ -88,7 +88,7 @@ function toggleMobileMenu() {
 }
 
 function toggleSettings(event) {
-    if(event) event.stopPropagation();
+    if (event) event.stopPropagation();
     document.getElementById('settingsPanel').classList.toggle('show');
 }
 
@@ -96,10 +96,10 @@ function detectLanguage() {
     const savedLang = localStorage.getItem('userLang');
     const browserLang = navigator.language || navigator.userLanguage;
     currentLang = savedLang ? savedLang : (browserLang.startsWith('fr') ? 'fr' : 'en');
-    
+
     const selector = document.getElementById('languageSelector');
-    if(selector) selector.value = currentLang;
-    
+    if (selector) selector.value = currentLang;
+
     loadLanguageFile(currentLang);
 }
 
@@ -115,7 +115,7 @@ function loadLanguageFile(lang) {
 }
 
 function applyTranslations() {
-document.querySelectorAll('[data-key]').forEach(elem => {
+    document.querySelectorAll('[data-key]').forEach(elem => {
         const key = elem.getAttribute('data-key');
         if (currentTranslations[key]) {
             if (elem.tagName === 'UL' || elem.tagName === 'SPAN' || elem.tagName === 'P' || elem.tagName === 'TITLE') {
@@ -143,7 +143,7 @@ function loadSavedFont() {
     if (saved) {
         document.documentElement.style.setProperty('--main-font', saved);
         const sel = document.getElementById('fontSelector');
-        if(sel) sel.value = saved;
+        if (sel) sel.value = saved;
     }
 }
 
@@ -151,23 +151,38 @@ function changeTheme(theme) {
     const body = document.body;
     const selector = document.getElementById('themeSelector');
 
-    if (theme === 'light') {
+    localStorage.setItem('userTheme', theme);
+
+    if (theme === 'system') {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            body.classList.add('light-mode');
+        } else {
+            body.classList.remove('light-mode');
+        }
+    } else if (theme === 'light') {
         body.classList.add('light-mode');
-        localStorage.setItem('userTheme', 'light');
     } else {
         body.classList.remove('light-mode');
-        localStorage.setItem('userTheme', 'dark');
     }
+
     if (selector) selector.value = theme;
 }
 
 function loadSavedTheme() {
     const savedTheme = localStorage.getItem('userTheme');
-    if (savedTheme === 'light') {
-        changeTheme('light');
+    if (savedTheme) {
+        changeTheme(savedTheme);
     } else {
-        changeTheme('dark');
+        changeTheme('system');
     }
+}
+
+if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+        if (localStorage.getItem('userTheme') === 'system') {
+            changeTheme('system');
+        }
+    });
 }
 
 loadSavedTheme();
@@ -178,11 +193,11 @@ function updateClock() {
     const now = new Date();
     let options = { hour: '2-digit', minute: '2-digit', hour12: (currentLang === 'en') };
     let timeStr = now.toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'fr-FR', options);
-    if(currentLang !== 'en') timeStr = timeStr.replace(':', ':');
+    if (currentLang !== 'en') timeStr = timeStr.replace(':', ':');
     clockEl.innerText = timeStr;
 }
 
-window.addEventListener('pageshow', function(event) {
+window.addEventListener('pageshow', function (event) {
     closeWarningModal();
 });
 
