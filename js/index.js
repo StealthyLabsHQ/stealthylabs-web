@@ -61,7 +61,7 @@ modal.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const networkLinks = document.querySelectorAll('a[href="network/"]');
+    const networkLinks = document.querySelectorAll('a[href="network/"], a[href="../network/"], a[data-key="nav_network"]');
     networkLinks.forEach(link => {
         link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
     });
