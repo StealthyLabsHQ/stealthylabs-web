@@ -25,7 +25,7 @@ function loadLanguageFile(lang) {
 
             updateClock();
             updateServerStats();
-            updateDiscordStatus();
+            // updateDiscordStatus(); // Removed as it is now WebSocket based
 
             const guidesCard = document.getElementById('guidesCard');
             if (guidesCard) {
@@ -153,110 +153,182 @@ if (window.matchMedia) {
     });
 }
 
-// =====================================================
-// INTEGRATION DISCORD (LANYARD)
-// =====================================================
-function updateDiscordStatus() {
-    const userId = "1071461037741723648";
-    const apiUrl = `https://api.lanyard.rest/v1/users/${userId}`;
+const lanyardUserId = "1071461037741723648";
+let lanyardSocket = null;
+let heartbeatInterval = null;
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const d = data.data;
-                const user = d.discord_user;
-                const status = d.discord_status;
+function connectLanyard() {
+    lanyardSocket = new WebSocket('wss://api.lanyard.rest/socket');
 
-                const avatarImg = document.getElementById('discordAvatar');
-                const statusDot = document.getElementById('discordStatus');
-                const activityEl = document.getElementById('discordActivity');
+    lanyardSocket.onopen = () => {
+        console.log("🟢 Connected to Lanyard WebSocket");
+    };
 
-                if (user.avatar) {
-                    avatarImg.src = `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=128`;
-                }
+    lanyardSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const op = data.op;
+        const d = data.d;
 
-                statusDot.className = 'discord-status-dot ' + status;
+        if (op === 1) { // Hello
+            // Send Initialize
+            lanyardSocket.send(JSON.stringify({
+                op: 2,
+                d: { subscribe_to_id: lanyardUserId }
+            }));
 
-                const statusText = {
-                    online: currentTranslations.status_online || "Online",
-                    idle: currentTranslations.status_idle || "Idle",
-                    dnd: currentTranslations.status_dnd || "DND",
-                    offline: currentTranslations.status_offline || "Offline"
-                }[status] || status;
-
-                let game = null;
-                let spotify = null;
-
-                if (d.activities && d.activities.length > 0) {
-                    game = d.activities.find(a => a.type !== 4 && a.name !== "Spotify" && a.assets && a.assets.large_image);
-                }
-                if (d.listening_to_spotify && d.spotify) {
-                    spotify = d.spotify;
-                }
-
-                let htmlContent = `<div style="color:#888; font-size:0.8rem;">${statusText}</div>`;
-
-                if (spotify || (game && (game.name === 'foobar2000' || game.name === 'Music'))) {
-                    let artist, album, track, coverUrl;
-                    let explicitHtml = '';
-
-                    if (spotify) {
-                        artist = spotify.artist;
-                        album = spotify.album;
-                        track = spotify.song;
-                        coverUrl = spotify.album_art_url;
-                        if (spotify.explicit === true) {
-                            explicitHtml = `<span class="explicit-badge" title="Explicit">E</span>`;
-                        }
-                    } else {
-                        artist = game.state || "Inconnu";
-                        album = game.assets.large_text || "";
-                        track = game.details || "";
-                        let assetId = game.assets.large_image;
-                        if (assetId.startsWith("mp:")) {
-                            coverUrl = `https://media.discordapp.net/${assetId.slice(3)}`;
-                        } else {
-                            coverUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${assetId}.png`;
-                        }
-                    }
-
-                    htmlContent += `
-                            <div class="rp-game-row" style="align-items: flex-start;">
-                                <img src="${coverUrl}" class="rp-game-icon" style="margin-top: 4px;">
-                                <div class="rp-game-info">
-                                    <div class="rp-game-title" style="color: #fff; font-weight: 700;">
-                                        ${track}${explicitHtml}
-                                    </div>
-                                    <div class="rp-game-detail" style="color: #ccc;">${album}</div>
-                                    <div class="rp-game-detail" style="color: #888;">${artist}</div>
-                                </div>
-                            </div>
-                        `;
-                }
-                else if (game) {
-                    let assetId = game.assets.large_image;
-                    let gameImgUrl;
-                    if (assetId.startsWith("mp:")) {
-                        gameImgUrl = `https://media.discordapp.net/${assetId.slice(3)}`;
-                    } else {
-                        gameImgUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${assetId}.png`;
-                    }
-                    const details = game.details || game.state || "";
-                    htmlContent += `
-                            <div class="rp-game-row">
-                                <img src="${gameImgUrl}" class="rp-game-icon">
-                                <div class="rp-game-info">
-                                    <div class="rp-game-title">${game.name}</div>
-                                    <div class="rp-game-detail">${details}</div>
-                                </div>
-                            </div>
-                        `;
-                }
-                activityEl.innerHTML = htmlContent;
+            // Start heartbeat
+            heartbeatInterval = setInterval(() => {
+                lanyardSocket.send(JSON.stringify({ op: 3 }));
+            }, d.heartbeat_interval);
+        } else if (op === 0) { // Event
+            if (data.t === 'INIT_STATE' || data.t === 'PRESENCE_UPDATE') {
+                updateDiscordUI(d);
             }
-        })
-        .catch(err => console.error("Erreur Lanyard:", err));
+        }
+    };
+
+    lanyardSocket.onclose = () => {
+        console.log("🔴 Disconnected from Lanyard WebSocket. Reconnecting in 5s...");
+        if (heartbeatInterval) clearInterval(heartbeatInterval);
+        setTimeout(connectLanyard, 5000);
+    };
+
+    lanyardSocket.onerror = (error) => {
+        console.error("⚠️ Lanyard WebSocket Error:", error);
+        lanyardSocket.close();
+    };
+}
+
+function updateDiscordUI(data) {
+    const user = data.discord_user;
+    const status = data.discord_status;
+    const activities = data.activities;
+    const spotify = data.spotify;
+
+    const avatarImg = document.getElementById('discordAvatar');
+    const statusDot = document.getElementById('discordStatus');
+    const activityEl = document.getElementById('discordActivity');
+
+    if (user.avatar) {
+        avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`;
+    }
+
+    statusDot.className = 'discord-status-dot ' + status;
+
+    const statusText = {
+        online: currentTranslations.status_online || "Online",
+        idle: currentTranslations.status_idle || "Idle",
+        dnd: currentTranslations.status_dnd || "DND",
+        offline: currentTranslations.status_offline || "Offline"
+    }[status] || status;
+
+    let htmlContent = `<div style="color:#888; font-size:0.8rem; margin-bottom: 5px;">${statusText}</div>`;
+
+    // Prioritize Spotify or Custom Status or Game
+    // Filter out internal activities if needed, but keeping logic broad as requested
+
+    // 1. Spotify
+    if (data.listening_to_spotify && spotify) {
+        let artist = spotify.artist;
+        let title = spotify.song;
+        let coverUrl = spotify.album_art_url;
+        let explicitHtml = spotify.explicit ? `<span class="explicit-badge" title="Explicit">E</span>` : '';
+
+        htmlContent += `
+            <div class="rp-game-row">
+                <img src="${coverUrl}" class="rp-game-icon">
+                <div class="rp-game-info">
+                    <div class="rp-game-title" style="color: #1db954; font-weight: 700;">
+                        ${title}${explicitHtml}
+                    </div>
+                    <div class="rp-game-detail" style="color: #ccc;">by ${artist}</div>
+                    <div class="rp-game-detail" style="color: #888;">on Spotify</div>
+                </div>
+            </div>
+        `;
+    }
+    // 2. Activities (Games, VScode, etc)
+    else if (activities && activities.length > 0) {
+        // Filter out status (type 4) if you want, or show it separately
+        // Typically type 4 is "Custom Status"
+        const game = activities.find(a => a.type !== 4); // Find first non-custom status activity
+
+        if (game) {
+            let largeImage = null;
+            let smallImage = null;
+
+            // Handle Images
+            if (game.assets) {
+                if (game.assets.large_image) {
+                    if (game.assets.large_image.startsWith("mp:")) {
+                        largeImage = `https://media.discordapp.net/${game.assets.large_image.slice(3)}`;
+                    } else {
+                        largeImage = `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
+                    }
+                }
+                if (game.assets.small_image) {
+                    if (game.assets.small_image.startsWith("mp:")) {
+                        smallImage = `https://media.discordapp.net/${game.assets.small_image.slice(3)}`;
+                    } else {
+                        smallImage = `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.small_image}.png`;
+                    }
+                }
+            }
+
+            // Fallback icon if no assets
+            const iconUrl = largeImage || "https://d2636k5j18ch80.cloudfront.net/assets/unknown-game.png"; // or a generic gamepad icon
+
+            const details = game.details || "";
+            const state = game.state || "";
+
+            htmlContent += `
+                <div class="rp-game-row">
+                    <img src="${iconUrl}" class="rp-game-icon" onerror="this.src='../logos/discord.png'">
+                    <div class="rp-game-info">
+                        <div class="rp-game-title">${game.name}</div>
+                        ${details ? `<div class="rp-game-detail">${details}</div>` : ''}
+                        ${state ? `<div class="rp-game-detail" style="color:#888;">${state}</div>` : ''}
+                        ${game.timestamps && game.timestamps.start ? `<div class="rp-game-detail" id="rp-timer" data-start="${game.timestamps.start}"></div>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Start timer update if needed (simple implementation)
+            if (game.timestamps && game.timestamps.start) {
+                updateRpTimer(game.timestamps.start);
+            }
+        } else {
+            // Check for Custom Status (Type 4)
+            const custom = activities.find(a => a.type === 4);
+            if (custom && custom.state) {
+                htmlContent += `<div style="color: #fff; font-style: italic;">"${custom.state}"</div>`;
+            }
+        }
+    }
+
+    activityEl.innerHTML = htmlContent;
+}
+
+let rpTimerInterval = null;
+function updateRpTimer(startTime) {
+    if (rpTimerInterval) clearInterval(rpTimerInterval);
+
+    function update() {
+        const elapsed = Date.now() - startTime;
+        const seconds = Math.floor((elapsed / 1000) % 60);
+        const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+        const hours = Math.floor((elapsed / (1000 * 60 * 60)));
+
+        const el = document.getElementById('rp-timer');
+        if (el) {
+            el.innerText = `${hours > 0 ? hours + ':' : ''}${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} elapsed`;
+        } else {
+            clearInterval(rpTimerInterval);
+        }
+    }
+
+    update();
+    rpTimerInterval = setInterval(update, 1000);
 }
 function openEmail() {
     const user = "contact";
@@ -476,9 +548,16 @@ audio.onloadedmetadata = () => timeTotal.textContent = fmt(audio.duration);
 audio.onended = () => { nextTrack(); };
 progressBar.onclick = e => { if (audio.duration && isFinite(audio.duration)) { const rect = progressBar.getBoundingClientRect(); const percent = (e.clientX - rect.left) / rect.width; audio.currentTime = percent * audio.duration; } };
 
+// detectLanguage(); // Already called above
+// loadPlaylist(); // Already called above
+// updateClock(); // Already called above
+// updateServerStats(); // Already called above
+// loadSavedFont(); // Already called above
+// loadSavedTheme(); // Already called above
+
 detectLanguage();
 loadPlaylist();
-updateDiscordStatus();
+connectLanyard(); // Changed from updateDiscordStatus
 updateClock();
 updateServerStats();
 loadSavedFont();
@@ -486,7 +565,7 @@ loadSavedTheme();
 console.log("Theme loaded:", localStorage.getItem('userTheme'));
 setInterval(updateClock, 1000);
 setInterval(updateServerStats, 60000);
-setInterval(updateDiscordStatus, 30000);
+// setInterval(updateDiscordStatus, 30000); // Removed polling
 
 // Spotlight Effect
 const spotlightEl = document.getElementById('spotlight');
