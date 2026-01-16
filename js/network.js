@@ -525,6 +525,9 @@ function typeWriter() {
         typeSpeed = 100 + Math.random() * 50; // Random typing variability
     }
 
+    // Mirror to document title
+    document.title = typewriterEl.textContent + " | StealthyLabs";
+
     if (!isDeleting && charIndex === currentPhrase.length) {
         isDeleting = true;
         typeSpeed = 2000; // Pause at end of phrase
