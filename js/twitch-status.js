@@ -1,74 +1,72 @@
-const TWITCH_CLIENT_ID = 'jjsy86yjlitq69q888s5lcawh7w534';
+// Client ID Twitch (Helix) - Not used directly due to static nature (CORS/Auth)
+// CLIENT_ID = 'jjsy86yjlitq69q888s5lcawh7w534'; 
 const CHANNEL_NAME = 'stealthylabs';
-const CHECK_INTERVAL = 60000;
+const UPTIME_API = `https://decapi.me/twitch/uptime/${CHANNEL_NAME}`;
+const TITLE_API = `https://decapi.me/twitch/title/${CHANNEL_NAME}`;
+const CHECK_INTERVAL = 60000; // Check every 60s
 
-async function checkStreamStatus() {
+async function checkTwitchStatus() {
     try {
-        const response = await fetch(`https://decapi.me/twitch/uptime/${CHANNEL_NAME}`);
-        const text = await response.text();
+        // Check Uptime
+        const response = await fetch(UPTIME_API);
+        const uptime = await response.text();
 
-        const isLive = !text.includes('offline');
-
-        if (isLive) {
-            setLiveStatus(true);
-        } else {
-            console.log('StealthyLabs is offline.');
+        // decapi returns "channel is offline" or just "offline" if not live
+        if (uptime.toLowerCase().includes('offline')) {
+            console.log(`StealthyLabs is OFFLINE. (${uptime})`);
+            return;
         }
+
+        // If we are here, channel is LIVE
+        console.log(`StealthyLabs is LIVE! Uptime: ${uptime}`);
+
+        // Fetch Stream Title
+        const titleResponse = await fetch(TITLE_API);
+        const streamTitle = await titleResponse.text();
+
+        setLiveMode(streamTitle);
 
     } catch (error) {
         console.error('Error checking Twitch status:', error);
     }
 }
 
-function setLiveStatus(isLive) {
-    if (!isLive) return;
-
+function setLiveMode(title) {
     const gamingTitle = document.querySelector('[data-key="card_gaming_title"]');
+    if (!gamingTitle) return;
 
-    if (gamingTitle) {
-        if (!gamingTitle.querySelector('.live-badge')) {
-            const badge = document.createElement('span');
-            badge.className = 'live-badge';
-            badge.textContent = 'LIVE';
+    const card = gamingTitle.closest('.card');
+    if (card) {
+        // 1. Add Neon Border / Glow
+        card.classList.add('is-live');
+    }
 
-            Object.assign(badge.style, {
-                backgroundColor: '#ff0000',
-                color: 'white',
-                fontSize: '0.7em',
-                fontWeight: 'bold',
-                padding: '2px 6px',
-                borderRadius: '4px',
-                marginLeft: '10px',
-                verticalAlign: 'middle',
-                display: 'inline-block',
-                boxShadow: '0 0 10px rgba(255, 0, 0, 0.7)',
-                animation: 'pulse 2s infinite'
-            });
+    // 2. Add "LIVE" Badge
+    // Check if badge already exists to avoid duplicates
+    let iconContainer = card.querySelector('.card-icon');
+    if (iconContainer) {
+        // Create badge if not present (or just replace content)
+        // We want to replace the existing icon icon <i class="..."> with the badge
+        // OR append it. Request said "Replace the icon... by a 'LIVE' indicator"
+        // Let's keep the gamepad but ADD the badge next to it, or strictly replace?
+        // "Remplace l'icône Twitch par un indicateur '🔴 LIVE' qui clignote." -> Strictly replace or overlay.
+        // Let's replace the inner HTML of card-icon to be safe and clean.
 
-            if (!document.getElementById('live-pulse-style')) {
-                const styleSheet = document.createElement('style');
-                styleSheet.id = 'live-pulse-style';
-                styleSheet.textContent = `
-                    @keyframes pulse {
-                        0% { opacity: 1; transform: scale(1); }
-                        50% { opacity: 0.8; transform: scale(1.05); }
-                        100% { opacity: 1; transform: scale(1); }
-                    }
-                `;
-                document.head.appendChild(styleSheet);
-            }
+        iconContainer.innerHTML = `<span class="live-badge">🔴 LIVE</span>`;
+    }
 
-            gamingTitle.appendChild(badge);
-        }
-
-        const card = gamingTitle.closest('.card');
-        if (card) {
-            card.style.border = '1px solid rgba(255, 0, 0, 0.5)';
-            card.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.2)';
-        }
+    // 3. Update Description with Stream Title
+    const descElement = card.querySelector('[data-key="card_gaming_desc"]');
+    if (descElement) {
+        // Truncate if too long (optional, but good practice)
+        descElement.textContent = title || "En direct sur Twitch !";
+        descElement.style.color = "#ffffff"; // Make it pop a bit more than muted text
     }
 }
 
+// Run on load
 document.addEventListener('DOMContentLoaded', () => {
-    checkStreamStatus();
+    checkTwitchStatus();
+    // Optional: Poll every 60s
+    setTimeout(checkTwitchStatus, CHECK_INTERVAL);
 });

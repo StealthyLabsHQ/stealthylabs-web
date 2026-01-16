@@ -327,7 +327,8 @@ nav {
 }
 
 .card:hover .fa-icon {
-    color: var(--accent); /* #ff0000 */
+    color: var(--accent);
+    /* #ff0000 */
 }
 
 .card h3 {
@@ -759,14 +760,15 @@ body.light-mode .modal-overlay {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.hero-title, 
-.hero-description, 
+.hero-title,
+.hero-description,
 .card {
     opacity: 0;
     animation: fadeUp 0.8s ease-out forwards;
@@ -786,4 +788,52 @@ body.light-mode .modal-overlay {
 
 .cards-grid .card:nth-child(2) {
     animation-delay: 0.8s;
+}
+
+/* Twitch Live Status */
+.card.is-live {
+    border-color: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 0, 0.1);
+    animation: liveBorderPulse 2s infinite alternate;
+}
+
+@keyframes liveBorderPulse {
+    from {
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    to {
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    }
+}
+
+.live-badge {
+    background-color: #ff0000;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    animation: badgePulse 1.5s infinite;
+}
+
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
