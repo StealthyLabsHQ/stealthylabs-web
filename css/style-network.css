@@ -65,11 +65,7 @@
                 pointer-events: none;
             }
 
-            body.light-mode #tsparticles {
-                display: none !important;
-                opacity: 0;
-                transition: opacity 0.5s ease;
-            }
+
 
             /* Dark Mode Galaxy Gradient - Nebula Effect */
             body {
@@ -1174,6 +1170,73 @@
                 /* flex-shrink: 0; removed as it is in container now */
             }
 
+            /* --- Custom Context Menu --- */
+            .custom-context-menu {
+                position: absolute;
+                z-index: 10000;
+                background: rgba(10, 10, 10, 0.95);
+                border: 1px solid #333;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                width: 250px;
+                overflow: hidden;
+                color: #fff;
+                font-family: 'Inter', sans-serif;
+                animation: fadeInMenu 0.1s ease-out;
+            }
+
+            .ctx-menu-list {
+                list-style: none;
+                /* Removes bullets */
+                padding: 5px 0;
+                margin: 0;
+            }
+
+            .ctx-item {
+                padding: 12px 15px;
+                /* Taller bars */
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                transition: background 0.2s, color 0.2s;
+                border-left: 3px solid transparent;
+                /* Selection bar indicator */
+            }
+
+            .ctx-item:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                border-left: 3px solid #ff0000;
+                /* Red accent on hover */
+            }
+
+            .ctx-icon {
+                font-size: 1.1rem;
+                width: 20px;
+                text-align: center;
+            }
+
+            .ctx-separator {
+                height: 1px;
+                background: #333;
+                margin: 5px 0;
+            }
+
+            @keyframes fadeInMenu {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
             /* Circular mask for small image */
             .rp-small-image {
                 position: absolute;
@@ -1842,4 +1905,71 @@
                 background: #f8f8f8;
                 border-color: var(--accent-green);
                 color: var(--accent-green);
+            }
+
+            /* --- Custom Context Menu --- */
+            .custom-context-menu {
+                position: absolute;
+                z-index: 10000;
+                background: rgba(10, 10, 10, 0.95);
+                border: 1px solid #333;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                width: 250px;
+                overflow: hidden;
+                color: #fff;
+                font-family: 'Inter', sans-serif;
+                animation: fadeInMenu 0.1s ease-out;
+            }
+
+            .ctx-menu-list {
+                list-style: none;
+                /* Removes bullets */
+                padding: 5px 0;
+                margin: 0;
+            }
+
+            .ctx-item {
+                padding: 12px 15px;
+                /* Taller bars */
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                transition: background 0.2s, color 0.2s;
+                border-left: 3px solid transparent;
+                /* Selection bar indicator */
+            }
+
+            .ctx-item:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                border-left: 3px solid #ff0000;
+                /* Red accent on hover */
+            }
+
+            .ctx-icon {
+                font-size: 1.1rem;
+                width: 20px;
+                text-align: center;
+            }
+
+            .ctx-separator {
+                height: 1px;
+                background: #333;
+                margin: 5px 0;
+            }
+
+            @keyframes fadeInMenu {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
             }

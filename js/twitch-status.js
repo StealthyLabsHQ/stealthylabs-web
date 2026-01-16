@@ -33,36 +33,22 @@ function setLiveMode(title) {
 
     const card = gamingTitle.closest('.card');
     if (card) {
-        // 1. Add Neon Border / Glow
         card.classList.add('is-live');
     }
 
-    // 2. Add "LIVE" Badge
-    // Check if badge already exists to avoid duplicates
     let iconContainer = card.querySelector('.card-icon');
     if (iconContainer) {
-        // Create badge if not present (or just replace content)
-        // We want to replace the existing icon icon <i class="..."> with the badge
-        // OR append it. Request said "Replace the icon... by a 'LIVE' indicator"
-        // Let's keep the gamepad but ADD the badge next to it, or strictly replace?
-        // "Remplace l'icône Twitch par un indicateur '🔴 LIVE' qui clignote." -> Strictly replace or overlay.
-        // Let's replace the inner HTML of card-icon to be safe and clean.
-
         iconContainer.innerHTML = `<span class="live-badge">🔴 LIVE</span>`;
     }
 
-    // 3. Update Description with Stream Title
     const descElement = card.querySelector('[data-key="card_gaming_desc"]');
     if (descElement) {
-        // Truncate if too long (optional, but good practice)
         descElement.textContent = title || "En direct sur Twitch !";
-        descElement.style.color = "#ffffff"; // Make it pop a bit more than muted text
+        descElement.style.color = "#ffffff";
     }
 }
 
-// Run on load
 document.addEventListener('DOMContentLoaded', () => {
     checkTwitchStatus();
-    // Optional: Poll every 60s
     setTimeout(checkTwitchStatus, CHECK_INTERVAL);
 });

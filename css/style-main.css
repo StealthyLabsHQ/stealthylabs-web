@@ -16,7 +16,19 @@
     box-sizing: border-box;
 }
 
+/* Particles Background */
+#tsparticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
 body {
+    position: relative;
     font-family: var(--main-font);
     background-color: var(--bg-primary);
     color: var(--text-primary);
@@ -630,6 +642,8 @@ body.light-mode::after {
     display: none !important;
 }
 
+
+
 body.light-mode .logo img {
     filter: invert(1);
     mix-blend-mode: normal;
@@ -878,5 +892,252 @@ body.light-mode {
     background: #ffffff;
     background-image: none;
     /* Remove nebula in light mode */
-    /* Ensure light mode stays light */
+}
+
+/* --- Custom Context Menu --- */
+.custom-context-menu {
+    position: absolute;
+    z-index: 10000;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    width: 250px;
+    overflow: hidden;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    animation: fadeInMenu 0.1s ease-out;
+}
+
+/* --- Redirect Modal Structure --- */
+.redirect-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 20000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.redirect-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.redirect-box {
+    background: #000;
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    color: #fff;
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.redirect-overlay.show .redirect-box {
+    animation: popupBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popupBounce {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.redirect-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ffff00;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+}
+
+.redirect-box h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-family: inherit;
+    /* Syncs with body font */
+    font-weight: 700;
+}
+
+.modal-desc {
+    color: #aaa;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.redirect-url {
+    background: #111;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    word-break: break-all;
+    font-size: 0.9rem;
+    color: #ff4444;
+    border: 1px solid #333;
+    font-family: monospace;
+    /* Keep code font */
+}
+
+/* Light Mode Overrides for Modal */
+body.light-mode .redirect-box {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .modal-desc {
+    color: #444;
+}
+
+body.light-mode .redirect-url {
+    background: #f5f5f5;
+    border-color: #ddd;
+}
+
+body.light-mode .redirect-buttons button:first-child {
+    border-color: #ddd;
+    color: #555;
+}
+
+body.light-mode .redirect-buttons button:first-child:hover {
+    background: #f0f0f0;
+    color: #000;
+    border-color: #ccc;
+}
+
+.redirect-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.redirect-buttons button {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.redirect-buttons button:first-child {
+    background: transparent;
+    border: 1px solid #555;
+    color: #ccc;
+}
+
+.redirect-buttons button:first-child:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.redirect-buttons button:last-child {
+    background: #ff0000;
+    border: 1px solid #ff0000;
+    color: #000;
+}
+
+.redirect-buttons button:last-child:hover {
+    background: #cc0000;
+    border-color: #cc0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+}
+
+/* Tooltip */
+.tooltip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    z-index: 10001;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+}
+
+.tooltip.show {
+    opacity: 1;
+}
+
+.ctx-menu-list {
+    list-style: none;
+    /* Removes bullets */
+    padding: 5px 0;
+    margin: 0;
+}
+
+.ctx-item {
+    padding: 12px 15px;
+    /* Taller bars */
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s, color 0.2s;
+    border-left: 3px solid transparent;
+    /* Selection bar indicator */
+}
+
+.ctx-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-left: 3px solid #ff0000;
+    /* Red accent on hover */
+}
+
+.ctx-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.ctx-separator {
+    height: 1px;
+    background: #333;
+    margin: 5px 0;
+}
+
+@keyframes fadeInMenu {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

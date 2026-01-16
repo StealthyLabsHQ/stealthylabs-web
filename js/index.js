@@ -172,6 +172,11 @@ function changeTheme(theme) {
     }
 
     if (selector) selector.value = theme;
+
+    // Update particles based on new theme
+    if (typeof updateGlobalParticles === 'function') {
+        updateGlobalParticles(theme);
+    }
 }
 
 function loadSavedTheme() {

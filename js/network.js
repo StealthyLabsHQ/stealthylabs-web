@@ -498,19 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.addEventListener('click', function (event) {
-    const settingsPanel = document.getElementById('settingsPanel');
-    const settingsBtn = document.querySelector('button[onclick="toggleSettings()"]');
 
-    if (settingsPanel && settingsBtn) {
-        // Si le menu est ouvert...
-        if (settingsPanel.classList.contains('show')) {
-            if (!settingsPanel.contains(event.target) && !settingsBtn.contains(event.target)) {
-                settingsPanel.classList.remove('show');
-            }
-        }
-    }
-});
 
 let playlistData = [];
 
@@ -790,4 +778,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // --- TSPARTICLES BACKGROUND ---
-const particleCanvas = null; // Removed native canvas
+// --- GLOBAL MUSIC CONTROL (For Context Menu) ---
+window.toggleGlobalMusic = function () {
+    if (typeof isPlaying !== 'undefined' && typeof playTrack === 'function' && typeof pauseTrack === 'function') {
+        if (isPlaying) {
+            pauseTrack();
+        } else {
+            playTrack();
+        }
+    } else {
+        console.log("Music player not active on this page.");
+    }
+};
