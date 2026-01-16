@@ -1,20 +1,68 @@
 [
-    { 
-        "title": "End of Beginning", 
-        "artist": "Djo", 
-        "file": "music/end_of_beginning.mp3", 
-        "cover": "albums/decide.jpg" 
+    {
+        "title": "Timeless",
+        "artist": "The Weeknd",
+        "file": "music/05. Timeless.flac",
+        "cover": "music/covers/05. Timeless.jpeg"
     },
-    { 
-        "title": "AS IF IT'S YOUR LAST", 
-        "artist": "BLACKPINK", 
+    {
+        "title": "Starboy",
+        "artist": "The Weeknd",
+        "file": "music/07. Starboy.flac",
+        "cover": "music/covers/07. Starboy.jpeg"
+    },
+    {
+        "title": "Not Like Us",
+        "artist": "Kendrick Lamar",
+        "file": "music/08. Not Like Us.flac",
+        "cover": "music/covers/08. Not Like Us.jpeg"
+    },
+    {
+        "title": "drinks or coffee",
+        "artist": "ROSÉ",
+        "file": "music/1-05 drinks or coffee.flac",
+        "cover": "music/covers/1-05 drinks or coffee.jpeg"
+    },
+    {
+        "title": "Kill Bill",
+        "artist": "SZA",
+        "file": "music/16. Kill Bill.flac",
+        "cover": "music/covers/16. Kill Bill.jpeg"
+    },
+    {
+        "title": "Low Life (feat. The Weeknd)",
+        "artist": "Future",
+        "file": "music/29. Low Life (feat. The Weeknd).flac",
+        "cover": "music/covers/29. Low Life (feat. The Weeknd).jpeg"
+    },
+    {
+        "title": "Revolving door",
+        "artist": "Tate McRae",
+        "file": "music/32. Revolving door.flac",
+        "cover": "music/covers/32. Revolving door.jpeg"
+    },
+    {
+        "title": "Lady (Hear Me Tonight)",
+        "artist": "Modjo",
+        "file": "music/39. Lady (Hear Me Tonight).flac",
+        "cover": "music/covers/39. Lady (Hear Me Tonight).jpeg"
+    },
+    {
+        "title": "Video Games",
+        "artist": "Lana Del Rey",
+        "file": "music/47. Video Games.flac",
+        "cover": "music/covers/47. Video Games.jpeg"
+    },
+    {
+        "title": "Radio",
+        "artist": "Lana Del Rey",
+        "file": "music/48. Radio.flac",
+        "cover": "music/covers/48. Radio.jpeg"
+    },
+    {
+        "title": "AS IF IT'S YOUR LAST (Japanese ver.)",
+        "artist": "BLACKPINK",
         "file": "music/AS IF IT'S YOUR LAST.mp3",
-        "cover": "albums/bp-aiiyl.jpg"
-    },
-    { 
-        "title": "Macarena Remix", 
-        "artist": "Los Del Rio", 
-        "file": "music/macarena_2.mp3", 
-        "cover": "albums/maduro.jpg" 
+        "cover": "music/covers/AS IF IT'S YOUR LAST.jpeg"
     }
 ]
