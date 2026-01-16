@@ -232,6 +232,12 @@ nav {
     letter-spacing: -1px;
 }
 
+.logo img {
+    mix-blend-mode: screen;
+    filter: grayscale(100%) contrast(1.5);
+    /* Crush darks to pure black */
+}
+
 .nav-links {
     list-style: none;
     display: flex;
@@ -626,6 +632,7 @@ body.light-mode::after {
 
 body.light-mode .logo img {
     filter: invert(1);
+    mix-blend-mode: normal;
 }
 
 body.light-mode .settings-btn img,
@@ -687,6 +694,7 @@ body.light-mode::after {
 
 body.light-mode .logo img {
     filter: invert(1);
+    mix-blend-mode: normal;
 }
 
 body.light-mode .settings-btn img,
@@ -837,4 +845,38 @@ body.light-mode .modal-overlay {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+/* Particles Background (Global) */
+#tsparticles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body.light-mode #tsparticles {
+    display: none !important;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Dark Mode Galaxy Gradient - Nebula Effect */
+body {
+    background-color: #020204;
+    background-image:
+        radial-gradient(circle at 15% 25%, rgba(20, 30, 60, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(35, 20, 50, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(10, 15, 30, 0.1) 0%, transparent 80%);
+    background-attachment: fixed;
+}
+
+body.light-mode {
+    background: #ffffff;
+    background-image: none;
+    /* Remove nebula in light mode */
+    /* Ensure light mode stays light */
 }

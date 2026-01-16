@@ -134,6 +134,15 @@ function changeTheme(theme) {
     }
 
     if (selector) selector.value = theme;
+
+    // Update particles based on new theme
+    if (typeof updateParticlesTheme === 'function') {
+        let isDark = false;
+        if (theme === 'dark' || (theme === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            isDark = true;
+        }
+        updateParticlesTheme(isDark);
+    }
 }
 
 function loadSavedTheme() {
@@ -754,3 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
     typeWriter(); // Start existing typewriter
     runTerminalIntro(); // Start new intro
 });
+
+
+// --- TSPARTICLES BACKGROUND ---
+const particleCanvas = null; // Removed native canvas
