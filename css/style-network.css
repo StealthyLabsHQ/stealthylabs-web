@@ -145,6 +145,26 @@
                 #spotlight {
                     display: none;
                 }
+
+                .top-bar {
+                    top: 15px;
+                    /* Move up slightly */
+                    right: 15px;
+                    /* More space */
+                    gap: 10px;
+                    /* Compress gap */
+                }
+
+                .time-badge {
+                    padding: 6px 10px;
+                    font-size: 0.8rem;
+                }
+
+                .top-icon-btn svg,
+                .top-icon-btn img {
+                    width: 22px;
+                    height: 22px;
+                }
             }
 
             .settings-panel {

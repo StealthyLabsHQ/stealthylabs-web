@@ -72,6 +72,17 @@ function initTsParticles() {
             size: { value: { min: 1, max: 3 } },
         },
         detectRetina: true,
+        responsive: [
+            {
+                maxWidth: 768,
+                options: {
+                    particles: {
+                        number: { value: 30 }, // Reduce particles on mobile
+                        links: { distance: 100 } // Shorten links
+                    }
+                }
+            }
+        ]
     }).then(container => {
         if (!isDarkMode && container) {
             container.pause();
