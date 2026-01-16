@@ -7,20 +7,16 @@ const CHECK_INTERVAL = 60000; // Check every 60s
 
 async function checkTwitchStatus() {
     try {
-        // Check Uptime
         const response = await fetch(UPTIME_API);
         const uptime = await response.text();
 
-        // decapi returns "channel is offline" or just "offline" if not live
         if (uptime.toLowerCase().includes('offline')) {
             console.log(`StealthyLabs is OFFLINE. (${uptime})`);
             return;
         }
 
-        // If we are here, channel is LIVE
         console.log(`StealthyLabs is LIVE! Uptime: ${uptime}`);
 
-        // Fetch Stream Title
         const titleResponse = await fetch(TITLE_API);
         const streamTitle = await titleResponse.text();
 
