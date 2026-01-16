@@ -60,9 +60,9 @@ modal.addEventListener('click', (e) => {
 });
 
 function setupLinkListeners() {
-    const networkLinks = document.querySelectorAll('a[href="network/"], a[href="../network/"], a[data-key="nav_network"]');
+    const networkLinks = document.querySelectorAll('a[href="network"], a[data-key="nav_network"]');
     networkLinks.forEach(link => {
-        link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
+        link.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
     });
 
     const lookyLink = document.querySelector('a[href="https://looky-gta.cc"]');
@@ -81,8 +81,8 @@ function setupLinkListeners() {
     }
 
     const ctaBtn = document.querySelector('.cta-button');
-    if (ctaBtn && ctaBtn.getAttribute('href') === 'network/') {
-        ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network/"));
+    if (ctaBtn && ctaBtn.getAttribute('href') === 'network') {
+        ctaBtn.addEventListener('click', (e) => openWarningModal(e, "https://stealthylabs.eu/network"));
     }
 }
 

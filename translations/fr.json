@@ -116,6 +116,9 @@
     "case_value": "Corsair 4000D Frame Blanc",
     "psu_value": "MSI MPG A850G PCIe 5.0",
     "legal_link": "Mentions Légales",
+    "settings_autoplay": "Autoplay Musique",
+    "autoplay_on": "Activé",
+    "autoplay_off": "Désactivé",
     "typewriter_phrases": [
         "Créateur de Contenu",
         "Streamer"

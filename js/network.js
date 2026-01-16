@@ -506,6 +506,7 @@ document.addEventListener('click', function (event) {
 let playlistData = [];
 
 function loadPlaylist() {
+    loadSavedAutoplay(); // Restore setting
     fetch(`${window.SITE_ROOT || ''}json/playlist.json`)
         .then(response => response.json())
         .then(data => {
@@ -532,6 +533,19 @@ const volumeSlider = document.getElementById("volumeSlider");
 const playlistEl = document.getElementById("playlist");
 const defaultSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
 
+// --- AUTOPLAY SETTINGS ---
+function changeAutoplay(val) {
+    localStorage.setItem('userAutoplay', val);
+}
+
+function loadSavedAutoplay() {
+    const saved = localStorage.getItem('userAutoplay');
+    const selector = document.getElementById('autoplaySelector');
+    if (selector) {
+        selector.value = saved || 'on';
+    }
+}
+
 function initPlaylist() {
     currentTrack = Math.floor(Math.random() * playlistData.length);
 
@@ -550,6 +564,14 @@ function initPlaylist() {
     });
 
     loadTrack(currentTrack);
+
+    // CHECK AUTOPLAY
+    const autoplay = localStorage.getItem('userAutoplay');
+    if (autoplay === 'off') {
+        console.log("Autoplay désactivé par l'utilisateur.");
+        return;
+    }
+
     const playPromise = audio.play();
     if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -686,4 +708,44 @@ function typeWriter() {
     setTimeout(typeWriter, typeSpeed);
 }
 
-document.addEventListener('DOMContentLoaded', typeWriter);
+// --- TERMINAL INTRO ANIMATION ---
+function runTerminalIntro() {
+    const intro = document.getElementById('terminal-intro');
+    const textEl = document.getElementById('terminal-text');
+    const text = "> Booting StealthyLabs System...\n> Connection established.";
+
+    // Check session storage
+    if (sessionStorage.getItem('introShown')) {
+        if (intro) intro.style.display = 'none';
+        return;
+    }
+
+    if (!intro || !textEl) return;
+
+    let i = 0;
+    const speed = 50; // ms per char
+
+    function terminalTypeWriter() {
+        if (i < text.length) {
+            textEl.textContent += text.charAt(i);
+            i++;
+            setTimeout(terminalTypeWriter, speed);
+        } else {
+            // Animation finished
+            setTimeout(() => {
+                intro.classList.add('fade-out');
+                sessionStorage.setItem('introShown', 'true');
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                }, 1000); // Wait for fade out
+            }, 1000); // Pause before fade out
+        }
+    }
+
+    terminalTypeWriter();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    typeWriter(); // Start existing typewriter
+    runTerminalIntro(); // Start new intro
+});

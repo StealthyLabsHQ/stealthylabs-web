@@ -11,18 +11,23 @@
 
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" type="image/png" href="../logos/favicon.png">
+    <link rel="icon" type="image/png" href="logos/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
         rel="stylesheet">
 
-    <script>window.SITE_ROOT = '../';</script>
-    <link rel="stylesheet" href="../css/style-network.css?v=3">
+    <script>window.SITE_ROOT = './';</script>
+    <link rel="stylesheet" href="css/style-network.css?v=3">
 </head>
 
 <body>
+    <!-- Terminal Intro Overlay -->
+    <div id="terminal-intro">
+        <div class="terminal-text" id="terminal-text"></div>
+    </div>
+
     <div id="spotlight"></div>
     <div class="top-bar">
         <div class="time-badge">
@@ -37,11 +42,11 @@
 
         <a href="https://steamcommunity.com/id/stealthylabs/" target="_blank" class="top-icon-btn" title="Steam"
             style="margin-left: auto;">
-            <img src="../logos/steam.png" alt="Steam">
+            <img src="logos/steam.png" alt="Steam">
         </a>
         <button class="top-icon-btn" onclick="toggleSettings()" title="Changer la police"
             style="background:none; border:none; cursor:pointer;">
-            <img src="../logos/gear.png" alt="Settings">
+            <img src="logos/gear.png" alt="Settings">
         </button>
 
 
@@ -78,13 +83,21 @@
                     <option value="system">System</option>
                 </select>
             </div>
+
+            <div class="settings-group">
+                <div class="settings-label" data-key="settings_autoplay">Autoplay Music</div>
+                <select id="autoplaySelector" class="font-select" onchange="changeAutoplay(this.value)">
+                    <option value="on" data-key="autoplay_on">Activé</option>
+                    <option value="off" data-key="autoplay_off">Désactivé</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="container">
 
         <div class="container">
             <header class="profile">
-                <img src="../avatar.png" alt="StealthyLabs" class="avatar">
+                <img src="avatar.png" alt="StealthyLabs" class="avatar">
                 <h1 class="username">StealthyLabs</h1>
                 <div class="bio">
                     <p class="bio-title"><span id="typewriter"></span><span class="cursor">|</span></p>
@@ -106,7 +119,7 @@
             <section class="links">
                 <div class="discord-card discord-card-main">
                     <div class="discord-avatar" style="background: #2b2d31;">
-                        <img id="discordAvatar" src="../logos/discord.png" alt="Avatar">
+                        <img id="discordAvatar" src="logos/discord.png" alt="Avatar">
                         <div id="discordStatus" class="discord-status-dot"></div>
                     </div>
                     <div class="discord-info">
@@ -119,7 +132,7 @@
 
                 <div class="discord-card">
                     <div class="discord-avatar">
-                        <img id="serverIcon" src="../logos/discord.png" alt="Discord Server">
+                        <img id="serverIcon" src="logos/discord.png" alt="Discord Server">
                     </div>
                     <div class="discord-info">
                         <div class="discord-name">
@@ -163,7 +176,7 @@
 
                 <div class="socials-wrapper" id="socialsWrapper">
                     <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener" class="link-card">
-                        <div class="link-icon tiktok"><img src="../logos/tiktok.png" alt="TikTok"></div>
+                        <div class="link-icon tiktok"><img src="logos/tiktok.png" alt="TikTok"></div>
                         <div class="link-content">
                             <div class="link-title">TikTok</div>
                             <div class="link-desc" data-key="tiktok_desc">Que des contenus shorts.</div>
@@ -241,7 +254,7 @@
                 </div>
 
                 <div class="creator-code" onclick="copyCode()">
-                    <div class="link-icon epic"><img src="../logos/epic_games.png" alt="Epic Games"></div>
+                    <div class="link-icon epic"><img src="logos/epic_games.png" alt="Epic Games"></div>
                     <div class="link-content">
                         <div class="link-title" data-key="support_creator">Support the Creator</div>
                         <div class="link-desc">Code: stealthylabs</div>
@@ -377,7 +390,7 @@
 
             </section>
 
-            <a href="../" class="home-button-pill" title="Retour à l'accueil">
+            <a href="./" class="home-button-pill" title="Retour à l'accueil">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                 </svg>
@@ -388,7 +401,7 @@
                 <span data-key="footer">© 2026 StealthyLabs. All rights reserved.</span>
                 <br>
                 <div style="margin-top: 5px;">
-                    <a href="../legal/?from=network" data-key="legal_link"
+                    <a href="legal?from=network" data-key="legal_link"
                         style="color: #555; text-decoration: none; font-size: 0.75rem; margin-right: 15px;">Mentions
                         Légales</a>
                     <a href="https://github.com/StealthyLabsHQ" target="_blank"
@@ -419,7 +432,7 @@
                 <span data-key="cookie_text">🍪 Ce site utilise le stockage local pour sauvegarder vos préférences
                     (Langue & Police). </span>
 
-                <a href="../legal/" target="_blank" data-key="cookie_more"
+                <a href="legal" target="_blank" data-key="cookie_more"
                     style="color: #fff; text-decoration: underline;">En savoir plus</a>.
             </p>
 
@@ -428,7 +441,7 @@
         </div>
 
         <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-        <script src="../js/network.js?v=2"></script>
+        <script src="js/network.js?v=2"></script>
 </body>
 
 </html>
