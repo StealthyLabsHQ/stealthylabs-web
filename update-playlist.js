@@ -43,10 +43,10 @@ async function generatePlaylist() {
 
         const playlist = [];
 
-        for (const file of audioFiles) {
-            const filePath = path.join(musicDir, file);
-            const ext = path.extname(file).toLowerCase();
-            const basename = path.basename(file, ext);
+        for (let file of audioFiles) {
+            let filePath = path.join(musicDir, file);
+            let ext = path.extname(file).toLowerCase();
+            let basename = path.basename(file, ext);
 
             let title = basename;
             let artist = "Unknown Artist";
@@ -57,7 +57,43 @@ async function generatePlaylist() {
                 const metadata = await mm.parseFile(filePath);
 
                 // Get common tags if available
-                if (metadata.common.title) title = metadata.common.title;
+                if (metadata.common.title) {
+                    title = metadata.common.title.trim();
+
+                    // --- AUTO RENAME LOGIC ---
+                    // Sanitize title to create a safe filename
+                    // Remove characters invalid in Windows/Linux: < > : " / \ | ? *
+                    const safeTitle = title.replace(/[<>:"/\\|?*]/g, '').trim();
+
+                    if (safeTitle && safeTitle.length > 0) {
+                        const newFilename = safeTitle + ext;
+
+                        // Only rename if the filename is actually different
+                        if (newFilename !== file) {
+                            const newFilePath = path.join(musicDir, newFilename);
+
+                            // Check collision
+                            if (!fs.existsSync(newFilePath)) {
+                                try {
+                                    fs.renameSync(filePath, newFilePath);
+                                    console.log(`✏️ Renommé : '${file}' -> '${newFilename}'`);
+
+                                    // Update variables to reflect the new file
+                                    file = newFilename;
+                                    filePath = newFilePath;
+                                    basename = safeTitle; // Update basename for cover art logic
+
+                                } catch (renameErr) {
+                                    console.error(`❌ Erreur renommage '${file}':`, renameErr);
+                                }
+                            } else {
+                                console.warn(`⚠️ Impossible de renommer '${file}' -> '${newFilename}' : Le fichier existe déjà.`);
+                            }
+                        }
+                    }
+                    // -------------------------
+                }
+
                 if (metadata.common.artist) artist = metadata.common.artist;
 
                 // Handle Cover Art

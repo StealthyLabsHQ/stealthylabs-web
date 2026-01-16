@@ -2,67 +2,67 @@
     {
         "title": "Timeless",
         "artist": "The Weeknd",
-        "file": "music/05. Timeless.mp3",
-        "cover": "music/covers/05. Timeless.png"
+        "file": "music/Timeless.mp3",
+        "cover": "music/covers/Timeless.png"
     },
     {
         "title": "Starboy",
         "artist": "The Weeknd;Daft Punk",
-        "file": "music/07. Starboy.mp3",
-        "cover": "music/covers/07. Starboy.png"
+        "file": "music/Starboy.mp3",
+        "cover": "music/covers/Starboy.png"
     },
     {
         "title": "Not Like Us",
         "artist": "Kendrick Lamar",
-        "file": "music/08. Not Like Us.mp3",
-        "cover": "music/covers/08. Not Like Us.png"
+        "file": "music/Not Like Us.mp3",
+        "cover": "music/covers/Not Like Us.png"
     },
     {
         "title": "drinks or coffee",
         "artist": "ROSÉ",
-        "file": "music/1-05 drinks or coffee.mp3",
-        "cover": "music/covers/1-05 drinks or coffee.png"
+        "file": "music/drinks or coffee.mp3",
+        "cover": "music/covers/drinks or coffee.png"
     },
     {
         "title": "Kill Bill",
         "artist": "SZA",
-        "file": "music/16. Kill Bill.mp3",
-        "cover": "music/covers/16. Kill Bill.png"
+        "file": "music/Kill Bill.mp3",
+        "cover": "music/covers/Kill Bill.png"
     },
     {
         "title": "Low Life (feat. The Weeknd)",
         "artist": "Future;The Weeknd",
-        "file": "music/29. Low Life (feat. The Weeknd).mp3",
-        "cover": "music/covers/29. Low Life (feat. The Weeknd).png"
+        "file": "music/Low Life (feat. The Weeknd).mp3",
+        "cover": "music/covers/Low Life (feat. The Weeknd).png"
     },
     {
         "title": "Revolving door",
         "artist": "Tate McRae",
-        "file": "music/32. Revolving door.mp3",
-        "cover": "music/covers/32. Revolving door.png"
+        "file": "music/Revolving door.mp3",
+        "cover": "music/covers/Revolving door.png"
     },
     {
         "title": "Lady (Hear Me Tonight)",
         "artist": "Modjo",
-        "file": "music/39. Lady (Hear Me Tonight).mp3",
-        "cover": "music/covers/39. Lady (Hear Me Tonight).png"
+        "file": "music/Lady (Hear Me Tonight).mp3",
+        "cover": "music/covers/Lady (Hear Me Tonight).png"
     },
     {
         "title": "Video Games",
         "artist": "Lana Del Rey",
-        "file": "music/47. Video Games.mp3",
-        "cover": "music/covers/47. Video Games.png"
+        "file": "music/Video Games.mp3",
+        "cover": "music/covers/Video Games.png"
     },
     {
         "title": "Radio",
         "artist": "Lana Del Rey",
-        "file": "music/48. Radio.mp3",
-        "cover": "music/covers/48. Radio.png"
+        "file": "music/Radio.mp3",
+        "cover": "music/covers/Radio.png"
     },
     {
-        "title": "AS IF IT'S YOUR LAST (Japanese ver.)",
+        "title": "JUMP",
         "artist": "BLACKPINK",
-        "file": "music/AS IF IT'S YOUR LAST.mp3",
-        "cover": "music/covers/AS IF IT'S YOUR LAST.jpeg"
+        "file": "music/JUMP.mp3",
+        "cover": "music/covers/JUMP.png"
     }
 ]
