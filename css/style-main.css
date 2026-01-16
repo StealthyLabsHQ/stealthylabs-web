@@ -794,6 +794,7 @@ body.light-mode .modal-overlay {
 .card.is-live {
     border-color: #ff0000;
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 0, 0.1);
+    opacity: 1;
     animation: liveBorderPulse 2s infinite alternate;
 }
 
