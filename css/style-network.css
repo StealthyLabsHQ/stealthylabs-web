@@ -1044,14 +1044,47 @@
             }
 
             .rp-game-row {
-                background: transparent;
-                border: none;
-                padding: 0;
+                background: rgba(255, 255, 255, 0.03);
+                /* Dark mode default */
+                border: 1px solid #333;
+                border-radius: 8px;
+                padding: 10px;
+                /* Add padding for the box look */
                 margin-top: 12px;
                 gap: 12px;
                 display: flex;
                 align-items: flex-start;
                 max-width: 100%;
+            }
+
+            /* Light Mode Activity Row Overrides */
+            body.light-mode .rp-game-row {
+                background-color: transparent !important;
+                border: 1px solid #000000 !important;
+            }
+
+            /* Force DARK text in Light Mode inside the activity box */
+            body.light-mode .rp-game-row .rp-game-title {
+                color: #000000 !important;
+            }
+
+            body.light-mode .rp-game-row .rp-game-detail,
+            body.light-mode .rp-game-row .rp-time-info {
+                color: #555555 !important;
+            }
+
+            body.light-mode .rp-game-row .explicit-badge {
+                color: #555555 !important;
+                border-color: #555555 !important;
+            }
+
+            /* Fix Progress Bar in Light Mode */
+            body.light-mode .rp-game-row .rp-progress-bar {
+                background-color: #e0e0e0 !important;
+            }
+
+            body.light-mode .rp-game-row .rp-progress-fill {
+                background-color: #000000 !important;
             }
 
             /* Image Container for Small Image Overlay */
@@ -1075,13 +1108,14 @@
                 position: absolute;
                 bottom: -5px;
                 right: -5px;
-                width: 28px;
-                height: 28px;
+                width: 24px;
+                /* Increased slightly to match ratio 60/20ish but 24 looks better */
+                height: 24px;
                 border-radius: 50%;
                 border: 3px solid #111214;
-                /* Match card bg + thicker border for mask effect */
                 background-color: #111214;
                 object-fit: cover;
+                z-index: 2;
             }
 
             .rp-game-info {
@@ -1463,6 +1497,46 @@
                 border-color: #000000 !important;
             }
 
+            /* Fix Light Mode Text Contrast in Discord Card */
+            body.light-mode .discord-card-main .rp-game-title,
+            body.light-mode .discord-card-main .rp-game-detail,
+            body.light-mode .discord-card-main .rp-time-info,
+            body.light-mode .discord-card-main .discord-status-dot,
+            body.light-mode .discord-card-main #discordStatus {
+                color: #333333 !important;
+                border-color: #e5e5e5;
+                /* specific for status dot border if needed */
+            }
+
+            body.light-mode .discord-card-main .rp-game-detail {
+                color: #555555 !important;
+            }
+
+            /* Fix Light Mode Progress Bar */
+            body.light-mode .rp-progress-bar {
+                background-color: #e0e0e0 !important;
+            }
+
+            body.light-mode .rp-progress-fill {
+                background-color: #333333 !important;
+            }
+
+            body.light-mode .discord-card-main {
+                background: #ffffff !important;
+                border-color: #000000 !important;
+            }
+
+            /* Avatar Alignment Fix */
+            .discord-card-main {
+                align-items: flex-start !important;
+                /* Align to top */
+            }
+
+            .discord-card-main .discord-avatar {
+                margin-top: 4px;
+                /* Align with first line of text */
+            }
+
 
 
             .link-icon.epic {
@@ -1492,6 +1566,48 @@
                 background: #f4f4f4 !important;
                 color: #cc0000 !important;
                 border: 1px solid #ddd;
+            }
+
+            /* Custom Status Text */
+            .custom-status-text {
+                color: #bbb;
+                font-size: 0.9rem;
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
+                /* Align emoji */
+            }
+
+            .custom-status-text.empty {
+                color: #888;
+                font-style: italic;
+                font-size: 0.8rem;
+            }
+
+            /* Fix Light Mode Custom Status */
+            body.light-mode .discord-card-main .custom-status-text {
+                color: #333333 !important;
+            }
+
+            body.light-mode .discord-card-main .custom-status-text.empty {
+                color: #666666 !important;
+            }
+
+            /* Settings Panel Light Mode */
+            body.light-mode .settings-panel {
+                background: #ffffff !important;
+                border: 1px solid #e5e5e5;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+            }
+
+            body.light-mode .settings-label {
+                color: #333333 !important;
+            }
+
+            body.light-mode .font-select {
+                background: #f4f4f4 !important;
+                color: #000000 !important;
+                border: 1px solid #ccc !important;
             }
 
             body.light-mode .redirect-buttons button:first-child {

@@ -238,7 +238,7 @@ function updateDiscordUI(data) {
             <div class="rp-game-row">
                 <div class="rp-image-container">
                     <img src="${coverUrl}" class="rp-game-icon">
-                    <img src="../logos/spotify_small.png" class="rp-small-image" style="background: #000; padding: 2px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" class="rp-small-image" style="padding: 0; background: #000;">
                 </div>
                 <div class="rp-game-info">
                     <div class="rp-game-title" style="color: #1db954; font-weight: 700;">
@@ -319,11 +319,12 @@ function updateDiscordUI(data) {
             }
         } else {
             // Check for Custom Status (Type 4)
+            // Check for Custom Status (Type 4)
             const custom = activities.find(a => a.type === 4);
             if (custom && custom.state) {
-                htmlContent += `<div style="color: #bbb; font-size: 0.9rem; margin-top: 5px;">${custom.emoji ? (custom.emoji.id ? `<img src="https://cdn.discordapp.com/emojis/${custom.emoji.id}.png?size=24" style="width:16px;vertical-align:middle;margin-right:4px;">` : custom.emoji.name + ' ') : ''}${custom.state}</div>`;
+                htmlContent += `<div class="custom-status-text">${custom.emoji ? (custom.emoji.id ? `<img src="https://cdn.discordapp.com/emojis/${custom.emoji.id}.png?size=24" style="width:16px;vertical-align:middle;margin-right:4px;">` : custom.emoji.name + ' ') : ''}${custom.state}</div>`;
             } else {
-                htmlContent += `<div style="color: #888; font-style: italic; font-size: 0.8rem; margin-top: 5px;">Pas d'activité</div>`;
+                htmlContent += `<div class="custom-status-text empty">Pas d'activité</div>`;
             }
         }
     }
