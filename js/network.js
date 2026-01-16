@@ -760,6 +760,30 @@ function runTerminalIntro() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Smooth Fade-In
+    setTimeout(() => {
+        document.body.classList.add('fade-in');
+    }, 50); // Small delay to ensure render
+
+    // Smooth Fade-Out on Navigation
+    const internalLinks = document.querySelectorAll('a[href^="./"], a[href^="index"], a[href^="about"], a[href^="legal"], a[href^="network"]');
+
+    internalLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            // Only process if it's not a new tab link
+            if (link.target !== '_blank') {
+                e.preventDefault();
+                document.body.classList.remove('fade-in');
+                document.body.classList.add('fade-out');
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500); // Wait for CSS transition (0.5s)
+            }
+        });
+    });
+
     typeWriter(); // Start existing typewriter
     runTerminalIntro(); // Start new intro
 });

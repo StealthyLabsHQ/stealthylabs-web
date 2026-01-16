@@ -73,12 +73,23 @@
 
             /* Dark Mode Galaxy Gradient - Nebula Effect */
             body {
+                opacity: 0;
+                /* Hidden by default for fade-in */
+                transition: opacity 0.5s ease-in-out;
                 background-color: #020204;
                 background-image:
                     radial-gradient(circle at 15% 25%, rgba(20, 30, 60, 0.25) 0%, transparent 50%),
                     radial-gradient(circle at 85% 75%, rgba(35, 20, 50, 0.2) 0%, transparent 50%),
                     radial-gradient(circle at 50% 50%, rgba(10, 15, 30, 0.1) 0%, transparent 80%);
                 background-attachment: fixed;
+            }
+
+            body.fade-in {
+                opacity: 1;
+            }
+
+            body.fade-out {
+                opacity: 0;
             }
 
             body.light-mode {
