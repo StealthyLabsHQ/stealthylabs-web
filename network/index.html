@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <div id="spotlight"></div>
     <div class="top-bar">
         <div class="time-badge">
             <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -86,7 +87,7 @@
                 <img src="../avatar.png" alt="StealthyLabs" class="avatar">
                 <h1 class="username">StealthyLabs</h1>
                 <div class="bio">
-                    <p class="bio-title" data-key="bio">Content Creator & Streamer</p>
+                    <p class="bio-title"><span id="typewriter"></span><span class="cursor">|</span></p>
                 </div>
                 <p class="email">
                     <a href="#" onclick="openEmail()" data-key="email_text">[email protected]</a>
@@ -308,6 +309,13 @@
                         </div>
 
                         <div class="player-progress">
+                            <div class="visualizer">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
                             <span class="time-current" id="timeCurrent">0:00</span>
                             <div class="progress-bar" id="progressBar">
                                 <div class="progress-fill" id="progressFill"></div>

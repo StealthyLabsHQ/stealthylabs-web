@@ -115,5 +115,9 @@
     "ssd_value": "2x WD SN7100 2TB <br> Samsung 970 EVO Plus 2TB <br> WD SA500 SATA 4TB",
     "case_value": "Corsair 4000D Frame White",
     "psu_value": "MSI MPG A850G PCIe 5.0",
-    "legal_link": "Legal Notice"
+    "legal_link": "Legal Notice",
+    "typewriter_phrases": [
+        "Content Creator",
+        "Streamer"
+    ]
 }

@@ -46,7 +46,18 @@ function applyTranslations() {
             if (key === 'location') elem.innerHTML = currentTranslations[key];
             else elem.innerText = currentTranslations[key];
         }
+        if (currentTranslations[key]) {
+            if (key === 'location') elem.innerHTML = currentTranslations[key];
+            else elem.innerText = currentTranslations[key];
+        }
     });
+
+    // Update phrases if typewriter is active
+    if (currentTranslations.typewriter_phrases) {
+        phrases = currentTranslations.typewriter_phrases;
+        // Reset if index out of bounds
+        if (phraseIndex >= phrases.length) phraseIndex = 0;
+    }
 }
 
 function changeLanguage(lang) {
@@ -406,6 +417,7 @@ function initPlaylist() {
             isPlaying = true;
             document.querySelector(".icon-play").style.display = "none";
             document.querySelector(".icon-pause").style.display = "block";
+            document.querySelector(".music-player").classList.add("playing");
         })
             .catch(error => {
                 console.log("Autoplay bloqué. Attente clic...");
@@ -435,11 +447,22 @@ function loadTrack(i) {
 }
 
 function playTrack() {
-    audio.play().then(() => { isPlaying = true; document.querySelector(".icon-play").style.display = "none"; document.querySelector(".icon-pause").style.display = "block"; }).catch(e => {
+    audio.play().then(() => {
+        isPlaying = true;
+        document.querySelector(".icon-play").style.display = "none";
+        document.querySelector(".icon-pause").style.display = "block";
+        document.querySelector(".music-player").classList.add("playing");
+    }).catch(e => {
         document.addEventListener('click', function onFirstClick() { playTrack(); document.removeEventListener('click', onFirstClick); }, { once: true });
     });
 }
-function pauseTrack() { audio.pause(); isPlaying = false; document.querySelector(".icon-play").style.display = "block"; document.querySelector(".icon-pause").style.display = "none"; }
+function pauseTrack() {
+    audio.pause();
+    isPlaying = false;
+    document.querySelector(".icon-play").style.display = "block";
+    document.querySelector(".icon-pause").style.display = "none";
+    document.querySelector(".music-player").classList.remove("playing");
+}
 function nextTrack() { currentTrack = (currentTrack + 1) % playlistData.length; loadTrack(currentTrack); if (isPlaying) playTrack(); }
 function prevTrack() { if (audio.currentTime > 3) { audio.currentTime = 0; } else { currentTrack = (currentTrack - 1 + playlistData.length) % playlistData.length; loadTrack(currentTrack); } if (isPlaying) playTrack(); }
 function fmt(s) { if (!isFinite(s)) return "0:00"; return Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0"); }
@@ -464,3 +487,54 @@ console.log("Theme loaded:", localStorage.getItem('userTheme'));
 setInterval(updateClock, 1000);
 setInterval(updateServerStats, 60000);
 setInterval(updateDiscordStatus, 30000);
+
+// Spotlight Effect
+const spotlightEl = document.getElementById('spotlight');
+if (spotlightEl) {
+    document.addEventListener('mousemove', (e) => {
+        // Activate on first move
+        if (!spotlightEl.classList.contains('active')) {
+            spotlightEl.classList.add('active');
+        }
+
+        spotlightEl.style.setProperty('--btn-x', `${e.clientX}px`);
+        spotlightEl.style.setProperty('--btn-y', `${e.clientY}px`);
+    });
+}
+
+// Typewriter Effect
+let phrases = ['Content Creator', 'Streamer'];
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typeSpeed = 100;
+
+function typeWriter() {
+    const typewriterEl = document.getElementById('typewriter');
+    if (!typewriterEl) return;
+
+    const currentPhrase = phrases[phraseIndex];
+
+    if (isDeleting) {
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typeSpeed = 50; // Faster deletion
+    } else {
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typeSpeed = 100 + Math.random() * 50; // Random typing variability
+    }
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typeSpeed = 2000; // Pause at end of phrase
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typeSpeed = 500; // Pause before new phrase
+    }
+
+    setTimeout(typeWriter, typeSpeed);
+}
+
+document.addEventListener('DOMContentLoaded', typeWriter);
