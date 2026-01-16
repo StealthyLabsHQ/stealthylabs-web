@@ -1029,68 +1029,159 @@
                 min-width: 0;
             }
 
+            /* --- DISCORD SPECIFIC ENHANCEMENTS --- */
+
+            /* Main Discord Card - Pixel Perfect Polish */
+            .discord-card-main {
+                background: #111214 !important;
+                /* Discord dark theme bg */
+                padding: 16px !important;
+                border: 1px solid #1e1f22 !important;
+            }
+
+            .discord-card-main:hover {
+                border-color: #5865f2 !important;
+            }
+
             .rp-game-row {
+                background: transparent;
+                border: none;
+                padding: 0;
+                margin-top: 12px;
+                gap: 12px;
                 display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-top: 6px;
-                background: rgba(0, 0, 0, 0.3);
-                padding: 6px 10px;
-                border-radius: 6px;
-                border: 1px solid #333;
+                align-items: flex-start;
                 max-width: 100%;
             }
 
-            .rp-game-icon {
-                width: 32px;
-                height: 32px;
-                border-radius: 6px;
-                object-fit: cover;
+            /* Image Container for Small Image Overlay */
+            .rp-image-container {
+                position: relative;
+                width: 60px;
+                height: 60px;
                 flex-shrink: 0;
+            }
+
+            .rp-game-icon {
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+                object-fit: cover;
+                /* flex-shrink: 0; removed as it is in container now */
+            }
+
+            /* Circular mask for small image */
+            .rp-small-image {
+                position: absolute;
+                bottom: -5px;
+                right: -5px;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: 3px solid #111214;
+                /* Match card bg + thicker border for mask effect */
+                background-color: #111214;
+                object-fit: cover;
             }
 
             .rp-game-info {
                 display: flex;
                 flex-direction: column;
-                line-height: 1.2;
+                line-height: 1.25;
+                /* Slightly looser */
                 min-width: 0;
                 flex: 1;
             }
 
             .rp-game-title {
-                font-weight: 600;
-                font-size: 0.8rem;
-                color: white;
-
+                font-weight: 700;
+                font-size: 0.9rem;
+                color: #f2f3f5;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                margin-bottom: 2px;
             }
 
             .rp-game-detail {
-                font-size: 0.7rem;
-                color: #bbb;
+                font-size: 0.8rem;
+                color: #b5bac1;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                line-height: 1.3;
             }
 
+            /* Progress Bar for Spotify */
+            .rp-progress-container {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .rp-progress-bar {
+                height: 4px;
+                background-color: #4e5058;
+                border-radius: 4px;
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .rp-progress-fill {
+                height: 100%;
+                background-color: #f2f3f5;
+                /* White/Light Grey like Discord */
+                border-radius: 4px;
+                width: 0%;
+                /* transition: width 1s linear;  Managed by JS interval for smoothness, usually no css transition better for 1s updates */
+            }
+
+            .rp-time-info {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.75rem;
+                color: #b5bac1;
+                margin-top: 4px;
+                font-family: 'gg sans', 'Inter', monospace;
+                /* Try to match discord font */
+                font-variant-numeric: tabular-nums;
+            }
+
+            /* Explicit badge refinement */
             .explicit-badge {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid currentColor;
+                border: 1px solid #b5bac1;
                 border-radius: 3px;
-                color: #b3b3b3;
-                font-size: 9px;
-                line-height: 1;
-                padding: 1px 4px;
-                margin-left: 8px;
-                vertical-align: middle;
-                font-weight: normal;
-                height: 14px;
-                min-width: 14px;
+                color: #b5bac1;
+                font-size: 0.6rem;
+                font-weight: 600;
+                line-height: normal;
+                padding: 0 4px;
+                height: 15px;
+                margin-left: 6px;
+                vertical-align: text-bottom;
                 opacity: 0.8;
+            }
+
+            /* Add friend button polish */
+            .join-btn {
+                background-color: #248046;
+                /* Discord Green */
+                color: white !important;
+                border: none;
+                font-weight: 500;
+                transition: background-color 0.2s;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                margin-left: auto;
+                /* Push to right if needed, but flex layout handles it */
+            }
+
+            .join-btn:hover {
+                background-color: #1a6334;
+                color: white !important;
             }
 
             .top-bar {
@@ -1300,7 +1391,8 @@
                 --accent-green: #1db954;
             }
 
-            body.light-mode::after {
+            body.light-mode::after,
+            body.light-mode::before {
                 display: none !important;
             }
 

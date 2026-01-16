@@ -236,16 +236,33 @@ function updateDiscordUI(data) {
 
         htmlContent += `
             <div class="rp-game-row">
-                <img src="${coverUrl}" class="rp-game-icon">
+                <div class="rp-image-container">
+                    <img src="${coverUrl}" class="rp-game-icon">
+                    <img src="../logos/spotify_small.png" class="rp-small-image" style="background: #000; padding: 2px;">
+                </div>
                 <div class="rp-game-info">
                     <div class="rp-game-title" style="color: #1db954; font-weight: 700;">
                         ${title}${explicitHtml}
                     </div>
                     <div class="rp-game-detail" style="color: #ccc;">by ${artist}</div>
-                    <div class="rp-game-detail" style="color: #888;">on Spotify</div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="rp-progress-container">
+                        <div class="rp-progress-bar">
+                            <div class="rp-progress-fill" id="spotify-progress"></div>
+                        </div>
+                        <div class="rp-time-info">
+                            <span id="spotify-curr">0:00</span>
+                            <span id="spotify-end">0:00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
+
+        if (spotify.timestamps) {
+            updateSpotifyProgress(spotify.timestamps.start, spotify.timestamps.end);
+        }
     }
     // 2. Activities (Games, VScode, etc)
     else if (activities && activities.length > 0) {
@@ -283,17 +300,20 @@ function updateDiscordUI(data) {
 
             htmlContent += `
                 <div class="rp-game-row">
-                    <img src="${iconUrl}" class="rp-game-icon" onerror="this.src='../logos/discord.png'">
+                    <div class="rp-image-container">
+                        <img src="${iconUrl}" class="rp-game-icon" onerror="this.src='../logos/discord.png'">
+                        ${smallImage ? `<img src="${smallImage}" class="rp-small-image" title="${game.assets.small_text || ''}">` : ''}
+                    </div>
                     <div class="rp-game-info">
                         <div class="rp-game-title">${game.name}</div>
                         ${details ? `<div class="rp-game-detail">${details}</div>` : ''}
                         ${state ? `<div class="rp-game-detail" style="color:#888;">${state}</div>` : ''}
-                        ${game.timestamps && game.timestamps.start ? `<div class="rp-game-detail" id="rp-timer" data-start="${game.timestamps.start}"></div>` : ''}
+                        ${game.timestamps && game.timestamps.start ? `<div class="rp-game-detail" id="rp-timer" data-start="${game.timestamps.start}">00:00 elapsed</div>` : ''}
                     </div>
                 </div>
             `;
 
-            // Start timer update if needed (simple implementation)
+            // Start timer update if needed
             if (game.timestamps && game.timestamps.start) {
                 updateRpTimer(game.timestamps.start);
             }
@@ -301,7 +321,9 @@ function updateDiscordUI(data) {
             // Check for Custom Status (Type 4)
             const custom = activities.find(a => a.type === 4);
             if (custom && custom.state) {
-                htmlContent += `<div style="color: #fff; font-style: italic;">"${custom.state}"</div>`;
+                htmlContent += `<div style="color: #bbb; font-size: 0.9rem; margin-top: 5px;">${custom.emoji ? (custom.emoji.id ? `<img src="https://cdn.discordapp.com/emojis/${custom.emoji.id}.png?size=24" style="width:16px;vertical-align:middle;margin-right:4px;">` : custom.emoji.name + ' ') : ''}${custom.state}</div>`;
+            } else {
+                htmlContent += `<div style="color: #888; font-style: italic; font-size: 0.8rem; margin-top: 5px;">Pas d'activité</div>`;
             }
         }
     }
@@ -310,11 +332,16 @@ function updateDiscordUI(data) {
 }
 
 let rpTimerInterval = null;
+let spotifyInterval = null;
+
 function updateRpTimer(startTime) {
     if (rpTimerInterval) clearInterval(rpTimerInterval);
+    if (spotifyInterval) clearInterval(spotifyInterval); // Clear spotify if switching
 
     function update() {
         const elapsed = Date.now() - startTime;
+        if (elapsed < 0) return; // Future start time?
+
         const seconds = Math.floor((elapsed / 1000) % 60);
         const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
         const hours = Math.floor((elapsed / (1000 * 60 * 60)));
@@ -329,6 +356,45 @@ function updateRpTimer(startTime) {
 
     update();
     rpTimerInterval = setInterval(update, 1000);
+}
+
+function updateSpotifyProgress(start, end) {
+    if (spotifyInterval) clearInterval(spotifyInterval);
+    if (rpTimerInterval) clearInterval(rpTimerInterval);
+
+    const totalDuration = end - start;
+
+    function update() {
+        const now = Date.now();
+        const currentCheck = now - start;
+
+        let percent = (currentCheck / totalDuration) * 100;
+        if (percent > 100) percent = 100;
+        if (percent < 0) percent = 0;
+
+        const bar = document.getElementById('spotify-progress');
+        const currEl = document.getElementById('spotify-curr');
+        const endEl = document.getElementById('spotify-end');
+
+        if (bar && currEl && endEl) {
+            bar.style.width = `${percent}%`;
+
+            // Format times
+            const currSeconds = Math.floor((currentCheck / 1000) % 60);
+            const currMinutes = Math.floor((currentCheck / (1000 * 60)));
+
+            const totalSeconds = Math.floor((totalDuration / 1000) % 60);
+            const totalMinutes = Math.floor((totalDuration / (1000 * 60)));
+
+            currEl.innerText = `${currMinutes}:${String(currSeconds).padStart(2, '0')}`;
+            endEl.innerText = `${totalMinutes}:${String(totalSeconds).padStart(2, '0')}`;
+        } else {
+            clearInterval(spotifyInterval);
+        }
+    }
+
+    update();
+    spotifyInterval = setInterval(update, 1000);
 }
 function openEmail() {
     const user = "contact";
