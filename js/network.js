@@ -567,26 +567,31 @@ function initPlaylist() {
 
     // CHECK AUTOPLAY
     const autoplay = localStorage.getItem('userAutoplay');
-    if (autoplay === 'off') {
-        console.log("Autoplay désactivé par l'utilisateur.");
-        return;
-    }
+    console.log("Autoplay setting:", autoplay);
 
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-        playPromise.then(() => {
-            isPlaying = true;
-            document.querySelector(".icon-play").style.display = "none";
-            document.querySelector(".icon-pause").style.display = "block";
-            document.querySelector(".music-player").classList.add("playing");
-        })
-            .catch(error => {
-                console.log("Autoplay bloqué. Attente clic...");
-                document.addEventListener('click', function startAudioOnFirstClick() {
-                    playTrack();
-                    document.removeEventListener('click', startAudioOnFirstClick);
-                }, { once: true });
-            });
+    if (autoplay !== 'off') {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+                document.querySelector(".icon-play").style.display = "none";
+                document.querySelector(".icon-pause").style.display = "block";
+                document.querySelector(".music-player").classList.add("playing");
+            })
+                .catch(error => {
+                    console.log("Autoplay bloqué. Attente clic...");
+                    document.addEventListener('click', function startAudioOnFirstClick() {
+                        playTrack();
+                        document.removeEventListener('click', startAudioOnFirstClick);
+                    }, { once: true });
+                });
+        }
+    } else {
+        console.log("Autoplay désactivé par l'utilisateur.");
+        isPlaying = false;
+        document.querySelector(".icon-play").style.display = "block";
+        document.querySelector(".icon-pause").style.display = "none";
+        document.querySelector(".music-player").classList.remove("playing");
     }
 }
 
