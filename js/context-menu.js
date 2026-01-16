@@ -69,16 +69,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmBtn = document.getElementById('btnConfirmRedirect');
         const cancelBtn = document.getElementById('btnCancelRedirect');
 
+        const closeCtxModal = () => {
+            overlay.classList.remove('show');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 400); // 400ms buffer for 300ms transition
+        };
+
         if (overlay && urlDisplay && confirmBtn) {
             urlDisplay.textContent = url;
+
+            // Force flex display before adding show class for animation
+            overlay.style.display = 'flex';
+            // Force Reflow
+            void overlay.offsetWidth;
             overlay.classList.add('show');
 
             confirmBtn.onclick = () => {
                 window.open(url, '_blank');
-                overlay.classList.remove('show');
+                closeCtxModal();
             };
-            if (cancelBtn) cancelBtn.onclick = () => overlay.classList.remove('show');
-            overlay.onclick = (e) => { if (e.target === overlay) overlay.classList.remove('show'); };
+
+            if (cancelBtn) cancelBtn.onclick = closeCtxModal;
+            overlay.onclick = (e) => { if (e.target === overlay) closeCtxModal(); };
         } else {
             window.open(url, '_blank');
         }

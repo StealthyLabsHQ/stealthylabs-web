@@ -465,7 +465,8 @@ checkCookieConsent();
 let pendingUrl = "";
 const overlay = document.getElementById('redirectOverlay');
 const urlDisplay = document.getElementById('redirectUrl');
-const confirmBtn = document.getElementById('confirmRedirectBtn');
+const confirmBtn = document.getElementById('btnConfirmRedirect');
+const cancelBtn = document.getElementById('btnCancelRedirect');
 
 function closeRedirect() {
     overlay.classList.remove('show');
@@ -476,15 +477,21 @@ function openModal(url) {
     pendingUrl = url;
     urlDisplay.innerText = url;
 
+    // Ensure handlers are reset to default behavior (in case Context Menu overwrote them)
+    if (confirmBtn) {
+        confirmBtn.onclick = () => {
+            window.open(pendingUrl, '_blank');
+            closeRedirect();
+        };
+    }
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            closeRedirect();
+        };
+    }
+
     overlay.style.display = 'flex';
     setTimeout(() => { overlay.classList.add('show'); }, 10);
-}
-
-if (confirmBtn) {
-    confirmBtn.onclick = () => {
-        window.open(pendingUrl, '_blank');
-        closeRedirect();
-    };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
