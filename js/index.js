@@ -3,6 +3,7 @@ let currentLang = 'en';
 document.addEventListener('DOMContentLoaded', () => {
     detectLanguage();
     loadSavedFont();
+    loadSavedTheme();
     updateClock();
     setupSearchBar();
 
@@ -234,6 +235,24 @@ function loadSavedFont() {
     if (saved && isAllowedFont(saved)) {
         document.documentElement.style.setProperty('--main-font', saved);
         const sel = document.getElementById('fontSelector');
+        if (sel) sel.value = saved;
+    }
+}
+
+/* --- Theme --- */
+const VALID_THEMES = ['dark', 'light'];
+
+function changeTheme(theme) {
+    if (!VALID_THEMES.includes(theme)) return;
+    document.documentElement.setAttribute('data-theme', theme);
+    setCookie('userTheme', theme);
+}
+
+function loadSavedTheme() {
+    const saved = getCookie('userTheme');
+    if (saved && VALID_THEMES.includes(saved)) {
+        changeTheme(saved);
+        const sel = document.getElementById('themeSelector');
         if (sel) sel.value = saved;
     }
 }

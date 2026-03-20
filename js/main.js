@@ -190,6 +190,17 @@ function setupFooterWarnings() {
     footerLinks.forEach(link => {
         link.addEventListener('click', (e) => openWarningModal(e, link.href));
     });
+
+    // Also intercept all other external target="_blank" links (project cards, release links, etc.)
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        if (link.closest('.footer-social-links')) return; // already handled
+        try {
+            const linkOrigin = new URL(link.href, window.location.origin).origin;
+            if (linkOrigin !== window.location.origin) {
+                link.addEventListener('click', (e) => openWarningModal(e, link.href));
+            }
+        } catch (_) {}
+    });
 }
 
 /* --- Page Transitions --- */

@@ -2182,7 +2182,7 @@ a:disabled {
     /* --- Navbar --- */
     & .main-navbar {
         background: var(--card-bg) !important;
-        border-bottom: 1px solid var(--border) !important;
+        border-bottom: 2px solid #1A1A1A !important;
     }
 
     & .nav-links a { color: var(--text-muted); }
@@ -2254,8 +2254,14 @@ a:disabled {
 
     /* --- Footer --- */
     & .site-footer { background: var(--card-bg) !important; border-top-color: var(--border) !important; }
+    & .footer-column h4 { color: var(--text-primary) !important; }
+    & .footer-column p { color: var(--text-muted) !important; }
     & :is(.footer-links a, .footer-links-list a) { color: var(--text-muted); }
     & :is(.footer-links a, .footer-links-list a):hover { color: var(--text-primary); }
+    & .footer-social-links a { color: var(--text-muted) !important; }
+    & .footer-social-links a:hover { color: var(--text-primary) !important; }
+    & .footer-bottom { color: var(--text-muted); }
+    & .footer-bottom p { color: var(--text-muted) !important; }
 
     /* --- Modal --- */
     & .modal-overlay { background-color: rgba(0, 0, 0, 0.5); }
@@ -2290,4 +2296,69 @@ a:disabled {
 
     /* --- Select --- */
     & select option { background: var(--card-bg) !important; color: var(--text-primary) !important; }
+
+    /* --- Invert white logos/images for light theme --- */
+    & .nav-logo img { filter: invert(1) !important; }
+    & .nav-logo:hover img { filter: invert(1) brightness(0.8) !important; }
+}
+
+/* --- Light theme: navbar border (flat selector for browser compat) --- */
+[data-theme="light"] .main-navbar {
+    background: #FFFFFF !important;
+    border-bottom: 2px solid #1A1A1A !important;
+}
+
+/* --- Light theme: card & content overrides (flat selectors for browser compat) --- */
+[data-theme="light"] .card h3,
+[data-theme="light"] .card p,
+[data-theme="light"] .card summary { color: #1A1A1A !important; }
+[data-theme="light"] .card .card-icon { color: #666 !important; }
+[data-theme="light"] .card .fa-chevron-down,
+[data-theme="light"] .card .fa-chevron-up { color: #666 !important; }
+[data-theme="light"] .card:hover { background: #FAFAFA !important; border-color: rgba(0, 0, 0, 0.2) !important; }
+[data-theme="light"] .card:hover h3,
+[data-theme="light"] .card:hover p,
+[data-theme="light"] .card:hover summary { color: #1A1A1A !important; }
+[data-theme="light"] .card:hover .card-icon,
+[data-theme="light"] .card:hover .fa-icon { color: #666 !important; }
+[data-theme="light"] .hero-title { color: #1A1A1A !important; }
+[data-theme="light"] .hero-description { color: #666 !important; }
+[data-theme="light"] .gradient-text { background: linear-gradient(135deg, #555 0%, #999 100%) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+[data-theme="light"] .about-text h3 { color: #1A1A1A !important; }
+[data-theme="light"] .tool-card { background: #FFFFFF !important; border-color: rgba(0, 0, 0, 0.12) !important; color: #1A1A1A !important; }
+[data-theme="light"] .tool-card:hover { border-color: rgba(0, 0, 0, 0.2) !important; }
+[data-theme="light"] .tool-card-title { color: #1A1A1A !important; }
+[data-theme="light"] .tool-card-desc { color: #666 !important; }
+
+/* --- Buttons --- */
+[data-theme="light"] .btn-continue {
+    background: #1A1A1A !important;
+    border: 1px solid #1A1A1A !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+[data-theme="light"] .btn-continue:hover {
+    background: #333 !important;
+    border-color: #333 !important;
+}
+[data-theme="light"] .btn-cancel {
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    color: #1A1A1A !important;
+    border-radius: 8px !important;
+}
+[data-theme="light"] .btn-cancel:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.4) !important;
+}
+[data-theme="light"] .cta-button,
+[data-theme="light"] .featured-game-cta {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    color: #1A1A1A !important;
+    background: transparent !important;
+}
+[data-theme="light"] .cta-button:hover,
+[data-theme="light"] .featured-game-cta:hover {
+    border-color: rgba(0, 0, 0, 0.4) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
 }

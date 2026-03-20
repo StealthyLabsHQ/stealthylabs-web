@@ -284,3 +284,83 @@
         padding: 5px;
     }
 }
+
+/* =========================================================================
+   LIGHT THEME OVERRIDES
+   ========================================================================= */
+[data-theme="light"] .bestiary-table {
+    background: #FFFFFF !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] .bestiary-table th {
+    color: #999 !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .bestiary-table td {
+    color: #1A1A1A !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .bestiary-tab-btn {
+    color: #666 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .bestiary-tab-btn.active {
+    color: #1A1A1A !important;
+    border-color: #1A1A1A !important;
+    background: #FFFFFF !important;
+}
+
+[data-theme="light"] .arc-name {
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .blueprint-card {
+    background: #FFFFFF !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .blueprint-card:hover {
+    background: #F0F0F0 !important;
+    border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="light"] .blueprint-card.found {
+    color: #1A1A1A !important;
+    border-color: #1A1A1A !important;
+    background: #F5F5F5 !important;
+}
+
+[data-theme="light"] .blueprint-card.owned {
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    background: #F5F5F5 !important;
+}
+
+[data-theme="light"] .blueprint-card.owned .blueprint-name {
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .blueprint-name {
+    color: #555 !important;
+}
+
+[data-theme="light"] .blueprint-check {
+    background: #E0E0E0 !important;
+    color: #999 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    box-shadow: none !important;
+}
+
+[data-theme="light"] .blueprint-card.owned .blueprint-check {
+    background: #1A1A1A !important;
+    color: #FFFFFF !important;
+    border-color: #1A1A1A !important;
+}
+
+[data-theme="light"] .blueprint-rarity {
+    color: #555 !important;
+}

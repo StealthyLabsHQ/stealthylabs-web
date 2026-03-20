@@ -148,6 +148,23 @@ function loadSavedFont() {
     }
 }
 
+/* --- Theme --- */
+const VALID_THEMES = ['dark', 'light'];
+
+function changeTheme(theme) {
+    if (!VALID_THEMES.includes(theme)) return;
+    document.documentElement.setAttribute('data-theme', theme);
+    setCookie('userTheme', theme);
+}
+
+function loadSavedTheme() {
+    const saved = getCookie('userTheme');
+    if (saved && VALID_THEMES.includes(saved)) {
+        changeTheme(saved);
+        const sel = document.getElementById('themeSelector');
+        if (sel) sel.value = saved;
+    }
+}
 
 function updateClock() {
     const now = new Date();
@@ -814,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateClock();
     updateServerStats();
     loadSavedFont();
+    loadSavedTheme();
 
     // Bind collapsible toggles
     document.querySelectorAll('[data-action="toggle-socials"]').forEach(el => {

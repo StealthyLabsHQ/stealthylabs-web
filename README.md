@@ -10,7 +10,7 @@ StealthyLabs is a personal brand and content creation platform focused on FPS ga
 
 - **Network** — Social links, Discord status, music player, and Twitch live detection
 - **About** — Gaming setup showcase (peripherals & PC specs)
-- **Projects** — Open source tools ([Anthropic Rich Presence](https://github.com/StealthyLabsHQ/anthropic-rich-presence), [iframe-edge](https://github.com/StealthyLabsHQ/iframe-edge))
+- **Projects** — Open source tools ([Claude Rich Presence](https://github.com/StealthyLabsHQ/claude-rpc), [iframe-edge](https://github.com/StealthyLabsHQ/iframe-edge))
 - **Games** — ARC Raiders guides with interactive bestiary, maps viewer, and blueprints tracker
 - **Contact** — Contact form powered by a Cloudflare Workers backend
 

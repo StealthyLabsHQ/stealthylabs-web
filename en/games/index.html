@@ -17,8 +17,8 @@
     <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/games/">
     <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/games/">
 
-    <link rel="stylesheet" href="../../css/style-main.css?v=3c0fda84">
-    <link rel="stylesheet" href="../../css/glass-theme.css?v=d88703c4">
+    <link rel="stylesheet" href="../../css/style-main.css?v=light2026">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=lt2026b">
     <link rel="icon" type="image/png" href="../../logos/favicon.png">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -262,6 +262,18 @@
                 width: 140px;
             }
         }
+        /* --- Light theme overrides --- */
+        [data-theme="light"] .game-card {
+            background: #FFFFFF;
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+        [data-theme="light"] .game-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+        [data-theme="light"] .game-card-title { color: #1A1A1A; }
+        [data-theme="light"] .game-card-desc { color: #555; }
+        [data-theme="light"] .game-card-subtitle { color: #666; }
     </style>
 </head>
 

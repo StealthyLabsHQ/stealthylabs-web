@@ -398,3 +398,78 @@
         font-size: 0.85rem;
     }
 }
+
+/* =========================================================================
+   LIGHT THEME OVERRIDES
+   ========================================================================= */
+[data-theme="light"] .contact-form-container {
+    background: #FFFFFF !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-select,
+[data-theme="light"] .form-textarea {
+    background: #F5F5F5 !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] .form-select:focus,
+[data-theme="light"] .form-textarea:focus {
+    border-color: #1A1A1A !important;
+}
+
+[data-theme="light"] .form-input::placeholder,
+[data-theme="light"] .form-textarea::placeholder {
+    color: #999 !important;
+}
+
+[data-theme="light"] .form-select option {
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .form-label {
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .contact-social-link {
+    background: #F5F5F5 !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    color: #666 !important;
+}
+
+[data-theme="light"] .contact-social-link:hover {
+    border-color: #1A1A1A !important;
+    color: #1A1A1A !important;
+}
+
+[data-theme="light"] .approval-group {
+    background: #F5F5F5 !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .approval-checkbox {
+    background: #FFFFFF !important;
+    border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="light"] .approval-checkbox:checked {
+    background: #1A1A1A !important;
+    border-color: #1A1A1A !important;
+}
+
+[data-theme="light"] .approval-checkbox:checked::after {
+    color: #FFFFFF;
+}
+
+[data-theme="light"] .submit-btn {
+    background: #1A1A1A !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .submit-btn:hover {
+    background: #333 !important;
+}
