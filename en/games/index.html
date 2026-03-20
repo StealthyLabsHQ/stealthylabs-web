@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games & Projects - StealthyLabs | Gaming Guides & Resources</title>
+    <meta name="description"
+        content="Gaming guides, resources and tools for video games. Discover ARC Raiders guides, blueprint trackers and gaming analysis projects on StealthyLabs.">
+    <meta name="keywords"
+        content="gaming guides, ARC Raiders, video game guides, gaming resources, blueprint tracker, gaming projects">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/en/games/">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/games/">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/games/">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=3c0fda84">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=d88703c4">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stealthylabs.eu/en/games/">
+    <meta property="og:site_name" content="StealthyLabs">
+    <meta property="og:title" content="Games & Projects - StealthyLabs | Gaming Guides & Resources">
+    <meta property="og:description"
+        content="Gaming guides, resources and tools for video games. Discover ARC Raiders guides, blueprint trackers and gaming analysis projects.">
+    <meta property="og:image" content="https://stealthylabs.eu/logos/embed.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Games & Projects - StealthyLabs | Gaming Guides & Resources">
+    <meta name="twitter:description"
+        content="Gaming guides, resources and tools for video games. Discover ARC Raiders guides, blueprint trackers and gaming analysis projects.">
+    <meta name="twitter:image" content="https://stealthylabs.eu/logos/embed.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+
+    <style>
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .game-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .game-card-content {
+            padding: 20px;
+        }
+
+        .game-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .game-card-subtitle {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .game-card-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .game-card-arrow {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #cc0000;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover .game-card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ========== Looky System Card - Cyan Theme ========== */
+        .game-card.looky-card {
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            background: linear-gradient(145deg, #0a0a0a 0%, #0d1a1f 100%);
+        }
+
+        .game-card.looky-card:hover {
+            border-color: rgba(0, 240, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 240, 255, 0.15), 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .game-card.looky-card .game-card-arrow {
+            color: #00f0ff;
+        }
+
+        .game-card.looky-card .game-card-subtitle {
+            color: #00f0ff;
+        }
+
+        /* Looky System Logo Container */
+        .looky-logo-container {
+            width: 100%;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #050a0d 0%, #0a1418 50%, #0d1a1f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated circuit lines background */
+        .looky-logo-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+
+        /* Radial glow behind the logo */
+        .looky-logo-container::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Logo Image Styling */
+        .looky-logo-img {
+            width: 160px;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4));
+            transition: all 0.4s ease;
+        }
+
+        .game-card.looky-card:hover .looky-logo-img {
+            filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.7));
+            transform: scale(1.05);
+        }
+
+        /* ========== Badge Styles ========== */
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .badge-new {
+            background: #00f0ff;
+            color: #000;
+        }
+
+        .badge-game {
+            background: rgba(255, 0, 0, 0.9);
+            color: #fff;
+        }
+
+        /* Light mode */
+        body.light-mode .game-card {
+            background: #1a1a1a;
+            border-color: #333;
+        }
+
+        body.light-mode .game-card-title {
+            color: #fff;
+        }
+
+        body.light-mode .game-card-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        body.light-mode .game-card.looky-card {
+            background: linear-gradient(145deg, #1a1a1a 0%, #1a2530 100%);
+        }
+
+        @media (max-width: 600px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .looky-logo-img {
+                width: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href=".././" class="nav-logo">
+                <img src="../../logos/logo.png" alt="StealthyLabs">
+            </a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="../projects" data-key="nav_projects">Projects</a></li>
+                <li><a href="./" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn">
+                    <img src="../../logos/gear.png" alt="Settings" class="gear-icon-img"
+                        style="width: 20px; height: 20px; filter: invert(1);">
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_lang">LANGUAGE</label>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_font">FONT</label>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)
+                            </option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" style="width: 100%; padding: 8px; background: rgba(255, 60, 60, 0.1); border: 1px solid rgba(255, 60, 60, 0.3); color: #ff4444; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="hamburger-btn mobile-only">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+
+
+    <div id="mobileMenu" class="mobile-menu-overlay">
+        <button class="close-menu-btn">&times;</button>
+        <div class="mobile-links">
+            <a href="../about" data-key="nav_about">About me</a>
+            <a href="../network" data-key="nav_network">Network</a>
+            <a href="../projects" data-key="nav_projects">Projects</a>
+            <a href="./" data-key="nav_games">Games</a>
+            <a href="../contact" data-key="nav_contact">Contact</a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1 class="hero-title" data-key="games_title">Games & Projects</h1>
+            <p class="hero-description" data-key="games_desc">Guides, resources for video games and analysis projects.
+            </p>
+        </section>
+
+        <div class="games-grid">
+            <!-- ARC Raiders Card -->
+            <a href="https://arcraiders.stealthylabs.eu/en/games/arc-raiders/" class="game-card">
+                <span class="card-badge badge-game">GAME</span>
+                <img src="../../img/arc-raiders.jpg" alt="ARC Raiders" class="game-card-image">
+                <div class="game-card-content">
+                    <h2 class="game-card-title">ARC Raiders</h2>
+                    <p class="game-card-desc" data-key="arc_card_desc">Guides, FAQ and Loadouts for ARC Raiders.</p>
+                </div>
+                <i class="fas fa-arrow-right game-card-arrow"></i>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>STEALTHYLABS</h4>
+                <p data-key="footer_tagline">Content Creator & FPS Enthusiast. Sharing setups, gameplay, and guides.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_legal_title">LEGAL</h4>
+                <ul class="footer-links-list">
+                    <li><a href="../terms-of-service" data-key="footer_tos">Terms of Service</a></li>
+                    <li><a href="../privacy" data-key="footer_privacy">Privacy Policy</a></li>
+                    <li><a href="../legal" data-key="footer_legal">Legal Notice</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_social">SOCIALS</h4>
+                <div class="footer-social-links">
+                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
+                        title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
+                        title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
+                            class="fab fa-twitch"></i></a>
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
+                        title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
+                            class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-key="footer_text">© 2026 StealthyLabs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
+            </div>
+
+            <h2 data-key="redirect_title">Waiting for redirection</h2>
+            <p class="modal-desc" data-key="redirect_text">You are about to leave StealthyLabs to go to:</p>
+
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" data-key="btn_cancel">Cancel</button>
+                <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continue</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../../js/index.js?v=25dd4b39" defer></script>
+    <script src="../../js/twitch-status.js?v=b30d24e2" defer></script>
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=728a9c6d" defer></script>
+    <script src="../../js/ux-enhancements.js?v=1" defer></script>
+</body>
+
+</html>

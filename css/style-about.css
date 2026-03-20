@@ -1,0 +1,155 @@
+        .about-text {
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-align: left;
+            line-height: 1.6;
+            color: #aaa;
+            font-size: 1.1rem;
+            background: #000000;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .setup-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .setup-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+
+        .setup-card .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .setup-card .card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            transition: transform 0.6s ease;
+            padding: 5px;
+        }
+
+        .card-img.zoom-mode {
+            object-fit: cover !important;
+            padding: 0 !important;
+        }
+
+        .setup-card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .setup-price {
+            color: #888;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: auto;
+            padding-top: 15px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card p {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        /* PC Specs Table Styles */
+        .pc-specs-table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            border-collapse: collapse;
+            background: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .pc-specs-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .pc-specs-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .pc-specs-table td {
+            padding: 15px 20px;
+            vertical-align: top;
+        }
+
+        .pc-specs-table .pc-label {
+            color: #888;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            width: 150px;
+            white-space: nowrap;
+        }
+
+        .pc-specs-table .pc-value {
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .pc-specs-table td {
+                display: block;
+                padding: 10px 15px;
+            }
+
+            .pc-specs-table .pc-label {
+                width: 100%;
+                padding-bottom: 5px;
+            }
+
+            .pc-specs-table tr {
+                display: block;
+                padding: 10px 0;
+            }
+        }

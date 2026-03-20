@@ -1,0 +1,64 @@
+/* Maps Tab System */
+.map-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.map-tab-btn {
+    background: transparent;
+    border: 1px solid #444;
+    /* Dark mode default border */
+    color: #ccc;
+    padding: 10px 24px;
+    border-radius: 50px;
+    /* Full pill shape */
+    cursor: pointer;
+    font-family: var(--main-font);
+    font-weight: 800;
+    /* Bold text */
+    transition: all 0.2s ease-in-out;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.map-tab-btn:hover {
+    border-color: #666;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    /* Subtle hover */
+}
+
+.map-tab-btn.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: none;
+    transform: translateY(-1px);
+}
+
+.map-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.map-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Light Mode Overrides */

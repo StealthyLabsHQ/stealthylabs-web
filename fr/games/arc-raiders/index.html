@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARC Raiders</title>
+
+    <link rel="stylesheet" href="../../../css/style-main.css?v=3c0fda84">
+    <link rel="stylesheet" href="../../../css/glass-theme.css?v=d88703c4">
+    <link rel="stylesheet" href="../../../css/style-maps.css?v=62486f0f">
+    <link rel="stylesheet" href="../../../css/style-bestiary.css?v=279a8cde">
+    <link rel="icon" type="image/png" href="../../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stealthylabs.eu/arc-raiders">
+    <meta property="og:site_name" content="StealthyLabs">
+    <meta property="og:title" content="ARC Raiders - StealthyLabs">
+    <meta property="og:description" content="Guides, FAQ et Loadouts pour ARC Raiders.">
+    <meta property="og:image" content="https://stealthylabs.eu/img/arcRaiders.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../../">
+</head>
+
+<body>
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="https://stealthylabs.eu/fr/" class="nav-logo">
+                <img src="../../../logos/logo.png" alt="StealthyLabs">
+            </a>
+            <ul class="nav-links desktop-only">
+                <li><a href="https://stealthylabs.eu/fr/about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="https://stealthylabs.eu/fr/network" data-key="nav_network">Network</a></li>
+                <li><a href="https://stealthylabs.eu/fr/projects" data-key="nav_projects">Projets</a></li>
+                <li><a href="https://stealthylabs.eu/fr/games/" data-key="nav_games">Games</a></li>
+                <li><a href="https://stealthylabs.eu/fr/contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <img src="../../../logos/gear.png" alt="Settings"
+                        style="width: 20px; height: 20px; filter: invert(1);">
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)
+                            </option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" style="width: 100%; padding: 8px; background: rgba(255, 60, 60, 0.1); border: 1px solid rgba(255, 60, 60, 0.3); color: #ff4444; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="https://stealthylabs.eu/fr/about" data-key="nav_about">A
+                    propos de moi</a>
+                <a href="https://stealthylabs.eu/fr/network" data-key="nav_network"
+                   >Network</a>
+                <a href="https://stealthylabs.eu/fr/projects" data-key="nav_projects">Projets</a>
+                <a href="https://stealthylabs.eu/fr/games/" data-key="nav_games">Games</a>
+                <a href="https://stealthylabs.eu/fr/contact" data-key="nav_contact"
+                   >Contact</a>
+            </div>
+        </div>
+
+        <section class="hero">
+            <h1 class="hero-title">
+                <span class="gradient-text" data-key="arc_hero_title">ARC Raiders</span>
+            </h1>
+            <p class="hero-description" data-key="arc_hero_desc">Guides, FAQ et Loadouts.</p>
+        </section>
+
+        <div class="cards-grid" style="grid-template-columns: 1fr; max-width: 1200px; margin: 0 auto;">
+
+
+            <div class="card">
+                <details id="details-bestiary" open>
+                    <summary
+                        style="list-style: none; cursor: pointer; outline: none; display: flex; align-items: center;">
+                        <div class="card-icon" style="margin-bottom: 0; margin-right: 15px;"><i
+                                class="fas fa-robot fa-icon"></i></div>
+                        <div style="flex-grow: 1;">
+                            <h3 data-key="arc_bestiary_title" style="margin: 0;">Bestiaire ARC</h3>
+                            <p data-key="arc_bestiary_desc" style="margin: 5px 0 0 0; opacity: 0.8; font-size: 0.9em;">
+                                Liste des machines connues.</p>
+                        </div>
+                        <i class="fas fa-chevron-down" style="transition: transform 0.3s; margin-left: 10px;"></i>
+                    </summary>
+
+                    <div class="content-block" style="margin-top: 20px;">
+                        <!-- Tabs Navigation -->
+                        <div class="bestiary-tabs">
+                            <button class="bestiary-tab-btn active" data-tab="cat_small"
+                                data-key="arc_cat_small">Petits & Moyens</button>
+                            <button class="bestiary-tab-btn" data-tab="cat_support"
+                                data-key="arc_cat_support">Soutien</button>
+                            <button class="bestiary-tab-btn" data-tab="cat_medium"
+                                data-key="arc_cat_medium">Assaut Moyen</button>
+                            <button class="bestiary-tab-btn" data-tab="cat_large"
+                                data-key="arc_cat_large">Larges & Critiques</button>
+                            <button class="bestiary-tab-btn" data-tab="cat_boss"
+                                data-key="arc_cat_boss">Boss</button>
+                        </div>
+
+                        <div class="bestiary-container">
+                            <!-- Header -->
+                            <div class="bestiary-header">
+                                <div data-key="arc_col_arc">ARC</div>
+                                <div data-key="arc_col_drops">Drops Notables</div>
+                                <div data-key="arc_col_tips">Conseils</div>
+                            </div>
+
+                            <!-- CATEGORY: Small & Medium -->
+                            <div id="cat_small" class="bestiary-content active">
+                                <!-- Tick -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/tick.png" alt="Tick" class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_tick">Tick</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_rubber">ARC Caoutchouc Flex</li>
+                                        <li class="drop-item" data-key="arc_drop_thermo">ARC Revêtement Thermique</li>
+                                        <li class="drop-item" data-key="arc_drop_tick">Cocon de Tick</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_tick_1">Souvent entendu...</li>
+                                        <li data-key="arc_tip_tick_2">Facilement détruit...</li>
+                                        <li data-key="arc_tip_tick_3">Roulade...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Wasp -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/wasp.jpg" alt="Wasp" class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_wasp">Wasp</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_light">Munitions Légères</li>
+                                        <li class="drop-item" data-key="arc_drop_simple">Pièces d'Arme Simples</li>
+                                        <li class="drop-item" data-key="arc_drop_driver">Driver de Wasp</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_wasp_1">Facilement déstabilisé...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Pop -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/pop.png" alt="Pop" class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_pop">Pop</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_coolant">ARC Liquide de Refroidissement
+                                        </li>
+                                        <li class="drop-item" data-key="arc_drop_thermo">ARC Revêtement Thermique</li>
+                                        <li class="drop-item" data-key="arc_drop_crude">Explosifs Bruts</li>
+                                        <li class="drop-item" data-key="arc_drop_pop">Détonateur de Pop</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_pop_1">Grimpez pour éviter...</li>
+                                        <li data-key="arc_tip_pop_2">Facilement détruit...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Fireball -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/fireball.jpg" alt="Fireball"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_fireball">Fireball</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_coolant">ARC Liquide de Refroidissement
+                                        </li>
+                                        <li class="drop-item" data-key="arc_drop_thermo">ARC Revêtement Thermique</li>
+                                        <li class="drop-item" data-key="arc_drop_crude">Explosifs Bruts</li>
+                                        <li class="drop-item" data-key="arc_drop_fireball">Brûleur de Fireball</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_fireball_1">Explose...</li>
+                                        <li data-key="arc_tip_fireball_2">Point faible...</li>
+                                        <li data-key="arc_tip_fireball_3">Courez ou esquivez...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Turret -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/turret.png" alt="Turret"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_turret">Turret</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_resin">ARC Résine Synthétique</li>
+                                        <li class="drop-item" data-key="arc_drop_thermo">ARC Revêtement Thermique</li>
+                                        <li class="drop-item" data-key="arc_drop_light">Munitions Légères</li>
+                                        <li class="drop-item" data-key="arc_drop_simple">Pièces d'Arme Simples</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_turret_1">Stationnaire...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Sentinel -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/sentinel.png" alt="Sentinel"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_sentinel">Sentinel</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_sentinel">Noyau de Tir de Sentinel</li>
+                                        <li class="drop-item" data-key="arc_drop_heavy">Munitions Lourdes</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_sentinel_1">Patrouilleur...</li>
+                                        <li data-key="arc_tip_sentinel_2">Tire en jaune...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Shredder -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/shredder.jpg" alt="Shredder"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_shredder">Shredder</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_power">Cellule ARC</li>
+                                        <li class="drop-item" data-key="arc_drop_mech">Composants Mécaniques</li>
+                                        <li class="drop-item" data-key="arc_drop_shredder">Gyroscope de Shredder</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_shredder_1">Point faible : propulseurs...</li>
+                                        <li data-key="arc_tip_shredder_2">Ne jamais attaquer sans couvert...</li>
+                                        <li data-key="arc_tip_shredder_3">Cachez-vous derrière une couverture...</li>
+                                        <li data-key="arc_tip_shredder_4">Munitions lourdes...</li>
+                                        <li data-key="arc_tip_shredder_5">Hullcracker.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CATEGORY: Support -->
+                            <div id="cat_support" class="bestiary-content">
+                                <!-- Snitch -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/snitch.png" alt="Snitch"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_snitch">Snitch</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_thermo">ARC Revêtement Thermique</li>
+                                        <li class="drop-item" data-key="arc_drop_resin">ARC Résine Synthétique</li>
+                                        <li class="drop-item" data-key="arc_drop_sensors">Capteurs</li>
+                                        <li class="drop-item" data-key="arc_drop_snitch">Scanner de Snitch</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_snitch_1">Facilement déstabilisé...</li>
+                                        <li data-key="arc_tip_snitch_2">Alerte bruyamment...</li>
+                                        <li data-key="arc_tip_snitch_3">Détruire rapidement...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Spotter -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/spotter.jpg" alt="Spotter"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_spotter">Spotter</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_sensors">Capteurs</li>
+                                        <li class="drop-item" data-key="arc_drop_spotter">Relais de Spotter</li>
+                                        <li class="drop-item" data-key="arc_drop_power">Cellule ARC</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_spotter_1">Marque les cibles...</li>
+                                        <li data-key="arc_tip_spotter_2">Cible prioritaire...</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CATEGORY: Medium Assault -->
+                            <div id="cat_medium" class="bestiary-content">
+                                <!-- Hornet -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/hornet.png" alt="Hornet"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_hornet">Hornet</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_perf">ARC Acier Performance</li>
+                                        <li class="drop-item" data-key="arc_drop_hornet">Driver de Hornet</li>
+                                        <li class="drop-item" data-key="arc_drop_medium">Munitions Moyennes</li>
+                                        <li class="drop-item" data-key="arc_drop_simple">Pièces d'Arme Simples</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_hornet_1">Arrière non blindé...</li>
+                                        <li data-key="arc_tip_hornet_2">Roulade...</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CATEGORY: Large & Critical -->
+                            <div id="cat_large" class="bestiary-content">
+                                <!-- Leaper -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/leaper.jpg" alt="Leaper"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_leaper">Leaper</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_mech">Composants Mécaniques</li>
+                                        <li class="drop-item" data-key="arc_drop_leaper">Unité d'Impulsion de Leaper
+                                        </li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_leaper_1">Saute sur la cible...</li>
+                                        <li data-key="arc_tip_leaper_2">Explosifs...</li>
+                                        <li data-key="arc_tip_leaper_3">Grenade Meute de Loups...</li>
+                                        <li data-key="arc_tip_leaper_4">Sans défense étourdi...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Rocketeer -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/rocketeer.png" alt="Rocketeer"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_rocketeer">Rocketeer</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_rocketeer">Driver de Rocketeer</li>
+                                        <li class="drop-item" data-key="arc_drop_heavy">Munitions Lourdes</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_rocketeer_1">Esquiver les roquettes...</li>
+                                        <li data-key="arc_tip_rocketeer_2">Bidon argenté...</li>
+                                        <li data-key="arc_tip_rocketeer_3">Grenade Meute de Loups.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Bastion -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/bastion.png" alt="Bastion"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_bastion">Bastion</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_bastion">Cellule de Bastion</li>
+                                        <li class="drop-item" data-key="arc_drop_medium">Munitions Moyennes</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_bastion_1">Bouclier frontal...</li>
+                                        <li data-key="arc_tip_bastion_2">Attaquer par les côtés...</li>
+                                        <li data-key="arc_tip_bastion_3">Mine Deadline...</li>
+                                        <li data-key="arc_tip_bastion_4">Grenade Meute de Loups.</li>
+                                        <li data-key="arc_tip_bastion_5">Sans défense étourdi...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Bombardier -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/bombardier.jpeg" alt="Bombardier"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_bombardier">Bombardier</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_alloy">ARC Alliage</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_bombardier">Cellule de Bombardier</li>
+                                        <li class="drop-item" data-key="arc_drop_launcher">Munitions de Lanceur</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_bombardier_1">Tir de mortier...</li>
+                                        <li data-key="arc_tip_bombardier_2">Détruire le Spotter...</li>
+                                        <li data-key="arc_tip_bombardier_3">Éviter l'onde de choc...</li>
+                                        <li data-key="arc_tip_bombardier_4">Mine Deadline...</li>
+                                        <li data-key="arc_tip_bombardier_5">Grenade Meute de Loups.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CATEGORY: Boss -->
+                            <div id="cat_boss" class="bestiary-content">
+                                <!-- Queen -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/queen.png" alt="Queen"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_queen">Queen</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_circuitry">ARC Circuits</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_complex">Pièces d'Arme Complexes</li>
+                                        <li class="drop-item" data-key="arc_drop_mag">Accélérateur Magnétique</li>
+                                        <li class="drop-item" data-key="arc_drop_queen">Réacteur de Queen</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_queen_1">Boss majeur...</li>
+                                        <li data-key="arc_tip_queen_2">Points faibles jaunes...</li>
+                                        <li data-key="arc_tip_queen_3">Deadline...</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Matriarch -->
+                                <div class="bestiary-row">
+                                    <div class="mob-identity">
+                                        <img src="https://stealthylabs.eu/img/arcs/matriarch.png" alt="Matriarch"
+                                            class="mob-img">
+                                        <span class="mob-name" data-key="arc_mob_matriarch">Matriarch</span>
+                                    </div>
+                                    <ul class="info-list">
+                                        <li class="drop-item" data-key="arc_drop_circuitry">ARC Circuits</li>
+                                        <li class="drop-item" data-key="arc_drop_adv_power">Cellule ARC Avancée</li>
+                                        <li class="drop-item" data-key="arc_drop_complex">Pièces d'Arme Complexes</li>
+                                        <li class="drop-item" data-key="arc_drop_mag">Accélérateur Magnétique</li>
+                                        <li class="drop-item" data-key="arc_drop_matriarch">Réacteur de Matriarch</li>
+                                    </ul>
+                                    <ul class="info-list">
+                                        <li data-key="arc_tip_matriarch_1">Boss majeur...</li>
+                                        <li data-key="arc_tip_matriarch_2">Points faibles jaunes...</li>
+                                        <li data-key="arc_tip_matriarch_3">Deadline...</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- End Bestiary Container -->
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <a href="./blueprint/" class="card"
+                style="text-decoration: none; color: inherit; display: block; cursor: pointer;">
+                <div class="card-icon"><i class="fas fa-scroll fa-icon"></i></div>
+                <h3 data-key="arc_blueprints_title">Suivi des schémas</h3>
+                <p data-key="arc_blueprints_desc">Suivez votre progression de déblocage (Sauvegardé
+                    automatiquement).</p>
+                <div style="margin-top: 15px; text-align: right; color: var(--accent); font-weight: bold;">
+                    Ouvrir le Tracker <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <div class="card">
+                <details id="details-maps" open>
+                    <summary
+                        style="list-style: none; cursor: pointer; outline: none; display: flex; align-items: center;">
+                        <div class="card-icon" style="margin-bottom: 0; margin-right: 15px;"><i
+                                class="fas fa-map-marked-alt fa-icon"></i></div>
+                        <div style="flex-grow: 1;">
+                            <h3 data-key="arc_maps_title" style="margin: 0;">Cartes / Maps</h3>
+                            <p data-key="arc_maps_desc" style="margin: 5px 0 0 0; opacity: 0.8; font-size: 0.9em;">
+                                Cartes des zones de jeu.</p>
+                        </div>
+                        <i class="fas fa-chevron-down" style="transition: transform 0.3s; margin-left: 10px;"></i>
+                    </summary>
+
+                    <div class="content-block" style="margin-top: 20px;">
+                        <!-- Tabs Navigation -->
+                        <div class="map-tabs">
+                            <button class="map-tab-btn active" data-tab="dam"
+                                data-key="arc_map_dam">Dam
+                                Battlegrounds</button>
+                            <button class="map-tab-btn" data-tab="spaceport"
+                                data-key="arc_map_spaceport">Spaceport</button>
+                            <button class="map-tab-btn" data-tab="bluegate"
+                                data-key="arc_map_bluegate">Blue Gate</button>
+                            <button class="map-tab-btn" data-tab="buried"
+                                data-key="arc_map_buried">Buried City</button>
+                            <button class="map-tab-btn" data-tab="stella"
+                                data-key="arc_map_stella">Stella Montis</button>
+                        </div>
+
+                        <!-- Tab Contents -->
+                        <div id="dam" class="map-content active">
+                            <img src="https://stealthylabs.eu/img/dam_battlegrounds.png" alt="Dam Battlegrounds"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                        </div>
+
+                        <div id="spaceport" class="map-content">
+                            <img src="https://stealthylabs.eu/img/the_spaceport.png" alt="Spaceport"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                        </div>
+
+                        <div id="bluegate" class="map-content">
+                            <img src="https://stealthylabs.eu/img/the_blue_gate.png" alt="Blue Gate"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                        </div>
+
+                        <div id="buried" class="map-content">
+                            <img src="https://stealthylabs.eu/img/buried_city.png" alt="Buried City"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                        </div>
+
+                        <div id="stella" class="map-content">
+                            <img src="https://stealthylabs.eu/img/stella_montis_upper.png" alt="Stella Montis Upper"
+                                style="width: 100%; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                            <img src="https://stealthylabs.eu/img/stella_montis_lower.png" alt="Stella Montis Lower"
+                                style="width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;"
+                                data-action="open-lightbox">
+                        </div>
+                    </div>
+                </details>
+                <style>
+                    details[open] summary i.fa-chevron-down {
+                        transform: rotate(180deg);
+                    }
+
+                    details summary::-webkit-details-marker {
+                        display: none;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>STEALTHYLABS</h4>
+                <p data-key="footer_tagline">Créateur de contenu & passionné de FPS. Partage de setups, gameplay et
+                    guides.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_legal_title">LÉGAL</h4>
+                <ul class="footer-links-list">
+                    <li><a href="https://stealthylabs.eu/fr/terms-of-service" data-key="footer_tos">Conditions
+                            d'utilisation</a></li>
+                    <li><a href="https://stealthylabs.eu/fr/privacy" data-key="footer_privacy">Politique de
+                            confidentialité</a></li>
+                    <li><a href="https://stealthylabs.eu/fr/legal" data-key="footer_legal">Mentions légales</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_social">RÉSEAUX</h4>
+                <div class="footer-social-links">
+                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
+                        title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
+                        title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
+                            class="fab fa-twitch"></i></a>
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
+                        title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
+                            class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+            <p class="copyright-disclaimer" data-key="arc_disclaimer"
+                style="font-size: 0.8em; opacity: 0.6; margin-top: 5px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                ARC Raiders® est une marque déposée d'Embark Studios AB. Ceci est un site de fan non officiel.</p>
+        </div>
+    </footer>
+
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
+            </div>
+
+            <h2 data-key="redirect_title">Attente de redirection</h2>
+            <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
+
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" data-key="btn_cancel">Annuler</button>
+                <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Map Preview -->
+    <div id="mapLightbox" class="lightbox-overlay" data-action="close-lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImage" class="lightbox-content" data-stop-propagation>
+    </div>
+
+    <style>
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: #ff5555;
+        }
+    </style>
+
+    <script src="../../../js/lightbox.js?v=50917cf0"></script>
+
+    <script src="../../../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../../../js/index.js?v=25dd4b39" defer></script>
+    <script src="../../../js/twitch-status.js?v=b30d24e2" defer></script>
+
+    <script src="../../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../../js/settings-handler.js?v=728a9c6d" defer></script>
+    <script src="../../../js/arc-tracker.js?v=0069b8ba" defer></script>
+    <script src="../../../js/ux-enhancements.js?v=1" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+# robots.txt for StealthyLabs
+# https://stealthylabs.eu
+
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas if any
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Allow important files
+Allow: /css/
+Allow: /js/
+Allow: /logos/
+Allow: /img/
+
+# Sitemap location
+Sitemap: https://stealthylabs.eu/sitemap.xml
+
+# Crawl-delay (optional, adjust if needed)
+Crawl-delay: 1

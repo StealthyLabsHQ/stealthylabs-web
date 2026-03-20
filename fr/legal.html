@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="legal_page_title">Mentions Légales - StealthyLabs</title>
+
+    <link rel="stylesheet" href="../css/style-main.css?v=3c0fda84">
+    <link rel="stylesheet" href="../css/glass-theme.css?v=d88703c4">
+    <link rel="stylesheet" href="../css/style-legal.css?v=0e315322">
+    <link rel="icon" type="image/png" href="../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../">
+</head>
+
+<body>
+
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="./" class="nav-logo">
+                <img src="../logos/logo.png" alt="StealthyLabs">
+            </a>
+            <ul class="nav-links desktop-only">
+                <li><a href="about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="network" data-key="nav_network">Network</a></li>
+                <li><a href="projects" data-key="nav_projects">Projets</a></li>
+                <li><a href="games/" data-key="nav_games">Games</a></li>
+                <li><a href="contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)
+                            </option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" style="width: 100%; padding: 8px; background: rgba(255, 60, 60, 0.1); border: 1px solid rgba(255, 60, 60, 0.3); color: #ff4444; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="about" data-key="nav_about">A propos de moi</a>
+                <a href="network" data-key="nav_network">Network</a>
+                <a href="projects" data-key="nav_projects">Projets</a>
+                <a href="games/" data-key="nav_games">Games</a>
+                <a href="contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero" style="padding: 40px 0 20px 0;">
+            <h1 class="hero-title" style="font-size: 3rem;">
+                <span class="gradient-text" data-key="legal_hero">Mentions Légales</span>
+            </h1>
+        </section>
+
+        <div class="legal-content">
+
+            <div class="legal-section">
+                <h2 data-key="legal_editor_title">1. Éditeur & Responsable de Publication</h2>
+                <p data-key="legal_editor_text">
+                    <strong>Site web :</strong> StealthyLabs.eu<br>
+                    <strong>Éditeur :</strong> StealthyLabs (Créateur de Contenu Numérique Indépendant)<br>
+                    <strong>Directeur de la publication :</strong> StealthyLabs<br>
+                    <strong>Email de contact :</strong> <a
+                        href="mailto:contact@stealthylabs.eu">contact@stealthylabs.eu</a><br>
+                    <strong>Statut :</strong> Site personnel non-commercial
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_hosting_title">2. Hébergement & Infrastructure Technique</h2>
+                <p>
+                    <strong data-key="legal_hosting_main">Hébergeur principal :</strong><br>
+                    LWS (Ligne Web Services)<br>
+                    10, Rue Penthièvre, 75008 Paris, France<br>
+                    Site web : <a href="https://www.lws.fr" target="_blank" rel="noopener noreferrer">lws.fr</a>
+                </p>
+                <p>
+                    <strong data-key="legal_hosting_cdn">CDN & Services de Sécurité :</strong><br>
+                    Cloudflare, Inc.<br>
+                    101 Townsend St, San Francisco, CA 94107, USA<br>
+                    Site web : <a href="https://www.cloudflare.com/" target="_blank"
+                        rel="noopener noreferrer">cloudflare.com</a>
+                </p>
+                <p data-key="legal_hosting_desc">
+                    Ce site utilise l'infrastructure Cloudflare pour une sécurité renforcée (protection DDoS,
+                    chiffrement SSL/TLS),
+                    l'optimisation des performances (mise en cache, compression) et la distribution mondiale du contenu.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_purpose_title">3. Objet & Nature du Site</h2>
+                <p data-key="legal_purpose_text">
+                    StealthyLabs.eu est un site personnel, non-commercial, dédié à :
+                </p>
+                <ul data-key="legal_purpose_list">
+                    <li>Le partage de contenu gaming, guides et ressources</li>
+                    <li>La mise à disposition d'outils et trackers pour jeux vidéo (blueprints, bestiaires, cartes)</li>
+                    <li>La création d'une communauté autour du gaming FPS</li>
+                    <li>La présentation de projets personnels et travaux créatifs</li>
+                </ul>
+                <p data-key="legal_purpose_note">
+                    Ce site ne vend aucun produit ni service. Tout le contenu est fourni gratuitement à titre informatif
+                    et de divertissement.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_liability_title">4. Limitation de Responsabilité</h2>
+                <p data-key="legal_liability_text">
+                    L'éditeur de StealthyLabs.eu s'efforce de fournir des informations exactes et à jour. Cependant :
+                </p>
+                <ul data-key="legal_liability_list">
+                    <li>Le contenu est fourni "tel quel" sans garantie d'exhaustivité ou d'exactitude</li>
+                    <li>Les informations gaming peuvent devenir obsolètes suite aux mises à jour des jeux</li>
+                    <li>L'éditeur n'est pas responsable des problèmes techniques, interruptions de service ou pertes de
+                        données</li>
+                    <li>Les liens externes sont fournis pour faciliter la navigation ; nous n'avons aucun contrôle sur
+                        le contenu tiers</li>
+                </ul>
+                <p data-key="legal_liability_note">
+                    Les utilisateurs accèdent et utilisent le site à leurs propres risques. L'éditeur ne saurait être
+                    tenu responsable de tout dommage direct ou indirect résultant de l'utilisation de ce site.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_trademarks_title">5. Marques Déposées & Contenus Tiers</h2>
+                <p data-key="legal_trademarks_text">
+                    Toutes les marques, titres de jeux, logos et noms déposés mentionnés sur ce site appartiennent à
+                    leurs propriétaires respectifs :
+                </p>
+                <ul data-key="legal_trademarks_list">
+                    <li><strong>ARC Raiders</strong> est une marque d'Embark Studios AB</li>
+                    <li><strong>Discord</strong> est une marque de Discord Inc.</li>
+                    <li><strong>Twitch</strong> est une marque de Twitch Interactive, Inc.</li>
+                    <li><strong>YouTube</strong> est une marque de Google LLC</li>
+                </ul>
+                <p data-key="legal_trademarks_note">
+                    StealthyLabs n'est pas affilié, approuvé ou sponsorisé par aucune des sociétés mentionnées
+                    ci-dessus. Tout contenu tiers est utilisé uniquement à des fins informatives.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_law_title">6. Droit Applicable & Juridiction</h2>
+                <p data-key="legal_law_text">
+                    Ce site et ses mentions légales sont régis par le droit français. Tout litige découlant de
+                    l'utilisation de StealthyLabs.eu sera soumis à la compétence exclusive des tribunaux de Paris,
+                    France.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="legal_credits_title">7. Crédits & Remerciements</h2>
+                <p data-key="legal_credits_text">
+                    <strong>Design & Développement :</strong> StealthyLabs<br>
+                    <strong>Icônes :</strong> Font Awesome (<a href="https://fontawesome.com" target="_blank"
+                        rel="noopener noreferrer">fontawesome.com</a>)<br>
+                    <strong>Polices :</strong> Google Fonts - Raleway, Inter, Roboto<br>
+                    <strong>Infrastructure :</strong> LWS, Cloudflare
+                </p>
+            </div>
+
+            <p style="text-align: right; color: #555; font-style: italic; font-size: 0.8rem; margin-top: 40px;">
+                <span data-key="legal_last_update">Dernière mise à jour :</span>
+                <span data-key="legal_date">08/02/2026</span>
+            </p>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>STEALTHYLABS</h4>
+                <p data-key="footer_tagline">Créateur de contenu & passionné de FPS. Partage de setups, gameplay et
+                    guides.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_legal_title">LÉGAL</h4>
+                <ul class="footer-links-list">
+                    <li><a href="terms-of-service" data-key="footer_tos">Conditions d'utilisation</a></li>
+                    <li><a href="privacy" data-key="footer_privacy">Politique de confidentialité</a></li>
+                    <li><a href="legal" data-key="footer_legal">Mentions légales</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_social">RÉSEAUX</h4>
+                <div class="footer-social-links">
+                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
+                        title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
+                        title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
+                            class="fab fa-twitch"></i></a>
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
+                        title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
+                            class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    </div>
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" width="50" height="50">
+                    <path fill="#FFC107" d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+                </svg>
+            </div>
+
+            <h2 data-key="redirect_title">Attente de redirection</h2>
+            <p class="modal-desc" data-key="redirect_text">Vous êtes sur le point de quitter StealthyLabs vers :</p>
+
+            <div class="url-container">
+                <span id="targetUrl">https://...</span>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" data-key="btn_cancel">Annuler</button>
+                <button class="btn-continue" id="continueBtn" data-key="btn_continue">Continuer</button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../js/index.js?v=25dd4b39" defer></script>
+    <script src="../js/twitch-status.js?v=b30d24e2" defer></script>
+
+
+    <script src="../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../js/settings-handler.js?v=728a9c6d" defer></script>
+    <script src="../js/ux-enhancements.js?v=1" defer></script>
+</body>
+
+</html>

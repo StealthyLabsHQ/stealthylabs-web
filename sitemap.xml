@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- Homepage FR (redirects to /fr/network) -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/</loc>
+        <lastmod>2026-03-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://stealthylabs.eu/"/>
+    </url>
+    
+    <!-- Homepage EN (redirects to /en/network) -->
+    <url>
+        <loc>https://stealthylabs.eu/en/</loc>
+        <lastmod>2026-03-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://stealthylabs.eu/"/>
+    </url>
+    
+    <!-- About FR -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/about</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/about"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/about"/>
+    </url>
+    
+    <!-- About EN -->
+    <url>
+        <loc>https://stealthylabs.eu/en/about</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/about"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/about"/>
+    </url>
+    
+    <!-- Network FR (Main Page) -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/network</loc>
+        <lastmod>2026-03-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/network"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/network"/>
+    </url>
+    
+    <!-- Network EN (Main Page) -->
+    <url>
+        <loc>https://stealthylabs.eu/en/network</loc>
+        <lastmod>2026-03-13</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/network"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/network"/>
+    </url>
+    
+    <!-- Games FR -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/games/</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/games/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/games/"/>
+    </url>
+    
+    <!-- Games EN -->
+    <url>
+        <loc>https://stealthylabs.eu/en/games/</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/games/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/games/"/>
+    </url>
+    
+    <!-- Privacy FR -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/privacy</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/privacy"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/privacy"/>
+    </url>
+    
+    <!-- Privacy EN -->
+    <url>
+        <loc>https://stealthylabs.eu/en/privacy</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/privacy"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/privacy"/>
+    </url>
+    
+    <!-- Terms FR -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/terms-of-service</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/terms-of-service"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/terms-of-service"/>
+    </url>
+    
+    <!-- Terms EN -->
+    <url>
+        <loc>https://stealthylabs.eu/en/terms-of-service</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/terms-of-service"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/terms-of-service"/>
+    </url>
+    
+    <!-- Legal FR -->
+    <url>
+        <loc>https://stealthylabs.eu/fr/legal</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/legal"/>
+    </url>
+    
+    <!-- Legal EN -->
+    <url>
+        <loc>https://stealthylabs.eu/en/legal</loc>
+        <lastmod>2026-02-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/legal"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/legal"/>
+    </url>
+    
+</urlset>

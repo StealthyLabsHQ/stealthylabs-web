@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "cache-bust": "node cache-bust.js"
+  },
+  "dependencies": {
+    "music-metadata": "^11.10.6"
+  }
+}

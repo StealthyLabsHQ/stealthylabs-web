@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A propos de moi - StealthyLabs | Setup Gaming & Configuration PC</title>
+    <meta name="description"
+        content="Découvrez le setup gaming complet de StealthyLabs : souris Endgame Gear OP1 8K v2, clavier Luminkey Magger 68 HE, écran LG UltraGear OLED 240Hz et configuration PC AMD Ryzen 7 9800X3D / RTX 5070 Ti.">
+    <meta name="keywords"
+        content="setup gaming, configuration PC, StealthyLabs setup, souris gaming, clavier mécanique, écran gaming, PC gaming">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/fr/about">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/about">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/about">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://stealthylabs.eu/fr/about">
+    <meta property="og:title" content="A propos de moi - StealthyLabs | Setup Gaming & Configuration PC">
+    <meta property="og:description"
+        content="Découvrez le setup gaming complet de StealthyLabs : souris Endgame Gear OP1 8K v2, clavier Luminkey Magger 68 HE, écran LG UltraGear OLED 240Hz et configuration PC AMD Ryzen 7 9800X3D / RTX 5070 Ti.">
+    <meta property="og:image" content="https://stealthylabs.eu/logos/embed.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A propos de moi - StealthyLabs | Setup Gaming & Configuration PC">
+    <meta name="twitter:description"
+        content="Découvrez le setup gaming complet de StealthyLabs : souris Endgame Gear OP1 8K v2, clavier Luminkey Magger 68 HE, écran LG UltraGear OLED 240Hz.">
+    <meta name="twitter:image" content="https://stealthylabs.eu/logos/embed.png">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "StealthyLabs",
+      "url": "https://stealthylabs.eu",
+      "description": "Créateur de contenu FPS passionné",
+      "image": "https://stealthylabs.eu/logos/embed.png",
+      "knowsAbout": ["Gaming FPS", "Content Creation", "ARC Raiders", "Gaming Setup"],
+      "sameAs": [
+        "https://twitch.tv/stealthylabs",
+        "https://youtube.com/@stealthylabsofficial",
+        "https://tiktok.com/@stealthylabs",
+        "https://x.com/StealthyLabsHQ",
+        "https://github.com/StealthyLabsHQ",
+        "https://discord.stealthylabs.eu"
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="../css/style-main.css?v=3c0fda84">
+    <link rel="stylesheet" href="../css/glass-theme.css?v=d88703c4">
+    <link rel="stylesheet" href="../css/style-about.css?v=b013d2e2">
+    <link rel="icon" type="image/png" href="../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../">
+</head>
+
+<body>
+
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="./" class="nav-logo">
+                <img src="../logos/logo.png" alt="StealthyLabs">
+            </a>
+            <ul class="nav-links desktop-only">
+                <li><a href="about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="network" data-key="nav_network">Network</a></li>
+                <li><a href="projects" data-key="nav_projects">Projets</a></li>
+                <li><a href="games/" data-key="nav_games">Games</a></li>
+                <li><a href="contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)
+                            </option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" style="width: 100%; padding: 8px; background: rgba(255, 60, 60, 0.1); border: 1px solid rgba(255, 60, 60, 0.3); color: #ff4444; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="about" data-key="nav_about">A propos de moi</a>
+                <a href="network" data-key="nav_network">Network</a>
+                <a href="projects" data-key="nav_projects">Projets</a>
+                <a href="games/" data-key="nav_games">Games</a>
+                <a href="contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero" style="padding: 40px 0;">
+            <h1 class="hero-title" style="font-size: 3rem;">
+                <span data-key="about_title_1">À Propos de</span><br>
+                <span class="gradient-text" data-key="about_title_2">Moi</span>
+            </h1>
+        </section>
+
+        <section class="about-text">
+            <h3 style="color: white; margin-bottom: 15px;" data-key="about_who_title">Qui suis-je ?</h3>
+            <p data-key="about_who_text">
+                Salut ! Je suis StealthyLabs, un passionné de gaming FPS et de création de contenu numérique.
+                Mon objectif est de partager ma passion à travers des gameplays intenses, des tutoriels techniques et
+                des moments de détente.
+            </p>
+        </section>
+
+        <h2 class="setup-title" data-key="setup_title">Mon Setup</h2>
+
+        <div class="cards-grid">
+            <a href="https://www.endgamegear.com/en-us/gaming-mice/op1-8k-v2" class="setup-card" target="_blank"
+                rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/mouse.jpg" alt="Mouse" class="card-img">
+                    </div>
+                    <h3 data-key="setup_mouse">Souris</h3>
+                    <p>Endgame Gear OP1 8K v2</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://www.luminkey.com/products/magger68-ultra-he-magnetic-gaming-keyboard" class="setup-card"
+                target="_blank" rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/keyboard.jpg" alt="Keyboard" class="card-img zoom-mode">
+                    </div>
+                    <h3 data-key="setup_keyboard">Clavier</h3>
+                    <p>Luminkey Magger 68 HE</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://www.maxgaming.com/en/mousepads/mousepad-fx-zero-soft-xl-daidai-orange" class="setup-card"
+                target="_blank" rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/mousepad.jpg" alt="Mousepad" class="card-img zoom-mode">
+                    </div>
+                    <h3 data-key="setup_mousepad">Tapis</h3>
+                    <p>Artisan FX Zero XSoft XL</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://www.lg.com/fr/moniteurs/gaming/lg-27gs95qe-b/" class="setup-card" target="_blank"
+                rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/monitor.png" alt="Monitor" class="card-img">
+                    </div>
+                    <h3 data-key="setup_monitor">Écran</h3>
+                    <p>LG UltraGear OLED 240Hz</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://www.corsair.com/us/en/p/pc-cases/cc-9011306-ww/xeneon-edge-14-5-lcd-touchscreen-cc-9011306-ww"
+                class="setup-card" target="_blank" rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/monitor_sec.jpg" alt="Secondary Monitor" class="card-img zoom-mode">
+                    </div>
+                    <h3 data-key="setup_monitor_sec">Écran Secondaire</h3>
+                    <p>Corsair XENEON EDGE</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://amzn.eu/d/56XpCY6" class="setup-card" target="_blank" rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/earbuds.jpg" alt="Earbuds" class="card-img">
+                    </div>
+                    <h3 data-key="setup_earbuds">Écouteurs</h3>
+                    <p>Sony INZONE Buds</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+
+            <a href="https://amzn.eu/d/dJeaJDC" class="setup-card" target="_blank" rel="noopener noreferrer">
+                <div class="card">
+                    <div class="card-img-container">
+                        <img src="../logos/setup/mic.jpg" alt="Microphone" class="card-img">
+                    </div>
+                    <h3 data-key="setup_mic">Microphone</h3>
+                    <p>Audio Technica AT2020USB+</p>
+                    <span class="setup-price" data-key="btn_view">Voir le produit &rarr;</span>
+                </div>
+            </a>
+        </div>
+
+        <h2 class="setup-title" data-key="pc_specs_title">Configuration PC</h2>
+
+        <table class="pc-specs-table">
+            <tbody>
+                <tr>
+                    <td class="pc-label" data-key="cpu_label">Processeur</td>
+                    <td class="pc-value" data-key="cpu_value">AMD Ryzen 7 9800X3D</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="ram_label">RAM</td>
+                    <td class="pc-value" data-key="ram_value">Lexar ARES RGB 32GB White (2x16) DDR5 6400 CL32</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="cooling_label">Watercooling</td>
+                    <td class="pc-value" data-key="cooling_value">Corsair iCUE Link Titan 360 RX</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="mobo_label">Carte Mère</td>
+                    <td class="pc-value" data-key="mobo_value">GIGABYTE AORUS B650E STEALTH ICE</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="gpu_label">Carte Graphique</td>
+                    <td class="pc-value" data-key="gpu_value">Gigabyte GeForce RTX 5070 Ti AERO 16GB GDDR7</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="ssd_label">Stockage</td>
+                    <td class="pc-value" data-key="ssd_value">
+                        2x WD SN7100 2TB<br>
+                        Samsung 970 EVO Plus 2TB<br>
+                        WD SA500 SATA 4TB
+                    </td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="case_label">Boitier</td>
+                    <td class="pc-value" data-key="case_value">Corsair 4000D Frame White</td>
+                </tr>
+                <tr>
+                    <td class="pc-label" data-key="psu_label">Alimentation</td>
+                    <td class="pc-value" data-key="psu_value">ASUS ROG Strix 1000W Platinum ATX 3.1</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>STEALTHYLABS</h4>
+                <p data-key="footer_tagline">Créateur de contenu & passionné de FPS. Partage de setups, gameplay et
+                    guides.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_legal_title">LÉGAL</h4>
+                <ul class="footer-links-list">
+                    <li><a href="terms-of-service" data-key="footer_tos">Conditions d'utilisation</a></li>
+                    <li><a href="privacy" data-key="footer_privacy">Politique de confidentialité</a></li>
+                    <li><a href="legal" data-key="footer_legal">Mentions légales</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_social">RÉSEAUX</h4>
+                <div class="footer-social-links">
+                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
+                        title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
+                        title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
+                            class="fab fa-twitch"></i></a>
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
+                        title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
+                            class="fab fa-x-twitter"></i></a>
+
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../js/settings-handler.js?v=728a9c6d" defer></script>
+    <script src="../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../js/main.js?v=ea16dd4c" defer></script>
+    <script src="../js/ux-enhancements.js?v=1" defer></script>
+</body>
+
+</html>

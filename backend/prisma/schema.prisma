@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User table - Stores user accounts with GDPR compliance
+model User {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email               String   @unique
+  passwordHash        String   @map("password_hash") @db.VarChar(255)
+  displayName         String?  @map("display_name") @db.VarChar(50)
+  isEmailVerified     Boolean  @default(false) @map("is_email_verified")
+  gdprConsentAt       DateTime @map("gdpr_consent_at") @db.Timestamptz
+  gdprConsentVersion  String   @map("gdpr_consent_version") @db.VarChar(20)
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt           DateTime? @map("deleted_at") @db.Timestamptz
+
+  // Relations
+  favorites           UserFavorite[]
+  authSessions        AuthSession[]
+  emailVerificationTokens EmailVerificationToken[]
+
+  @@map("users")
+  @@index([deletedAt])
+}
+
+// Items table - Game items (weapons, blueprints, etc.)
+model Item {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug        String    @unique @db.VarChar(140)
+  name        String    @db.VarChar(120)
+  itemType    String    @map("item_type") @db.VarChar(20)
+  gameTitle   String    @map("game_title") @db.VarChar(80)
+  description String?   @db.Text
+  metadata    Json      @default("{}")
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  favorites   UserFavorite[]
+
+  @@map("items")
+  @@index([itemType, gameTitle], map: "idx_items_type_game")
+  @@index([isActive])
+}
+
+// User favorites table - Many-to-many relationship between users and items
+model UserFavorite {
+  userId    String   @map("user_id") @db.Uuid
+  itemId    String   @map("item_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@id([userId, itemId])
+  @@map("user_favorites")
+  @@index([userId, createdAt(sort: Desc)], map: "idx_favorites_user_created")
+  @@index([itemId], map: "idx_favorites_item")
+}
+
+// Auth sessions table - Stores refresh tokens and session metadata
+model AuthSession {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String   @map("user_id") @db.Uuid
+  refreshTokenHash String   @unique @map("refresh_token_hash") @db.Char(64)
+  userAgent        String?  @map("user_agent") @db.VarChar(255)
+  ipAddress        String?  @map("ip_address") @db.VarChar(45)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz
+  lastUsedAt       DateTime? @map("last_used_at") @db.Timestamptz
+  expiresAt        DateTime @map("expires_at") @db.Timestamptz
+  revokedAt        DateTime? @map("revoked_at") @db.Timestamptz
+
+  // Relations
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("auth_sessions")
+  @@index([userId], map: "idx_sessions_user")
+  @@index([expiresAt], map: "idx_sessions_expires")
+}
+
+// Email verification tokens table - Tokens for email verification
+model EmailVerificationToken {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  tokenHash String   @unique @map("token_hash") @db.Char(64)
+  expiresAt DateTime @map("expires_at") @db.Timestamptz
+  usedAt    DateTime? @map("used_at") @db.Timestamptz
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verification_tokens")
+}

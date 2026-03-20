@@ -1,0 +1,286 @@
+/* =========================================================================
+   PROJECTS PAGE STYLES
+   ========================================================================= */
+
+.projects-intro {
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+    text-align: left;
+    line-height: 1.6;
+    color: #aaa;
+    font-size: 1.1rem;
+    background: #000000;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------
+   PROJECT CARDS
+   ----------------------------------------------------------------- */
+
+.project-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-card .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.project-card .card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.project-icon {
+    font-size: 2rem;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.project-header h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+}
+
+.project-description {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.project-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #888;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-language {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.lang-dot.python {
+    background: #3572A5;
+}
+
+.lang-dot.javascript {
+    background: #f1e05a;
+}
+
+.project-link {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* -----------------------------------------------------------------
+   RELEASES
+   ----------------------------------------------------------------- */
+
+.releases-section {
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+.release-card {
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.release-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.release-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.release-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.release-title h4 {
+    font-size: 1.15rem;
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+}
+
+.release-version {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.release-date {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.release-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+
+.release-features li {
+    color: #aaa;
+    font-size: 0.9rem;
+    padding: 4px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.release-features li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #555;
+}
+
+.release-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.release-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.release-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.release-btn i {
+    font-size: 0.9rem;
+}
+
+/* -----------------------------------------------------------------
+   RESPONSIVE
+   ----------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .project-header {
+        gap: 12px;
+    }
+
+    .project-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .project-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .release-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .release-card {
+        padding: 20px;
+    }
+
+    .projects-intro {
+        padding: 20px;
+    }
+}

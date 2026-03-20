@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="privacy_page_title">Privacy - StealthyLabs</title>
+
+    <link rel="stylesheet" href="../css/style-main.css?v=3c0fda84">
+    <link rel="stylesheet" href="../css/glass-theme.css?v=d88703c4">
+    <link rel="stylesheet" href="../css/style-legal.css?v=0e315322">
+    <link rel="icon" type="image/png" href="../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="./" class="nav-logo">
+                <img src="../logos/logo.png" alt="StealthyLabs">
+            </a>
+            <ul class="nav-links desktop-only">
+                <li><a href="about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="network" data-key="nav_network">Network</a></li>
+                <li><a href="projects" data-key="nav_projects">Projets</a></li>
+                <li><a href="games/" data-key="nav_games">Games</a></li>
+                <li><a href="contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)
+                            </option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" style="width: 100%; padding: 8px; background: rgba(255, 60, 60, 0.1); border: 1px solid rgba(255, 60, 60, 0.3); color: #ff4444; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="about" data-key="nav_about">A propos de moi</a>
+                <a href="network" data-key="nav_network">Network</a>
+                <a href="projects" data-key="nav_projects">Projets</a>
+                <a href="games/" data-key="nav_games">Games</a>
+                <a href="contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero" style="padding: 40px 0 20px 0;">
+            <h1 class="hero-title" style="font-size: 3rem;">
+                <span class="gradient-text" data-key="privacy_hero">Politique de Confidentialité</span>
+            </h1>
+        </section>
+
+        <div class="legal-content">
+
+            <div class="legal-section">
+                <h2 data-key="privacy_intro_title">1. Introduction</h2>
+                <p data-key="privacy_intro_text">
+                    Chez <strong>StealthyLabs</strong>, nous prenons votre vie privée au sérieux. Cette politique de
+                    confidentialité explique comment nous gérons vos informations lorsque vous utilisez notre site web.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="privacy_data_title">2. Collecte de Données</h2>
+                <p data-key="privacy_data_text">
+                    <strong>Nous ne collectons aucune donnée personnelle.</strong><br><br>
+                    Notre site fonctionne selon une politique stricte de non-journalisation :
+                </p>
+                <ul data-key="privacy_data_list">
+                    <li>Aucune information personnelle (nom, adresse, numéro de téléphone) n'est collectée</li>
+                    <li>Aucune adresse IP n'est stockée dans nos bases de données</li>
+                    <li>Aucun traceur publicitaire (Pixel Facebook, Google Analytics, etc.) n'est utilisé</li>
+                    <li>Aucun cookie qui suit votre comportement sur le web</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="privacy_local_title">3. Cookies</h2>
+                <p data-key="privacy_local_text">
+                    Nous utilisons des cookies <strong>uniquement</strong> pour
+                    sauvegarder vos préférences d'affichage :
+                </p>
+                <ul data-key="privacy_local_list">
+                    <li>Votre langue sélectionnée (Français/Anglais)</li>
+                    <li>Votre préférence de police</li>
+                </ul>
+                <p data-key="privacy_local_note">
+                    Ces cookies sont strictement fonctionnels et ne sont jamais utilisés à des fins de suivi ou transmis à
+                    des tiers.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="privacy_third_title">4. Services Tiers</h2>
+                <p data-key="privacy_third_text">
+                    Notre site peut intégrer du contenu provenant de services tiers (vidéos YouTube, widgets Discord,
+                    etc.). Ces services ont leurs propres politiques de confidentialité, et nous n'avons aucun contrôle
+                    sur les données qu'ils peuvent collecter.
+                </p>
+            </div>
+
+            <div class="legal-section">
+                <h2 data-key="privacy_contact_title">5. Contact</h2>
+                <p data-key="privacy_contact_text">
+                    Pour toute question relative à la confidentialité, veuillez nous contacter à :<br>
+                    <a href="mailto:contact@stealthylabs.eu">contact@stealthylabs.eu</a>
+                </p>
+            </div>
+
+            <p style="text-align: right; color: #555; font-style: italic; font-size: 0.8rem; margin-top: 40px;">
+                <span data-key="legal_last_update">Dernière mise à jour :</span>
+                <span data-key="privacy_date">19/03/2026</span>
+            </p>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>STEALTHYLABS</h4>
+                <p data-key="footer_tagline">Créateur de contenu & passionné de FPS. Partage de setups, gameplay et
+                    guides.</p>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_legal_title">LÉGAL</h4>
+                <ul class="footer-links-list">
+                    <li><a href="terms-of-service" data-key="footer_tos">Conditions d'utilisation</a></li>
+                    <li><a href="privacy" data-key="footer_privacy">Politique de confidentialité</a></li>
+                    <li><a href="legal" data-key="footer_legal">Mentions légales</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 data-key="footer_social">RÉSEAUX</h4>
+                <div class="footer-social-links">
+                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
+                        title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
+                        title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
+                            class="fab fa-twitch"></i></a>
+                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
+                        title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
+                        title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
+                            class="fab fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../js/index.js?v=25dd4b39" defer></script>
+    <script src="../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../js/settings-handler.js?v=728a9c6d" defer></script>
+    <script src="../js/ux-enhancements.js?v=1" defer></script>
+</body>
+
+</html>
