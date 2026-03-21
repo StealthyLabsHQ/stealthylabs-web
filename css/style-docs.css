@@ -233,6 +233,11 @@
     border-bottom: none;
 }
 
+.docs-steps li > div {
+    flex: 1;
+    min-width: 0;
+}
+
 .docs-steps li::before {
     content: counter(step-counter);
     display: flex;
