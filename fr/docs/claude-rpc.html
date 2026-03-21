@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Rich Presence - Documentation | StealthyLabs</title>
+    <meta name="description" content="Documentation de Claude RPC — Discord Rich Presence pour Claude Code et Claude Desktop. Installation, configuration et fonctionnalités.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/fr/docs/claude-rpc">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/claude-rpc">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/claude-rpc">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=1.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                            <option value="system">Système</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">A propos de moi</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Claude</span><br>
+                <span class="gradient-text">Rich Presence</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Retour aux docs
+        </a>
+
+        <!-- Overview -->
+        <div class="docs-section">
+            <h2>Vue d'ensemble</h2>
+            <p>
+                <strong>Claude RPC</strong> est un client Discord Rich Presence qui affiche votre activité Claude en temps réel
+                directement sur votre profil Discord. Il détecte automatiquement Claude Code et Claude Desktop, suit le modèle
+                actif, le mode et la durée de session.
+            </p>
+            <p>
+                Zéro configuration requise — aucun Application ID Discord n'est nécessaire.
+            </p>
+        </div>
+
+        <!-- Features -->
+        <div class="docs-section">
+            <h2>Fonctionnalités</h2>
+            <ul>
+                <li><strong>Détection automatique du client</strong> — Claude Code ou Claude Desktop</li>
+                <li><strong>Mode Claude Desktop</strong> — détecte l'onglet actif (Chat, Cowork, Code)</li>
+                <li><strong>Suivi du modèle en direct</strong> — Opus 4.6, Sonnet 4.6, Haiku 4.5, etc.</li>
+                <li><strong>Extended Thinking</strong> — affiche quand le mode étendu est actif</li>
+                <li><strong>Détection du contexte 1M</strong> — affiche (1M) pour les modèles compatibles</li>
+                <li><strong>Durée de session</strong> — liée à votre session réelle</li>
+                <li><strong>Timeout d'inactivité</strong> — affiche "Absent" après 15 minutes d'inactivité</li>
+                <li><strong>Barre système</strong> — démarrage automatique au boot (Windows)</li>
+                <li><strong>Zéro configuration</strong> — aucun Application ID Discord requis</li>
+                <li><strong>Sécurité renforcée</strong> — audit de sécurité réussi, toutes les failles corrigées</li>
+            </ul>
+        </div>
+
+        <!-- Installation -->
+        <div class="docs-section">
+            <h2>Installation</h2>
+
+            <h3>Option 1 — Exécutable standalone (recommandé)</h3>
+            <ol class="docs-steps">
+                <li>Téléchargez <code>claude-rpc-windows-x64.zip</code> depuis la <a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">dernière release</a></li>
+                <li>Extrayez le dossier</li>
+                <li>Double-cliquez sur <strong><code>claude-rpc.exe</code></strong></li>
+            </ol>
+            <div class="docs-note">
+                <strong>Note :</strong> Aucune installation requise — Node.js est inclus dans l'exécutable.
+            </div>
+
+            <h3>Option 2 — Depuis les sources</h3>
+            <p>Requiert <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
+            <pre><code>git clone https://github.com/StealthyLabsHQ/claude-rpc.git
+cd claude-rpc
+npm install</code></pre>
+            <p><strong>Windows :</strong> Double-cliquez sur <code>start-claude.bat</code></p>
+            <p><strong>macOS / Linux :</strong></p>
+            <pre><code>chmod +x start-claude.sh
+./start-claude.sh</code></pre>
+            <p>Ou directement :</p>
+            <pre><code>node --no-deprecation index.js</code></pre>
+        </div>
+
+        <!-- Auto-detection -->
+        <div class="docs-section">
+            <h2>Détection automatique</h2>
+            <div class="docs-table-wrap">
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Élément détecté</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Client</td>
+                            <td>Détection de processus (chemin <code>claude.exe</code>)</td>
+                        </tr>
+                        <tr>
+                            <td>Mode Desktop</td>
+                            <td>Windows UI Automation (Chat / Cowork / Code)</td>
+                        </tr>
+                        <tr>
+                            <td>Modèle Desktop</td>
+                            <td>Windows UI Automation (bouton sélecteur de modèle)</td>
+                        </tr>
+                        <tr>
+                            <td>Modèle Code</td>
+                            <td><code>~/.claude/settings.json</code> ou session JSONL</td>
+                        </tr>
+                        <tr>
+                            <td>Provider</td>
+                            <td>Variables d'environnement, patterns de clé API, identifiants OAuth</td>
+                        </tr>
+                        <tr>
+                            <td>Durée de session</td>
+                            <td>Premier timestamp dans le JSONL de session active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Platform Support -->
+        <div class="docs-section">
+            <h2>Compatibilité</h2>
+            <div class="docs-table-wrap">
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Fonctionnalité</th>
+                            <th>Windows</th>
+                            <th>macOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Détection Claude Code</td>
+                            <td><span class="check">Complet</span></td>
+                            <td><span class="check">Complet</span></td>
+                        </tr>
+                        <tr>
+                            <td>Détection Claude Desktop</td>
+                            <td><span class="check">Complet (UI Automation)</span></td>
+                            <td><span class="cross">Basique (AppleScript)</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mode Desktop (Chat/Cowork/Code)</td>
+                            <td><span class="check">Complet</span></td>
+                            <td><span class="cross">Requiert accessibilité</span></td>
+                        </tr>
+                        <tr>
+                            <td>Détection du modèle Desktop</td>
+                            <td><span class="check">Complet</span></td>
+                            <td><span class="cross">Via JSONL uniquement</span></td>
+                        </tr>
+                        <tr>
+                            <td>Barre système</td>
+                            <td><span class="check">Complet (démarrage auto)</span></td>
+                            <td><span class="cross">Mode terminal</span></td>
+                        </tr>
+                        <tr>
+                            <td>Exécutable standalone</td>
+                            <td><span class="check">Oui (.exe + Node.js intégré)</span></td>
+                            <td><span class="cross">Depuis les sources</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Requirements -->
+        <div class="docs-section">
+            <h2>Prérequis</h2>
+            <ul>
+                <li><strong>OS :</strong> Windows 10/11 ou macOS 12+</li>
+                <li><strong>Discord</strong> client de bureau en cours d'exécution</li>
+                <li><strong>Claude Code</strong> ou <strong>Claude Desktop</strong></li>
+                <li>Node.js 18+ (uniquement pour l'installation depuis les sources)</li>
+            </ul>
+        </div>
+
+        <!-- Links -->
+        <div class="docs-section">
+            <h2>Liens</h2>
+            <ul>
+                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Code source sur GitHub</a></li>
+                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Dernière release</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits r&eacute;serv&eacute;s.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Confidentialit&eacute;</a>
+                <a href="../terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="../legal" data-key="footer_legal">Mentions l&eacute;gales</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=983f5b64" defer></script>
+    <script src="../../js/ux-enhancements.js?v=16c257c7" defer></script>
+</body>
+
+</html>

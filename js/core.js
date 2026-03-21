@@ -299,6 +299,8 @@ function highlightActiveNav() {
             isActive = true;
         } else if (hrefClean === 'games' && path.includes('/games')) {
             isActive = true;
+        } else if ((hrefClean === 'docs' || hrefClean === '.') && path.includes('/docs')) {
+            isActive = true;
         }
 
         if (isActive) {
