@@ -1,7 +1,8 @@
 // core.js — Shared logic for all StealthyLabs pages
 
 let currentLang = 'en';
-const VALID_THEMES = ['dark', 'light'];
+const VALID_THEMES = ['dark', 'light', 'system'];
+let _systemThemeListener = null;
 
 // --- Security Utilities ---
 
@@ -93,9 +94,25 @@ function loadSavedFont() {
 
 // --- Theme ---
 
+function _applySystemTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+}
+
 function changeTheme(theme) {
     if (!VALID_THEMES.includes(theme)) return;
-    document.documentElement.setAttribute('data-theme', theme);
+    // Remove previous system listener if any
+    if (_systemThemeListener) {
+        window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', _systemThemeListener);
+        _systemThemeListener = null;
+    }
+    if (theme === 'system') {
+        _applySystemTheme();
+        _systemThemeListener = _applySystemTheme;
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', _systemThemeListener);
+    } else {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
     setCookie('userTheme', theme);
 }
 

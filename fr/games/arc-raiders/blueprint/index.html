@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARC Raiders Blueprints</title>
 
-    <link rel="stylesheet" href="../../../../css/style-main.css?v=116b5e21">
-    <link rel="stylesheet" href="../../../../css/glass-theme.css?v=28a1ae0a">
-    <link rel="stylesheet" href="../../../../css/theme-light.css?v=b267b11d">
-    <link rel="stylesheet" href="../../../../css/style-maps.css?v=221fb59d">
-    <link rel="stylesheet" href="../../../../css/style-bestiary.css?v=aa0c114f">
+    <link rel="stylesheet" href="../../../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../../../css/style-maps.css?v=3425939b">
+    <link rel="stylesheet" href="../../../../css/style-bestiary.css?v=4947168f">
     <link rel="icon" type="image/png" href="../../../../logos/favicon.png">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Dancing+Script&family=Inter:wght@400;700&family=Montserrat&family=Open+Sans&family=Oswald&family=Playfair+Display&family=Poppins&family=Raleway:wght@400;700&family=Roboto&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet" media="print" data-lazy-css>
     <meta name="site-root" content="https://stealthylabs.eu/">
 </head>
@@ -41,9 +41,7 @@
 
     <nav class="main-navbar">
         <div class="nav-left">
-            <a href="https://stealthylabs.eu/fr/" class="nav-logo">
-                <img src="../../../../logos/logo.png" alt="StealthyLabs">
-            </a>
+            <a href="https://stealthylabs.eu/fr/" class="nav-logo nav-wordmark">STEALTHYLABS</a>
             <ul class="nav-links desktop-only">
                 <li><a href="https://stealthylabs.eu/fr/about" data-key="nav_about">A propos de moi</a></li>
                 <li><a href="https://stealthylabs.eu/fr/network" data-key="nav_network">Network</a></li>
@@ -76,7 +74,7 @@
                         <div class="settings-label" data-key="settings_theme">Thème</div>
                         <select id="themeSelector" class="font-select">
                             <option value="dark" selected>Sombre</option>
-                            <option value="light">Clair</option>
+                            <option value="light">Clair</option>n                                                       <option value="system">Système</option>
                         </select>
                     </div>
                     <div class="settings-group">
@@ -84,6 +82,7 @@
                         <select id="fontSelector">
                             <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)
                             </option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
                             <option value="'Raleway', sans-serif">Raleway</option>
                             <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
                         </select>
@@ -165,47 +164,13 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>STEALTHYLABS</h4>
-                <p data-key="footer_tagline">Créateur de contenu & passionné de FPS. Partage de setups, gameplay et
-                    guides.</p>
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits r&eacute;serv&eacute;s.</p>
+            <div class="footer-links">
+                <a href="privacy" data-key="footer_privacy">Confidentialit&eacute;</a>
+                <a href="terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="legal" data-key="footer_legal">Mentions l&eacute;gales</a>
             </div>
-            <div class="footer-column">
-                <h4 data-key="footer_legal_title">LÉGAL</h4>
-                <ul class="footer-links-list">
-                    <li><a href="https://stealthylabs.eu/fr/terms-of-service" data-key="footer_tos">Conditions
-                            d'utilisation</a></li>
-                    <li><a href="https://stealthylabs.eu/fr/privacy" data-key="footer_privacy">Politique de
-                            confidentialité</a></li>
-                    <li><a href="https://stealthylabs.eu/fr/legal" data-key="footer_legal">Mentions légales</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4 data-key="footer_social">RÉSEAUX</h4>
-                <div class="footer-social-links">
-                    <a href="https://github.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer"
-                        title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://discord.stealthylabs.eu" target="_blank" rel="noopener noreferrer"
-                        title="Discord"><i class="fab fa-discord"></i></a>
-                    <a href="https://twitch.tv/stealthylabs" target="_blank" rel="noopener noreferrer" title="Twitch"><i
-                            class="fab fa-twitch"></i></a>
-                    <a href="https://youtube.com/@stealthylabsofficial" target="_blank" rel="noopener noreferrer"
-                        title="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="https://tiktok.com/@stealthylabs" target="_blank" rel="noopener noreferrer"
-                        title="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://x.com/StealthyLabsHQ" target="_blank" rel="noopener noreferrer" title="X"><i
-                            class="fab fa-x-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p data-key="footer_text">© 2026 StealthyLabs. Tous droits réservés.</p>
-            <p class="copyright-disclaimer" data-key="arc_disclaimer"
-                style="font-size: 0.8em; opacity: 0.6; margin-top: 5px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                ARC Raiders® est une marque déposée d'Embark Studios AB. Ceci est un site de fan non officiel.
-            </p>
         </div>
     </footer>
 
@@ -282,7 +247,7 @@
 
     <script src="../../../../js/lightbox.js?v=50917cf0"></script>
 
-    <script src="../../../../js/cookie-utils.js?v=637d788b" defer></script>
+    <script src="../../../../js/cookie-utils.js?v=9ba4dd72" defer></script>
     <script src="../../../../js/core.js?v=983f5b64" defer></script>
     <script src="../../../../js/games.js?v=269ed94e" defer></script>
     <script src="../../../../js/twitch-status.js?v=b30d24e2" defer></script>

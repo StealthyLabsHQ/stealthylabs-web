@@ -3,6 +3,7 @@
 
 const ALLOWED_FONTS = [
     "'Inter', sans-serif",
+    "'Space Grotesk', 'Inter', sans-serif",
     "'Raleway', sans-serif",
     "'JetBrains Mono', monospace"
 ];

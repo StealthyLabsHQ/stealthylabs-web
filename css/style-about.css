@@ -2,22 +2,23 @@
             max-width: 800px;
             margin: 0 auto 60px auto;
             text-align: left;
-            line-height: 1.6;
-            color: #aaa;
-            font-size: 1.1rem;
-            background: #000000;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            background: var(--card-bg);
             padding: 30px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
         }
 
         .setup-title {
-            text-align: center;
-            font-size: 2rem;
+            text-align: left;
+            font-size: 1.25rem;
             margin-bottom: 30px;
-            color: white;
-            font-weight: 800;
+            color: var(--text-primary);
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .setup-card {
@@ -32,13 +33,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s;
         }
 
         .setup-card .card:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-hover);
+            transform: none;
+            background: var(--card-bg);
         }
 
         .card-img-container {
@@ -48,10 +49,10 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            background: #111;
-            border-radius: 8px;
+            background: var(--surface);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
         }
 
         .card-img {
@@ -69,30 +70,32 @@
         }
 
         .setup-card:hover .card-img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .setup-price {
-            color: #888;
-            font-weight: bold;
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.8rem;
             margin-top: auto;
             padding-top: 15px;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .card h3 {
-            font-size: 1.1rem;
-            color: #888;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.1em;
         }
 
         .card p {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-primary);
             margin-bottom: 10px;
         }
 
@@ -102,14 +105,18 @@
             max-width: 800px;
             margin: 0 auto 60px auto;
             border-collapse: collapse;
-            background: #000000;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border);
         }
 
         .pc-specs-table tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pc-specs-table tr:nth-child(even) {
+            background: var(--surface-low);
         }
 
         .pc-specs-table tr:last-child {
@@ -117,24 +124,24 @@
         }
 
         .pc-specs-table td {
-            padding: 15px 20px;
+            padding: 14px 20px;
             vertical-align: top;
         }
 
         .pc-specs-table .pc-label {
-            color: #888;
-            font-weight: 700;
+            color: var(--text-muted);
+            font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
             width: 150px;
             white-space: nowrap;
         }
 
         .pc-specs-table .pc-value {
-            color: #fff;
+            color: var(--text-primary);
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 600px) {
@@ -153,4 +160,3 @@
                 padding: 10px 0;
             }
         }
-

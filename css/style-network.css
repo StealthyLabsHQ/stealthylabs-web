@@ -1,39 +1,5 @@
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            :root {
-                --bg-primary: #000000;
-                --bg-card: #000000;
-                --bg-card-hover: #000000;
-                --border-color: rgba(255, 255, 255, 0.12);
-                --text-primary: #FFFFFF;
-                --text-secondary: #888888;
-                --text-muted: #666666;
-                --accent-green: #888888;
-                --accent-soundcloud: #888888;
-                --accent-spotify: #888888;
-                --main-font: 'Raleway', sans-serif;
-            }
-
             a {
                 text-decoration: none;
-            }
-
-            body {
-                font-family: var(--main-font);
-                background-color: var(--bg-primary);
-                color: var(--text-primary);
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding: 0;
-                line-height: 1.5;
-                position: relative;
             }
 
             .cursor {
@@ -94,13 +60,13 @@
             }
 
             .avatar {
-                width: 150px;
-                height: 150px;
-                border-radius: 16px;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
                 object-fit: cover;
                 margin-top: 40px;
                 margin-bottom: 16px;
-                border: 2px solid var(--border-color);
+                border: 1px solid var(--border);
             }
 
             .username {
@@ -167,9 +133,9 @@
             .discord-card,
             .creator-code,
             .music-player {
-                background: #000000;
+                background: var(--card-bg);
                 backdrop-filter: none;
-                border: 1px solid rgba(255, 255, 255, 0.12);
+                border: 1px solid var(--border);
                 box-shadow: none;
             }
 
@@ -179,10 +145,10 @@
                 align-items: center;
                 gap: 14px;
                 padding: 14px 18px;
-                border-radius: 12px;
+                border-radius: var(--radius-lg);
                 text-decoration: none;
                 color: var(--text-primary);
-                transition: all 0.3s ease;
+                transition: border-color 0.2s;
                 cursor: pointer;
             }
 
@@ -195,47 +161,47 @@
             a.discord-card:hover,
             .creator-code:hover,
             .music-player:hover {
-                background: var(--bg-primary);
-                border-color: #444;
-                transform: translateY(-2px);
+                background: var(--card-bg);
+                border-color: var(--border-hover);
+                transform: none;
                 box-shadow: none;
             }
 
             /* Specific Brand Glows using :has() */
             .link-card:has(.tiktok):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-card:has(.youtube):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-card:has(.twitch):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-card:has(.instagram):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-card:has(.twitter):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .discord-card:hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             div.discord-card:hover {
                 box-shadow: none;
                 /* No glow on main discord card frame if plain div */
-                border-color: #333;
+                border-color: var(--border);
             }
 
             /* Re-apply glow to join button or specific interactive parts if needed, 
@@ -250,18 +216,18 @@
             .music-player:hover {
                 box-shadow: none;
                 /* Spotify Green-ish */
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-card:has(.socials):hover {
                 box-shadow: none;
-                border-color: #333;
+                border-color: var(--border);
             }
 
             .link-icon {
                 width: 40px;
                 height: 40px;
-                border-radius: 10px;
+                border-radius: var(--radius-md);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -286,11 +252,11 @@
             }
 
             .link-icon.youtube {
-                background: #333;
+                background: var(--surface-highest);
             }
 
             .link-icon.twitch {
-                background: #333;
+                background: var(--surface-highest);
             }
 
             .link-icon.twitter {
@@ -299,7 +265,12 @@
             }
 
             .link-icon.instagram {
-                background: #333;
+                background: var(--surface-highest);
+            }
+
+            .link-icon.github {
+                background: var(--bg-primary);
+                border: 1px solid var(--border);
             }
 
             .link-icon.epic {
@@ -321,11 +292,11 @@
             }
 
             .link-icon.music-icon {
-                background: #333;
+                background: var(--surface-highest);
             }
 
             .link-icon.socials {
-                background: #333;
+                background: var(--surface-highest);
             }
 
             .link-content,
@@ -398,7 +369,7 @@
             .discord-avatar {
                 width: 44px;
                 height: 44px;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 overflow: hidden;
                 display: flex;
                 align-items: center;
@@ -412,7 +383,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
             }
 
             .discord-name {
@@ -428,7 +399,7 @@
                 width: 12px;
                 height: 12px;
                 border-radius: 50%;
-                border: 2px solid var(--bg-card);
+                border: 2px solid var(--card-bg);
                 background-color: #747f8d;
             }
 
@@ -460,8 +431,8 @@
             .join-btn {
                 padding: 8px 20px;
                 background: transparent;
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
                 color: var(--text-primary);
                 font-size: 0.85rem;
                 font-weight: 500;
@@ -481,13 +452,13 @@
                 align-items: center;
                 gap: 14px;
                 padding: 14px 18px;
-                border-radius: 12px;
+                border-radius: var(--radius-lg);
                 cursor: pointer;
                 transition: all 0.3s ease;
             }
 
             .creator-code:hover {
-                transform: translateY(-2px);
+                
             }
 
             .copy-btn {
@@ -510,13 +481,13 @@
 
             /* Music Player */
             .music-player {
-                border-radius: 12px;
+                border-radius: var(--radius-lg);
                 padding: 18px;
                 transition: all 0.3s ease;
             }
 
             .music-player:hover {
-                transform: translateY(-2px);
+                
             }
 
             .music-player.playing .bar {
@@ -592,8 +563,8 @@
             .player-artwork {
                 width: 56px;
                 height: 56px;
-                border-radius: 8px;
-                background: #111;
+                border-radius: var(--radius-lg);
+                background: var(--surface);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -654,7 +625,7 @@
             .progress-bar {
                 flex: 1;
                 height: 4px;
-                background: var(--border-color);
+                background: var(--border);
                 border-radius: 2px;
                 cursor: pointer;
                 position: relative;
@@ -695,7 +666,7 @@
 
             .control-btn:hover {
                 color: var(--text-primary);
-                background: var(--bg-card-hover);
+                background: var(--surface);
             }
 
             .control-btn svg {
@@ -741,7 +712,7 @@
                 height: 4px;
                 -webkit-appearance: none;
                 appearance: none;
-                background: var(--border-color);
+                background: var(--border);
                 border-radius: 2px;
                 cursor: pointer;
             }
@@ -756,7 +727,7 @@
             }
 
             .playlist {
-                border-top: 1px solid var(--border-color);
+                border-top: 1px solid var(--border);
                 padding-top: 14px;
                 max-height: 250px;
                 overflow-y: auto;
@@ -776,17 +747,17 @@
                 align-items: center;
                 gap: 12px;
                 padding: 8px;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 cursor: pointer;
                 transition: background 0.2s;
             }
 
             .playlist-item:hover {
-                background: var(--bg-card-hover);
+                background: var(--surface);
             }
 
             .playlist-item.active {
-                background: var(--bg-card-hover);
+                background: var(--surface);
             }
 
             .playlist-item.active .playlist-item-title {
@@ -840,11 +811,11 @@
             }
 
             .playlist::-webkit-scrollbar-track {
-                background: var(--bg-card);
+                background: var(--card-bg);
             }
 
             .playlist::-webkit-scrollbar-thumb {
-                background: var(--border-color);
+                background: var(--border);
                 border-radius: 3px;
             }
 
@@ -855,7 +826,7 @@
                 gap: 10px;
                 width: 100%;
                 padding: 10px;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 text-decoration: none;
                 font-size: 0.85rem;
                 font-weight: 600;
@@ -901,7 +872,7 @@
                 text-align: center;
                 margin-top: 40px;
                 padding-top: 20px;
-                border-top: 1px solid var(--border-color);
+                border-top: 1px solid var(--border);
                 color: var(--text-muted);
                 font-size: 0.8rem;
             }
@@ -914,7 +885,7 @@
                 background: var(--text-primary);
                 color: var(--bg-primary);
                 padding: 12px 24px;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 font-size: 0.85rem;
                 font-weight: 500;
                 opacity: 0;
@@ -960,7 +931,7 @@
                 background: rgba(255, 255, 255, 0.03);
                 /* Dark mode default */
                 border: 1px solid #333;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 padding: 10px;
                 /* Add padding for the box look */
                 margin-top: 12px;
@@ -986,7 +957,7 @@
             .rp-game-icon {
                 width: 100%;
                 height: 100%;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 object-fit: cover;
                 /* flex-shrink: 0; removed as it is in container now */
             }
@@ -997,7 +968,7 @@
                 z-index: 10000;
                 background: rgba(10, 10, 10, 0.95);
                 border: 1px solid #333;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
                 backdrop-filter: blur(10px);
                 width: 250px;
@@ -1042,7 +1013,7 @@
 
             .ctx-separator {
                 height: 1px;
-                background: #333;
+                background: var(--surface-highest);
                 margin: 5px 0;
             }
 
@@ -1248,7 +1219,7 @@
             }
 
             .redirect-box {
-                background: #000000;
+                background: var(--card-bg);
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 padding: 30px;
                 border-radius: 16px;
@@ -1304,7 +1275,7 @@
 
             .redirect-buttons button {
                 padding: 10px 24px;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 font-size: 0.95rem;
                 font-weight: 600;
                 cursor: pointer;
@@ -1341,7 +1312,7 @@
             .creator-code,
             .music-player {
                 border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                background: #000000;
+                background: var(--card-bg);
                 box-shadow: none !important;
                 transform: none !important;
                 transition: all 0.3s ease;
@@ -1581,7 +1552,7 @@
                 z-index: 10000;
                 background: rgba(10, 10, 10, 0.95);
                 border: 1px solid #333;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
                 backdrop-filter: blur(10px);
                 width: 250px;
@@ -1626,7 +1597,7 @@
 
             .ctx-separator {
                 height: 1px;
-                background: #333;
+                background: var(--surface-highest);
                 margin: 5px 0;
             }
 
@@ -1660,7 +1631,7 @@
             .rp-game-icon {
                 width: 100%;
                 height: 100%;
-                border-radius: 8px;
+                border-radius: var(--radius-lg);
                 object-fit: cover;
                 display: block;
                 border: none !important;
@@ -1737,7 +1708,7 @@
             /* ========== Multi-Column Footer for Network Page ========== */
             .site-footer {
                 background: var(--bg-primary);
-                border-top: 1px solid var(--border-color);
+                border-top: 1px solid var(--border);
                 padding: 60px 40px 20px;
                 margin-top: auto;
                 width: 100%;
@@ -1809,7 +1780,7 @@
             .footer-bottom {
                 text-align: center;
                 padding-top: 30px;
-                border-top: 1px solid var(--border-color);
+                border-top: 1px solid var(--border);
             }
 
             .footer-bottom p {
