@@ -575,7 +575,7 @@ function loadTrack(i) {
     document.querySelectorAll(".playlist-item").forEach((el, index) => {
         el.classList.toggle("active", index === i);
         const titleEl = el.querySelector('.playlist-item-title');
-        if (index === i) titleEl.style.color = '#1db954'; else titleEl.style.color = '#ffffff';
+        if (index === i) titleEl.style.color = '#1db954'; else titleEl.style.color = '';
     });
 
     if ('mediaSession' in navigator) {
