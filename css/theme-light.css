@@ -262,7 +262,10 @@
 [data-theme="light"] .player-track a { color: #1A1A1A !important; }
 [data-theme="light"] .player-artist { color: #666 !important; }
 [data-theme="light"] .visualizer .bar { background: #1A1A1A !important; }
+[data-theme="light"] .playlist-item:hover { background: rgba(0, 0, 0, 0.04) !important; }
 [data-theme="light"] .playlist-item.active { background: rgba(0, 0, 0, 0.06) !important; }
+[data-theme="light"] .playlist-item.active .playlist-item-title { color: #1db954 !important; }
+[data-theme="light"] .playlist-item.active .playlist-item-artist { color: #666 !important; }
 [data-theme="light"] .playlist-item-cover { background: #E0E0E0 !important; }
 [data-theme="light"] .control-btn {
     color: #555 !important;
