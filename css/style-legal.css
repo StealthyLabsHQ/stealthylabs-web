@@ -51,27 +51,3 @@
             text-decoration: underline;
         }
 
-/* =========================================================================
-   LIGHT THEME OVERRIDES
-   ========================================================================= */
-[data-theme="light"] .legal-content {
-    background: #FFFFFF !important;
-    border-color: rgba(0, 0, 0, 0.12) !important;
-}
-
-[data-theme="light"] .legal-section h2 {
-    color: #1A1A1A !important;
-}
-
-[data-theme="light"] .legal-section p,
-[data-theme="light"] .legal-section ul {
-    color: #555 !important;
-}
-
-[data-theme="light"] .legal-section strong {
-    color: #1A1A1A !important;
-}
-
-[data-theme="light"] .legal-section a {
-    color: #555 !important;
-}

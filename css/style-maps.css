@@ -61,20 +61,3 @@
     }
 }
 
-/* Light Mode Overrides */
-[data-theme="light"] .map-tab-btn {
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #666;
-}
-
-[data-theme="light"] .map-tab-btn:hover {
-    border-color: rgba(0, 0, 0, 0.4);
-    color: #1A1A1A;
-    background: rgba(0, 0, 0, 0.03);
-}
-
-[data-theme="light"] .map-tab-btn.active {
-    background: #1A1A1A;
-    color: #FFFFFF;
-    border-color: #1A1A1A;
-}

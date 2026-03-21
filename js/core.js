@@ -1,7 +1,18 @@
-
-// Shared Logic for StealthyLabs Website
+// core.js — Shared logic for all StealthyLabs pages
 
 let currentLang = 'en';
+const VALID_THEMES = ['dark', 'light'];
+
+// --- Security Utilities ---
+
+function escapeHTML(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 function sanitizeLanguage(lang) {
     return lang === 'fr' || lang === 'en' ? lang : null;
@@ -22,29 +33,11 @@ function sanitizeExternalUrl(url) {
     return '';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    detectLanguage();
-    loadSavedFont();
-    loadSavedTheme();
-    updateClock();
-    setupPageTransitions();
-    setupFooterWarnings();
-    setupBackToTop();
-    highlightActiveNav();
+// --- Language ---
 
-    // Clock interval
-    setInterval(updateClock, 1000);
-});
-
-/* --- Language Logic --- */
 function detectLanguage() {
     const path = window.location.pathname;
-    if (path.includes('/fr/')) {
-        currentLang = 'fr';
-    } else {
-        currentLang = 'en';
-    }
-
+    currentLang = path.includes('/fr/') ? 'fr' : 'en';
     const selector = document.getElementById('languageSelector');
     if (selector) selector.value = currentLang;
 }
@@ -56,7 +49,6 @@ function changeLanguage(lang) {
     currentLang = safeLang;
     setCookie('userLang', safeLang);
 
-    // Also set a cross-domain cookie for subdomains
     const domain = window.location.hostname.includes('stealthylabs.eu') ? '.stealthylabs.eu' : window.location.hostname;
     document.cookie = `userLang=${safeLang}; path=/; domain=${domain}; max-age=31536000; SameSite=Lax; Secure`;
 
@@ -82,7 +74,8 @@ function changeLanguage(lang) {
     }
 }
 
-/* --- Font Logic --- */
+// --- Font ---
+
 function changeFont(font) {
     if (!isAllowedFont(font)) return;
     document.documentElement.style.setProperty('--main-font', font);
@@ -98,7 +91,25 @@ function loadSavedFont() {
     }
 }
 
-/* --- Clock Logic --- */
+// --- Theme ---
+
+function changeTheme(theme) {
+    if (!VALID_THEMES.includes(theme)) return;
+    document.documentElement.setAttribute('data-theme', theme);
+    setCookie('userTheme', theme);
+}
+
+function loadSavedTheme() {
+    const saved = getCookie('userTheme');
+    if (saved && VALID_THEMES.includes(saved)) {
+        changeTheme(saved);
+        const sel = document.getElementById('themeSelector');
+        if (sel) sel.value = saved;
+    }
+}
+
+// --- Clock ---
+
 function updateClock() {
     const clockEl = document.getElementById('clockDisplay');
     if (!clockEl) return;
@@ -109,7 +120,8 @@ function updateClock() {
     clockEl.innerText = timeStr;
 }
 
-/* --- UI Logic --- */
+// --- UI ---
+
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     if (menu) menu.classList.toggle('active');
@@ -121,32 +133,30 @@ function toggleSettings(event) {
     if (panel) panel.classList.toggle('show');
 }
 
-/* --- External Link Warning --- */
-let modal = null;
-let targetUrlSpan = null;
-let continueBtn = null;
-let pendingUrl = '';
+// --- External Link Warning Modal ---
+
+let _modal = null;
+let _targetUrlSpan = null;
+let _continueBtn = null;
+let _pendingUrl = '';
 
 function openWarningModal(e, url) {
-    if (!modal || !targetUrlSpan) return;
+    if (!_modal || !_targetUrlSpan) return;
     const safeUrl = sanitizeExternalUrl(url);
     if (!safeUrl) return;
     e.preventDefault();
-    pendingUrl = safeUrl;
-    targetUrlSpan.textContent = safeUrl;
-    modal.classList.add('active');
+    _pendingUrl = safeUrl;
+    _targetUrlSpan.textContent = safeUrl;
+    _modal.classList.add('active');
 }
 
 function closeWarningModal() {
-    if (!modal) return;
-    modal.classList.remove('active');
-    pendingUrl = '';
+    if (!_modal) return;
+    _modal.classList.remove('active');
+    _pendingUrl = '';
 }
 
-function setupFooterWarnings() {
-    const footerLinks = document.querySelectorAll('.footer-social-links a[target="_blank"]');
-    if (!footerLinks.length) return;
-
+function setupExternalLinkWarnings() {
     const isFr = window.location.pathname.includes('/fr/');
     const div = document.createElement('div');
     div.id = 'warningModal';
@@ -159,7 +169,7 @@ function setupFooterWarnings() {
                 </svg>
             </div>
             <h2>${isFr ? 'Redirection en attente' : 'Redirection pending'}</h2>
-            <p class="modal-desc">${isFr ? 'Vous êtes sur le point de quitter StealthyLabs pour :' : 'You are about to leave StealthyLabs for:'}</p>
+            <p class="modal-desc">${isFr ? 'Vous \u00eates sur le point de quitter StealthyLabs pour :' : 'You are about to leave StealthyLabs for:'}</p>
             <div class="url-container">
                 <span id="targetUrl">https://...</span>
             </div>
@@ -169,13 +179,13 @@ function setupFooterWarnings() {
             </div>
         </div>`;
     document.body.appendChild(div);
-    modal = div;
-    targetUrlSpan = div.querySelector('#targetUrl');
-    continueBtn = div.querySelector('#continueBtn');
+    _modal = div;
+    _targetUrlSpan = div.querySelector('#targetUrl');
+    _continueBtn = div.querySelector('#continueBtn');
 
-    continueBtn.addEventListener('click', () => {
-        if (pendingUrl) {
-            const urlToGo = pendingUrl;
+    _continueBtn.addEventListener('click', () => {
+        if (_pendingUrl) {
+            const urlToGo = _pendingUrl;
             closeWarningModal();
             setTimeout(() => {
                 window.open(urlToGo, '_blank', 'noopener,noreferrer');
@@ -187,13 +197,8 @@ function setupFooterWarnings() {
         if (e.target === div) closeWarningModal();
     });
 
-    footerLinks.forEach(link => {
-        link.addEventListener('click', (e) => openWarningModal(e, link.href));
-    });
-
-    // Also intercept all other external target="_blank" links (project cards, release links, etc.)
+    // Intercept all external target="_blank" links
     document.querySelectorAll('a[target="_blank"]').forEach(link => {
-        if (link.closest('.footer-social-links')) return; // already handled
         try {
             const linkOrigin = new URL(link.href, window.location.origin).origin;
             if (linkOrigin !== window.location.origin) {
@@ -203,15 +208,14 @@ function setupFooterWarnings() {
     });
 }
 
-/* --- Page Transitions --- */
+// --- Page Transitions ---
+
 function setupPageTransitions() {
-    // Handle bfcache restore
     window.addEventListener('pageshow', () => {
         document.body.classList.remove('page-exiting');
-        if (modal) modal.classList.remove('active');
+        if (_modal) _modal.classList.remove('active');
     });
 
-    // Exit animation on internal link click
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (!link) return;
@@ -237,25 +241,8 @@ function setupPageTransitions() {
     });
 }
 
-/* --- Theme Logic --- */
-const VALID_THEMES = ['dark', 'light'];
+// --- Back to Top ---
 
-function changeTheme(theme) {
-    if (!VALID_THEMES.includes(theme)) return;
-    document.documentElement.setAttribute('data-theme', theme);
-    setCookie('userTheme', theme);
-}
-
-function loadSavedTheme() {
-    const saved = getCookie('userTheme');
-    if (saved && VALID_THEMES.includes(saved)) {
-        changeTheme(saved);
-        const sel = document.getElementById('themeSelector');
-        if (sel) sel.value = saved;
-    }
-}
-
-/* --- Back to Top Button --- */
 function setupBackToTop() {
     const btn = document.createElement('button');
     btn.className = 'back-to-top';
@@ -277,15 +264,13 @@ function setupBackToTop() {
     });
 }
 
-/* --- Active Nav Link --- */
+// --- Active Nav Highlight ---
+
 function highlightActiveNav() {
     const path = window.location.pathname;
     const segments = path.split('/').filter(Boolean);
-    // Get the page segment (last meaningful part)
     let page = segments[segments.length - 1] || '';
-    // Remove .html extension if present
     page = page.replace('.html', '');
-    // Handle index pages
     if (page === '' || page === 'index') page = '';
 
     document.querySelectorAll('.nav-links a, .mobile-links a').forEach(link => {
@@ -305,9 +290,26 @@ function highlightActiveNav() {
     });
 }
 
-// Expose functions globally
+// --- Initialization ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    detectLanguage();
+    loadSavedFont();
+    loadSavedTheme();
+    updateClock();
+    setupPageTransitions();
+    setupExternalLinkWarnings();
+    setupBackToTop();
+    highlightActiveNav();
+
+    setInterval(updateClock, 1000);
+});
+
+// --- Expose globally for settings-handler.js and inline handlers ---
 window.changeLanguage = changeLanguage;
 window.changeFont = changeFont;
 window.changeTheme = changeTheme;
 window.toggleSettings = toggleSettings;
 window.toggleMobileMenu = toggleMobileMenu;
+window.openWarningModal = openWarningModal;
+window.closeWarningModal = closeWarningModal;
