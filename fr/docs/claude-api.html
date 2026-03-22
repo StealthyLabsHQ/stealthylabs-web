@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construire avec l'API Claude – Guide Complet | StealthyLabs</title>
+    <meta name="description" content="Guide complet pour builder avec l'API Claude : authentification, Messages API, streaming, tool use, vision, prompt engineering et bonnes pratiques de A à Z.">
+
+    <link rel="canonical" href="https://stealthylabs.eu/fr/docs/claude-api">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/claude-api">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/claude-api">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=1.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="time-badge"><span id="clockDisplay">--:--</span></div>
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres"><i class="fas fa-cog"></i></button>
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                            <option value="system">Système</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+            <button class="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">A propos de moi</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Builder avec</span><br>
+                <span class="gradient-text">l'API Claude</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back"><i class="fas fa-arrow-left"></i> Retour aux docs</a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <!-- 1. Vue d'ensemble -->
+                <div class="docs-section" id="vue-ensemble">
+                    <h2><span class="docs-section-num">1</span> Vue d'ensemble</h2>
+                    <p>
+                        L'<strong>API Claude</strong> est une API HTTP RESTful accessible à <code>https://api.anthropic.com</code> qui donne un accès programmatique aux modèles Claude. Tu envoies des messages, Claude répond. C'est le principe de base. Tout le reste – streaming, tool use, vision, caching – s'appuie sur cette primitive.
+                    </p>
+                    <p>
+                        L'endpoint principal est le <strong>Messages API</strong> (<code>POST /v1/messages</code>). Il gère les requêtes simples, les conversations multi-tours, l'analyse d'images, l'appel de fonctions, et bien plus.
+                    </p>
+                    <h3>Ce qu'on peut builder</h3>
+                    <ul>
+                        <li>Chatbots et assistants conversationnels</li>
+                        <li>Outils de génération et revue de code</li>
+                        <li>Pipelines d'analyse et de résumé de documents</li>
+                        <li>Agents autonomes qui appellent des outils et APIs externes</li>
+                        <li>Applications multimodales avec compréhension d'images</li>
+                        <li>Extraction de données structurées depuis du texte non structuré</li>
+                        <li>Génération de contenu à grande échelle via le Batch API</li>
+                    </ul>
+                    <h3>APIs disponibles</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>API</th><th>Statut</th><th>Objectif</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>Messages API</strong></td><td>GA</td><td>API conversationnelle principale</td></tr>
+                                <tr><td><strong>Message Batches API</strong></td><td>GA</td><td>Traitement asynchrone à -50% de coût</td></tr>
+                                <tr><td><strong>Token Counting API</strong></td><td>GA</td><td>Compter les tokens avant envoi pour maîtriser les coûts</td></tr>
+                                <tr><td><strong>Models API</strong></td><td>GA</td><td>Lister les modèles disponibles et leurs détails</td></tr>
+                                <tr><td><strong>Files API</strong></td><td>Beta</td><td>Uploader des fichiers une fois, les référencer par ID</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        <strong>Où accéder à Claude :</strong> Directement via l'API Anthropic (accès prioritaire aux nouvelles fonctionnalités), ou via AWS Bedrock, Google Cloud Vertex AI et Microsoft Azure (intégrés à la facturation et l'IAM cloud).
+                    </div>
+                </div>
+
+                <!-- 2. Démarrage -->
+                <div class="docs-section" id="demarrage">
+                    <h2><span class="docs-section-num">2</span> Démarrage</h2>
+                    <div class="docs-steps">
+                        <div class="docs-step">
+                            <span class="docs-step-num">1</span>
+                            <div>
+                                <strong>Créer un compte Anthropic Console</strong><br>
+                                Aller sur <a href="https://console.anthropic.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">console.anthropic.com</a> et s'inscrire. Vérifier son email et optionnellement ajouter une carte bancaire pour accéder aux limites de taux supérieures.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">2</span>
+                            <div>
+                                <strong>Obtenir sa clé API</strong><br>
+                                Dans la Console, aller dans <em>API Keys</em> et créer une nouvelle clé. La copier immédiatement – elle n'est affichée qu'une fois. La stocker de façon sécurisée (variable d'environnement, gestionnaire de secrets).
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">3</span>
+                            <div>
+                                <strong>Installer le SDK ou utiliser cURL</strong><br>
+                                Des SDKs officiels existent pour Python, TypeScript/Node.js, Java, Go, C#, Ruby et PHP. Pour des tests rapides, cURL fonctionne directement.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">4</span>
+                            <div>
+                                <strong>Faire son premier appel</strong><br>
+                                Envoyer un message et recevoir une réponse. Voir les exemples ci-dessous.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Installation</h3>
+                    <pre><code># Python
+pip install anthropic
+
+# TypeScript / Node.js
+npm install @anthropic-ai/sdk
+
+# Java (Gradle)
+implementation("com.anthropic:anthropic-java:2.18.0")</code></pre>
+
+                    <h3>Première requête</h3>
+                    <pre><code># cURL
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Bonjour Claude !"}]
+  }'</code></pre>
+
+                    <pre><code># Python
+import anthropic
+
+client = anthropic.Anthropic()  # Lit ANTHROPIC_API_KEY depuis l'environnement
+
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Bonjour Claude !"}],
+)
+print(message.content[0].text)</code></pre>
+
+                    <pre><code>// TypeScript
+import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic();
+
+const msg = await client.messages.create({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Bonjour Claude !" }],
+});
+console.log(msg.content[0].text);</code></pre>
+
+                    <div class="docs-note">
+                        <strong>Bonne pratique :</strong> Ne jamais hardcoder la clé API. La définir comme variable d'environnement : <code>export ANTHROPIC_API_KEY='sk-ant-...'</code> sur Linux/Mac, ou dans un fichier <code>.env</code> avec <code>dotenv</code>. Le SDK lit <code>ANTHROPIC_API_KEY</code> automatiquement.
+                    </div>
+                </div>
+
+                <!-- 3. Modèles -->
+                <div class="docs-section" id="modeles">
+                    <h2><span class="docs-section-num">3</span> Modèles</h2>
+                    <p>
+                        Choisir le bon modèle pour son cas d'usage. Le compromis est toujours entre capacité, vitesse et coût.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Modèle</th>
+                                    <th>ID API</th>
+                                    <th>Idéal pour</th>
+                                    <th>Contexte</th>
+                                    <th>Prix (entrée/sortie par MTok)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Claude Opus 4.6</strong></td>
+                                    <td><code>claude-opus-4-6</code></td>
+                                    <td>Tâches complexes, agents, raisonnement poussé, code</td>
+                                    <td>1M tokens</td>
+                                    <td>$5 / $25</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Claude Sonnet 4.6</strong></td>
+                                    <td><code>claude-sonnet-4-6</code></td>
+                                    <td>Meilleur équilibre – charges de production, tâches générales</td>
+                                    <td>1M tokens</td>
+                                    <td>$3 / $15</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Claude Haiku 4.5</strong></td>
+                                    <td><code>claude-haiku-4-5-20251001</code></td>
+                                    <td>Volume élevé, faible latence, tâches sensibles au coût</td>
+                                    <td>200k tokens</td>
+                                    <td>$1 / $5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Comment choisir</h3>
+                    <ul>
+                        <li><strong>Commencer avec Sonnet 4.6</strong> pour la plupart des cas de production – excellente qualité à coût raisonnable.</li>
+                        <li><strong>Utiliser Opus 4.6</strong> quand on a besoin d'une intelligence maximale : workflows agentiques complexes, raisonnement nuancé, code difficile.</li>
+                        <li><strong>Utiliser Haiku 4.5</strong> pour la classification, extraction, résumé à grande échelle où la vitesse et le coût priment.</li>
+                        <li>Les trois modèles supportent l'extended thinking, la vision (images) et le tool use.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Date de coupure :</strong> Opus 4.6 – mai 2025. Sonnet 4.6 – août 2025. Haiku 4.5 – fév. 2025. Claude n'a pas d'accès internet en temps réel sauf si tu lui fournis un outil <code>web_search</code>.
+                    </div>
+                </div>
+
+                <!-- 4. Authentification -->
+                <div class="docs-section" id="authentification">
+                    <h2><span class="docs-section-num">4</span> Authentification</h2>
+                    <p>
+                        Chaque requête à l'API nécessite deux headers :
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Header</th><th>Valeur</th><th>Requis</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>x-api-key</code></td><td>Ta clé API (<code>sk-ant-...</code>)</td><td>Oui</td></tr>
+                                <tr><td><code>anthropic-version</code></td><td><code>2023-06-01</code></td><td>Oui</td></tr>
+                                <tr><td><code>content-type</code></td><td><code>application/json</code></td><td>Oui (pour POST)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Avec un SDK, l'authentification est gérée automatiquement depuis la variable d'environnement <code>ANTHROPIC_API_KEY</code>.</p>
+
+                    <h3>Sécuriser sa clé</h3>
+                    <ul>
+                        <li>Ne jamais committer de clés API en versioning. Ajouter <code>.env</code> au <code>.gitignore</code>.</li>
+                        <li>Utiliser des variables d'environnement ou un gestionnaire de secrets (AWS Secrets Manager, Vault, etc.) en production.</li>
+                        <li>Faire tourner les clés immédiatement en cas de suspicion de fuite.</li>
+                        <li>Utiliser le champ <code>metadata.user_id</code> pour tracer l'usage par utilisateur sans envoyer de données personnelles.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Côté serveur uniquement :</strong> Ne jamais exposer la clé API dans du JavaScript côté client. Tous les appels à l'API Anthropic doivent passer par le backend.
+                    </div>
+                </div>
+
+                <!-- 5. Messages API -->
+                <div class="docs-section" id="messages-api">
+                    <h2><span class="docs-section-num">5</span> Messages API</h2>
+                    <p>
+                        <code>POST https://api.anthropic.com/v1/messages</code> est l'endpoint principal. Il accepte une conversation et retourne la réponse de Claude.
+                    </p>
+
+                    <h3>Paramètres requis</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>model</code></td><td>string</td><td>ID du modèle à utiliser (ex. <code>claude-sonnet-4-6</code>)</td></tr>
+                                <tr><td><code>max_tokens</code></td><td>integer</td><td>Nombre maximum de tokens que Claude peut générer. Ne garantit pas ce nombre – Claude peut s'arrêter avant.</td></tr>
+                                <tr><td><code>messages</code></td><td>array</td><td>Tableau d'objets <code>{"role": "user"|"assistant", "content": ...}</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Paramètres optionnels</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Paramètre</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>system</code></td><td>string ou array</td><td>Prompt système – instructions globales pour le comportement de Claude.</td></tr>
+                                <tr><td><code>temperature</code></td><td>float 0–1</td><td>Aléatoire. Défaut 1.0. Plus bas = plus focalisé/déterministe.</td></tr>
+                                <tr><td><code>stream</code></td><td>boolean</td><td>Activer le streaming par server-sent events.</td></tr>
+                                <tr><td><code>stop_sequences</code></td><td>string[]</td><td>Arrêter la génération quand Claude produit l'une de ces chaînes.</td></tr>
+                                <tr><td><code>tools</code></td><td>array</td><td>Définitions des outils que Claude peut appeler.</td></tr>
+                                <tr><td><code>tool_choice</code></td><td>object</td><td>Contrôler la sélection d'outil : <code>auto</code>, <code>any</code>, <code>none</code>, ou un nom d'outil spécifique.</td></tr>
+                                <tr><td><code>top_p</code></td><td>float</td><td>Nucleus sampling. Utiliser <code>temperature</code> ou <code>top_p</code>, pas les deux.</td></tr>
+                                <tr><td><code>metadata</code></td><td>object</td><td><code>{"user_id": "..."}</code> – identifiant opaque pour le suivi des abus.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Format des messages</h3>
+                    <pre><code>// Contenu simple en string
+{"role": "user", "content": "Bonjour"}
+
+// Tableau de content blocks (requis pour images/documents)
+{"role": "user", "content": [
+  {"type": "text", "text": "Qu'y a-t-il dans cette image ?"},
+  {"type": "image", "source": {"type": "url", "url": "https://..."}}
+]}
+
+// Conversation multi-tours
+[
+  {"role": "user",      "content": "Combien font 2+2 ?"},
+  {"role": "assistant", "content": "4"},
+  {"role": "user",      "content": "Et 4+4 ?"}
+]</code></pre>
+
+                    <h3>Objet de réponse</h3>
+                    <pre><code>{
+  "id": "msg_01XFDUDYJgAACzvnptvVoYEL",
+  "type": "message",
+  "role": "assistant",
+  "content": [{"type": "text", "text": "Bonjour ! Comment puis-je aider ?"}],
+  "model": "claude-sonnet-4-6",
+  "stop_reason": "end_turn",   // end_turn | stop_sequence | tool_use | max_tokens
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 10,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+  }
+}</code></pre>
+                </div>
+
+                <!-- 6. Prompts système -->
+                <div class="docs-section" id="prompts-systeme">
+                    <h2><span class="docs-section-num">6</span> Prompts Système</h2>
+                    <p>
+                        Le paramètre <code>system</code> définit le contexte global du comportement de Claude. Il s'exécute avant tout message utilisateur. Utilise-le pour définir persona, contraintes, format de sortie et connaissances domaine.
+                    </p>
+                    <pre><code>client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system="Tu es un ingénieur backend senior. Réponds uniquement en TypeScript. "
+           "Ajoute toujours des commentaires JSDoc. N'utilise jamais le type 'any'.",
+    messages=[{"role": "user", "content": "Écris une fonction pour debouncer des appels."}]
+)</code></pre>
+
+                    <h3>Quoi mettre dans un prompt système</h3>
+                    <ul>
+                        <li><strong>Persona et ton</strong> – "Tu es un agent de support client amical pour StealthyLabs."</li>
+                        <li><strong>Format de sortie</strong> – "Réponds toujours en JSON. N'ajoute jamais de markdown."</li>
+                        <li><strong>Contraintes</strong> – "Réponds uniquement aux questions sur notre produit. Décline poliment toute autre demande."</li>
+                        <li><strong>Connaissances domaine</strong> – Coller des documents de référence, FAQs, specs produit.</li>
+                        <li><strong>Instructions chain-of-thought</strong> – "Avant de répondre, réfléchis au problème étape par étape."</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Conseil fenêtre de contexte :</strong> Pour les prompts système volumineux et statiques qui ne changent pas entre les appels, utiliser le <strong>prompt caching</strong> (voir section 12) pour réduire drastiquement les coûts.
+                    </div>
+                </div>
+
+                <!-- 7. Conversations multi-tours -->
+                <div class="docs-section" id="conversations">
+                    <h2><span class="docs-section-num">7</span> Conversations Multi-tours</h2>
+                    <p>
+                        Le Messages API est sans état. Pour maintenir le contexte entre les tours, il faut envoyer l'historique complet de la conversation à chaque requête. L'application est responsable du stockage et de la gestion du tableau de messages.
+                    </p>
+                    <pre><code>import anthropic
+
+client = anthropic.Anthropic()
+conversation = []
+
+def chat(user_message: str) -> str:
+    conversation.append({"role": "user", "content": user_message})
+
+    response = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1024,
+        messages=conversation,
+    )
+
+    assistant_reply = response.content[0].text
+    conversation.append({"role": "assistant", "content": assistant_reply})
+    return assistant_reply
+
+print(chat("Quelle est la capitale de la France ?"))
+print(chat("Et quelle est sa population ?"))  # Claude se souvient de Paris</code></pre>
+
+                    <h3>Gérer les limites de la fenêtre de contexte</h3>
+                    <ul>
+                        <li>Sonnet 4.6 et Opus 4.6 supportent jusqu'à <strong>1 million de tokens</strong> de contexte.</li>
+                        <li>Pour de très longues conversations, implémenter une fenêtre glissante, une stratégie de résumé ou de récupération.</li>
+                        <li>Utiliser le <strong>Token Counting API</strong> (<code>POST /v1/messages/count_tokens</code>) pour estimer les coûts avant envoi.</li>
+                    </ul>
+                    <pre><code># Compter les tokens avant d'envoyer
+token_count = client.messages.count_tokens(
+    model="claude-sonnet-4-6",
+    messages=conversation,
+)
+print(f"Cette requête utilisera ~{token_count.input_tokens} tokens d'entrée")</code></pre>
+                </div>
+
+                <!-- 8. Streaming -->
+                <div class="docs-section" id="streaming">
+                    <h2><span class="docs-section-num">8</span> Streaming</h2>
+                    <p>
+                        Par défaut, l'API attend la réponse complète avant d'envoyer quoi que ce soit. Avec <code>stream: true</code>, Claude envoie les tokens au fur et à mesure de leur génération via des <strong>Server-Sent Events (SSE)</strong>. Les UIs semblent beaucoup plus réactives.
+                    </p>
+                    <pre><code># Python – streaming avec SDK
+with client.messages.stream(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Écris un haïku sur l'océan."}],
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)</code></pre>
+
+                    <pre><code>// TypeScript – streaming avec SDK
+const stream = client.messages.stream({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Écris un haïku sur l'océan." }],
+});
+
+for await (const chunk of stream) {
+  if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+    process.stdout.write(chunk.delta.text);
+  }
+}
+const finalMessage = await stream.finalMessage();
+console.log("\nUsage:", finalMessage.usage);</code></pre>
+
+                    <h3>Types d'événements SSE</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Événement</th><th>Quand il se déclenche</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>message_start</code></td><td>Début de la réponse – contient l'ID du modèle et l'usage initial</td></tr>
+                                <tr><td><code>content_block_start</code></td><td>Un nouveau bloc de contenu commence (text, tool_use, thinking)</td></tr>
+                                <tr><td><code>content_block_delta</code></td><td>Delta de texte incrémental (les tokens réels)</td></tr>
+                                <tr><td><code>content_block_stop</code></td><td>Un bloc de contenu se termine</td></tr>
+                                <tr><td><code>message_delta</code></td><td>Met à jour stop_reason et les compteurs de tokens finaux</td></tr>
+                                <tr><td><code>message_stop</code></td><td>Stream terminé</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        Utiliser le streaming pour les interfaces de chat et partout où l'utilisateur attend. Pour le traitement par lots ou les jobs en arrière-plan, le mode non-streaming est plus simple à gérer.
+                    </div>
+                </div>
+
+                <!-- 9. Vision -->
+                <div class="docs-section" id="vision">
+                    <h2><span class="docs-section-num">9</span> Vision (Images)</h2>
+                    <p>
+                        Tous les modèles Claude actuels peuvent comprendre les images. Inclure des blocs de contenu image dans les messages, aux côtés du texte. Formats supportés : <strong>JPEG, PNG, GIF, WebP</strong>.
+                    </p>
+
+                    <h3>Trois façons de fournir des images</h3>
+                    <div class="docs-steps">
+                        <div class="docs-step">
+                            <span class="docs-step-num">A</span>
+                            <div><strong>Encodage Base64</strong> – Encoder l'image et l'inclure en ligne. Bien pour les requêtes ponctuelles.</div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">B</span>
+                            <div><strong>Référence URL</strong> – Fournir une URL publiquement accessible. Claude télécharge l'image. Rapide à implémenter.</div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">C</span>
+                            <div><strong>Files API</strong> – Uploader une fois, réutiliser par <code>file_id</code>. Idéal pour les conversations multi-tours et l'usage répété pour éviter de renvoyer des payloads volumineux.</div>
+                        </div>
+                    </div>
+
+                    <pre><code># Python – image par URL
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "source": {"type": "url", "url": "https://example.com/image.jpg"},
+            },
+            {"type": "text", "text": "Qu'est-ce que tu vois dans cette image ?"}
+        ],
+    }],
+)</code></pre>
+
+                    <h3>Limites et bonnes pratiques</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Limite</th><th>Valeur</th></tr></thead>
+                            <tbody>
+                                <tr><td>Taille max par image</td><td>5 Mo (API) / 10 Mo (claude.ai)</td></tr>
+                                <tr><td>Images max par requête</td><td>600 (100 pour les modèles 200k)</td></tr>
+                                <tr><td>Dimension maximale</td><td>8000×8000 px (rejeté au-delà)</td></tr>
+                                <tr><td>Dimension optimale (long côté)</td><td>≤ 1568 px pour le meilleur time-to-first-token</td></tr>
+                                <tr><td>Formule de coût en tokens</td><td><code>(largeur × hauteur) / 750</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul>
+                        <li>Placer les images <em>avant</em> la question textuelle associée pour de meilleurs résultats.</li>
+                        <li>Redimensionner les grandes images à ≤ 1,15 mégapixels avant upload – aucun gain de qualité au-delà.</li>
+                        <li>Claude ne peut pas identifier des personnes, générer/modifier des images ni traiter du contenu inapproprié.</li>
+                    </ul>
+                </div>
+
+                <!-- 10. Tool Use -->
+                <div class="docs-section" id="tool-use">
+                    <h2><span class="docs-section-num">10</span> Tool Use (Appel de fonctions)</h2>
+                    <p>
+                        Les tools permettent à Claude d'appeler des fonctions définies par l'utilisateur. On décrit ce que l'outil fait et ses paramètres ; Claude décide quand l'utiliser, construit des arguments valides, et on exécute la fonction pour retourner le résultat. Cela permet de créer des agents qui interagissent avec des APIs, bases de données et services externes.
+                    </p>
+
+                    <h3>La boucle tool use</h3>
+                    <div class="docs-steps">
+                        <div class="docs-step"><span class="docs-step-num">1</span><div>Envoyer une requête avec <code>tools</code> définis.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">2</span><div>Claude répond avec <code>stop_reason: "tool_use"</code> et un bloc <code>tool_use</code> contenant le nom de l'outil et ses arguments.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">3</span><div>Ton code exécute l'outil avec les arguments fournis.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">4</span><div>Renvoyer le résultat comme message <code>tool_result</code>.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">5</span><div>Claude lit le résultat et continue (appel d'un autre outil éventuellement, ou réponse textuelle finale).</div></div>
+                    </div>
+
+                    <pre><code>import anthropic, json
+
+client = anthropic.Anthropic()
+
+tools = [{
+    "name": "get_weather",
+    "description": "Obtenir la météo actuelle d'une ville.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "city": {"type": "string", "description": "Nom de la ville, ex. Paris"}
+        },
+        "required": ["city"]
+    }
+}]
+
+messages = [{"role": "user", "content": "Quel temps fait-il à Tokyo ?"}]
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,
+    messages=messages,
+)
+
+while response.stop_reason == "tool_use":
+    tool_use_block = next(b for b in response.content if b.type == "tool_use")
+
+    # Exécuter l'outil (ta vraie logique ici)
+    if tool_use_block.name == "get_weather":
+        result = {"temperature": "18°C", "condition": "Nuageux"}
+
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({
+        "role": "user",
+        "content": [{
+            "type": "tool_result",
+            "tool_use_id": tool_use_block.id,
+            "content": json.dumps(result),
+        }]
+    })
+
+    response = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1024,
+        tools=tools,
+        messages=messages,
+    )
+
+print(response.content[0].text)</code></pre>
+
+                    <h3>Outils serveur intégrés</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Outil</th><th>Type</th><th>Ce qu'il fait</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>web_search</code></td><td><code>web_search_20260209</code></td><td>Rechercher sur internet. Supporte des listes allow/block de domaines.</td></tr>
+                                <tr><td><code>web_fetch</code></td><td><code>web_fetch_20260309</code></td><td>Récupérer et lire le contenu d'une page web.</td></tr>
+                                <tr><td><code>code_execution</code></td><td><code>code_execution_20260120</code></td><td>Exécuter du code Python dans un environnement sandbox.</td></tr>
+                                <tr><td><code>bash</code></td><td><code>bash_20250124</code></td><td>Exécuter des commandes bash.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 11. Extended Thinking -->
+                <div class="docs-section" id="thinking">
+                    <h2><span class="docs-section-num">11</span> Extended Thinking</h2>
+                    <p>
+                        L'extended thinking laisse Claude "réfléchir à voix haute" avant de répondre. Il traite les problèmes complexes étape par étape avant de s'engager dans une réponse, améliorant la précision sur les tâches de raisonnement difficile et de maths. Supporté par tous les modèles Claude 4.
+                    </p>
+                    <pre><code>response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=16000,
+    thinking={
+        "type": "enabled",
+        "budget_tokens": 10000,  # Combien de tokens Claude peut utiliser pour réfléchir
+    },
+    messages=[{
+        "role": "user",
+        "content": "Prouve qu'il existe une infinité de nombres premiers."
+    }],
+)
+
+for block in response.content:
+    if block.type == "thinking":
+        print("Réflexion de Claude :\n", block.thinking)
+    elif block.type == "text":
+        print("Réponse finale :\n", block.text)</code></pre>
+
+                    <ul>
+                        <li><code>budget_tokens</code> contrôle la limite haute des tokens de réflexion. Plus de budget = potentiellement meilleur raisonnement, coût plus élevé.</li>
+                        <li>Les blocs de thinking apparaissent avant la réponse textuelle dans <code>response.content</code>.</li>
+                        <li>À utiliser pour : preuves mathématiques, raisonnement multi-étapes, décisions d'architecture code complexes, problèmes logiques difficiles.</li>
+                    </ul>
+                </div>
+
+                <!-- 12. Prompt Caching -->
+                <div class="docs-section" id="caching">
+                    <h2><span class="docs-section-num">12</span> Prompt Caching</h2>
+                    <p>
+                        Le prompt caching permet de marquer des parties du prompt comme cachables. Sur les requêtes suivantes qui incluent le même préfixe mis en cache, les tokens cachés sont lus au lieu d'être retraités – donnant une <strong>réduction de coût d'~90%</strong> et une <strong>réduction de latence d'~85%</strong> sur ces tokens.
+                    </p>
+                    <pre><code># Cacher un grand prompt système
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system=[
+        {
+            "type": "text",
+            "text": "Tu es un assistant IA spécialisé dans l'analyse de documents juridiques. "
+                    + tres_long_document_reference,  # Des milliers de tokens
+            "cache_control": {"type": "ephemeral"},
+        }
+    ],
+    messages=[{"role": "user", "content": "Résume la clause 7."}],
+)
+
+# response.usage.cache_creation_input_tokens  → tokens écrits en cache (premier appel)
+# response.usage.cache_read_input_tokens      → tokens lus depuis le cache (appels suivants)</code></pre>
+
+                    <h3>Quand utiliser le caching</h3>
+                    <ul>
+                        <li>Grands prompts système statiques qui se répètent sur de nombreuses requêtes</li>
+                        <li>Documents de référence, catalogues produits ou FAQs inclus dans chaque appel</li>
+                        <li>Longs historiques de conversation en sessions multi-tours</li>
+                        <li>Exemples few-shot qui ne changent pas</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Note sur le prix :</strong> Les écritures en cache coûtent 25% de plus que les tokens d'entrée normaux. Les lectures coûtent environ 10% des tokens d'entrée normaux. L'investissement est rentabilisé après 2 lectures.
+                    </div>
+                </div>
+
+                <!-- 13. Sorties structurées -->
+                <div class="docs-section" id="sorties-structurees">
+                    <h2><span class="docs-section-num">13</span> Sorties Structurées</h2>
+                    <p>
+                        Il existe deux façons principales d'obtenir des données structurées de façon fiable depuis Claude :
+                    </p>
+
+                    <h3>Méthode 1 – Prompt + validation</h3>
+                    <p>Dire à Claude de répondre en JSON dans le prompt système, puis parser et valider avec une bibliothèque (Pydantic pour Python, Zod pour TypeScript).</p>
+                    <pre><code>from pydantic import BaseModel
+import json
+
+class CritiqueFil m(BaseModel):
+    titre: str
+    note: float
+    resume: str
+    points_forts: list[str]
+    points_faibles: list[str]
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system="Réponds toujours en JSON valide uniquement. Pas de markdown, pas d'explication.",
+    messages=[{"role": "user", "content": "Critique Inception (2010)."}],
+)
+
+data = json.loads(response.content[0].text)
+critique = CritiqueFilm(**data)  # Pydantic valide le schéma</code></pre>
+
+                    <h3>Méthode 2 – Tool use pour une structure garantie</h3>
+                    <p>Définir un outil avec le schéma JSON exact. Forcer Claude à l'appeler avec <code>tool_choice</code>. Claude retournera toujours du JSON valide correspondant au schéma.</p>
+                    <pre><code>tools = [{
+    "name": "extraire_donnees",
+    "description": "Extraire des données structurées du texte.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "titre":  {"type": "string"},
+            "note":   {"type": "number", "minimum": 0, "maximum": 10},
+            "resume": {"type": "string"},
+        },
+        "required": ["titre", "note", "resume"]
+    }
+}]
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,
+    tool_choice={"type": "tool", "name": "extraire_donnees"},
+    messages=[{"role": "user", "content": "Critique Inception (2010)."}],
+)
+
+tool_block = next(b for b in response.content if b.type == "tool_use")
+data = tool_block.input  # Déjà un dict Python correspondant au schéma</code></pre>
+                </div>
+
+                <!-- 14. Traitement par lots -->
+                <div class="docs-section" id="batch">
+                    <h2><span class="docs-section-num">14</span> Traitement par Lots</h2>
+                    <p>
+                        Le <strong>Message Batches API</strong> traite de grands volumes de requêtes de façon asynchrone à <strong>-50% de coût</strong>. Idéal pour traiter des milliers de documents, des évaluations, ou tout workload qui n'a pas besoin de réponses en temps réel.
+                    </p>
+                    <pre><code># Créer un lot pouvant aller jusqu'à 100 000 requêtes
+batch = client.messages.batches.create(
+    requests=[
+        {
+            "custom_id": "avis-1",
+            "params": {
+                "model": "claude-haiku-4-5-20251001",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": "Classfie le sentiment : 'Super produit !'"}],
+            },
+        },
+        {
+            "custom_id": "avis-2",
+            "params": {
+                "model": "claude-haiku-4-5-20251001",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": "Classifie le sentiment : 'Expérience terrible.'"}],
+            },
+        },
+    ]
+)
+
+# Attendre et récupérer les résultats
+import time
+while True:
+    status = client.messages.batches.retrieve(batch.id)
+    if status.processing_status == "ended":
+        break
+    time.sleep(60)
+
+for result in client.messages.batches.results(batch.id):
+    print(result.custom_id, result.result.message.content[0].text)</code></pre>
+                </div>
+
+                <!-- 15. Limites de taux & Erreurs -->
+                <div class="docs-section" id="erreurs">
+                    <h2><span class="docs-section-num">15</span> Limites de Taux &amp; Erreurs</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Status</th><th>Code d'erreur</th><th>Signification</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>400</td><td><code>invalid_request_error</code></td><td>Requête malformée, champ requis manquant</td><td>Corriger la requête</td></tr>
+                                <tr><td>401</td><td><code>authentication_error</code></td><td>Clé API invalide ou manquante</td><td>Vérifier la clé</td></tr>
+                                <tr><td>403</td><td><code>permission_error</code></td><td>La clé manque de permissions</td><td>Vérifier les scopes</td></tr>
+                                <tr><td>429</td><td><code>rate_limit_error</code></td><td>Trop de requêtes</td><td>Backoff exponentiel</td></tr>
+                                <tr><td>500</td><td><code>api_error</code></td><td>Erreur serveur Anthropic</td><td>Réessayer après délai</td></tr>
+                                <tr><td>529</td><td><code>overloaded_error</code></td><td>API surchargée</td><td>Réessayer après délai</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <pre><code>import time, anthropic
+from anthropic import RateLimitError, APIStatusError
+
+client = anthropic.Anthropic()
+
+def creer_avec_retry(max_retries=5, **kwargs):
+    for attempt in range(max_retries):
+        try:
+            return client.messages.create(**kwargs)
+        except RateLimitError:
+            if attempt == max_retries - 1:
+                raise
+            wait = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
+            print(f"Rate limited. Retry dans {wait}s...")
+            time.sleep(wait)
+        except APIStatusError as e:
+            if e.status_code in (500, 529) and attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+            else:
+                raise</code></pre>
+                </div>
+
+                <!-- 16. Prompt Engineering -->
+                <div class="docs-section" id="prompt-engineering">
+                    <h2><span class="docs-section-num">16</span> Prompt Engineering</h2>
+                    <p>
+                        De bons prompts déterminent 80% de la qualité de sortie. Voici les techniques à haut rendement spécifiques à Claude.
+                    </p>
+
+                    <h3>Être spécifique sur ce qu'on veut</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Faible</th><th>Fort</th></tr></thead>
+                            <tbody>
+                                <tr><td>"Résume ça."</td><td>"Résume en 3 points pour un public non-technique. Concentre-toi sur l'impact business, pas les détails techniques."</td></tr>
+                                <tr><td>"Écris du code."</td><td>"Écris une fonction TypeScript avec JSDoc. Utilise async/await. Inclus la gestion d'erreurs. Retourne un résultat typé, pas <code>any</code>."</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Utiliser des balises XML pour la structure</h3>
+                    <pre><code>Tu es un revieweur de code. Analyse le code ci-dessous et fournis des retours structurés.
+
+&lt;code&gt;
+function add(a, b) { return a + b }
+&lt;/code&gt;
+
+&lt;instructions&gt;
+1. Identifie les bugs ou problèmes de types.
+2. Suggère des améliorations.
+3. Réécris la fonction correctement en TypeScript.
+&lt;/instructions&gt;</code></pre>
+
+                    <h3>Chain-of-thought</h3>
+                    <pre><code>system = "Avant de répondre à toute question, écris ton raisonnement étape par étape dans des balises &lt;thinking&gt;. Puis fournis ta réponse finale."</code></pre>
+
+                    <h3>Exemples few-shot</h3>
+                    <pre><code>messages = [{
+    "role": "user",
+    "content": """Classifie le sentiment de chaque avis comme POSITIF, NÉGATIF ou NEUTRE.
+
+Avis : "Je l'adore, livraison rapide !" → POSITIF
+Avis : "Il s'est cassé après deux jours." → NÉGATIF
+Avis : "Il est arrivé à l'heure." → NEUTRE
+
+Avis : "La couleur était légèrement différente mais ça fonctionne bien." →"""
+}]</code></pre>
+
+                    <h3>Pré-remplir la réponse de l'assistant</h3>
+                    <pre><code>messages = [
+    {"role": "user", "content": "Extrais nom, email et téléphone de : Jean Dupont, jean@exemple.com, 06-12-34-56-78"},
+    {"role": "assistant", "content": '{"nom":'}  # Force une sortie JSON
+]</code></pre>
+                </div>
+
+                <!-- 17. Sécurité -->
+                <div class="docs-section" id="securite">
+                    <h2><span class="docs-section-num">17</span> Sécurité</h2>
+                    <ul>
+                        <li><strong>Clés API côté serveur uniquement.</strong> Ne jamais les exposer dans du JavaScript navigateur, des apps mobiles ou des dépôts publics.</li>
+                        <li><strong>Valider et assainir les entrées utilisateur</strong> avant de les passer dans les prompts pour mitiger les attaques par injection de prompt.</li>
+                        <li><strong>Implémenter son propre rate limiting</strong> sur les endpoints pour prévenir les abus des utilisateurs de l'application.</li>
+                        <li><strong>Ne jamais faire confiance à la sortie de Claude</strong> comme vérité absolue pour les décisions sensibles à la sécurité (authentification, autorisation, transactions financières).</li>
+                        <li><strong>Faire tourner les clés API régulièrement</strong> et immédiatement en cas de suspicion de fuite.</li>
+                        <li><strong>Logger les requêtes et réponses</strong> pour les pistes d'audit, particulièrement dans les secteurs réglementés.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Injection de prompt :</strong> Du contenu malveillant dans le texte fourni par l'utilisateur peut tenter d'écraser les instructions du prompt système. Valider les entrées, utiliser des champs séparés pour les données utilisateur et les instructions, et appliquer une validation des sorties.
+                    </div>
+                </div>
+
+                <!-- 18. Optimisation des coûts -->
+                <div class="docs-section" id="couts">
+                    <h2><span class="docs-section-num">18</span> Optimisation des Coûts</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Technique</th><th>Économie potentielle</th></tr></thead>
+                            <tbody>
+                                <tr><td>Utiliser Haiku pour la classification/extraction simple</td><td>60–80% vs Sonnet</td></tr>
+                                <tr><td>Prompt caching pour les prompts larges répétés</td><td>~90% sur les tokens cachés</td></tr>
+                                <tr><td>Batch API pour les workloads asynchrones</td><td>50% flat</td></tr>
+                                <tr><td>Réduire l'historique de conversation au strict nécessaire</td><td>Variable</td></tr>
+                                <tr><td>Définir <code>max_tokens</code> de façon appropriée</td><td>Évite la génération inutile</td></tr>
+                                <tr><td>Token Counting API pour estimer avant envoi</td><td>Visibilité sur les coûts</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="credit" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 8px;">
+                    <p style="font-size:0.8rem; color: var(--text-muted);">
+                        Basé sur la <a href="https://platform.claude.com/docs/en/home" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">documentation officielle de l'API Claude (Anthropic)</a>. Contenu à jour en mars 2026.
+                    </p>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Sommaire</p>
+                <ol class="docs-toc-list">
+                    <li class="toc-l1"><a href="#vue-ensemble">Vue d'ensemble</a></li>
+                    <li class="toc-l1"><a href="#demarrage">Démarrage</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#demarrage">Installation</a></li>
+                            <li class="toc-l2"><a href="#demarrage">Première requête</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#modeles">Modèles</a></li>
+                    <li class="toc-l1"><a href="#authentification">Authentification</a></li>
+                    <li class="toc-l1"><a href="#messages-api">Messages API</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#messages-api">Paramètres</a></li>
+                            <li class="toc-l2"><a href="#messages-api">Format de réponse</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#prompts-systeme">Prompts Système</a></li>
+                    <li class="toc-l1"><a href="#conversations">Conversations Multi-tours</a></li>
+                    <li class="toc-l1"><a href="#streaming">Streaming</a></li>
+                    <li class="toc-l1"><a href="#vision">Vision (Images)</a></li>
+                    <li class="toc-l1"><a href="#tool-use">Tool Use</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#tool-use">La boucle tool</a></li>
+                            <li class="toc-l2"><a href="#tool-use">Outils intégrés</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#thinking">Extended Thinking</a></li>
+                    <li class="toc-l1"><a href="#caching">Prompt Caching</a></li>
+                    <li class="toc-l1"><a href="#sorties-structurees">Sorties Structurées</a></li>
+                    <li class="toc-l1"><a href="#batch">Traitement par Lots</a></li>
+                    <li class="toc-l1"><a href="#erreurs">Limites &amp; Erreurs</a></li>
+                    <li class="toc-l1"><a href="#prompt-engineering">Prompt Engineering</a></li>
+                    <li class="toc-l1"><a href="#securite">Sécurité</a></li>
+                    <li class="toc-l1"><a href="#couts">Optimisation des coûts</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits r&eacute;serv&eacute;s.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Confidentialit&eacute;</a>
+                <a href="../terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="../legal" data-key="footer_legal">Mentions l&eacute;gales</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=983f5b64" defer></script>
+    <script src="../../js/ux-enhancements.js?v=16c257c7" defer></script>
+</body>
+
+</html>

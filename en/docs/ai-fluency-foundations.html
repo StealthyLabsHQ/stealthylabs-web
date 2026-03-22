@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fluency: Framework &amp; Foundations | StealthyLabs</title>
+    <meta name="description" content="Understand the foundations of AI Fluency: generative AI, the 4D framework, prompting techniques, and key vocabulary for working with Claude effectively.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/en/docs/ai-fluency-foundations">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/ai-fluency-foundations">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/ai-fluency-foundations">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=1.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Language</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Font</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">About me</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>AI Fluency</span><br>
+                <span class="gradient-text">Framework &amp; Foundations</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Back to docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <!-- 1. Understanding Generative AI -->
+                <div class="docs-section" id="generative-ai">
+                    <h2><span class="docs-section-num">1</span> Understanding Generative AI</h2>
+                    <p>
+                        <strong>Generative AI</strong> refers to artificial intelligence systems that can <em>create new content</em> rather than just analyzing existing data. Where traditional AI might classify an email as spam or not spam, generative AI can write a completely new email for you.
+                    </p>
+                    <p>Three converging developments made this possible:</p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Pillar</th>
+                                    <th>What happened</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Algorithms</strong></td>
+                                    <td>The Transformer architecture (2017) revolutionized processing of long text passages by letting models pay attention to relationships between words across entire passages at once.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Data explosion</strong></td>
+                                    <td>The internet produced massive amounts of digital text (websites, books, code repositories) that provided raw material for training.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Computing power</strong></td>
+                                    <td>GPU advances made it feasible to train large models on billions of examples within a reasonable timeframe.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>How it works</h3>
+                    <div class="docs-steps">
+                        <div class="docs-step">
+                            <span class="docs-step-num">1</span>
+                            <div>
+                                <strong>Pre-training</strong> – The model analyzes billions of text examples, learning to predict what word or token comes next. This builds broad language understanding and world knowledge.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">2</span>
+                            <div>
+                                <strong>Fine-tuning</strong> – The model is refined to follow instructions, be helpful, and avoid generating harmful content. This is where models like Claude develop their conversational behavior.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">3</span>
+                            <div>
+                                <strong>Deployment</strong> – Users provide prompts, and the model generates responses based on both the prompt and the patterns it learned during training.
+                            </div>
+                        </div>
+                    </div>
+                    <h3>Key capabilities</h3>
+                    <ul>
+                        <li>Versatile language skills – writing, summarizing, translating, explaining</li>
+                        <li>General-purpose reasoning across many domains</li>
+                        <li>Learning from examples provided in the conversation</li>
+                        <li>Connecting to external tools and data sources</li>
+                    </ul>
+                    <h3>Current limitations</h3>
+                    <ul>
+                        <li><strong>Knowledge cutoff date</strong> – No built-in awareness of events after training ended</li>
+                        <li><strong>Hallucinations</strong> – Can confidently state things that are plausible but incorrect</li>
+                        <li><strong>Context window constraints</strong> – Can only consider a finite amount of text at once</li>
+                        <li><strong>Complex reasoning and math</strong> – Still prone to errors on multi-step logical problems</li>
+                    </ul>
+                </div>
+
+                <!-- 2. The 4D Framework -->
+                <div class="docs-section" id="4d-framework">
+                    <h2><span class="docs-section-num">2</span> The 4D Framework</h2>
+                    <p>
+                        AI Fluency is organized around four interconnected competencies. Together they ensure your interactions with AI are <strong>effective, efficient, ethical, and safe</strong>.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Competency</th>
+                                    <th>Core question</th>
+                                    <th>What it covers</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Delegation</strong></td>
+                                    <td>"Should I involve AI, and how?"</td>
+                                    <td>Deciding what work is appropriate for humans, AI, or both – and distributing tasks accordingly.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Description</strong></td>
+                                    <td>"Have I communicated clearly?"</td>
+                                    <td>Effectively describing goals, processes, and expectations to prompt useful behaviors and outputs.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Discernment</strong></td>
+                                    <td>"Is what I got actually good?"</td>
+                                    <td>Thoughtfully and critically evaluating AI outputs, reasoning, and behavior.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Diligence</strong></td>
+                                    <td>"Am I being responsible?"</td>
+                                    <td>Taking accountability for what you do with AI and how you do it.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        These four competencies are not a checklist to complete in order. They work as a continuous feedback loop – discernment informs better description, which improves delegation, and so on.
+                    </div>
+                </div>
+
+                <!-- 3. Delegation -->
+                <div class="docs-section" id="delegation">
+                    <h2><span class="docs-section-num">3</span> Delegation</h2>
+                    <p>
+                        <strong>Delegation</strong> means making thoughtful decisions about what work is appropriate for you to do, for AI to do, or for you and AI to do together – and how to distribute those tasks. Effective delegation requires both domain expertise and an understanding of AI capabilities.
+                    </p>
+                    <h3>Problem Awareness</h3>
+                    <p>
+                        Clearly understanding your goals and the nature of the work <em>before</em> involving AI. Ask yourself: <em>"What am I actually trying to accomplish?"</em> Jumping to AI without a clear goal leads to vague outputs that require extensive revision.
+                    </p>
+                    <ul>
+                        <li>Define the specific outcome you want</li>
+                        <li>Identify what kind of task it is (creative, analytical, informational, etc.)</li>
+                        <li>Consider whether AI involvement adds value or creates risk</li>
+                    </ul>
+                    <h3>Platform Awareness</h3>
+                    <p>
+                        Understanding the capabilities and limitations of different AI systems. Not every AI tool is suited for every task. Ask: <em>"What does this system do well?"</em>
+                    </p>
+                    <ul>
+                        <li>Know the model's strengths (reasoning, coding, writing, summarizing)</li>
+                        <li>Know its limitations (knowledge cutoff, hallucination risk, context window)</li>
+                        <li>Choose the right tool for the job</li>
+                    </ul>
+                    <h3>Task Delegation</h3>
+                    <p>
+                        Thoughtfully distributing work between humans and AI to leverage the strengths of each. Ask: <em>"What's the plan for who does what?"</em>
+                    </p>
+                    <ul>
+                        <li>Give AI tasks where it excels: summarizing, drafting, transforming formats</li>
+                        <li>Keep human tasks where judgment, ethics, and accountability matter</li>
+                        <li>Design the collaboration deliberately, not by default</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Description -->
+                <div class="docs-section" id="description">
+                    <h2><span class="docs-section-num">4</span> Description</h2>
+                    <p>
+                        <strong>Description</strong> is the ability to communicate with AI in ways that create a productive collaborative environment. Clear communication up front saves time and leads to better results. It has three dimensions:
+                    </p>
+                    <h3>Product Description</h3>
+                    <p>
+                        Defining <em>what you want</em> in terms of outputs, format, audience, and style. Without this, AI will guess – and it will often guess wrong.
+                    </p>
+                    <ul>
+                        <li>Specify the format: bullet list, essay, table, code snippet, etc.</li>
+                        <li>Define the audience: expert, beginner, executive, student, etc.</li>
+                        <li>Set the tone and style: formal, casual, concise, comprehensive</li>
+                        <li>State the length: two paragraphs, 500 words, a single sentence</li>
+                    </ul>
+                    <h3>Process Description</h3>
+                    <p>
+                        Defining <em>how</em> the AI should approach your request. Providing step-by-step instructions guides the AI's reasoning and reduces the chance of it taking shortcuts.
+                    </p>
+                    <ul>
+                        <li>"First analyze X, then compare with Y, then recommend Z"</li>
+                        <li>Ask the AI to work through its reasoning before answering</li>
+                        <li>Break multi-step problems into explicit phases</li>
+                    </ul>
+                    <h3>Performance Description</h3>
+                    <p>
+                        Defining <em>how the AI behaves</em> during your collaboration: whether it should be concise or detailed, challenging or supportive, creative or conservative.
+                    </p>
+                    <ul>
+                        <li>"Act as a Socratic tutor – ask questions rather than giving answers"</li>
+                        <li>"Be concise and direct. No preamble."</li>
+                        <li>"Push back if you think my reasoning is flawed"</li>
+                    </ul>
+                </div>
+
+                <!-- 5. Discernment -->
+                <div class="docs-section" id="discernment">
+                    <h2><span class="docs-section-num">5</span> Discernment</h2>
+                    <p>
+                        <strong>Discernment</strong> is the ability to thoughtfully and critically evaluate what AI produces, how it produces it, and how it behaves. Discernment works hand-in-hand with Description in a continuous feedback loop – what you observe informs how you refine your prompts.
+                    </p>
+                    <h3>Product Discernment</h3>
+                    <p>
+                        Evaluating the quality of what AI produces. Check for:
+                    </p>
+                    <ul>
+                        <li><strong>Accuracy</strong> – Is it factually correct? Can you verify key claims?</li>
+                        <li><strong>Appropriateness</strong> – Is it suitable for the intended audience and context?</li>
+                        <li><strong>Coherence</strong> – Does it hold together logically from start to finish?</li>
+                        <li><strong>Relevance</strong> – Does it actually address what you asked?</li>
+                    </ul>
+                    <h3>Process Discernment</h3>
+                    <p>
+                        Evaluating <em>how</em> the AI arrived at its output. Look for:
+                    </p>
+                    <ul>
+                        <li>Logical errors or jumps in reasoning</li>
+                        <li>Lapses in attention (did it address all parts of the prompt?)</li>
+                        <li>Inappropriate reasoning steps (did it make assumptions it shouldn't?)</li>
+                    </ul>
+                    <h3>Performance Discernment</h3>
+                    <p>
+                        Evaluating how the AI behaves during your interaction. Ask:
+                    </p>
+                    <ul>
+                        <li>Is the communication style effective for what you need right now?</li>
+                        <li>Is it being overly agreeable or pushing back when it should?</li>
+                        <li>Is the level of detail appropriate?</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>The Description-Discernment loop:</strong> When discernment reveals a problem, the fix is almost always better description. Refine your prompt, re-run, re-evaluate. This loop is the core practice of AI Fluency.
+                    </div>
+                </div>
+
+                <!-- 6. Diligence -->
+                <div class="docs-section" id="diligence">
+                    <h2><span class="docs-section-num">6</span> Diligence</h2>
+                    <p>
+                        <strong>Diligence</strong> means taking responsibility for what you do with AI and how you do it. AI can assist – but you remain accountable for the outcome. Different contexts (personal, academic, professional) may have different expectations for disclosure and verification.
+                    </p>
+                    <h3>Creation Diligence</h3>
+                    <p>
+                        Being thoughtful about which AI systems you use and how you interact with them.
+                    </p>
+                    <ul>
+                        <li>Choose tools that are appropriate for the sensitivity of the task</li>
+                        <li>Understand what data you are sharing and with whom</li>
+                        <li>Document which AI model was used and when, when it matters (e.g., "Claude 3.7, March 2026")</li>
+                    </ul>
+                    <h3>Transparency Diligence</h3>
+                    <p>
+                        Being honest about AI's role in your work with everyone who needs to know.
+                    </p>
+                    <ul>
+                        <li>Disclose AI assistance in academic, professional, or public contexts</li>
+                        <li>Don't present AI-generated work as entirely your own when transparency is expected</li>
+                        <li>Help others understand how AI contributed to a result</li>
+                    </ul>
+                    <h3>Deployment Diligence</h3>
+                    <p>
+                        Taking responsibility for verifying and vouching for the outputs you use or share.
+                    </p>
+                    <ul>
+                        <li>Don't deploy AI output without reviewing it yourself</li>
+                        <li>You are responsible for the final product, not the AI</li>
+                        <li>If something is wrong in what you shared, you own the correction</li>
+                    </ul>
+                </div>
+
+                <!-- 7. Interaction Modes -->
+                <div class="docs-section" id="interaction-modes">
+                    <h2><span class="docs-section-num">7</span> Interaction Modes</h2>
+                    <p>
+                        Human-AI collaboration takes three fundamental forms. Understanding which mode you are in helps you set the right expectations and apply the right delegation strategy.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>What it means</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Automation</strong></td>
+                                    <td>AI executes specific tasks based on human instructions. Human defines what needs to be done; AI does it.</td>
+                                    <td>"Translate this document to Spanish."</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Augmentation</strong></td>
+                                    <td>Humans and AI collaborate as thinking partners. Iterative back-and-forth where both contribute to the outcome.</td>
+                                    <td>Drafting a report together, refining it across multiple exchanges.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Agency</strong></td>
+                                    <td>Humans configure AI to work independently on their behalf, including interacting with other systems. Human sets the AI's knowledge and behavior; AI acts within that framework.</td>
+                                    <td>An AI agent that monitors your inbox and drafts replies based on your instructions.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 8. Prompting Techniques -->
+                <div class="docs-section" id="prompting">
+                    <h2><span class="docs-section-num">8</span> 6 Prompting Techniques</h2>
+                    <p>
+                        Effective prompting is a learnable skill. These six techniques directly apply the Description competency and will improve your results immediately.
+                    </p>
+
+                    <h3>1. Provide context</h3>
+                    <p>Be specific about what you want, providing details about scope, geography, timeframe, and other relevant parameters.</p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Before</th><th>After</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tell me about climate change.</td>
+                                    <td>Explain three major impacts of climate change on agriculture in tropical regions, with examples from the past decade.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>2. Show examples of what "good" looks like</h3>
+                    <p>Providing examples helps the AI understand the pattern, style, or format you're looking for more clearly than descriptions alone. This is called few-shot prompting.</p>
+                    <div class="docs-note">
+                        Give 1-3 examples of the desired input-output pattern before your actual request. The AI will match the style and format of your examples.
+                    </div>
+
+                    <h3>3. Specify output constraints</h3>
+                    <p>Be explicit about format, length, structure, or other characteristics of the expected response.</p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Before</th><th>After</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>Design me a personal art portfolio website.</td>
+                                    <td>Create a clean, modern single-page portfolio website with these sections: Hero, About Me, Skills, Portfolio, Experience, and Contact. Navigation must be sticky and responsive, with a hamburger menu on mobile. Use a sunset color palette and add a dark/light mode toggle.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>4. Break complex tasks into steps</h3>
+                    <p>Breaking down complex tasks into clear steps guides the AI's reasoning and ensures thorough, methodical responses.</p>
+                    <div class="docs-note">
+                        Instead of "Analyze this sales data", try: "1. Identify top-performing products. 2. Compare this quarter to last quarter. 3. Highlight unusual patterns. 4. Suggest possible reasons."
+                    </div>
+
+                    <h3>5. Ask it to think first</h3>
+                    <p>Giving the AI space to reason before responding encourages more thoughtful, comprehensive answers. Explicitly say: <em>"Before answering, think through the different factors, potential constraints, and approaches."</em></p>
+
+                    <h3>6. Define the AI's role</h3>
+                    <p>Defining a role, tone, or persona shapes the AI's approach to fit your specific needs.</p>
+                    <div class="docs-note">
+                        Example: <em>"Explain how rainbows form from the perspective of an experienced science teacher speaking to a bright 10-year-old."</em>
+                    </div>
+
+                    <h3>Secret weapon: ask AI to help you prompt</h3>
+                    <p>When you're not sure how to phrase your request, ask Claude directly:</p>
+                    <div class="docs-note">
+                        <em>"I'm trying to get you to help me with [goal]. I'm not sure how to phrase my request to get the best results. Can you help me craft an effective prompt?"</em>
+                    </div>
+                </div>
+
+                <!-- 9. Vocabulary Reference -->
+                <div class="docs-section" id="vocabulary">
+                    <h2><span class="docs-section-num">9</span> Vocabulary Reference</h2>
+                    <p>Key terms organized by category.</p>
+
+                    <h3>AI Systems</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr><th>Term</th><th>Definition</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Generative AI</strong></td><td>AI systems that create new content (text, images, code) rather than just analyzing existing data.</td></tr>
+                                <tr><td><strong>Large Language Model (LLM)</strong></td><td>Generative AI trained on vast amounts of text to understand and generate human language.</td></tr>
+                                <tr><td><strong>Claude</strong></td><td>Anthropic's family of large language models.</td></tr>
+                                <tr><td><strong>Neural networks</strong></td><td>Computing systems composed of interconnected nodes organized in layers that learn patterns from data.</td></tr>
+                                <tr><td><strong>Transformer architecture</strong></td><td>The 2017 AI design breakthrough that enables LLMs to process text in parallel while tracking relationships between words across long passages.</td></tr>
+                                <tr><td><strong>Parameters</strong></td><td>The mathematical values within a model that determine how it processes and relates information. Modern LLMs contain billions.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Training &amp; Behavior</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr><th>Term</th><th>Definition</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Pre-training</strong></td><td>Initial training phase where models learn language patterns from vast text data.</td></tr>
+                                <tr><td><strong>Fine-tuning</strong></td><td>Additional training to follow instructions, give helpful responses, and avoid harmful content.</td></tr>
+                                <tr><td><strong>Scaling laws</strong></td><td>The empirical observation that model performance improves consistently as size and training data grow, sometimes unlocking entirely new capabilities.</td></tr>
+                                <tr><td><strong>Hallucination</strong></td><td>When AI confidently states something plausible but factually incorrect.</td></tr>
+                                <tr><td><strong>Knowledge cutoff date</strong></td><td>The point after which an AI model has no built-in knowledge, based on when training ended.</td></tr>
+                                <tr><td><strong>Context window</strong></td><td>The maximum amount of information an AI can consider at one time, including conversation history and shared documents.</td></tr>
+                                <tr><td><strong>Temperature</strong></td><td>A setting controlling response randomness. Higher = more creative and varied. Lower = more focused and predictable.</td></tr>
+                                <tr><td><strong>Bias</strong></td><td>Systematic patterns in AI outputs that unfairly favor or disadvantage certain groups, often reflecting training data imbalances.</td></tr>
+                                <tr><td><strong>Retrieval Augmented Generation (RAG)</strong></td><td>A technique connecting AI to external knowledge sources to improve accuracy and reduce hallucinations.</td></tr>
+                                <tr><td><strong>Reasoning models</strong></td><td>AI models designed to think step-by-step through complex problems, showing improved logical reasoning capabilities.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Prompt Engineering</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr><th>Term</th><th>Definition</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Prompt</strong></td><td>The input given to an AI model, including instructions and any documents shared.</td></tr>
+                                <tr><td><strong>Prompt engineering</strong></td><td>The practice of designing effective prompts to produce desired outputs.</td></tr>
+                                <tr><td><strong>Chain-of-thought prompting</strong></td><td>Encouraging AI to work through a problem step by step before answering.</td></tr>
+                                <tr><td><strong>Few-shot learning</strong></td><td>Teaching AI by showing examples of the desired input-output pattern. "N-shot" = N examples provided.</td></tr>
+                                <tr><td><strong>Role / persona definition</strong></td><td>Specifying a character, expertise level, or communication style for the AI to adopt.</td></tr>
+                                <tr><td><strong>Output constraints</strong></td><td>Specifying desired format, length, structure, or other characteristics of the AI's response.</td></tr>
+                                <tr><td><strong>Think-first approach</strong></td><td>Explicitly asking AI to work through its reasoning before providing a final answer.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="credit" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 8px;">
+                    <p style="font-size:0.8rem; color: var(--text-muted);">
+                        Based on <em>AI Fluency: Framework &amp; Foundations</em> by Rick Dakan, Joseph Feller, and Anthropic.
+                        Released under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">CC BY-NC-SA 4.0</a> license.
+                    </p>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li class="toc-l1"><a href="#generative-ai">Understanding Generative AI</a></li>
+                    <li class="toc-l1"><a href="#4d-framework">The 4D Framework</a></li>
+                    <li class="toc-l1"><a href="#delegation">Delegation</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#delegation">Problem Awareness</a></li>
+                            <li class="toc-l2"><a href="#delegation">Platform Awareness</a></li>
+                            <li class="toc-l2"><a href="#delegation">Task Delegation</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#description">Description</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#description">Product Description</a></li>
+                            <li class="toc-l2"><a href="#description">Process Description</a></li>
+                            <li class="toc-l2"><a href="#description">Performance Description</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#discernment">Discernment</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#discernment">Product Discernment</a></li>
+                            <li class="toc-l2"><a href="#discernment">Process Discernment</a></li>
+                            <li class="toc-l2"><a href="#discernment">Performance Discernment</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#diligence">Diligence</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#diligence">Creation Diligence</a></li>
+                            <li class="toc-l2"><a href="#diligence">Transparency Diligence</a></li>
+                            <li class="toc-l2"><a href="#diligence">Deployment Diligence</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#interaction-modes">Interaction Modes</a></li>
+                    <li class="toc-l1"><a href="#prompting">6 Prompting Techniques</a></li>
+                    <li class="toc-l1"><a href="#vocabulary">Vocabulary Reference</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Privacy</a>
+                <a href="../terms-of-service" data-key="footer_tos">Terms</a>
+                <a href="../legal" data-key="footer_legal">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=983f5b64" defer></script>
+    <script src="../../js/ux-enhancements.js?v=16c257c7" defer></script>
+</body>
+
+</html>

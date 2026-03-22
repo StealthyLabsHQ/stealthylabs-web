@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fluency – Comment utiliser Claude | StealthyLabs</title>
+    <meta name="description" content="Apprends à utiliser Claude et l'IA efficacement avec le framework AI Fluency. Maîtrise la méthode des 4D : Délégation, Description, Discernement et Diligence.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/fr/docs/ai-fluency">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/ai-fluency">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/ai-fluency">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=1.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">A propos de moi</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Paramètres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Thème</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                            <option value="system">Système</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Défaut)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">A propos de moi</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>AI Fluency</span><br>
+                <span class="gradient-text">Framework</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Retour aux docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <!-- 1. Vue d'ensemble -->
+                <div class="docs-section" id="vue-ensemble">
+                    <h2><span class="docs-section-num">1</span> Vue d'ensemble</h2>
+                    <p>
+                        <strong>L'AI Fluency</strong> est la capacité à interagir avec les systèmes d'IA de manière <strong>efficace, efficiente, éthique et sûre</strong>. Cela va bien au-delà de savoir utiliser un outil spécifique – c'est un ensemble de compétences transférables qui s'appliquent à Claude, et à tout ce qui vient ensuite.
+                    </p>
+                    <p>
+                        Il existe une différence fondamentale entre <em>utiliser</em> l'IA et en être <em>fluent</em>. Utiliser l'IA, c'est lui demander de faire des choses. Être fluent, c'est comprendre quand l'impliquer, comment la diriger précisément, comment évaluer ce qu'elle produit, et comment prendre la responsabilité du résultat.
+                    </p>
+                    <p>
+                        Au fond, l'AI Fluency consiste à rester le <strong>human in the loop</strong> – c'est toi qui prends les décisions, qui pilotes le travail, et qui es responsable du résultat. L'IA amplifie ce que tu lui apportes ; elle ne remplace pas ton jugement.
+                    </p>
+                    <div class="docs-note">
+                        <strong>Idée clé :</strong> Les meilleures interactions avec l'IA n'arrivent pas quand tu lui délègues ton travail – elles arrivent quand tu collabores avec elle de façon intentionnelle. Tes objectifs, ton contexte et ta pensée critique font toute la différence.
+                    </div>
+                </div>
+
+                <!-- 2. Le Framework 4D -->
+                <div class="docs-section" id="framework-4d">
+                    <h2><span class="docs-section-num">2</span> Le Framework 4D</h2>
+                    <p>
+                        Le Framework 4D définit quatre compétences interconnectées qui, ensemble, constituent l'AI Fluency. Ce ne sont pas des cases à cocher – elles fonctionnent comme une boucle de rétroaction continue qui se renforce à chaque interaction.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Compétence</th>
+                                    <th>Question centrale</th>
+                                    <th>Ce qu'elle couvre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Délégation</strong></td>
+                                    <td>Qui fait quoi ?</td>
+                                    <td>Définir ses objectifs et décider quand, si, et comment impliquer l'IA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Description</strong></td>
+                                    <td>Comment expliquer ce dont j'ai besoin ?</td>
+                                    <td>Communiquer clairement pour obtenir des comportements et résultats utiles</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Discernement</strong></td>
+                                    <td>Est-ce que c'est bon ?</td>
+                                    <td>Évaluer de façon critique les résultats, le raisonnement et le comportement de l'IA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Diligence</strong></td>
+                                    <td>Suis-je responsable ?</td>
+                                    <td>Assumer la responsabilité éthique du travail assisté par IA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        Description et Discernement forment une boucle continue : tu décris ce que tu veux, tu évalues ce que tu reçois, puis tu affines ta description. Chaque itération approfondit la collaboration et te rapproche de ton objectif.
+                    </p>
+                </div>
+
+                <!-- 3. Délégation -->
+                <div class="docs-section" id="delegation">
+                    <h2><span class="docs-section-num">3</span> Délégation</h2>
+                    <p>
+                        La délégation est la première étape – déterminer <em>ce que les humains doivent faire</em>, <em>ce que l'IA doit faire</em>, et <em>ce que vous devez faire ensemble</em>. Une bonne délégation est le fondement d'une collaboration IA réfléchie.
+                    </p>
+
+                    <h3>Problem Awareness – Conscience du problème</h3>
+                    <p>
+                        Avant d'ouvrir Claude, clarifie ce que tu veux vraiment accomplir. À quoi ressemble le succès ? Qu'est-ce qui compte le plus ? Cette clarté devient ton étoile polaire tout au long de l'interaction – elle te permet de rester sur la bonne voie même lorsque la conversation évolue.
+                    </p>
+                    <p>
+                        Sans cette conscience, tu risques de dériver : l'IA peut générer beaucoup de contenu plausible qui ne sert pas vraiment ton objectif initial. Ta compréhension du problème est ce qui rend la collaboration significative.
+                    </p>
+
+                    <h3>Platform Awareness – Conscience des outils</h3>
+                    <p>
+                        Tous les systèmes d'IA ne sont pas égaux. Différents modèles ont différents points forts – certains excellent dans le raisonnement complexe, d'autres dans le code, l'écriture créative ou l'analyse structurée. Les modèles Claude varient aussi : <strong>Opus</strong> pour les tâches les plus exigeantes, <strong>Sonnet</strong> pour le meilleur équilibre capacité/vitesse, <strong>Haiku</strong> pour les tâches légères et rapides.
+                    </p>
+                    <p>
+                        Choisir le bon outil pour le bon travail – comme décider de marcher, prendre le bus ou conduire selon ta situation.
+                    </p>
+
+                    <h3>Task Delegation – Répartition des tâches</h3>
+                    <p>
+                        Une fois ton objectif et ton outil définis, décide comment répartir le travail. Les humains apportent créativité, vécu, jugement et responsabilité. Claude apporte vitesse, cohérence et capacité à traiter de grandes quantités d'informations. Les meilleurs résultats viennent de l'exploitation des forces de chacun – pas du remplacement de l'un par l'autre.
+                    </p>
+                    <div class="docs-note">
+                        <strong>Exemple :</strong> Si ton objectif est d'améliorer ton écriture argumentative, ne demande pas à Claude d'écrire tes arguments. Demande-lui plutôt d'être ton partenaire de débat – en soulevant des contre-arguments pendant que tu développes ta propre position. Tu restes aux commandes.
+                    </div>
+                </div>
+
+                <!-- 4. Description -->
+                <div class="docs-section" id="description">
+                    <h2><span class="docs-section-num">4</span> Description</h2>
+                    <p>
+                        La description, c'est comment tu communiques avec Claude. Cela va au-delà d'« écrire un bon prompt » – c'est avoir une vraie conversation avec un collaborateur. Plus tu décris précisément ce dont tu as besoin, plus la réponse sera utile.
+                    </p>
+
+                    <h3>Product Description – Ce que tu veux</h3>
+                    <p>
+                        Définis le résultat final en détail : format, longueur, audience, ton, messages clés. Ne dis pas « écris un email ». Dis :
+                    </p>
+                    <pre><code>"Écris un email de relance de 150 mots pour un client qui n'a pas répondu depuis deux semaines.
+Ton professionnel mais chaleureux. Objectif : relancer sans être insistant.
+Termine par une question précise pour inviter une réponse."</code></pre>
+
+                    <h3>Process Description – Comment Claude doit raisonner</h3>
+                    <p>
+                        Dis à Claude <em>comment</em> aborder ta demande. Instructions utiles : « raisonne étape par étape », « considère plusieurs perspectives », « commence par les points les plus importants », « identifie les faiblesses potentielles avant de répondre ». Cela guide le processus de réflexion, pas seulement le résultat.
+                    </p>
+
+                    <h3>Performance Description – Comment Claude doit se comporter</h3>
+                    <p>
+                        Définis le comportement de Claude pendant la conversation. Exemples :
+                    </p>
+                    <ul>
+                        <li>« Sois un éditeur critique – challenge mes idées, ne te contente pas de les valider »</li>
+                        <li>« Pose-moi des questions au lieu de répondre directement »</li>
+                        <li>« Joue le rôle d'un recruteur sceptique et questionne mon raisonnement »</li>
+                        <li>« Sois concis – maximum 3 phrases par réponse »</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>À retenir :</strong> Une bonne description couvre le <em>quoi</em> (produit), le <em>comment</em> (processus) et la <em>manière</em> (performance). Couvrir ces trois dimensions te donne des résultats nettement meilleurs qu'une simple demande de résultat.
+                    </div>
+                </div>
+
+                <!-- 5. Discernement -->
+                <div class="docs-section" id="discernement">
+                    <h2><span class="docs-section-num">5</span> Discernement</h2>
+                    <p>
+                        Le discernement est la capacité à évaluer les résultats de l'IA de façon critique et précise – pas seulement pour traquer les erreurs, mais aussi pour reconnaître quand Claude t'apporte quelque chose d'inattendu et précieux. Le bon discernement distingue un utilisateur fluent de quelqu'un qui accepte passivement ce qui apparaît.
+                    </p>
+
+                    <h3>Product Discernment – Le résultat est-il bon ?</h3>
+                    <p>
+                        Évalue la qualité de ce que Claude a produit : l'information est-elle exacte ? Pertinente par rapport à ton vrai objectif ? Cohérente et bien structurée ? Claude a-t-il omis quelque chose d'important ? Aussi : Claude t'a-t-il offert une perspective que tu n'avais pas considérée ?
+                    </p>
+
+                    <h3>Process Discernment – Le raisonnement est-il solide ?</h3>
+                    <p>
+                        Regarde <em>comment</em> Claude est arrivé à son résultat. A-t-il suivi des étapes logiques ? Fait des hypothèses raisonnables ? Pris en compte tous les facteurs pertinents ? Comprendre le raisonnement te permet de détecter des erreurs que tu aurais autrement manquées – et de faire confiance aux résultats qui tiennent la route.
+                    </p>
+
+                    <h3>Performance Discernment – Claude s'est-il comporté comme demandé ?</h3>
+                    <p>
+                        A-t-il maintenu le rôle ou le comportement que tu avais défini ? A-t-il challengé quand il le fallait ? Son style de communication était-il adapté à tes besoins ? Cette conscience t'aide à ajuster ta prochaine description pour de meilleurs résultats.
+                    </p>
+
+                    <div class="docs-note">
+                        <strong>La boucle Description–Discernement :</strong> Tu décris → tu reçois une réponse → tu évalues la qualité → tu affines ta description. Chaque itération approfondit la collaboration. Ce qui commence comme une demande brute évolue en un échange véritablement productif.
+                    </div>
+
+                    <h3>À propos des erreurs de l'IA</h3>
+                    <p>
+                        Claude peut <strong>halluciner</strong> – affirmer avec confiance quelque chose qui semble plausible mais qui est factuellement faux. Vérifie toujours les informations importantes en utilisant des sources externes non-IA. Tu es responsable de ce que tu fais avec les informations générées par l'IA.
+                    </p>
+                </div>
+
+                <!-- 6. Diligence -->
+                <div class="docs-section" id="diligence">
+                    <h2><span class="docs-section-num">6</span> Diligence</h2>
+                    <p>
+                        La diligence consiste à prendre la responsabilité de la façon dont tu utilises l'IA – à chaque étape du processus. Elle garantit que ton utilisation de l'IA reste éthique, transparente, et quelque chose que tu peux pleinement assumer.
+                    </p>
+
+                    <h3>Creation Diligence – Choisir ses outils avec soin</h3>
+                    <p>
+                        Avant d'utiliser un système d'IA, considère le contexte : confidentialité, sécurité, propriété des données que tu partages, et adéquation de l'outil à la tâche. Utiliser Claude pour un brainstorming personnel est différent de l'utiliser pour traiter des informations clients sensibles. Fais des choix délibérés.
+                    </p>
+
+                    <h3>Transparency Diligence – Être honnête sur le rôle de l'IA</h3>
+                    <p>
+                        Sois transparent sur la façon dont l'IA t'a aidé – avec tes collaborateurs, enseignants, employeurs ou clients. La maîtrise de l'IA est de plus en plus une compétence professionnelle à mettre en avant, pas à cacher. La transparence signifie aussi garder trace de tes interactions avec l'IA pour mieux comprendre ton propre processus.
+                    </p>
+
+                    <h3>Deployment Diligence – Assumer le résultat final</h3>
+                    <p>
+                        Tu es toujours responsable de ce que tu publies ou envoies dans le monde. Claude peut rédiger l'email, mais c'est toi qui l'envoies. Claude peut suggérer la stratégie, mais c'est toi qui la mets en œuvre. Avant de déployer un travail assisté par IA, vérifie son exactitude, évalue son adéquation, et assure-toi de pouvoir expliquer et défendre chaque partie.
+                    </p>
+                    <div class="docs-note">
+                        <strong>Le test ultime :</strong> Si quelqu'un demande « pourquoi as-tu abordé ça de cette façon ? » – peux-tu répondre ? Si non, tu as externalisé ta réflexion plutôt que de l'augmenter.
+                    </div>
+                </div>
+
+                <!-- 7. Modes d'interaction -->
+                <div class="docs-section" id="modes-interaction">
+                    <h2><span class="docs-section-num">7</span> Modes d'interaction</h2>
+                    <p>
+                        Chaque interaction avec l'IA correspond à l'un de trois modes. Comprendre dans quel mode tu te trouves t'aide à calibrer ton approche et tes attentes.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>Description</th>
+                                    <th>Exemple</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Automatisation</strong></td>
+                                    <td>Tu donnes une instruction précise, Claude l'exécute. L'humain définit la tâche, l'IA la réalise.</td>
+                                    <td>« Traduis ce paragraphe en anglais. » / « Formate ce JSON. »</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Augmentation</strong></td>
+                                    <td>Toi et Claude collaborez comme partenaires de réflexion, en itérant ensemble. Les deux contribuent au résultat.</td>
+                                    <td>Brainstorming, affiner un argument, rédiger et réviser ensemble</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Agence</strong></td>
+                                    <td>Tu configures Claude pour qu'il agisse de façon autonome en ton nom, en établissant ses connaissances et comportements plutôt qu'en spécifiant chaque action.</td>
+                                    <td>Un assistant personnalisé avec contexte, persona et règles définis</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        Le Framework 4D s'applique avec le plus de puissance en mode <strong>Augmentation</strong> – le va-et-vient itératif et collaboratif où se développe la vraie maîtrise de l'IA.
+                    </p>
+                </div>
+
+                <!-- 8. L'IA comme partenaire d'apprentissage -->
+                <div class="docs-section" id="apprentissage">
+                    <h2><span class="docs-section-num">8</span> L'IA comme partenaire d'apprentissage</h2>
+                    <p>
+                        Il y a une différence cruciale entre utiliser l'IA <em>pour faire ton travail</em> et utiliser l'IA <em>pour faire ton travail mieux</em>. Quand tu laisses régulièrement l'IA penser à ta place, tu rates l'opportunité de développer les compétences de pensée critique qui comptent vraiment dans le monde réel.
+                    </p>
+                    <p>
+                        L'objectif est d'utiliser Claude comme un <strong>coach, pas un remplaçant</strong>. Voici des façons concrètes de le faire :
+                    </p>
+
+                    <h3>Demander du coaching, pas des réponses</h3>
+                    <ul>
+                        <li>Au lieu de « Explique la photosynthèse » → <em>« Pose-moi des questions sur la photosynthèse pour tester ma compréhension »</em></li>
+                        <li>Au lieu de « Écris mon analyse » → <em>« Lis mon analyse et pose-moi des questions pour m'aider à aller plus loin »</em></li>
+                        <li>Au lieu de « Résous ce problème » → <em>« Sans le résoudre, donne-moi un indice pour commencer, puis travaillons-le ensemble »</em></li>
+                    </ul>
+
+                    <h3>Utiliser Claude comme ton étudiant</h3>
+                    <p>
+                        L'une des techniques d'apprentissage les plus efficaces : demande à Claude de jouer le rôle d'un étudiant qui ne comprend pas le sujet, et enseigne-lui. Expliquer quelque chose à quelqu'un d'autre t'oblige à solidifier et structurer ta propre compréhension.
+                    </p>
+
+                    <h3>Le test de contrôle</h3>
+                    <p>Après toute session d'apprentissage assistée par IA, demande-toi :</p>
+                    <ul>
+                        <li>Est-ce que je peux expliquer ce que j'ai appris à quelqu'un d'autre ?</li>
+                        <li>Est-ce que je pourrais résoudre un problème similaire sans IA ?</li>
+                        <li>Est-ce que je comprends <em>pourquoi</em> quelque chose fonctionne, pas seulement <em>que</em> ça fonctionne ?</li>
+                    </ul>
+                    <p>Si la réponse à l'une de ces questions est non, l'IA a pensé pour toi – pas avec toi.</p>
+                    <div class="docs-note">
+                        <strong>À retenir :</strong> Cette sensation de frustration quand tu es bloqué ? C'est ton cerveau qui construit de nouvelles connexions. Claude peut t'aider à démêler le nœud sans court-circuiter l'apprentissage lui-même.
+                    </div>
+                </div>
+
+                <!-- 9. Concepts techniques -->
+                <div class="docs-section" id="concepts-techniques">
+                    <h2><span class="docs-section-num">9</span> Concepts techniques</h2>
+                    <p>Comprendre ces concepts t'aide à travailler avec Claude plus efficacement et à avoir des attentes réalistes.</p>
+
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Concept</th>
+                                    <th>Ce que ça signifie</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>LLM</strong></td>
+                                    <td>Large Language Model – un système d'IA générative entraîné sur d'immenses quantités de texte pour comprendre et produire du langage humain. Claude est un LLM.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fenêtre de contexte</strong></td>
+                                    <td>La quantité d'information que Claude peut « voir » en même temps – l'historique complet de ta conversation plus les documents partagés. A une limite maximale qui varie selon le modèle.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hallucination</strong></td>
+                                    <td>Quand Claude affirme avec confiance quelque chose qui semble plausible mais est factuellement faux. Toujours vérifier les informations importantes avec des sources externes.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date de coupure</strong></td>
+                                    <td>Le point après lequel Claude n'a aucune connaissance intégrée du monde, basé sur sa date d'entraînement. Il ne peut pas connaître les événements récents sauf si tu les lui indiques.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Température</strong></td>
+                                    <td>Un paramètre contrôlant l'aléatoire. Haute température = plus créatif et varié. Basse température = plus prévisible et concentré. Affecte le style des réponses.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pré-entraînement</strong></td>
+                                    <td>La phase initiale où Claude a appris à partir d'immenses quantités de texte – développant une compréhension fondamentale du langage et des connaissances générales.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fine-tuning</strong></td>
+                                    <td>Entraînement complémentaire après le pré-entraînement qui apprend à Claude à suivre des instructions, être utile et éviter de produire du contenu nuisible.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RAG</strong></td>
+                                    <td>Retrieval Augmented Generation – une technique connectant l'IA à des sources de connaissance externes en temps réel, améliorant la précision et réduisant les hallucinations.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Biais</strong></td>
+                                    <td>Patterns systématiques dans les résultats de l'IA qui favorisent ou désavantagent injustement certains groupes ou perspectives, souvent reflet des données d'entraînement.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 10. Prompt Engineering -->
+                <div class="docs-section" id="prompt-engineering">
+                    <h2><span class="docs-section-num">10</span> Prompt Engineering</h2>
+                    <p>
+                        Le prompt engineering est la pratique de concevoir des inputs efficaces pour obtenir les meilleurs outputs de Claude. Ces techniques complètent la compétence Description du Framework 4D.
+                    </p>
+
+                    <h3 id="pe-cot">Chain-of-thought – Raisonnement en chaîne</h3>
+                    <p>
+                        Demande à Claude de raisonner étape par étape avant de donner une réponse finale. Améliore la précision sur les tâches complexes et rend le raisonnement transparent pour que tu puisses l'évaluer.
+                    </p>
+                    <pre><code>"Réfléchis à ce problème étape par étape avant de me donner ta réponse."</code></pre>
+
+                    <h3 id="pe-fewshot">Few-shot prompting</h3>
+                    <p>
+                        Montre à Claude des exemples du pattern input-output que tu veux. Le modèle apprend des exemples plutôt que de longues explications. Plus d'exemples (n-shot) = meilleur alignement à tes attentes.
+                    </p>
+                    <pre><code>"Voici deux exemples du ton que je veux :
+[Exemple 1 : input → output]
+[Exemple 2 : input → output]
+Maintenant fais la même chose pour : [ta demande]"</code></pre>
+
+                    <h3 id="pe-role">Définition de rôle et persona</h3>
+                    <p>
+                        Assigne à Claude un rôle spécifique, un niveau d'expertise ou un style de communication. Cela façonne toute la conversation.
+                    </p>
+                    <pre><code>"Tu es un designer UX senior avec 10 ans d'expérience en SaaS B2B.
+Examine mon parcours utilisateur et identifie les problèmes d'ergonomie."</code></pre>
+
+                    <h3 id="pe-format">Contraintes de format</h3>
+                    <p>
+                        Spécifie le format exact, la structure, la longueur ou les caractéristiques dont tu as besoin. Ne laisse pas le format au hasard.
+                    </p>
+                    <pre><code>"Donne-moi ta réponse sous forme de liste numérotée de 5 points, maximum 2 phrases chacun.
+Langage simple, sans jargon."</code></pre>
+
+                    <h3 id="pe-think">Approche think-first</h3>
+                    <p>
+                        Demande explicitement à Claude de travailler son raisonnement avant de s'engager sur une réponse. Produit des réponses plus complètes et réfléchies – particulièrement utile pour les problèmes ambigus ou complexes.
+                    </p>
+                    <pre><code>"Avant de répondre, réfléchis aux considérations clés et aux compromis potentiels.
+Donne-moi ensuite ta recommandation."</code></pre>
+
+                    <div class="docs-note">
+                        <strong>Source :</strong> Ce guide est basé sur le <em>AI Fluency Framework</em> de Rick Dakan, Joseph Feller et Anthropic (2025), publié sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">CC BY-NC-SA 4.0</a>.
+                    </div>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Sommaire</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#vue-ensemble">Vue d'ensemble</a></li>
+                    <li><a href="#framework-4d">Le Framework 4D</a></li>
+                    <li>
+                        <a href="#delegation">Délégation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#delegation">Problem Awareness</a></li>
+                            <li><a href="#delegation">Platform Awareness</a></li>
+                            <li><a href="#delegation">Task Delegation</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#description">Description</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#description">Produit</a></li>
+                            <li><a href="#description">Processus</a></li>
+                            <li><a href="#description">Performance</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#discernement">Discernement</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#discernement">Produit</a></li>
+                            <li><a href="#discernement">Processus</a></li>
+                            <li><a href="#discernement">Performance</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#diligence">Diligence</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#diligence">Création</a></li>
+                            <li><a href="#diligence">Transparence</a></li>
+                            <li><a href="#diligence">Déploiement</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#modes-interaction">Modes d'interaction</a></li>
+                    <li><a href="#apprentissage">L'IA comme partenaire d'apprentissage</a></li>
+                    <li><a href="#concepts-techniques">Concepts techniques</a></li>
+                    <li>
+                        <a href="#prompt-engineering">Prompt Engineering</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#pe-cot">Chain-of-thought</a></li>
+                            <li><a href="#pe-fewshot">Few-shot</a></li>
+                            <li><a href="#pe-role">Définition de rôle</a></li>
+                            <li><a href="#pe-format">Contraintes de format</a></li>
+                            <li><a href="#pe-think">Think-first</a></li>
+                        </ol>
+                    </li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits r&eacute;serv&eacute;s.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Confidentialit&eacute;</a>
+                <a href="../terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="../legal" data-key="footer_legal">Mentions l&eacute;gales</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=983f5b64" defer></script>
+    <script src="../../js/ux-enhancements.js?v=16c257c7" defer></script>
+</body>
+
+</html>

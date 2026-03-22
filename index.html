@@ -68,6 +68,19 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        .splash-countdown {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.15em;
+            color: #484848;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 1.8s forwards;
+        }
+
+        .splash-countdown span {
+            color: #A8D8EA;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -85,10 +98,19 @@
         <h1 class="splash-brand">StealthyLabs</h1>
         <div class="splash-line"></div>
         <p class="splash-status">redirecting...</p>
+        <p class="splash-countdown" id="splashCountdown">[ <span id="countdownNum">4</span> ]</p>
     </div>
 
     <script src="js/cookie-utils.js"></script>
     <script>
+        var countEl = document.getElementById('countdownNum');
+        var count = 4;
+        var interval = setInterval(function() {
+            count--;
+            if (countEl) countEl.textContent = count;
+            if (count <= 0) clearInterval(interval);
+        }, 1000);
+
         setTimeout(function() {
             var lang = getCookie('userLang') || (navigator.language && navigator.language.startsWith('fr') ? 'fr' : 'en');
             window.location.replace('/' + lang + '/network');

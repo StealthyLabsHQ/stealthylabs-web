@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Rich Presence - Documentation | StealthyLabs</title>
-    <meta name="description" content="Documentation de Claude RPC — Discord Rich Presence pour Claude Code et Claude Desktop. Installation, configuration et fonctionnalités.">
+    <meta name="description" content="Documentation de Claude RPC – Discord Rich Presence pour Claude Code et Claude Desktop. Installation, configuration et fonctionnalités.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stealthylabs.eu/fr/docs/claude-rpc">
@@ -123,170 +123,190 @@
             <i class="fas fa-arrow-left"></i> Retour aux docs
         </a>
 
-        <!-- Overview -->
-        <div class="docs-section">
-            <h2>Vue d'ensemble</h2>
-            <p>
-                <strong>Claude RPC</strong> est un client Discord Rich Presence qui affiche votre activité Claude en temps réel
-                directement sur votre profil Discord. Il détecte automatiquement Claude Code et Claude Desktop, suit le modèle
-                actif, le mode et la durée de session.
-            </p>
-            <p>
-                Zéro configuration requise — aucun Application ID Discord n'est nécessaire.
-            </p>
-        </div>
+        <div class="docs-layout">
 
-        <!-- Features -->
-        <div class="docs-section">
-            <h2>Fonctionnalités</h2>
-            <ul>
-                <li><strong>Détection automatique du client</strong> — Claude Code ou Claude Desktop</li>
-                <li><strong>Mode Claude Desktop</strong> — détecte l'onglet actif (Chat, Cowork, Code)</li>
-                <li><strong>Suivi du modèle en direct</strong> — Opus 4.6, Sonnet 4.6, Haiku 4.5, etc.</li>
-                <li><strong>Extended Thinking</strong> — affiche quand le mode étendu est actif</li>
-                <li><strong>Détection du contexte 1M</strong> — affiche (1M) pour les modèles compatibles</li>
-                <li><strong>Durée de session</strong> — liée à votre session réelle</li>
-                <li><strong>Timeout d'inactivité</strong> — affiche "Absent" après 15 minutes d'inactivité</li>
-                <li><strong>Barre système</strong> — démarrage automatique au boot (Windows)</li>
-                <li><strong>Zéro configuration</strong> — aucun Application ID Discord requis</li>
-                <li><strong>Sécurité renforcée</strong> — audit de sécurité réussi, toutes les failles corrigées</li>
-            </ul>
-        </div>
+            <article class="docs-main">
 
-        <!-- Installation -->
-        <div class="docs-section">
-            <h2>Installation</h2>
+                <div class="docs-section" id="vue-ensemble">
+                    <h2><span class="docs-section-num">1</span> Vue d'ensemble</h2>
+                    <p>
+                        <strong>Claude RPC</strong> est un client Discord Rich Presence qui affiche votre activité Claude en temps réel
+                        directement sur votre profil Discord. Il détecte automatiquement Claude Code et Claude Desktop, suit le modèle
+                        actif, le mode et la durée de session.
+                    </p>
+                    <p>
+                        Zéro configuration requise – aucun Application ID Discord n'est nécessaire.
+                    </p>
+                </div>
 
-            <h3>Option 1 — Exécutable standalone (recommandé)</h3>
-            <ol class="docs-steps">
-                <li>Téléchargez <code>claude-rpc-windows-x64.zip</code> depuis la <a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">dernière release</a></li>
-                <li>Extrayez le dossier</li>
-                <li>Double-cliquez sur <strong><code>claude-rpc.exe</code></strong></li>
-            </ol>
-            <div class="docs-note">
-                <strong>Note :</strong> Aucune installation requise — Node.js est inclus dans l'exécutable.
-            </div>
+                <div class="docs-section" id="fonctionnalites">
+                    <h2><span class="docs-section-num">2</span> Fonctionnalités</h2>
+                    <ul>
+                        <li><strong>Détection automatique du client</strong> – Claude Code ou Claude Desktop</li>
+                        <li><strong>Mode Claude Desktop</strong> – détecte l'onglet actif (Chat, Cowork, Code)</li>
+                        <li><strong>Suivi du modèle en direct</strong> – Opus 4.6, Sonnet 4.6, Haiku 4.5, etc.</li>
+                        <li><strong>Extended Thinking</strong> – affiche quand le mode étendu est actif</li>
+                        <li><strong>Détection du contexte 1M</strong> – affiche (1M) pour les modèles compatibles</li>
+                        <li><strong>Durée de session</strong> – liée à votre session réelle</li>
+                        <li><strong>Timeout d'inactivité</strong> – affiche "Absent" après 15 minutes d'inactivité</li>
+                        <li><strong>Barre système</strong> – démarrage automatique au boot (Windows)</li>
+                        <li><strong>Zéro configuration</strong> – aucun Application ID Discord requis</li>
+                        <li><strong>Sécurité renforcée</strong> – audit de sécurité réussi, toutes les failles corrigées</li>
+                    </ul>
+                </div>
 
-            <h3>Option 2 — Depuis les sources</h3>
-            <p>Requiert <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
-            <pre><code>git clone https://github.com/StealthyLabsHQ/claude-rpc.git
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">3</span> Installation</h2>
+
+                    <h3 id="installation-exe">Option 1 – Exécutable standalone (recommandé)</h3>
+                    <ol class="docs-steps">
+                        <li>Téléchargez <code>claude-rpc-windows-x64.zip</code> depuis la <a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">dernière release</a></li>
+                        <li>Extrayez le dossier</li>
+                        <li>Double-cliquez sur <strong><code>claude-rpc.exe</code></strong></li>
+                    </ol>
+                    <div class="docs-note">
+                        <strong>Note :</strong> Aucune installation requise – Node.js est inclus dans l'exécutable.
+                    </div>
+
+                    <h3 id="installation-src">Option 2 – Depuis les sources</h3>
+                    <p>Requiert <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/claude-rpc.git
 cd claude-rpc
 npm install</code></pre>
-            <p><strong>Windows :</strong> Double-cliquez sur <code>start-claude.bat</code></p>
-            <p><strong>macOS / Linux :</strong></p>
-            <pre><code>chmod +x start-claude.sh
+                    <p><strong>Windows :</strong> Double-cliquez sur <code>start-claude.bat</code></p>
+                    <p><strong>macOS / Linux :</strong></p>
+                    <pre><code>chmod +x start-claude.sh
 ./start-claude.sh</code></pre>
-            <p>Ou directement :</p>
-            <pre><code>node --no-deprecation index.js</code></pre>
-        </div>
+                    <p>Ou directement :</p>
+                    <pre><code>node --no-deprecation index.js</code></pre>
+                </div>
 
-        <!-- Auto-detection -->
-        <div class="docs-section">
-            <h2>Détection automatique</h2>
-            <div class="docs-table-wrap">
-                <table class="docs-table">
-                    <thead>
-                        <tr>
-                            <th>Élément détecté</th>
-                            <th>Source</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Client</td>
-                            <td>Détection de processus (chemin <code>claude.exe</code>)</td>
-                        </tr>
-                        <tr>
-                            <td>Mode Desktop</td>
-                            <td>Windows UI Automation (Chat / Cowork / Code)</td>
-                        </tr>
-                        <tr>
-                            <td>Modèle Desktop</td>
-                            <td>Windows UI Automation (bouton sélecteur de modèle)</td>
-                        </tr>
-                        <tr>
-                            <td>Modèle Code</td>
-                            <td><code>~/.claude/settings.json</code> ou session JSONL</td>
-                        </tr>
-                        <tr>
-                            <td>Provider</td>
-                            <td>Variables d'environnement, patterns de clé API, identifiants OAuth</td>
-                        </tr>
-                        <tr>
-                            <td>Durée de session</td>
-                            <td>Premier timestamp dans le JSONL de session active</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="docs-section" id="detection">
+                    <h2><span class="docs-section-num">4</span> Détection automatique</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Élément détecté</th>
+                                    <th>Source</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Client</td>
+                                    <td>Détection de processus (chemin <code>claude.exe</code>)</td>
+                                </tr>
+                                <tr>
+                                    <td>Mode Desktop</td>
+                                    <td>Windows UI Automation (Chat / Cowork / Code)</td>
+                                </tr>
+                                <tr>
+                                    <td>Modèle Desktop</td>
+                                    <td>Windows UI Automation (bouton sélecteur de modèle)</td>
+                                </tr>
+                                <tr>
+                                    <td>Modèle Code</td>
+                                    <td><code>~/.claude/settings.json</code> ou session JSONL</td>
+                                </tr>
+                                <tr>
+                                    <td>Provider</td>
+                                    <td>Variables d'environnement, patterns de clé API, identifiants OAuth</td>
+                                </tr>
+                                <tr>
+                                    <td>Durée de session</td>
+                                    <td>Premier timestamp dans le JSONL de session active</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <!-- Platform Support -->
-        <div class="docs-section">
-            <h2>Compatibilité</h2>
-            <div class="docs-table-wrap">
-                <table class="docs-table">
-                    <thead>
-                        <tr>
-                            <th>Fonctionnalité</th>
-                            <th>Windows</th>
-                            <th>macOS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Détection Claude Code</td>
-                            <td><span class="check">Complet</span></td>
-                            <td><span class="check">Complet</span></td>
-                        </tr>
-                        <tr>
-                            <td>Détection Claude Desktop</td>
-                            <td><span class="check">Complet (UI Automation)</span></td>
-                            <td><span class="cross">Basique (AppleScript)</span></td>
-                        </tr>
-                        <tr>
-                            <td>Mode Desktop (Chat/Cowork/Code)</td>
-                            <td><span class="check">Complet</span></td>
-                            <td><span class="cross">Requiert accessibilité</span></td>
-                        </tr>
-                        <tr>
-                            <td>Détection du modèle Desktop</td>
-                            <td><span class="check">Complet</span></td>
-                            <td><span class="cross">Via JSONL uniquement</span></td>
-                        </tr>
-                        <tr>
-                            <td>Barre système</td>
-                            <td><span class="check">Complet (démarrage auto)</span></td>
-                            <td><span class="cross">Mode terminal</span></td>
-                        </tr>
-                        <tr>
-                            <td>Exécutable standalone</td>
-                            <td><span class="check">Oui (.exe + Node.js intégré)</span></td>
-                            <td><span class="cross">Depuis les sources</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="docs-section" id="compatibilite">
+                    <h2><span class="docs-section-num">5</span> Compatibilité</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Fonctionnalité</th>
+                                    <th>Windows</th>
+                                    <th>macOS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Détection Claude Code</td>
+                                    <td><span class="check">Complet</span></td>
+                                    <td><span class="check">Complet</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Détection Claude Desktop</td>
+                                    <td><span class="check">Complet (UI Automation)</span></td>
+                                    <td><span class="cross">Basique (AppleScript)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mode Desktop (Chat/Cowork/Code)</td>
+                                    <td><span class="check">Complet</span></td>
+                                    <td><span class="cross">Requiert accessibilité</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Détection du modèle Desktop</td>
+                                    <td><span class="check">Complet</span></td>
+                                    <td><span class="cross">Via JSONL uniquement</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Barre système</td>
+                                    <td><span class="check">Complet (démarrage auto)</span></td>
+                                    <td><span class="cross">Mode terminal</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Exécutable standalone</td>
+                                    <td><span class="check">Oui (.exe + Node.js intégré)</span></td>
+                                    <td><span class="cross">Depuis les sources</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <!-- Requirements -->
-        <div class="docs-section">
-            <h2>Prérequis</h2>
-            <ul>
-                <li><strong>OS :</strong> Windows 10/11 ou macOS 12+</li>
-                <li><strong>Discord</strong> client de bureau en cours d'exécution</li>
-                <li><strong>Claude Code</strong> ou <strong>Claude Desktop</strong></li>
-                <li>Node.js 18+ (uniquement pour l'installation depuis les sources)</li>
-            </ul>
-        </div>
+                <div class="docs-section" id="prerequis">
+                    <h2><span class="docs-section-num">6</span> Prérequis</h2>
+                    <ul>
+                        <li><strong>OS :</strong> Windows 10/11 ou macOS 12+</li>
+                        <li><strong>Discord</strong> client de bureau en cours d'exécution</li>
+                        <li><strong>Claude Code</strong> ou <strong>Claude Desktop</strong></li>
+                        <li>Node.js 18+ (uniquement pour l'installation depuis les sources)</li>
+                    </ul>
+                </div>
 
-        <!-- Links -->
-        <div class="docs-section">
-            <h2>Liens</h2>
-            <ul>
-                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Code source sur GitHub</a></li>
-                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Dernière release</a></li>
-            </ul>
+                <div class="docs-section" id="liens">
+                    <h2><span class="docs-section-num">7</span> Liens</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/claude-rpc" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Code source sur GitHub</a></li>
+                        <li><a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Dernière release</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Sommaire</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#vue-ensemble">Vue d'ensemble</a></li>
+                    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#installation-exe">Exécutable standalone</a></li>
+                            <li><a href="#installation-src">Depuis les sources</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#detection">Détection automatique</a></li>
+                    <li><a href="#compatibilite">Compatibilité</a></li>
+                    <li><a href="#prerequis">Prérequis</a></li>
+                    <li><a href="#liens">Liens</a></li>
+                </ol>
+            </aside>
+
         </div>
 
     </div>

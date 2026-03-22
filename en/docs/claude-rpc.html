@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Rich Presence - Documentation | StealthyLabs</title>
-    <meta name="description" content="Claude RPC documentation — Discord Rich Presence for Claude Code and Claude Desktop. Installation, configuration and features.">
+    <meta name="description" content="Claude RPC documentation – Discord Rich Presence for Claude Code and Claude Desktop. Installation, configuration and features.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stealthylabs.eu/en/docs/claude-rpc">
@@ -123,170 +123,190 @@
             <i class="fas fa-arrow-left"></i> Back to docs
         </a>
 
-        <!-- Overview -->
-        <div class="docs-section">
-            <h2>Overview</h2>
-            <p>
-                <strong>Claude RPC</strong> is a Discord Rich Presence client that displays your Claude activity in real time
-                directly on your Discord profile. It auto-detects Claude Code and Claude Desktop, tracks the active model,
-                mode, and session duration.
-            </p>
-            <p>
-                Zero configuration required — no Discord Application ID needed.
-            </p>
-        </div>
+        <div class="docs-layout">
 
-        <!-- Features -->
-        <div class="docs-section">
-            <h2>Features</h2>
-            <ul>
-                <li><strong>Auto-detect Claude client</strong> — Claude Code or Claude Desktop</li>
-                <li><strong>Claude Desktop mode</strong> — detects active tab (Chat, Cowork, Code)</li>
-                <li><strong>Live model tracking</strong> — Opus 4.6, Sonnet 4.6, Haiku 4.5, etc.</li>
-                <li><strong>Extended Thinking</strong> — shows when Extended mode is enabled</li>
-                <li><strong>1M context detection</strong> — displays (1M) for supported models</li>
-                <li><strong>Session elapsed time</strong> — linked to your actual session</li>
-                <li><strong>Idle timeout</strong> — shows Away after 15 minutes of inactivity</li>
-                <li><strong>System tray</strong> — Start on boot toggle (Windows)</li>
-                <li><strong>Zero config</strong> — no Discord Application ID needed</li>
-                <li><strong>Security hardened</strong> — audit passed, all findings fixed</li>
-            </ul>
-        </div>
+            <article class="docs-main">
 
-        <!-- Installation -->
-        <div class="docs-section">
-            <h2>Installation</h2>
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Overview</h2>
+                    <p>
+                        <strong>Claude RPC</strong> is a Discord Rich Presence client that displays your Claude activity in real time
+                        directly on your Discord profile. It auto-detects Claude Code and Claude Desktop, tracks the active model,
+                        mode, and session duration.
+                    </p>
+                    <p>
+                        Zero configuration required – no Discord Application ID needed.
+                    </p>
+                </div>
 
-            <h3>Option 1 — Standalone exe (recommended)</h3>
-            <ol class="docs-steps">
-                <li>Download <code>claude-rpc-windows-x64.zip</code> from the <a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">latest release</a></li>
-                <li>Extract the folder</li>
-                <li>Double-click <strong><code>claude-rpc.exe</code></strong></li>
-            </ol>
-            <div class="docs-note">
-                <strong>Note:</strong> No install needed — Node.js is bundled inside the executable.
-            </div>
+                <div class="docs-section" id="features">
+                    <h2><span class="docs-section-num">2</span> Features</h2>
+                    <ul>
+                        <li><strong>Auto-detect Claude client</strong> – Claude Code or Claude Desktop</li>
+                        <li><strong>Claude Desktop mode</strong> – detects active tab (Chat, Cowork, Code)</li>
+                        <li><strong>Live model tracking</strong> – Opus 4.6, Sonnet 4.6, Haiku 4.5, etc.</li>
+                        <li><strong>Extended Thinking</strong> – shows when Extended mode is enabled</li>
+                        <li><strong>1M context detection</strong> – displays (1M) for supported models</li>
+                        <li><strong>Session elapsed time</strong> – linked to your actual session</li>
+                        <li><strong>Idle timeout</strong> – shows Away after 15 minutes of inactivity</li>
+                        <li><strong>System tray</strong> – Start on boot toggle (Windows)</li>
+                        <li><strong>Zero config</strong> – no Discord Application ID needed</li>
+                        <li><strong>Security hardened</strong> – audit passed, all findings fixed</li>
+                    </ul>
+                </div>
 
-            <h3>Option 2 — From source</h3>
-            <p>Requires <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
-            <pre><code>git clone https://github.com/StealthyLabsHQ/claude-rpc.git
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">3</span> Installation</h2>
+
+                    <h3 id="installation-exe">Option 1 – Standalone exe (recommended)</h3>
+                    <ol class="docs-steps">
+                        <li>Download <code>claude-rpc-windows-x64.zip</code> from the <a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">latest release</a></li>
+                        <li>Extract the folder</li>
+                        <li>Double-click <strong><code>claude-rpc.exe</code></strong></li>
+                    </ol>
+                    <div class="docs-note">
+                        <strong>Note:</strong> No install needed – Node.js is bundled inside the executable.
+                    </div>
+
+                    <h3 id="installation-src">Option 2 – From source</h3>
+                    <p>Requires <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/claude-rpc.git
 cd claude-rpc
 npm install</code></pre>
-            <p><strong>Windows:</strong> Double-click <code>start-claude.bat</code></p>
-            <p><strong>macOS / Linux:</strong></p>
-            <pre><code>chmod +x start-claude.sh
+                    <p><strong>Windows:</strong> Double-click <code>start-claude.bat</code></p>
+                    <p><strong>macOS / Linux:</strong></p>
+                    <pre><code>chmod +x start-claude.sh
 ./start-claude.sh</code></pre>
-            <p>Or run directly:</p>
-            <pre><code>node --no-deprecation index.js</code></pre>
-        </div>
+                    <p>Or run directly:</p>
+                    <pre><code>node --no-deprecation index.js</code></pre>
+                </div>
 
-        <!-- Auto-detection -->
-        <div class="docs-section">
-            <h2>Auto-detection</h2>
-            <div class="docs-table-wrap">
-                <table class="docs-table">
-                    <thead>
-                        <tr>
-                            <th>Detection</th>
-                            <th>Source</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Client</td>
-                            <td>Process detection (<code>claude.exe</code> path)</td>
-                        </tr>
-                        <tr>
-                            <td>Desktop mode</td>
-                            <td>Windows UI Automation (Chat / Cowork / Code)</td>
-                        </tr>
-                        <tr>
-                            <td>Desktop model</td>
-                            <td>Windows UI Automation (model selector button)</td>
-                        </tr>
-                        <tr>
-                            <td>Code model</td>
-                            <td><code>~/.claude/settings.json</code> or session JSONL</td>
-                        </tr>
-                        <tr>
-                            <td>Provider</td>
-                            <td>Environment variables, API key patterns, OAuth credentials</td>
-                        </tr>
-                        <tr>
-                            <td>Session time</td>
-                            <td>First timestamp in the active session JSONL</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="docs-section" id="detection">
+                    <h2><span class="docs-section-num">4</span> Auto-detection</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Detection</th>
+                                    <th>Source</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Client</td>
+                                    <td>Process detection (<code>claude.exe</code> path)</td>
+                                </tr>
+                                <tr>
+                                    <td>Desktop mode</td>
+                                    <td>Windows UI Automation (Chat / Cowork / Code)</td>
+                                </tr>
+                                <tr>
+                                    <td>Desktop model</td>
+                                    <td>Windows UI Automation (model selector button)</td>
+                                </tr>
+                                <tr>
+                                    <td>Code model</td>
+                                    <td><code>~/.claude/settings.json</code> or session JSONL</td>
+                                </tr>
+                                <tr>
+                                    <td>Provider</td>
+                                    <td>Environment variables, API key patterns, OAuth credentials</td>
+                                </tr>
+                                <tr>
+                                    <td>Session time</td>
+                                    <td>First timestamp in the active session JSONL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <!-- Platform Support -->
-        <div class="docs-section">
-            <h2>Platform Support</h2>
-            <div class="docs-table-wrap">
-                <table class="docs-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Windows</th>
-                            <th>macOS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Claude Code detection</td>
-                            <td><span class="check">Full</span></td>
-                            <td><span class="check">Full</span></td>
-                        </tr>
-                        <tr>
-                            <td>Claude Desktop detection</td>
-                            <td><span class="check">Full (UI Automation)</span></td>
-                            <td><span class="cross">Basic (AppleScript)</span></td>
-                        </tr>
-                        <tr>
-                            <td>Desktop mode (Chat/Cowork/Code)</td>
-                            <td><span class="check">Full</span></td>
-                            <td><span class="cross">Requires accessibility</span></td>
-                        </tr>
-                        <tr>
-                            <td>Desktop model detection</td>
-                            <td><span class="check">Full</span></td>
-                            <td><span class="cross">Via JSONL only</span></td>
-                        </tr>
-                        <tr>
-                            <td>System tray</td>
-                            <td><span class="check">Full (Start on boot)</span></td>
-                            <td><span class="cross">Terminal mode</span></td>
-                        </tr>
-                        <tr>
-                            <td>Standalone exe</td>
-                            <td><span class="check">Yes (.exe + bundled Node.js)</span></td>
-                            <td><span class="cross">Run from source</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="docs-section" id="platform-support">
+                    <h2><span class="docs-section-num">5</span> Platform Support</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Windows</th>
+                                    <th>macOS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Claude Code detection</td>
+                                    <td><span class="check">Full</span></td>
+                                    <td><span class="check">Full</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Claude Desktop detection</td>
+                                    <td><span class="check">Full (UI Automation)</span></td>
+                                    <td><span class="cross">Basic (AppleScript)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Desktop mode (Chat/Cowork/Code)</td>
+                                    <td><span class="check">Full</span></td>
+                                    <td><span class="cross">Requires accessibility</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Desktop model detection</td>
+                                    <td><span class="check">Full</span></td>
+                                    <td><span class="cross">Via JSONL only</span></td>
+                                </tr>
+                                <tr>
+                                    <td>System tray</td>
+                                    <td><span class="check">Full (Start on boot)</span></td>
+                                    <td><span class="cross">Terminal mode</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Standalone exe</td>
+                                    <td><span class="check">Yes (.exe + bundled Node.js)</span></td>
+                                    <td><span class="cross">Run from source</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-        <!-- Requirements -->
-        <div class="docs-section">
-            <h2>Requirements</h2>
-            <ul>
-                <li><strong>OS:</strong> Windows 10/11 or macOS 12+</li>
-                <li><strong>Discord</strong> desktop client running</li>
-                <li><strong>Claude Code</strong> or <strong>Claude Desktop</strong></li>
-                <li>Node.js 18+ (only for installation from source)</li>
-            </ul>
-        </div>
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">6</span> Requirements</h2>
+                    <ul>
+                        <li><strong>OS:</strong> Windows 10/11 or macOS 12+</li>
+                        <li><strong>Discord</strong> desktop client running</li>
+                        <li><strong>Claude Code</strong> or <strong>Claude Desktop</strong></li>
+                        <li>Node.js 18+ (only for installation from source)</li>
+                    </ul>
+                </div>
 
-        <!-- Links -->
-        <div class="docs-section">
-            <h2>Links</h2>
-            <ul>
-                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Source code on GitHub</a></li>
-                <li><a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Latest release</a></li>
-            </ul>
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">7</span> Links</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/claude-rpc" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Source code on GitHub</a></li>
+                        <li><a href="https://github.com/StealthyLabsHQ/claude-rpc/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Latest release</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#installation-exe">Standalone exe</a></li>
+                            <li><a href="#installation-src">From source</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#detection">Auto-detection</a></li>
+                    <li><a href="#platform-support">Platform Support</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ol>
+            </aside>
+
         </div>
 
     </div>

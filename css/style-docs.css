@@ -1,5 +1,5 @@
 /* =========================================================================
-   DOCUMENTATION PAGES
+   DOCUMENTATION PAGES — Wikipedia-style layout
    ========================================================================= */
 
 .docs-back {
@@ -11,63 +11,180 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     text-decoration: none;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     transition: color 0.2s;
 }
 
-.docs-back:hover {
-    color: var(--accent);
-}
-
-.docs-back i {
-    font-size: 0.75rem;
-}
+.docs-back:hover { color: var(--accent); }
+.docs-back i { font-size: 0.75rem; }
 
 /* -----------------------------------------------------------------
-   SECTION BLOCKS
+   WIKIPEDIA-STYLE LAYOUT
    ----------------------------------------------------------------- */
 
-.docs-section {
-    max-width: 800px;
-    margin: 0 auto 32px auto;
+.docs-layout {
+    display: flex;
+    gap: 28px;
+    max-width: 1020px;
+    margin: 0 auto 60px auto;
+    align-items: flex-start;
+}
+
+.docs-main {
+    flex: 1;
+    min-width: 0;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 28px 32px;
+    padding: 36px 40px;
 }
 
-.docs-section h2 {
-    font-size: 0.75rem;
+/* -----------------------------------------------------------------
+   TABLE OF CONTENTS SIDEBAR
+   ----------------------------------------------------------------- */
+
+.docs-toc {
+    width: 210px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 76px;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-highest) transparent;
+}
+
+.docs-toc-title {
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     color: var(--text-muted);
-    margin: 0 0 20px 0;
-    padding-bottom: 12px;
+    margin: 0 0 12px 0;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--border);
 }
 
-.docs-section h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 20px 0 10px 0;
+.docs-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc-l1;
 }
 
-.docs-section h3:first-child {
-    margin-top: 0;
+.docs-toc-list > li {
+    counter-increment: toc-l1;
 }
+
+.docs-toc-list > li > a::before {
+    content: counter(toc-l1) ". ";
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
+.docs-toc-list li {
+    margin: 0;
+}
+
+.docs-toc-list a {
+    display: block;
+    padding: 3px 0;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+    line-height: 1.4;
+}
+
+.docs-toc-list a:hover { color: var(--accent); }
+
+.docs-toc-list a.active { color: var(--accent); }
+
+.docs-toc-sub {
+    list-style: none;
+    padding-left: 14px;
+    margin: 2px 0 4px 0;
+    counter-reset: toc-l2;
+}
+
+.docs-toc-sub > li {
+    counter-increment: toc-l2;
+}
+
+.docs-toc-sub > li > a::before {
+    content: counter(toc-l1) "." counter(toc-l2) " ";
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+
+.docs-toc-sub a {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    padding: 2px 0;
+}
+
+/* -----------------------------------------------------------------
+   SECTION BLOCKS (flow inside .docs-main)
+   ----------------------------------------------------------------- */
+
+.docs-section {
+    margin: 0 0 36px 0;
+    padding: 0;
+}
+
+.docs-section + .docs-section {
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+}
+
+.docs-section:last-child {
+    margin-bottom: 0;
+}
+
+.docs-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-headline);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.docs-section-num {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.docs-section h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 22px 0 10px 0;
+}
+
+.docs-section h3:first-child { margin-top: 0; }
 
 .docs-section p {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    line-height: 1.7;
+    line-height: 1.75;
     margin: 0 0 12px 0;
 }
 
-.docs-section p:last-child {
-    margin-bottom: 0;
-}
+.docs-section p:last-child { margin-bottom: 0; }
 
 .docs-section ul,
 .docs-section ol {
@@ -78,9 +195,7 @@
     margin: 0 0 12px 0;
 }
 
-.docs-section li {
-    padding: 3px 0;
-}
+.docs-section li { padding: 3px 0; }
 
 .docs-section strong {
     color: var(--text-primary);
@@ -140,20 +255,15 @@
     padding: 8px 16px;
     background: var(--surface-high);
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     border-bottom: 1px solid var(--border);
 }
 
-.docs-table th:first-child {
-    border-radius: var(--radius-sm) 0 0 0;
-}
-
-.docs-table th:last-child {
-    border-radius: 0 var(--radius-sm) 0 0;
-}
+.docs-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.docs-table th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
 
 .docs-table td {
     padding: 10px 16px;
@@ -163,32 +273,15 @@
     line-height: 1.5;
 }
 
-.docs-table tr:last-child td {
-    border-bottom: none;
-}
+.docs-table tr:last-child td { border-bottom: none; }
+.docs-table td:first-child { color: var(--text-primary); font-weight: 500; white-space: nowrap; }
+.docs-table td code { font-size: 0.78rem; }
 
-.docs-table td:first-child {
-    color: var(--text-primary);
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.docs-table td code {
-    font-size: 0.78rem;
-}
-
-/* Check / X marks */
-.check {
-    color: #4caf50;
-    font-weight: 700;
-}
-
-.cross {
-    color: var(--text-muted);
-}
+.check { color: #4caf50; font-weight: 700; }
+.cross { color: var(--text-muted); }
 
 /* -----------------------------------------------------------------
-   CALLOUT / NOTE BOXES
+   CALLOUT / NOTE
    ----------------------------------------------------------------- */
 
 .docs-note {
@@ -203,9 +296,7 @@
     line-height: 1.6;
 }
 
-.docs-note strong {
-    color: var(--accent);
-}
+.docs-note strong { color: var(--accent); }
 
 /* -----------------------------------------------------------------
    STEP LIST
@@ -229,17 +320,42 @@
     border-bottom: 1px solid var(--border);
 }
 
-.docs-steps li:last-child {
-    border-bottom: none;
-}
-
-.docs-steps li > div {
-    flex: 1;
-    min-width: 0;
-}
+.docs-steps li:last-child { border-bottom: none; }
+.docs-steps li > div { flex: 1; min-width: 0; }
 
 .docs-steps li::before {
     content: counter(step-counter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    background: var(--surface-high);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* Div-based step variant (.docs-step + .docs-step-num) */
+.docs-step {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+}
+
+.docs-step:last-child { border-bottom: none; }
+.docs-step > div { flex: 1; min-width: 0; }
+
+.docs-step-num {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -279,10 +395,20 @@
    RESPONSIVE
    ----------------------------------------------------------------- */
 
-@media (max-width: 600px) {
-    .docs-section {
-        padding: 20px;
+@media (max-width: 860px) {
+    .docs-layout {
+        flex-direction: column-reverse;
     }
+
+    .docs-toc {
+        width: 100%;
+        position: static;
+        max-height: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .docs-main { padding: 20px; }
 
     .docs-table th,
     .docs-table td {
@@ -290,7 +416,5 @@
         font-size: 0.8rem;
     }
 
-    .docs-section pre {
-        padding: 12px;
-    }
+    .docs-section pre { padding: 12px; }
 }

@@ -1,12 +1,29 @@
 import { Router, Request, Response } from 'express';
+import rateLimit from 'express-rate-limit';
 import { registerSchema, loginSchema } from '../validators/auth.validator';
 import {
   registerUser,
   loginUser,
-  refreshToken,
+  refreshAccessToken,
   logoutUser,
   getUserById,
 } from '../services/auth.service';
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: { code: 'RATE_LIMITED', message: 'Too many requests, please try again later.' } },
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: { code: 'RATE_LIMITED', message: 'Too many login attempts, please try again later.' } },
+});
 
 const router = Router();
 
@@ -14,7 +31,7 @@ const router = Router();
  * POST /api/auth/register
  * Register a new user account
  */
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register', authLimiter, async (req: Request, res: Response) => {
   try {
     // Validate input
     const validationResult = registerSchema.safeParse(req.body);
@@ -71,7 +88,7 @@ router.post('/register', async (req: Request, res: Response) => {
  * POST /api/auth/login
  * Login user and create session
  */
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login', loginLimiter, async (req: Request, res: Response) => {
   try {
     // Validate input
     const validationResult = loginSchema.safeParse(req.body);
@@ -146,9 +163,9 @@ router.post('/login', async (req: Request, res: Response) => {
  */
 router.post('/refresh', async (req: Request, res: Response) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshTokenCookie = req.cookies.refreshToken;
 
-    if (!refreshToken) {
+    if (!refreshTokenCookie) {
       return res.status(401).json({
         error: {
           code: 'MISSING_REFRESH_TOKEN',
@@ -157,7 +174,7 @@ router.post('/refresh', async (req: Request, res: Response) => {
       });
     }
 
-    const result = await refreshToken(refreshToken);
+    const result = await refreshAccessToken(refreshTokenCookie);
 
     return res.status(200).json({
       user: result.user,
@@ -200,10 +217,10 @@ router.post('/refresh', async (req: Request, res: Response) => {
  */
 router.post('/logout', async (req: Request, res: Response) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshTokenCookie = req.cookies.refreshToken;
 
-    if (refreshToken) {
-      await logoutUser(refreshToken);
+    if (refreshTokenCookie) {
+      await logoutUser(refreshTokenCookie);
     }
 
     // Clear refresh token cookie

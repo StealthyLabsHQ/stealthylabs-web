@@ -1,5 +1,11 @@
 import jwt from 'jsonwebtoken';
 
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.JWT_ACCESS_TOKEN_SECRET || !process.env.JWT_REFRESH_TOKEN_SECRET) {
+    throw new Error('JWT_ACCESS_TOKEN_SECRET and JWT_REFRESH_TOKEN_SECRET must be set in production');
+  }
+}
+
 // JWT Configuration
 export const JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET || 'dev-access-secret-key';
 export const JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET || 'dev-refresh-secret-key';

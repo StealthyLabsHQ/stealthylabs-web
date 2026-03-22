@@ -1,12 +1,21 @@
 import argon2 from 'argon2';
-import { PrismaClient, Prisma } from '@prisma/client';
-import { generateAccessToken, generateRefreshToken } from '../config/jwt.config';
+import { createHash, randomBytes } from 'crypto';
+import { PrismaClient } from '@prisma/client';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../config/jwt.config';
 import type { RegisterInput, LoginInput } from '../validators/auth.validator';
 
 const prisma = new PrismaClient();
 
 /**
- * Hash password using argon2
+ * Hash a token deterministically with SHA-256.
+ * Produces a 64-character hex string matching the Char(64) DB column.
+ * Unlike Argon2, this is a pure lookup hash – not for passwords.
+ */
+const hashToken = (token: string): string =>
+  createHash('sha256').update(token).digest('hex');
+
+/**
+ * Hash password using argon2id
  */
 export const hashPassword = async (password: string): Promise<string> => {
   return argon2.hash(password, {
@@ -30,10 +39,7 @@ export const verifyPassword = async (hash: string, password: string): Promise<bo
 export const registerUser = async (input: RegisterInput) => {
   const { email, password, displayName } = input;
 
-  // Check if user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
+  const existingUser = await prisma.user.findUnique({ where: { email } });
 
   if (existingUser) {
     throw {
@@ -42,10 +48,8 @@ export const registerUser = async (input: RegisterInput) => {
     };
   }
 
-  // Hash password
   const passwordHash = await hashPassword(password);
 
-  // Create user with GDPR consent
   const user = await prisma.user.create({
     data: {
       email,
@@ -72,7 +76,6 @@ export const registerUser = async (input: RegisterInput) => {
 export const loginUser = async (input: LoginInput, userAgent?: string, ipAddress?: string) => {
   const { email, password } = input;
 
-  // Find user by email
   const user = await prisma.user.findUnique({
     where: { email },
     select: {
@@ -86,62 +89,44 @@ export const loginUser = async (input: LoginInput, userAgent?: string, ipAddress
   });
 
   if (!user) {
-    throw {
-      code: 'INVALID_CREDENTIALS',
-      message: 'Invalid email or password',
-    };
+    throw { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' };
   }
 
   if (user.deletedAt) {
-    throw {
-      code: 'ACCOUNT_DELETED',
-      message: 'This account has been deleted',
-    };
+    throw { code: 'ACCOUNT_DELETED', message: 'This account has been deleted' };
   }
 
-  // Verify password
   const isPasswordValid = await verifyPassword(user.passwordHash, password);
 
   if (!isPasswordValid) {
-    throw {
-      code: 'INVALID_CREDENTIALS',
-      message: 'Invalid email or password',
-    };
+    throw { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' };
   }
 
-  // Generate tokens
-  const accessToken = generateAccessToken({
-    userId: user.id,
-    email: user.email,
-  });
+  const accessToken = generateAccessToken({ userId: user.id, email: user.email });
 
-  const refreshTokenPlain = generateRefreshToken({
-    sessionId: '', // Will be updated after session creation
-  });
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  // Hash refresh token for storage
-  const refreshTokenHash = await hashPassword(refreshTokenPlain);
-
-  // Create auth session
-  const now = new Date();
-  const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days
-
+  // Create session with a random placeholder hash (64 hex chars, unique, no collision risk)
   const session = await prisma.authSession.create({
     data: {
       userId: user.id,
-      refreshTokenHash,
+      refreshTokenHash: randomBytes(32).toString('hex'),
       userAgent,
       ipAddress,
       expiresAt,
     },
   });
 
-  // Generate proper refresh token with session ID
-  const refreshToken = generateRefreshToken({
-    sessionId: session.id,
+  // Generate the refresh token with the real session ID now that we have it
+  const refreshTokenValue = generateRefreshToken({ sessionId: session.id });
+  const tokenHash = hashToken(refreshTokenValue);
+
+  // Update the session with the correct hash
+  await prisma.authSession.update({
+    where: { id: session.id },
+    data: { refreshTokenHash: tokenHash },
   });
 
-  // Return user data and tokens
   return {
     user: {
       id: user.id,
@@ -150,89 +135,85 @@ export const loginUser = async (input: LoginInput, userAgent?: string, ipAddress
       isEmailVerified: user.isEmailVerified,
     },
     accessToken,
-    refreshToken,
+    refreshToken: refreshTokenValue,
   };
 };
 
 /**
  * Refresh access token using refresh token
  */
-export const refreshToken = async (refreshToken: string) => {
+export const refreshAccessToken = async (tokenValue: string) => {
+  // Verify JWT signature and expiry before touching the DB
+  let payload;
   try {
-    // Find session by refresh token
-    const session = await prisma.authSession.findFirst({
-      where: {
-        refreshTokenHash: await hashPassword(refreshToken),
-        revokedAt: null,
-        expiresAt: { gt: new Date() },
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-            displayName: true,
-            isEmailVerified: true,
-            deletedAt: true,
-          },
+    payload = verifyRefreshToken(tokenValue);
+  } catch {
+    throw { code: 'INVALID_REFRESH_TOKEN', message: 'Invalid or expired refresh token' };
+  }
+
+  const tokenHash = hashToken(tokenValue);
+
+  const session = await prisma.authSession.findFirst({
+    where: {
+      id: payload.sessionId,
+      refreshTokenHash: tokenHash,
+      revokedAt: null,
+      expiresAt: { gt: new Date() },
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          email: true,
+          displayName: true,
+          isEmailVerified: true,
+          deletedAt: true,
         },
       },
-    });
+    },
+  });
 
-    if (!session) {
-      throw {
-        code: 'INVALID_REFRESH_TOKEN',
-        message: 'Invalid or expired refresh token',
-      };
-    }
-
-    if (session.user.deletedAt) {
-      throw {
-        code: 'ACCOUNT_DELETED',
-        message: 'This account has been deleted',
-      };
-    }
-
-    // Generate new access token
-    const accessToken = generateAccessToken({
-      userId: session.user.id,
-      email: session.user.email,
-    });
-
-    return {
-      user: {
-        id: session.user.id,
-        email: session.user.email,
-        displayName: session.user.displayName,
-        isEmailVerified: session.user.isEmailVerified,
-      },
-      accessToken,
-    };
-  } catch (error) {
-    throw {
-      code: 'INVALID_REFRESH_TOKEN',
-      message: 'Invalid or expired refresh token',
-    };
+  if (!session) {
+    throw { code: 'INVALID_REFRESH_TOKEN', message: 'Invalid or expired refresh token' };
   }
+
+  if (session.user.deletedAt) {
+    throw { code: 'ACCOUNT_DELETED', message: 'This account has been deleted' };
+  }
+
+  const accessToken = generateAccessToken({
+    userId: session.user.id,
+    email: session.user.email,
+  });
+
+  await prisma.authSession.update({
+    where: { id: session.id },
+    data: { lastUsedAt: new Date() },
+  });
+
+  return {
+    user: {
+      id: session.user.id,
+      email: session.user.email,
+      displayName: session.user.displayName,
+      isEmailVerified: session.user.isEmailVerified,
+    },
+    accessToken,
+  };
 };
 
 /**
  * Logout user (revoke session)
  */
-export const logoutUser = async (refreshToken: string) => {
-  const refreshTokenHash = await hashPassword(refreshToken);
+export const logoutUser = async (tokenValue: string) => {
+  const tokenHash = hashToken(tokenValue);
 
-  const session = await prisma.authSession.updateMany({
-    where: {
-      refreshTokenHash,
-      revokedAt: null,
-    },
-    data: {
-      revokedAt: new Date(),
-    },
+  const result = await prisma.authSession.updateMany({
+    where: { refreshTokenHash: tokenHash, revokedAt: null },
+    data: { revokedAt: new Date() },
   });
 
-  return session.count > 0;
+  return result.count > 0;
 };
 
 /**
@@ -251,10 +232,7 @@ export const getUserById = async (userId: string) => {
   });
 
   if (!user) {
-    throw {
-      code: 'USER_NOT_FOUND',
-      message: 'User not found',
-    };
+    throw { code: 'USER_NOT_FOUND', message: 'User not found' };
   }
 
   return user;

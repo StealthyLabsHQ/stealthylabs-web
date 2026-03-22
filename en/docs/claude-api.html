@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building with Claude API – Complete Guide | StealthyLabs</title>
+    <meta name="description" content="Complete guide to building with the Claude API: authentication, Messages API, streaming, tool use, vision, prompt engineering, and best practices from A to Z.">
+
+    <link rel="canonical" href="https://stealthylabs.eu/en/docs/claude-api">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/claude-api">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/claude-api">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=c9af8c60">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=1.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="time-badge"><span id="clockDisplay">--:--</span></div>
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Settings"><i class="fas fa-cog"></i></button>
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Language</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Font</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh" data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+            <button class="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">About me</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Building with</span><br>
+                <span class="gradient-text">Claude API</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back"><i class="fas fa-arrow-left"></i> Back to docs</a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <!-- 1. Overview -->
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Overview</h2>
+                    <p>
+                        The <strong>Claude API</strong> is a RESTful HTTP API at <code>https://api.anthropic.com</code> that gives you programmatic access to Claude models. You send messages, Claude responds. That's the core. Everything else – streaming, tool use, vision, caching – builds on top of that single primitiv.
+                    </p>
+                    <p>
+                        The primary endpoint is the <strong>Messages API</strong> (<code>POST /v1/messages</code>). It handles single queries, multi-turn conversations, image analysis, function calling, and more.
+                    </p>
+                    <h3>What you can build</h3>
+                    <ul>
+                        <li>Chatbots and conversational assistants</li>
+                        <li>Code generation and review tools</li>
+                        <li>Document analysis and summarization pipelines</li>
+                        <li>Autonomous agents that call external tools and APIs</li>
+                        <li>Image understanding and multimodal applications</li>
+                        <li>Structured data extraction from unstructured text</li>
+                        <li>Content generation at scale via the Batch API</li>
+                    </ul>
+                    <h3>Available APIs</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>API</th><th>Status</th><th>Purpose</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>Messages API</strong></td><td>GA</td><td>Core conversational API</td></tr>
+                                <tr><td><strong>Message Batches API</strong></td><td>GA</td><td>Async processing at 50% cost reduction</td></tr>
+                                <tr><td><strong>Token Counting API</strong></td><td>GA</td><td>Count tokens before sending to manage costs</td></tr>
+                                <tr><td><strong>Models API</strong></td><td>GA</td><td>List available models and their details</td></tr>
+                                <tr><td><strong>Files API</strong></td><td>Beta</td><td>Upload files once, reference by ID across calls</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        <strong>Where to access Claude:</strong> Directly via Anthropic's API (first access to new features), or through AWS Bedrock, Google Cloud Vertex AI, and Microsoft Azure (integrated with cloud billing and IAM).
+                    </div>
+                </div>
+
+                <!-- 2. Getting Started -->
+                <div class="docs-section" id="getting-started">
+                    <h2><span class="docs-section-num">2</span> Getting Started</h2>
+                    <div class="docs-steps">
+                        <div class="docs-step">
+                            <span class="docs-step-num">1</span>
+                            <div>
+                                <strong>Create an Anthropic Console account</strong><br>
+                                Go to <a href="https://console.anthropic.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">console.anthropic.com</a> and sign up. You'll need to verify your email and optionally add billing to access higher rate limits.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">2</span>
+                            <div>
+                                <strong>Get your API key</strong><br>
+                                In the Console, navigate to <em>API Keys</em> and create a new key. Copy it immediately – it's only shown once. Store it securely (environment variable, secrets manager).
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">3</span>
+                            <div>
+                                <strong>Install the SDK or use cURL</strong><br>
+                                Official SDKs exist for Python, TypeScript/Node.js, Java, Go, C#, Ruby, and PHP. For quick tests, cURL works directly.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">4</span>
+                            <div>
+                                <strong>Make your first call</strong><br>
+                                Send a message and receive a response. See the examples below.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Install</h3>
+                    <pre><code># Python
+pip install anthropic
+
+# TypeScript / Node.js
+npm install @anthropic-ai/sdk
+
+# Java (Gradle)
+implementation("com.anthropic:anthropic-java:2.18.0")</code></pre>
+
+                    <h3>Your first request</h3>
+                    <pre><code># cURL
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Hello, Claude!"}]
+  }'</code></pre>
+
+                    <pre><code># Python
+import anthropic
+
+client = anthropic.Anthropic()  # Reads ANTHROPIC_API_KEY from env
+
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello, Claude!"}],
+)
+print(message.content[0].text)</code></pre>
+
+                    <pre><code>// TypeScript
+import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic();
+
+const msg = await client.messages.create({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Hello, Claude!" }],
+});
+console.log(msg.content[0].text);</code></pre>
+
+                    <div class="docs-note">
+                        <strong>Best practice:</strong> Never hardcode your API key. Set it as an environment variable: <code>export ANTHROPIC_API_KEY='sk-ant-...'</code> on Linux/Mac, or add it to your <code>.env</code> file and use <code>dotenv</code>. The SDK reads <code>ANTHROPIC_API_KEY</code> automatically.
+                    </div>
+                </div>
+
+                <!-- 3. Models -->
+                <div class="docs-section" id="models">
+                    <h2><span class="docs-section-num">3</span> Models</h2>
+                    <p>
+                        Choose the right model for your use case. The tradeoff is always between capability, speed, and cost.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>API ID</th>
+                                    <th>Best for</th>
+                                    <th>Context</th>
+                                    <th>Price (input/output per MTok)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Claude Opus 4.6</strong></td>
+                                    <td><code>claude-opus-4-6</code></td>
+                                    <td>Most complex tasks, agents, deep reasoning, coding</td>
+                                    <td>1M tokens</td>
+                                    <td>$5 / $25</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Claude Sonnet 4.6</strong></td>
+                                    <td><code>claude-sonnet-4-6</code></td>
+                                    <td>Best balance – production workloads, general tasks</td>
+                                    <td>1M tokens</td>
+                                    <td>$3 / $15</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Claude Haiku 4.5</strong></td>
+                                    <td><code>claude-haiku-4-5-20251001</code></td>
+                                    <td>High-volume, low-latency, cost-sensitive tasks</td>
+                                    <td>200k tokens</td>
+                                    <td>$1 / $5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>How to choose</h3>
+                    <ul>
+                        <li><strong>Start with Sonnet 4.6</strong> for most production use cases – excellent quality at reasonable cost.</li>
+                        <li><strong>Use Opus 4.6</strong> when you need maximum intelligence: complex agentic workflows, nuanced reasoning, difficult code.</li>
+                        <li><strong>Use Haiku 4.5</strong> for classification, extraction, summarization at scale where speed and cost matter most.</li>
+                        <li>All three models support extended thinking, vision (images), and tool use.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Knowledge cutoff:</strong> Opus 4.6 – May 2025. Sonnet 4.6 – Aug 2025. Haiku 4.5 – Feb 2025. Claude has no real-time internet access unless you provide a <code>web_search</code> tool.
+                    </div>
+                </div>
+
+                <!-- 4. Authentication -->
+                <div class="docs-section" id="authentication">
+                    <h2><span class="docs-section-num">4</span> Authentication</h2>
+                    <p>
+                        Every request to the API requires two headers:
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Header</th><th>Value</th><th>Required</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>x-api-key</code></td><td>Your API key (<code>sk-ant-...</code>)</td><td>Yes</td></tr>
+                                <tr><td><code>anthropic-version</code></td><td><code>2023-06-01</code></td><td>Yes</td></tr>
+                                <tr><td><code>content-type</code></td><td><code>application/json</code></td><td>Yes (for POST)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>When using an SDK, authentication is handled automatically from the <code>ANTHROPIC_API_KEY</code> environment variable.</p>
+
+                    <h3>Keeping your key secure</h3>
+                    <ul>
+                        <li>Never commit API keys to version control. Add <code>.env</code> to <code>.gitignore</code>.</li>
+                        <li>Use environment variables or a secrets manager (AWS Secrets Manager, Vault, etc.) in production.</li>
+                        <li>Rotate keys immediately if you suspect exposure.</li>
+                        <li>Use the <code>metadata.user_id</code> field to trace API usage per user without exposing PII.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Server-side only:</strong> Never expose your API key in client-side JavaScript. All calls to the Anthropic API must go through your backend.
+                    </div>
+                </div>
+
+                <!-- 5. Messages API -->
+                <div class="docs-section" id="messages-api">
+                    <h2><span class="docs-section-num">5</span> Messages API</h2>
+                    <p>
+                        <code>POST https://api.anthropic.com/v1/messages</code> is the core endpoint. It accepts a conversation and returns Claude's response.
+                    </p>
+
+                    <h3>Required parameters</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>model</code></td><td>string</td><td>Model ID to use (e.g., <code>claude-sonnet-4-6</code>)</td></tr>
+                                <tr><td><code>max_tokens</code></td><td>integer</td><td>Maximum tokens Claude may generate. Does not guarantee this many – Claude may stop earlier.</td></tr>
+                                <tr><td><code>messages</code></td><td>array</td><td>Array of <code>{"role": "user"|"assistant", "content": ...}</code> objects.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Optional parameters</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>system</code></td><td>string or array</td><td>System prompt – global instructions for Claude's behavior.</td></tr>
+                                <tr><td><code>temperature</code></td><td>float 0–1</td><td>Randomness. Default 1.0. Lower = more focused/deterministic.</td></tr>
+                                <tr><td><code>stream</code></td><td>boolean</td><td>Enable server-sent event streaming.</td></tr>
+                                <tr><td><code>stop_sequences</code></td><td>string[]</td><td>Stop generation when Claude produces any of these strings.</td></tr>
+                                <tr><td><code>tools</code></td><td>array</td><td>Tool definitions Claude can call.</td></tr>
+                                <tr><td><code>tool_choice</code></td><td>object</td><td>Control tool selection: <code>auto</code>, <code>any</code>, <code>none</code>, or a specific tool name.</td></tr>
+                                <tr><td><code>top_p</code></td><td>float</td><td>Nucleus sampling. Use either <code>temperature</code> or <code>top_p</code>, not both.</td></tr>
+                                <tr><td><code>metadata</code></td><td>object</td><td><code>{"user_id": "..."}</code> – opaque user identifier for abuse tracking.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Message format</h3>
+                    <pre><code>// Simple string content
+{"role": "user", "content": "Hello"}
+
+// Array of content blocks (required for images/documents)
+{"role": "user", "content": [
+  {"type": "text", "text": "What's in this image?"},
+  {"type": "image", "source": {"type": "url", "url": "https://..."}}
+]}
+
+// Multi-turn conversation
+[
+  {"role": "user",      "content": "What is 2+2?"},
+  {"role": "assistant", "content": "4"},
+  {"role": "user",      "content": "And 4+4?"}
+]</code></pre>
+
+                    <h3>Response object</h3>
+                    <pre><code>{
+  "id": "msg_01XFDUDYJgAACzvnptvVoYEL",
+  "type": "message",
+  "role": "assistant",
+  "content": [{"type": "text", "text": "Hello! How can I help?"}],
+  "model": "claude-sonnet-4-6",
+  "stop_reason": "end_turn",   // end_turn | stop_sequence | tool_use | max_tokens
+  "usage": {
+    "input_tokens": 25,
+    "output_tokens": 10,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+  }
+}</code></pre>
+                </div>
+
+                <!-- 6. System Prompts -->
+                <div class="docs-section" id="system-prompts">
+                    <h2><span class="docs-section-num">6</span> System Prompts</h2>
+                    <p>
+                        The <code>system</code> parameter sets the global context for Claude's behavior. It runs before any user message. Use it to define persona, constraints, output format, and domain knowledge.
+                    </p>
+                    <pre><code>client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system="You are a senior backend engineer. Respond only in TypeScript. "
+           "Always add JSDoc comments. Never use 'any' types.",
+    messages=[{"role": "user", "content": "Write a function to debounce calls."}]
+)</code></pre>
+
+                    <h3>What to put in a system prompt</h3>
+                    <ul>
+                        <li><strong>Persona and tone</strong> – "You are a friendly customer support agent for StealthyLabs."</li>
+                        <li><strong>Output format</strong> – "Always respond in JSON. Never add markdown."</li>
+                        <li><strong>Constraints</strong> – "Only answer questions about our product. Decline anything else politely."</li>
+                        <li><strong>Domain knowledge</strong> – Paste reference documents, FAQs, product specs.</li>
+                        <li><strong>Chain-of-thought instructions</strong> – "Before answering, think through the problem step by step."</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Context window tip:</strong> For large, static system prompts that don't change between calls, use <strong>prompt caching</strong> (see section 10) to reduce costs dramatically.
+                    </div>
+                </div>
+
+                <!-- 7. Multi-turn Conversations -->
+                <div class="docs-section" id="conversations">
+                    <h2><span class="docs-section-num">7</span> Multi-turn Conversations</h2>
+                    <p>
+                        The Messages API is stateless. To maintain context across turns, you must send the full conversation history with each request. Your application is responsible for storing and managing the message array.
+                    </p>
+                    <pre><code>import anthropic
+
+client = anthropic.Anthropic()
+conversation = []
+
+def chat(user_message: str) -> str:
+    conversation.append({"role": "user", "content": user_message})
+
+    response = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1024,
+        messages=conversation,
+    )
+
+    assistant_reply = response.content[0].text
+    conversation.append({"role": "assistant", "content": assistant_reply})
+    return assistant_reply
+
+print(chat("What is the capital of France?"))
+print(chat("And what's the population there?"))  # Claude remembers Paris from above</code></pre>
+
+                    <h3>Managing context window limits</h3>
+                    <ul>
+                        <li>Sonnet 4.6 and Opus 4.6 support up to <strong>1 million tokens</strong> of context.</li>
+                        <li>For very long conversations, implement a sliding window, summarization, or retrieval strategy.</li>
+                        <li>Use the <strong>Token Counting API</strong> (<code>POST /v1/messages/count_tokens</code>) to estimate costs before sending.</li>
+                    </ul>
+                    <pre><code># Count tokens before sending
+token_count = client.messages.count_tokens(
+    model="claude-sonnet-4-6",
+    messages=conversation,
+)
+print(f"This request will use ~{token_count.input_tokens} input tokens")</code></pre>
+                </div>
+
+                <!-- 8. Streaming -->
+                <div class="docs-section" id="streaming">
+                    <h2><span class="docs-section-num">8</span> Streaming</h2>
+                    <p>
+                        By default, the API waits for the full response before sending anything. With <code>stream: true</code>, Claude sends tokens as they are generated via <strong>Server-Sent Events (SSE)</strong>. This makes UIs feel much more responsive.
+                    </p>
+                    <pre><code># Python – streaming with SDK
+with client.messages.stream(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Write me a haiku about the ocean."}],
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)</code></pre>
+
+                    <pre><code>// TypeScript – streaming with SDK
+const stream = client.messages.stream({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Write me a haiku about the ocean." }],
+});
+
+for await (const chunk of stream) {
+  if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+    process.stdout.write(chunk.delta.text);
+  }
+}
+const finalMessage = await stream.finalMessage();
+console.log("\nUsage:", finalMessage.usage);</code></pre>
+
+                    <h3>SSE event types</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Event</th><th>When it fires</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>message_start</code></td><td>Beginning of response – contains model ID and initial usage</td></tr>
+                                <tr><td><code>content_block_start</code></td><td>A new content block begins (text, tool_use, thinking)</td></tr>
+                                <tr><td><code>content_block_delta</code></td><td>Incremental text delta (the actual tokens)</td></tr>
+                                <tr><td><code>content_block_stop</code></td><td>A content block ends</td></tr>
+                                <tr><td><code>message_delta</code></td><td>Updates stop_reason and final token counts</td></tr>
+                                <tr><td><code>message_stop</code></td><td>Stream complete</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        Use streaming for chat interfaces and anything where the user is waiting. For batch processing or background jobs, non-streaming is simpler to handle.
+                    </div>
+                </div>
+
+                <!-- 9. Vision -->
+                <div class="docs-section" id="vision">
+                    <h2><span class="docs-section-num">9</span> Vision (Images)</h2>
+                    <p>
+                        All current Claude models can understand images. Include image content blocks in your messages alongside text. Supported formats: <strong>JPEG, PNG, GIF, WebP</strong>.
+                    </p>
+
+                    <h3>Three ways to provide images</h3>
+                    <div class="docs-steps">
+                        <div class="docs-step">
+                            <span class="docs-step-num">A</span>
+                            <div>
+                                <strong>Base64 encoding</strong> – Encode the image and include it inline. Good for one-off requests.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">B</span>
+                            <div>
+                                <strong>URL reference</strong> – Provide a publicly accessible URL. Claude downloads the image. Fast to implement.
+                            </div>
+                        </div>
+                        <div class="docs-step">
+                            <span class="docs-step-num">C</span>
+                            <div>
+                                <strong>Files API</strong> – Upload once, reuse by <code>file_id</code>. Best for multi-turn conversations and repeated use to avoid resending large payloads.
+                            </div>
+                        </div>
+                    </div>
+
+                    <pre><code># Python – URL image
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "source": {
+                    "type": "url",
+                    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
+                },
+            },
+            {"type": "text", "text": "What do you see in this image?"}
+        ],
+    }],
+)
+print(message.content[0].text)</code></pre>
+
+                    <pre><code># Python – Base64 image
+import base64, anthropic
+
+with open("screenshot.png", "rb") as f:
+    image_data = base64.standard_b64encode(f.read()).decode("utf-8")
+
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "source": {
+                    "type": "base64",
+                    "media_type": "image/png",
+                    "data": image_data,
+                },
+            },
+            {"type": "text", "text": "Describe this screenshot."}
+        ],
+    }],
+)</code></pre>
+
+                    <h3>Image limits and best practices</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Limit</th><th>Value</th></tr></thead>
+                            <tbody>
+                                <tr><td>Max size per image</td><td>5 MB (API) / 10 MB (claude.ai)</td></tr>
+                                <tr><td>Max images per request</td><td>600 (100 for 200k context models)</td></tr>
+                                <tr><td>Max dimension</td><td>8000×8000 px (images beyond are rejected)</td></tr>
+                                <tr><td>Optimal long edge</td><td>≤ 1568 px for best time-to-first-token</td></tr>
+                                <tr><td>Token cost formula</td><td><code>(width × height) / 750</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul>
+                        <li>Place images <em>before</em> the related text question for best results.</li>
+                        <li>Resize large images to ≤ 1.15 megapixels before uploading – no quality gain above that.</li>
+                        <li>Claude cannot identify specific people, generate/edit images, or process inappropriate content.</li>
+                    </ul>
+                </div>
+
+                <!-- 10. Tool Use -->
+                <div class="docs-section" id="tool-use">
+                    <h2><span class="docs-section-num">10</span> Tool Use (Function Calling)</h2>
+                    <p>
+                        Tools let Claude call functions you define. You describe what the tool does and its parameters; Claude decides when to use it, constructs valid arguments, and you execute the function and return the result. This enables agents that interact with external APIs, databases, and services.
+                    </p>
+
+                    <h3>The tool use loop</h3>
+                    <div class="docs-steps">
+                        <div class="docs-step"><span class="docs-step-num">1</span><div>You send a request with <code>tools</code> defined.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">2</span><div>Claude responds with <code>stop_reason: "tool_use"</code> and a <code>tool_use</code> content block containing the tool name and input.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">3</span><div>Your code executes the tool with the provided input.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">4</span><div>You send the result back as a <code>tool_result</code> message.</div></div>
+                        <div class="docs-step"><span class="docs-step-num">5</span><div>Claude reads the result and continues the conversation (possibly calling another tool, or producing a final text response).</div></div>
+                    </div>
+
+                    <pre><code>import anthropic, json
+
+client = anthropic.Anthropic()
+
+# 1. Define tools
+tools = [{
+    "name": "get_weather",
+    "description": "Get current weather for a city.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "city": {"type": "string", "description": "City name, e.g. Paris"}
+        },
+        "required": ["city"]
+    }
+}]
+
+messages = [{"role": "user", "content": "What's the weather in Tokyo?"}]
+
+# 2. First call – Claude may request a tool
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,
+    messages=messages,
+)
+
+# 3. Handle tool calls
+while response.stop_reason == "tool_use":
+    tool_use_block = next(b for b in response.content if b.type == "tool_use")
+
+    # 4. Execute the tool (your real logic here)
+    if tool_use_block.name == "get_weather":
+        result = {"temperature": "18°C", "condition": "Cloudy"}
+
+    # 5. Send result back
+    messages.append({"role": "assistant", "content": response.content})
+    messages.append({
+        "role": "user",
+        "content": [{
+            "type": "tool_result",
+            "tool_use_id": tool_use_block.id,
+            "content": json.dumps(result),
+        }]
+    })
+
+    response = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1024,
+        tools=tools,
+        messages=messages,
+    )
+
+print(response.content[0].text)</code></pre>
+
+                    <h3>Built-in server tools</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Tool</th><th>Type</th><th>What it does</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>web_search</code></td><td><code>web_search_20260209</code></td><td>Search the internet. Supports domain allow/block lists.</td></tr>
+                                <tr><td><code>web_fetch</code></td><td><code>web_fetch_20260309</code></td><td>Fetch and read a web page's content.</td></tr>
+                                <tr><td><code>code_execution</code></td><td><code>code_execution_20260120</code></td><td>Execute Python code in a sandboxed environment.</td></tr>
+                                <tr><td><code>bash</code></td><td><code>bash_20250124</code></td><td>Execute bash commands.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Tool choice</h3>
+                    <pre><code># Force Claude to always use a tool
+tool_choice={"type": "any"}
+
+# Force a specific tool
+tool_choice={"type": "tool", "name": "get_weather"}
+
+# Let Claude decide (default)
+tool_choice={"type": "auto"}
+
+# No tools allowed
+tool_choice={"type": "none"}</code></pre>
+                </div>
+
+                <!-- 11. Extended Thinking -->
+                <div class="docs-section" id="thinking">
+                    <h2><span class="docs-section-num">11</span> Extended Thinking</h2>
+                    <p>
+                        Extended thinking lets Claude "think out loud" before responding. It works through complex problems step by step before committing to an answer, improving accuracy on hard reasoning and math tasks. Supported by all Claude 4 models.
+                    </p>
+                    <pre><code>response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=16000,
+    thinking={
+        "type": "enabled",
+        "budget_tokens": 10000,  # How many tokens Claude may use for thinking
+    },
+    messages=[{
+        "role": "user",
+        "content": "Prove that there are infinitely many prime numbers."
+    }],
+)
+
+for block in response.content:
+    if block.type == "thinking":
+        print("Claude's thinking:\n", block.thinking)
+    elif block.type == "text":
+        print("Final answer:\n", block.text)</code></pre>
+
+                    <ul>
+                        <li><code>budget_tokens</code> controls the upper bound on thinking tokens. More budget = potentially better reasoning, higher cost.</li>
+                        <li>Thinking content blocks appear before the text response in <code>response.content</code>.</li>
+                        <li>Use for: math proofs, multi-step reasoning, complex code architecture decisions, hard logical puzzles.</li>
+                        <li>Adaptive thinking (automatic budget selection) is available on Opus and Sonnet 4.6.</li>
+                    </ul>
+                </div>
+
+                <!-- 12. Prompt Caching -->
+                <div class="docs-section" id="caching">
+                    <h2><span class="docs-section-num">12</span> Prompt Caching</h2>
+                    <p>
+                        Prompt caching lets you mark parts of your prompt as cacheable. On subsequent requests that include the same cached prefix, cached tokens are read instead of re-processed – giving you a <strong>~90% cost reduction</strong> and <strong>~85% latency reduction</strong> on those tokens.
+                    </p>
+                    <p>
+                        Mark content with <code>{"cache_control": {"type": "ephemeral"}}</code>. The cache lasts 5 minutes (default) or up to 1 hour.
+                    </p>
+                    <pre><code># Cache a large system prompt
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system=[
+        {
+            "type": "text",
+            "text": "You are an AI assistant helping with legal document analysis. "
+                    + very_long_legal_reference_document,  # Thousands of tokens
+            "cache_control": {"type": "ephemeral"},
+        }
+    ],
+    messages=[{"role": "user", "content": "Summarize clause 7."}],
+)
+
+# response.usage.cache_creation_input_tokens  → tokens written to cache (first call)
+# response.usage.cache_read_input_tokens      → tokens read from cache (subsequent calls)</code></pre>
+
+                    <h3>When to use caching</h3>
+                    <ul>
+                        <li>Large static system prompts that repeat across many requests</li>
+                        <li>Reference documents, product catalogs, or FAQs included in every call</li>
+                        <li>Long conversation histories in multi-turn sessions</li>
+                        <li>Few-shot examples that don't change</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Pricing note:</strong> Cache writes cost 25% more than normal input tokens. Cache reads cost about 10% of normal input tokens. You break even after 2 reads.
+                    </div>
+                </div>
+
+                <!-- 13. Structured Outputs -->
+                <div class="docs-section" id="structured-outputs">
+                    <h2><span class="docs-section-num">13</span> Structured Outputs</h2>
+                    <p>
+                        There are two main ways to get Claude to return structured data reliably:
+                    </p>
+
+                    <h3>Method 1 – Prompt + validation</h3>
+                    <p>Tell Claude to respond in JSON in the system prompt, then parse and validate with a library like Pydantic (Python) or Zod (TypeScript).</p>
+                    <pre><code>from pydantic import BaseModel
+import json
+
+class MovieReview(BaseModel):
+    title: str
+    rating: float
+    summary: str
+    pros: list[str]
+    cons: list[str]
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    system="Always respond with valid JSON only. No markdown, no explanation.",
+    messages=[{"role": "user", "content": "Review Inception (2010)."}],
+)
+
+data = json.loads(response.content[0].text)
+review = MovieReview(**data)  # Pydantic validates the schema</code></pre>
+
+                    <h3>Method 2 – Tool use for guaranteed structure</h3>
+                    <p>Define a tool with your exact JSON schema. Set <code>tool_choice</code> to force Claude to call it. Claude will always return valid JSON matching your schema.</p>
+                    <pre><code>tools = [{
+    "name": "extract_data",
+    "description": "Extract structured data from the text.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "title":   {"type": "string"},
+            "rating":  {"type": "number", "minimum": 0, "maximum": 10},
+            "summary": {"type": "string"},
+        },
+        "required": ["title", "rating", "summary"]
+    }
+}]
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    tools=tools,
+    tool_choice={"type": "tool", "name": "extract_data"},
+    messages=[{"role": "user", "content": "Review Inception (2010)."}],
+)
+
+tool_block = next(b for b in response.content if b.type == "tool_use")
+data = tool_block.input  # Already a Python dict matching the schema</code></pre>
+                </div>
+
+                <!-- 14. Batch Processing -->
+                <div class="docs-section" id="batches">
+                    <h2><span class="docs-section-num">14</span> Batch Processing</h2>
+                    <p>
+                        The <strong>Message Batches API</strong> processes large volumes of requests asynchronously at <strong>50% cost reduction</strong>. Ideal for processing thousands of documents, evaluations, or any workload that doesn't need real-time responses.
+                    </p>
+                    <pre><code># Create a batch of up to 100,000 requests
+batch = client.messages.batches.create(
+    requests=[
+        {
+            "custom_id": "review-1",
+            "params": {
+                "model": "claude-haiku-4-5-20251001",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": "Classify sentiment: 'Great product!'"}],
+            },
+        },
+        {
+            "custom_id": "review-2",
+            "params": {
+                "model": "claude-haiku-4-5-20251001",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": "Classify sentiment: 'Terrible experience.'"}],
+            },
+        },
+    ]
+)
+
+print(f"Batch ID: {batch.id}")  # Save this to retrieve results later
+
+# Poll for completion
+import time
+while True:
+    status = client.messages.batches.retrieve(batch.id)
+    if status.processing_status == "ended":
+        break
+    time.sleep(60)  # Check every minute
+
+# Retrieve results
+for result in client.messages.batches.results(batch.id):
+    print(result.custom_id, result.result.message.content[0].text)</code></pre>
+                </div>
+
+                <!-- 15. Rate Limits & Error Handling -->
+                <div class="docs-section" id="errors">
+                    <h2><span class="docs-section-num">15</span> Rate Limits &amp; Error Handling</h2>
+                    <p>
+                        The API enforces rate limits organized into usage tiers. Higher tiers have higher RPM (requests per minute) and TPM (tokens per minute) limits.
+                    </p>
+
+                    <h3>Common HTTP error codes</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Status</th><th>Error code</th><th>Meaning</th><th>Action</th></tr></thead>
+                            <tbody>
+                                <tr><td>400</td><td><code>invalid_request_error</code></td><td>Malformed request, missing required field</td><td>Fix the request</td></tr>
+                                <tr><td>401</td><td><code>authentication_error</code></td><td>Invalid or missing API key</td><td>Check your key</td></tr>
+                                <tr><td>403</td><td><code>permission_error</code></td><td>API key lacks permissions</td><td>Check key scopes</td></tr>
+                                <tr><td>404</td><td><code>not_found_error</code></td><td>Resource not found</td><td>Check endpoint/ID</td></tr>
+                                <tr><td>429</td><td><code>rate_limit_error</code></td><td>Too many requests</td><td>Back off, retry with exponential backoff</td></tr>
+                                <tr><td>500</td><td><code>api_error</code></td><td>Anthropic server error</td><td>Retry after delay</td></tr>
+                                <tr><td>529</td><td><code>overloaded_error</code></td><td>API is overloaded</td><td>Retry after delay</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Retry with exponential backoff</h3>
+                    <pre><code>import time, anthropic
+from anthropic import RateLimitError, APIStatusError
+
+client = anthropic.Anthropic()
+
+def create_with_retry(max_retries=5, **kwargs):
+    for attempt in range(max_retries):
+        try:
+            return client.messages.create(**kwargs)
+        except RateLimitError:
+            if attempt == max_retries - 1:
+                raise
+            wait = 2 ** attempt  # 1s, 2s, 4s, 8s, 16s
+            print(f"Rate limited. Retrying in {wait}s...")
+            time.sleep(wait)
+        except APIStatusError as e:
+            if e.status_code in (500, 529) and attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+            else:
+                raise</code></pre>
+
+                    <div class="docs-note">
+                        The SDK includes automatic retries by default. You can configure them: <code>anthropic.Anthropic(max_retries=3)</code>.
+                    </div>
+                </div>
+
+                <!-- 16. Prompt Engineering -->
+                <div class="docs-section" id="prompt-engineering">
+                    <h2><span class="docs-section-num">16</span> Prompt Engineering</h2>
+                    <p>
+                        Good prompts determine 80% of the output quality. Here are the highest-leverage techniques for Claude specifically.
+                    </p>
+
+                    <h3>Be specific about what you want</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Weak</th><th>Strong</th></tr></thead>
+                            <tbody>
+                                <tr><td>"Summarize this."</td><td>"Summarize this in 3 bullet points for a non-technical audience. Focus on business impact, not technical details."</td></tr>
+                                <tr><td>"Write code."</td><td>"Write a TypeScript function with JSDoc. Use async/await. Include error handling. Return a typed result, not <code>any</code>."</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Use XML tags for structure</h3>
+                    <p>Claude responds well to XML-tagged sections in prompts – it helps delimit instructions, context, and examples clearly.</p>
+                    <pre><code>You are a code reviewer. Analyze the code below and provide structured feedback.
+
+&lt;code&gt;
+function add(a, b) { return a + b }
+&lt;/code&gt;
+
+&lt;instructions&gt;
+1. Identify any bugs or type issues.
+2. Suggest improvements.
+3. Rewrite the function correctly in TypeScript.
+&lt;/instructions&gt;</code></pre>
+
+                    <h3>Chain-of-thought</h3>
+                    <p>For complex reasoning, instruct Claude to think before answering:</p>
+                    <pre><code>system = "Before answering any question, write out your reasoning step by step inside &lt;thinking&gt; tags. Then provide your final answer."</code></pre>
+
+                    <h3>Few-shot examples</h3>
+                    <p>Show Claude examples of good input-output pairs before the real task. This is especially effective for formatting and classification.</p>
+                    <pre><code>messages = [{
+    "role": "user",
+    "content": """Classify the sentiment of each review as POSITIVE, NEGATIVE, or NEUTRAL.
+
+Review: "Absolutely love it, fast shipping!" → POSITIVE
+Review: "It broke after two days." → NEGATIVE
+Review: "It arrived on time." → NEUTRAL
+
+Review: "The color was slightly off but it works fine." →"""
+}]</code></pre>
+
+                    <h3>Prefill the assistant response</h3>
+                    <p>Start Claude's response to constrain its output format:</p>
+                    <pre><code>messages = [
+    {"role": "user", "content": "Extract name, email, and phone from: John Smith, john@example.com, 555-1234"},
+    {"role": "assistant", "content": '{"name":'}  # Forces JSON output
+]</code></pre>
+
+                    <h3>Prompt length vs. model</h3>
+                    <ul>
+                        <li>Put the most important instructions at the <strong>beginning</strong> of your system prompt and at the <strong>end</strong> of your user message (primacy and recency effects).</li>
+                        <li>For very long documents (100k+ tokens), put documents <strong>before</strong> instructions in the system prompt.</li>
+                        <li>Avoid vague instructions like "be concise" without defining what concise means.</li>
+                    </ul>
+                </div>
+
+                <!-- 17. Security Best Practices -->
+                <div class="docs-section" id="security">
+                    <h2><span class="docs-section-num">17</span> Security Best Practices</h2>
+                    <ul>
+                        <li><strong>API keys on the server side only.</strong> Never expose them in browser JavaScript, mobile apps, or public repositories.</li>
+                        <li><strong>Validate and sanitize user inputs</strong> before passing them into prompts to mitigate prompt injection attacks.</li>
+                        <li><strong>Implement your own rate limiting</strong> on your API endpoint to prevent abuse by users of your application.</li>
+                        <li><strong>Use the <code>metadata.user_id</code> field</strong> to help Anthropic flag abuse patterns without sending PII.</li>
+                        <li><strong>Never trust Claude's output as ground truth</strong> for security-sensitive decisions (authentication, authorization, financial transactions). Always validate with your own logic.</li>
+                        <li><strong>Rotate API keys periodically</strong> and immediately on any suspected exposure.</li>
+                        <li><strong>Log requests and responses</strong> for audit trails, especially in regulated industries.</li>
+                    </ul>
+                    <div class="docs-note">
+                        <strong>Prompt injection:</strong> Malicious content in user-supplied text can attempt to override your system prompt instructions. Validate inputs, use separate fields for user data vs. instructions, and apply output validation.
+                    </div>
+                </div>
+
+                <!-- 18. Cost Optimization -->
+                <div class="docs-section" id="cost">
+                    <h2><span class="docs-section-num">18</span> Cost Optimization</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead><tr><th>Technique</th><th>Potential saving</th></tr></thead>
+                            <tbody>
+                                <tr><td>Use Haiku for simple classification/extraction tasks</td><td>60–80% vs Sonnet</td></tr>
+                                <tr><td>Prompt caching for repeated large prompts</td><td>~90% on cached tokens</td></tr>
+                                <tr><td>Message Batches API for async workloads</td><td>50% flat</td></tr>
+                                <tr><td>Trim conversation history to only what's needed</td><td>Varies</td></tr>
+                                <tr><td>Set <code>max_tokens</code> appropriately</td><td>Prevents unnecessary generation</td></tr>
+                                <tr><td>Use Token Counting API to estimate before sending</td><td>Visibility into costs</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        Track costs with the <code>usage</code> field in every response. Log <code>input_tokens</code>, <code>output_tokens</code>, <code>cache_read_input_tokens</code>, and <code>cache_creation_input_tokens</code> per call and aggregate by user/feature.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="credit" style="border-top: 1px solid var(--border); padding-top: 24px; margin-top: 8px;">
+                    <p style="font-size:0.8rem; color: var(--text-muted);">
+                        Based on the <a href="https://platform.claude.com/docs/en/home" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Anthropic Claude API documentation</a>. Content accurate as of March 2026.
+                    </p>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li class="toc-l1"><a href="#overview">Overview</a></li>
+                    <li class="toc-l1"><a href="#getting-started">Getting Started</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#getting-started">Install</a></li>
+                            <li class="toc-l2"><a href="#getting-started">First request</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#models">Models</a></li>
+                    <li class="toc-l1"><a href="#authentication">Authentication</a></li>
+                    <li class="toc-l1"><a href="#messages-api">Messages API</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#messages-api">Parameters</a></li>
+                            <li class="toc-l2"><a href="#messages-api">Response format</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#system-prompts">System Prompts</a></li>
+                    <li class="toc-l1"><a href="#conversations">Multi-turn Conversations</a></li>
+                    <li class="toc-l1"><a href="#streaming">Streaming</a></li>
+                    <li class="toc-l1"><a href="#vision">Vision (Images)</a></li>
+                    <li class="toc-l1"><a href="#tool-use">Tool Use</a>
+                        <ol class="docs-toc-sub">
+                            <li class="toc-l2"><a href="#tool-use">The tool loop</a></li>
+                            <li class="toc-l2"><a href="#tool-use">Built-in tools</a></li>
+                        </ol>
+                    </li>
+                    <li class="toc-l1"><a href="#thinking">Extended Thinking</a></li>
+                    <li class="toc-l1"><a href="#caching">Prompt Caching</a></li>
+                    <li class="toc-l1"><a href="#structured-outputs">Structured Outputs</a></li>
+                    <li class="toc-l1"><a href="#batches">Batch Processing</a></li>
+                    <li class="toc-l1"><a href="#errors">Rate Limits &amp; Errors</a></li>
+                    <li class="toc-l1"><a href="#prompt-engineering">Prompt Engineering</a></li>
+                    <li class="toc-l1"><a href="#security">Security</a></li>
+                    <li class="toc-l1"><a href="#cost">Cost Optimization</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Privacy</a>
+                <a href="../terms-of-service" data-key="footer_tos">Terms</a>
+                <a href="../legal" data-key="footer_legal">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=983f5b64" defer></script>
+    <script src="../../js/ux-enhancements.js?v=16c257c7" defer></script>
+</body>
+
+</html>
