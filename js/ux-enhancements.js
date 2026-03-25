@@ -211,8 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize smooth scroll
     initSmoothScroll();
 
-    // Initialize progress bar
-    initProgressBar();
+    // Progress bar disabled
+    // initProgressBar();
 
     // Initialize ripple effect
     initRippleEffect();
