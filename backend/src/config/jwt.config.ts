@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
 
-if (process.env.NODE_ENV === 'production') {
-  if (!process.env.JWT_ACCESS_TOKEN_SECRET || !process.env.JWT_REFRESH_TOKEN_SECRET) {
-    throw new Error('JWT_ACCESS_TOKEN_SECRET and JWT_REFRESH_TOKEN_SECRET must be set in production');
-  }
+const accessSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
+const refreshSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
+
+if (!accessSecret || !refreshSecret) {
+  throw new Error('JWT_ACCESS_TOKEN_SECRET and JWT_REFRESH_TOKEN_SECRET must be set. See .env.example.');
 }
 
 // JWT Configuration
-export const JWT_ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET || 'dev-access-secret-key';
-export const JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET || 'dev-refresh-secret-key';
+export const JWT_ACCESS_TOKEN_SECRET = accessSecret;
+export const JWT_REFRESH_TOKEN_SECRET = refreshSecret;
 
 export const JWT_ACCESS_TOKEN_TTL = process.env.JWT_ACCESS_TOKEN_TTL || '15m';
 export const JWT_REFRESH_TOKEN_TTL = process.env.JWT_REFRESH_TOKEN_TTL || '7d';

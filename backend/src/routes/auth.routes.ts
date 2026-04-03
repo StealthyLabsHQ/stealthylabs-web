@@ -8,6 +8,7 @@ import {
   logoutUser,
   getUserById,
 } from '../services/auth.service';
+import { requireAuth } from '../middleware/auth.middleware';
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -23,6 +24,14 @@ const loginLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: { code: 'RATE_LIMITED', message: 'Too many login attempts, please try again later.' } },
+});
+
+const refreshLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: { code: 'RATE_LIMITED', message: 'Too many token refresh attempts, please try again later.' } },
 });
 
 const router = Router();
@@ -161,7 +170,7 @@ router.post('/login', loginLimiter, async (req: Request, res: Response) => {
  * POST /api/auth/refresh
  * Refresh access token using refresh token from cookie
  */
-router.post('/refresh', async (req: Request, res: Response) => {
+router.post('/refresh', refreshLimiter, async (req: Request, res: Response) => {
   try {
     const refreshTokenCookie = req.cookies.refreshToken;
 
@@ -249,16 +258,20 @@ router.post('/logout', async (req: Request, res: Response) => {
  * GET /api/auth/me
  * Get current user information (requires authentication)
  */
-router.get('/me', async (req: Request, res: Response) => {
+router.get('/me', requireAuth, async (req: Request, res: Response) => {
   try {
-    // This endpoint requires authentication middleware
-    // For now, return 401 - will be implemented with auth middleware
-    return res.status(401).json({
-      error: {
-        code: 'UNAUTHORIZED',
-        message: 'Authentication required',
-      },
-    });
+    const user = await getUserById(req.user!.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: {
+          code: 'USER_NOT_FOUND',
+          message: 'User not found',
+        },
+      });
+    }
+
+    return res.status(200).json({ user });
   } catch (error: any) {
     console.error('Get user error:', error);
     return res.status(500).json({

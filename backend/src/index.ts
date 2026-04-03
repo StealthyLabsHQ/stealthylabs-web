@@ -17,8 +17,17 @@ app.use(helmet());
 
 // CORS configuration
 const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction && !process.env.CORS_ORIGIN) {
+  throw new Error('CORS_ORIGIN must be set in production');
+}
+
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map(o => o.trim());
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
   credentials: true,
 }));
 
@@ -66,5 +75,5 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:5173'}`);
+  console.log(`🔐 CORS Origins: ${allowedOrigins.join(', ')}`);
 });
