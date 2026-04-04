@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arklay - Documentation | StealthyLabs</title>
+    <meta name="description" content="Arklay open-source Discord bot documentation - 76 slash commands, music player, AI assistant (Claude + Gemini), image generation, server moderation, and utility tools.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/en/docs/arklay-bot">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/arklay-bot">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/arklay-bot">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=b79df374">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=8dbe76cf.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Language</div>
+                        <select id="languageSelector">
+                            <option value="fr">Fran&ccedil;ais</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Font</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">About me</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Arklay</span><br>
+                <span class="gradient-text">Discord Bot</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Back to docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Overview</h2>
+                    <p>
+                        <strong>Arklay</strong> is an open-source modular Discord bot (v2.0.0) built with TypeScript
+                        and discord.js v14. It provides 76 slash commands across 6 independent modules: music player,
+                        AI assistant, moderation, utility, fun, and server configuration.
+                    </p>
+                    <p>
+                        All state persists via SQLite (8 tables): guild configuration, user preferences, conversation
+                        history, warning records, and music queue resume across bot restarts. Supports both slash
+                        commands and text prefix (<code>.command</code> or <code>arklay command</code>).
+                    </p>
+                    <p>
+                        Available at <a href="https://github.com/StealthyLabsHQ/arklay-bot" target="_blank" rel="noopener noreferrer">github.com/StealthyLabsHQ/arklay-bot</a>.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="modules">
+                    <h2><span class="docs-section-num">2</span> Modules</h2>
+
+                    <h3 id="module-music">2.1 Music (22 commands)</h3>
+                    <p>
+                        Multi-source music player supporting YouTube, Spotify, and SoundCloud via yt-dlp. Queue
+                        auto-resumes across bot restarts. Interactive Now Playing embed with buttons. Auto-disconnects
+                        after 5 minutes of inactivity.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/play [query]</code></td><td>Play from YouTube, Spotify or SoundCloud</td></tr>
+                                <tr><td><code>/pause</code></td><td>Pause playback</td></tr>
+                                <tr><td><code>/resume</code></td><td>Resume playback</td></tr>
+                                <tr><td><code>/skip</code></td><td>Skip to next track</td></tr>
+                                <tr><td><code>/skipto [position]</code></td><td>Skip to specific queue position</td></tr>
+                                <tr><td><code>/previous</code></td><td>Play previous track</td></tr>
+                                <tr><td><code>/stop</code></td><td>Stop and clear queue</td></tr>
+                                <tr><td><code>/queue</code></td><td>Show queue with pagination buttons</td></tr>
+                                <tr><td><code>/nowplaying</code></td><td>Current track with interactive player buttons</td></tr>
+                                <tr><td><code>/replay</code></td><td>Restart current track from beginning</td></tr>
+                                <tr><td><code>/loop [off/track/queue]</code></td><td>Set loop mode</td></tr>
+                                <tr><td><code>/volume [0-100]</code></td><td>Set playback volume</td></tr>
+                                <tr><td><code>/shuffle</code></td><td>Shuffle the queue</td></tr>
+                                <tr><td><code>/move [from] [to]</code></td><td>Move a track to a different position</td></tr>
+                                <tr><td><code>/remove [position]</code></td><td>Remove track by position</td></tr>
+                                <tr><td><code>/save</code></td><td>DM yourself the current track link</td></tr>
+                                <tr><td><code>/lyrics [search]</code></td><td>Lyrics with AI explain button</td></tr>
+                                <tr><td><code>/seek [timestamp]</code></td><td>Jump to position (e.g. 1:30)</td></tr>
+                                <tr><td><code>/filter [type]</code></td><td>Audio filters: bassboost, nightcore, vaporwave, 8d, slowed reverb, speed reverb, treble, karaoke, deep bass, chipmunk</td></tr>
+                                <tr><td><code>/ai-playlist [prompt]</code></td><td>AI-generated playlist (e.g. "chill lo-fi for studying")</td></tr>
+                                <tr><td><code>/autoplay</code></td><td>Toggle autoplay - auto-add similar tracks when queue ends</td></tr>
+                                <tr><td><code>/disconnect</code></td><td>Disconnect bot from voice channel</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 id="module-ai">2.2 AI (9 commands)</h3>
+                    <p>
+                        Dual provider system: Claude (Anthropic) and Gemini (Google). Per-user model selection stored
+                        in SQLite. Conversation history retains the last 25 messages per user per guild. Rate limiting
+                        applies an 8s base cooldown that extends to 60s when the API is busy. Daily usage limits apply
+                        per model, with a configurable owner multiplier.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/ask [question] [provider] [lang]</code></td><td>Ask Claude or Gemini (10 languages supported)</td></tr>
+                                <tr><td><code>/summarize [messages] [provider]</code></td><td>Summarize recent channel messages</td></tr>
+                                <tr><td><code>/tldr [url]</code></td><td>Summarize a webpage</td></tr>
+                                <tr><td><code>/nanobanana [prompt] [image]</code></td><td>Generate images with Gemini (Nano Banana 2)</td></tr>
+                                <tr><td><code>/setmodel [model]</code></td><td>Choose personal AI model</td></tr>
+                                <tr><td><code>/translate [language] [text]</code></td><td>AI-powered translation</td></tr>
+                                <tr><td><code>/roast [user]</code></td><td>Contextual AI roast using target's recent messages</td></tr>
+                                <tr><td><code>/vision [image] [prompt]</code></td><td>Analyze an image with Claude or Gemini</td></tr>
+                                <tr><td><code>/catchup</code></td><td>AI-powered summary of recent channel activity</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>Available models:</strong></p>
+                    <ul>
+                        <li><strong>Claude:</strong> Sonnet 4.6 (recommended), Opus 4.6 (most powerful), Haiku 4.5 (fastest)</li>
+                        <li><strong>Gemini:</strong> Flash 3 Preview (recommended), Pro 3.1 Preview (most powerful), Flash Lite 3.1 (cheapest)</li>
+                    </ul>
+                    <p><strong>Image generation (/nanobanana):</strong></p>
+                    <ul>
+                        <li><strong>Aspect ratios:</strong> 1:1, 16:9, 9:16, 4:3, 3:4</li>
+                        <li><strong>Resolutions:</strong> 512px, 1K, 2K, 4K</li>
+                        <li><strong>Styles:</strong> photorealistic, anime, cartoon, oil painting, sketch, pixel art, cinematic</li>
+                        <li>Adaptive cooldown increases when API is busy</li>
+                    </ul>
+
+                    <h3 id="module-moderation">2.3 Moderation (12 commands) - Admin only</h3>
+                    <p>
+                        Admin-only module. Uses a custom admin role system via <code>/botrole</code>. Discord
+                        Administrator permission always grants full access. Admin roles are stored in SQLite per guild.
+                    </p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/timeout [user] [duration] [reason]</code></td><td>Timeout a user</td></tr>
+                                <tr><td><code>/ban [user] [reason] [delete_history]</code></td><td>Ban a user</td></tr>
+                                <tr><td><code>/unban [userid] [reason]</code></td><td>Unban a user</td></tr>
+                                <tr><td><code>/kick [user] [reason]</code></td><td>Kick a user</td></tr>
+                                <tr><td><code>/warn add/list/clear [user]</code></td><td>Warning system</td></tr>
+                                <tr><td><code>/mute [user]</code></td><td>Server mute/unmute in voice</td></tr>
+                                <tr><td><code>/role [user] [role]</code></td><td>Toggle a role on a user</td></tr>
+                                <tr><td><code>/clear [amount]</code></td><td>Delete 1-100 messages</td></tr>
+                                <tr><td><code>/lockdown [channel]</code></td><td>Toggle channel lockdown</td></tr>
+                                <tr><td><code>/slowmode [seconds]</code></td><td>Set slowmode</td></tr>
+                                <tr><td><code>/nuke</code></td><td>Delete and recreate a channel</td></tr>
+                                <tr><td><code>/botrole add/remove/list</code></td><td>Manage bot admin roles</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 id="module-utility">2.4 Utility (23 commands + 1 context menu)</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/help [command]</code></td><td>Interactive help center with dropdown categories</td></tr>
+                                <tr><td><code>/botinfo</code></td><td>Bot statistics, developer info, links</td></tr>
+                                <tr><td><code>/ping</code></td><td>Bot latency</td></tr>
+                                <tr><td><code>/userinfo [user]</code></td><td>User info (status, badges, roles, permissions, activity)</td></tr>
+                                <tr><td><code>/serverinfo</code></td><td>Server statistics</td></tr>
+                                <tr><td><code>/avatar [user]</code></td><td>Full-size avatar</td></tr>
+                                <tr><td><code>/banner [user]</code></td><td>User banner</td></tr>
+                                <tr><td><code>/roleinfo [role]</code></td><td>Role details</td></tr>
+                                <tr><td><code>/channelinfo [channel]</code></td><td>Channel details</td></tr>
+                                <tr><td><code>/membercount</code></td><td>Server member count</td></tr>
+                                <tr><td><code>/invite</code></td><td>Bot invite link</td></tr>
+                                <tr><td><code>/math [expression]</code></td><td>Calculator</td></tr>
+                                <tr><td><code>/define [word]</code></td><td>Dictionary lookup</td></tr>
+                                <tr><td><code>/crypto [coin]</code></td><td>Cryptocurrency prices</td></tr>
+                                <tr><td><code>/weather [city]</code></td><td>Current weather</td></tr>
+                                <tr><td><code>/afk [reason]</code></td><td>Set/remove AFK status</td></tr>
+                                <tr><td><code>/remindme [duration] [message]</code></td><td>Reminder (max 24h)</td></tr>
+                                <tr><td><code>/poll [question] [options]</code></td><td>Interactive button poll</td></tr>
+                                <tr><td><code>/emoji [emoji]</code></td><td>Emoji info and full-size image</td></tr>
+                                <tr><td><code>/steal [emoji] [name]</code></td><td>Add external emoji to server</td></tr>
+                                <tr><td><code>/snipe</code></td><td>Show last deleted message in channel</td></tr>
+                                <tr><td><code>/editsnipe</code></td><td>Show previous version of last edited message</td></tr>
+                                <tr><td><code>/color [hex]</code></td><td>Preview a color with hex and RGB values</td></tr>
+                                <tr><td><code>/timestamp [date]</code></td><td>Convert date to all Discord timestamp formats</td></tr>
+                                <tr><td>Context menu: "Steal Sticker"</td><td>Right-click any message to add its sticker to the server</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 id="module-fun">2.5 Fun (10 commands)</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/8ball [question]</code></td><td>Magic 8-ball</td></tr>
+                                <tr><td><code>/choose [options]</code></td><td>Random pick from comma-separated options</td></tr>
+                                <tr><td><code>/coinflip</code></td><td>Flip a coin</td></tr>
+                                <tr><td><code>/dice [count] [sides]</code></td><td>Roll dice</td></tr>
+                                <tr><td><code>/trivia [category]</code></td><td>Trivia with buttons (includes AI-generated category)</td></tr>
+                                <tr><td><code>/meme [search]</code></td><td>Random meme from Reddit with optional search</td></tr>
+                                <tr><td><code>/guesssong</code></td><td>Guess the song from a hint (requires active music queue)</td></tr>
+                                <tr><td><code>/rps [choice]</code></td><td>Rock paper scissors vs bot</td></tr>
+                                <tr><td><code>/rate [thing]</code></td><td>Rate anything 0-10 with progress bar</td></tr>
+                                <tr><td><code>/how [trait] [thing]</code></td><td>Fun percentage (e.g. "how cool is @user")</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 id="module-config">2.6 Configuration (7 subcommands) - Admin only</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>/config autorole [role]</code></td><td>Auto-assign role to new members (omit to disable)</td></tr>
+                                <tr><td><code>/config welcome [channel] [message]</code></td><td>Set welcome message ({user} and {server} placeholders)</td></tr>
+                                <tr><td><code>/config logs [channel]</code></td><td>Set mod log channel</td></tr>
+                                <tr><td><code>/config tempvc [channel]</code></td><td>Set hub channel for temporary voice channels</td></tr>
+                                <tr><td><code>/config automod [on/off]</code></td><td>Toggle AI auto-moderation (Gemini-based)</td></tr>
+                                <tr><td><code>/config language [lang]</code></td><td>Set bot language (13 languages: en, fr, es, de, pt, it, nl, ru, ja, ko, zh, ar, tr)</td></tr>
+                                <tr><td><code>/config show</code></td><td>Show current configuration</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="automatic-features">
+                    <h2><span class="docs-section-num">3</span> Automatic Features</h2>
+                    <p>Event-driven behaviors that require no slash command:</p>
+                    <ul>
+                        <li><strong>Auto-role</strong> - assigns a role to every new member when configured via <code>/config autorole</code></li>
+                        <li><strong>Welcome messages</strong> - greets new members with customizable text (<code>{user}</code> and <code>{server}</code> placeholders)</li>
+                        <li><strong>Temporary voice channels</strong> - joining a hub channel creates a personal VC, auto-deleted when empty</li>
+                        <li><strong>Message logging</strong> - deleted and edited messages logged to mod channel</li>
+                        <li><strong>AI auto-moderation</strong> - optional Gemini content scanning (debounced), logs flagged content</li>
+                        <li><strong>Music auto-resume</strong> - queue automatically restores after bot restart</li>
+                        <li><strong>Music auto-disconnect</strong> - bot leaves voice after 5 minutes of inactivity</li>
+                        <li><strong>Snipe tracking</strong> - last deleted and edited messages tracked per channel</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="text-prefix">
+                    <h2><span class="docs-section-num">4</span> Text Prefix Commands</h2>
+                    <p>All commands work with text prefix in addition to slash commands:</p>
+                    <ul>
+                        <li>Format: <code>.command [args]</code> or <code>arklay command [args]</code></li>
+                        <li>Default prefix: <code>.</code> (configurable via <code>BOT_PREFIX</code> in .env)</li>
+                        <li>Default bot name: <code>arklay</code> (configurable via <code>BOT_NAME</code> in .env)</li>
+                        <li>Example: <code>.play never gonna give you up</code> or <code>arklay ask what is rust</code></li>
+                        <li>Note: complex subcommand groups (<code>/config</code>, <code>/warn</code>, <code>/botrole</code>, <code>/nanobanana</code>) are not available as text prefix</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">5</span> Installation</h2>
+                    <ol class="docs-steps">
+                        <li>
+                            <div>
+                                <strong>Clone the repository:</strong>
+                                <pre><code>git clone https://github.com/StealthyLabsHQ/arklay-bot.git
+cd arklay-bot</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Install dependencies:</strong>
+                                <pre><code>npm install</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Copy the environment template:</strong>
+                                <pre><code>cp .env.example .env</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Edit <code>.env</code></strong> with your tokens and API keys (see the Configuration section below).
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>(Optional) Install system FFmpeg</strong> for best audio quality. Without it, the bundled ffmpeg-static is used as fallback.
+                                <ul>
+                                    <li>Windows: download from <a href="https://gyan.dev/ffmpeg/builds" target="_blank" rel="noopener noreferrer">gyan.dev/ffmpeg/builds</a></li>
+                                    <li>Linux: <code>sudo apt install ffmpeg</code></li>
+                                    <li>macOS: <code>brew install ffmpeg</code></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Deploy slash commands to Discord:</strong>
+                                <pre><code>npm run deploy</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Start the bot:</strong>
+                                <p>Development mode:</p>
+                                <pre><code>npm run dev</code></pre>
+                                <p>Or build and start for production:</p>
+                                <pre><code>npm run build
+npm run start</code></pre>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <h3 id="install-pm2">Production with PM2</h3>
+                    <pre><code>npm run build
+npm run deploy
+pm2 start dist/index.js --name arklay-bot
+pm2 save</code></pre>
+
+                    <h3 id="install-discord-portal">Discord Developer Portal setup</h3>
+                    <ul>
+                        <li>Go to <a href="https://discord.com/developers/applications" target="_blank" rel="noopener noreferrer">discord.com/developers/applications</a> and create an application</li>
+                        <li>Under <strong>Bot</strong>, enable: Server Members Intent, Message Content Intent, Presence Intent</li>
+                        <li>Under <strong>OAuth2</strong>, generate an invite URL with scopes: <code>bot</code>, <code>applications.commands</code></li>
+                        <li>Recommended permissions: Administrator (or specific: Manage Roles, Manage Channels, Kick/Ban Members, Moderate Members, Manage Messages, Connect, Speak)</li>
+                    </ul>
+                    <p>
+                        Optional: place a <code>cookies.txt</code> (Netscape format) in the project root to bypass
+                        YouTube bot detection for music playback.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="configuration">
+                    <h2><span class="docs-section-num">6</span> Configuration</h2>
+                    <p>All configuration is done via environment variables in the <code>.env</code> file.</p>
+
+                    <p><strong>Required</strong></p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Variable</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>DISCORD_TOKEN</code></td><td>Bot token from Discord Developer Portal</td></tr>
+                                <tr><td><code>CLIENT_ID</code></td><td>Application ID from Discord Developer Portal</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p><strong>Optional</strong></p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Variable</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>GUILD_ID</code></td><td>Dev server ID for instant command deployment (no GUILD_ID = global deployment, up to 1 hour)</td></tr>
+                                <tr><td><code>BOT_PREFIX</code></td><td>Text command prefix (default: ".")</td></tr>
+                                <tr><td><code>BOT_NAME</code></td><td>Bot name prefix for text commands (default: "arklay")</td></tr>
+                                <tr><td><code>BOT_OWNER_ID</code></td><td>Owner's Discord user ID (gets boosted AI rate limits)</td></tr>
+                                <tr><td><code>BOT_OWNER_MULTIPLIER</code></td><td>Owner rate limit multiplier 0-20 (default: 5)</td></tr>
+                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Direct Claude API access (AI module disabled if both AI keys absent)</td></tr>
+                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Gemini API key + /nanobanana image generation</td></tr>
+                                <tr><td><code>GOOGLE_CLOUD_PROJECT</code></td><td>GCP project for Vertex AI Claude routing</td></tr>
+                                <tr><td><code>GOOGLE_CLOUD_REGION</code></td><td>GCP region for Vertex AI (default: us-east5)</td></tr>
+                                <tr><td><code>GOOGLE_APPLICATION_CREDENTIALS</code></td><td>Path to GCP service account JSON</td></tr>
+                                <tr><td><code>SPOTIFY_CLIENT_ID</code></td><td>Spotify link resolution</td></tr>
+                                <tr><td><code>SPOTIFY_CLIENT_SECRET</code></td><td>Spotify link resolution</td></tr>
+                                <tr><td><code>NODE_ENV</code></td><td>development or production</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        If neither <code>ANTHROPIC_API_KEY</code> nor <code>GOOGLE_AI_API_KEY</code> is set, the AI
+                        module auto-disables gracefully and all AI commands will be unavailable.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">7</span> Requirements</h2>
+                    <ul>
+                        <li>Node.js 20+</li>
+                        <li>FFmpeg (system install recommended; bundled ffmpeg-static used as fallback)</li>
+                        <li>Discord bot token (required)</li>
+                        <li>At least one AI API key (<code>ANTHROPIC_API_KEY</code> or <code>GOOGLE_AI_API_KEY</code>) to use AI commands</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">8</span> Links</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/arklay-bot" target="_blank" rel="noopener noreferrer">Source code on GitHub</a></li>
+                        <li><a href="https://github.com/StealthyLabsHQ/arklay-bot/releases/latest" target="_blank" rel="noopener noreferrer">Latest release</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Overview</a></li>
+                    <li>
+                        <a href="#modules">Modules</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#module-music">Music</a></li>
+                            <li><a href="#module-ai">AI</a></li>
+                            <li><a href="#module-moderation">Moderation</a></li>
+                            <li><a href="#module-utility">Utility</a></li>
+                            <li><a href="#module-fun">Fun</a></li>
+                            <li><a href="#module-config">Configuration</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#automatic-features">Automatic Features</a></li>
+                    <li><a href="#text-prefix">Text Prefix Commands</a></li>
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#install-pm2">Production with PM2</a></li>
+                            <li><a href="#install-discord-portal">Discord Developer Portal</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Privacy</a>
+                <a href="../terms-of-service" data-key="footer_tos">Terms</a>
+                <a href="../legal" data-key="footer_legal">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=bfc8571a" defer></script>
+    <script src="../../js/ux-enhancements.js?v=bb847a6a" defer></script>
+</body>
+
+</html>
