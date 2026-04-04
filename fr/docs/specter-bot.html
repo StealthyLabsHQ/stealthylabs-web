@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specter - Documentation | StealthyLabs</title>
-    <meta name="description" content="Documentation du bot Discord Specter - 61 commandes slash sur 6 modules : musique, IA, modération, utilitaires, fun et configuration.">
+    <meta name="description" content="Documentation du bot Discord Specter - 74 commandes slash sur 6 modules : musique, IA, modération, utilitaires, fun et configuration.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stealthylabs.eu/fr/docs/specter-bot">
@@ -128,26 +128,27 @@
             <article class="docs-main">
 
                 <div class="docs-section" id="apercu">
-                    <h2><span class="docs-section-num">1</span> Aperçu</h2>
+                    <h2><span class="docs-section-num">1</span> Apercu</h2>
                     <p>
-                        <strong>Specter</strong> est un bot Discord modulaire développé en TypeScript avec discord.js v14,
-                        combinant lecture musicale, commandes IA (Claude + Gemini), génération d'images, modération de
-                        serveur et outils utilitaires. Il propose 61 commandes slash réparties sur 6 modules indépendants.
+                        <strong>Specter</strong> est un bot Discord modulaire (v2.0.0) développé en TypeScript avec discord.js v14.
+                        Il propose 74 commandes slash réparties sur 6 modules indépendants : lecteur musical, assistant IA,
+                        modération, utilitaires, fun et configuration du serveur.
                     </p>
                     <p>
-                        SQLite gère toute la persistance : configuration des guildes, préférences utilisateurs,
-                        historique des conversations et reprise de la file musicale après redémarrage. Version 2.0.0.
+                        Toute la persistance est assurée par SQLite (8 tables) : configuration des guildes,
+                        préférences utilisateurs, historique des conversations, avertissements et reprise de la file
+                        musicale après redémarrage. Prend en charge les commandes slash et le préfixe texte
+                        (<code>.commande</code> ou <code>specter commande</code>).
                     </p>
                 </div>
 
                 <div class="docs-section" id="modules">
                     <h2><span class="docs-section-num">2</span> Modules</h2>
 
-                    <h3 id="module-musique">2.1 Musique (18 commandes)</h3>
+                    <h3 id="module-musique">2.1 Musique (21 commandes)</h3>
                     <p>
-                        Lecteur musical complet prenant en charge YouTube, Spotify et SoundCloud via le backend yt-dlp.
-                        La file d'attente persiste entre les redémarrages du bot. Filtres audio : bassboost, nightcore,
-                        vaporwave, 8d.
+                        Lecteur musical multi-sources prenant en charge YouTube, Spotify et SoundCloud via yt-dlp.
+                        La file reprend automatiquement après redémarrage du bot. Embed "En cours de lecture" interactif avec boutons.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -158,30 +159,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/play</code></td><td>Lire depuis YouTube, Spotify ou SoundCloud avec gestion de file</td></tr>
+                                <tr><td><code>/play</code></td><td>Lire depuis YouTube, Spotify ou SoundCloud</td></tr>
                                 <tr><td><code>/pause</code></td><td>Mettre en pause la lecture</td></tr>
                                 <tr><td><code>/resume</code></td><td>Reprendre la lecture</td></tr>
                                 <tr><td><code>/skip</code></td><td>Passer la piste en cours</td></tr>
                                 <tr><td><code>/stop</code></td><td>Arrêter et vider la file</td></tr>
                                 <tr><td><code>/queue</code></td><td>Afficher la file d'attente</td></tr>
-                                <tr><td><code>/nowplaying</code></td><td>Afficher la piste en cours avec barre de progression</td></tr>
-                                <tr><td><code>/loop [mode]</code></td><td>Modes de répétition : off / track / queue</td></tr>
+                                <tr><td><code>/nowplaying</code></td><td>Piste en cours avec barre de progression et contrôles</td></tr>
+                                <tr><td><code>/loop [mode]</code></td><td>Répétition : off / track / queue</td></tr>
                                 <tr><td><code>/volume [0-100]</code></td><td>Régler le volume</td></tr>
                                 <tr><td><code>/shuffle</code></td><td>Mélanger la file</td></tr>
-                                <tr><td><code>/remove [position]</code></td><td>Supprimer une piste de la file</td></tr>
+                                <tr><td><code>/remove [position]</code></td><td>Supprimer une piste</td></tr>
+                                <tr><td><code>/move [from] [to]</code></td><td>Déplacer une piste vers une autre position</td></tr>
+                                <tr><td><code>/previous</code></td><td>Rejouer la piste précédente</td></tr>
                                 <tr><td><code>/disconnect</code></td><td>Quitter le salon vocal</td></tr>
                                 <tr><td><code>/save</code></td><td>Recevoir le lien de la piste en cours par MP</td></tr>
-                                <tr><td><code>/lyrics [search]</code></td><td>Afficher les paroles de la piste en cours ou d'une recherche</td></tr>
+                                <tr><td><code>/lyrics [search]</code></td><td>Paroles avec bouton d'explication IA</td></tr>
                                 <tr><td><code>/seek [timestamp]</code></td><td>Aller à une position (ex. 1:30)</td></tr>
-                                <tr><td><code>/filter [type]</code></td><td>Appliquer des filtres audio : bassboost, nightcore, vaporwave, 8d</td></tr>
+                                <tr><td><code>/filter [type]</code></td><td>Filtres audio : bassboost, nightcore, vaporwave, 8d</td></tr>
                                 <tr><td><code>/skipto [position]</code></td><td>Passer à une position précise dans la file</td></tr>
-                                <tr><td><code>/aiplaylist [prompt]</code></td><td>Créer une playlist générée par IA</td></tr>
+                                <tr><td><code>/aiplaylist [prompt]</code></td><td>Playlist générée par IA</td></tr>
+                                <tr><td><code>/autoplay</code></td><td>Activer/désactiver l'ajout automatique de pistes similaires</td></tr>
                                 <tr><td><code>/replay</code></td><td>Rejouer la piste en cours</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-ia">2.2 IA (8 commandes)</h3>
+                    <h3 id="module-ia">2.2 IA (9 commandes)</h3>
                     <p>
                         Système dual fournisseur : Claude (Anthropic) et Gemini (Google). Le choix de modèle par
                         utilisateur est stocké dans SQLite. L'historique de conversation conserve les 25 derniers
@@ -198,12 +202,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/ask [question] [provider] [lang]</code></td><td>Interroger Claude ou Gemini avec sélection de langue</td></tr>
+                                <tr><td><code>/ask [question] [provider] [lang]</code></td><td>Interroger Claude ou Gemini</td></tr>
                                 <tr><td><code>/summarize [messages] [provider]</code></td><td>Résumer les messages récents d'un salon</td></tr>
+                                <tr><td><code>/tldr [url]</code></td><td>Résumer une page web</td></tr>
                                 <tr><td><code>/nanobanana [prompt] [style] [ratio] [resolution]</code></td><td>Générer des images avec Gemini</td></tr>
-                                <tr><td><code>/setmodel [model]</code></td><td>Choisir son modèle IA personnel (variantes Claude ou Gemini)</td></tr>
+                                <tr><td><code>/setmodel [model]</code></td><td>Choisir son modèle IA personnel</td></tr>
                                 <tr><td><code>/translate [language] [text]</code></td><td>Traduction par IA</td></tr>
-                                <tr><td><code>/roast [user]</code></td><td>Roast humoristique d'un utilisateur par l'IA</td></tr>
+                                <tr><td><code>/roast [user]</code></td><td>Roast humoristique basé sur les messages récents de l'utilisateur</td></tr>
                                 <tr><td><code>/vision [image] [prompt]</code></td><td>Analyser une image avec l'IA</td></tr>
                                 <tr><td><code>/catchup</code></td><td>Résumer le contexte de conversation récent</td></tr>
                             </tbody>
@@ -222,7 +227,7 @@
                         <li>Le délai adaptatif augmente lorsque l'API est surchargée</li>
                     </ul>
 
-                    <h3 id="module-moderation">2.3 Modération (12 commandes)</h3>
+                    <h3 id="module-moderation">2.3 Modération (13 commandes) - Admin uniquement</h3>
                     <p>
                         Module réservé aux administrateurs. Utilise un système de rôles admin personnalisé via
                         <code>/botrole</code>. La permission Administrateur Discord accorde toujours un accès complet.
@@ -243,17 +248,18 @@
                                 <tr><td><code>/kick [user] [reason]</code></td><td>Expulser un utilisateur</td></tr>
                                 <tr><td><code>/warn add/list/clear [user]</code></td><td>Système d'avertissements</td></tr>
                                 <tr><td><code>/mute [user]</code></td><td>Couper/rétablir le micro en vocal</td></tr>
+                                <tr><td><code>/role [user] [role]</code></td><td>Attribuer ou retirer un rôle à un utilisateur</td></tr>
                                 <tr><td><code>/clear [amount]</code></td><td>Supprimer 1 à 100 messages</td></tr>
                                 <tr><td><code>/lockdown [channel]</code></td><td>Basculer le verrouillage d'un salon</td></tr>
                                 <tr><td><code>/slowmode [seconds]</code></td><td>Définir le mode lent d'un salon</td></tr>
                                 <tr><td><code>/nuke</code></td><td>Supprimer et recréer un salon</td></tr>
                                 <tr><td><code>/botrole add/remove/list</code></td><td>Gérer les rôles admin du bot</td></tr>
-                                <tr><td><code>/help</code></td><td>Menu d'aide interactif</td></tr>
+                                <tr><td><code>/help</code></td><td>Centre d'aide interactif</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-utilitaires">2.4 Utilitaires (18 commandes + 1 menu contextuel)</h3>
+                    <h3 id="module-utilitaires">2.4 Utilitaires (23 commandes + 1 menu contextuel)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -264,6 +270,7 @@
                             </thead>
                             <tbody>
                                 <tr><td><code>/ping</code></td><td>Latence du bot</td></tr>
+                                <tr><td><code>/botinfo</code></td><td>Statistiques et disponibilité du bot</td></tr>
                                 <tr><td><code>/userinfo [user]</code></td><td>Informations sur un utilisateur</td></tr>
                                 <tr><td><code>/serverinfo</code></td><td>Statistiques du serveur</td></tr>
                                 <tr><td><code>/avatar [user]</code></td><td>Avatar en pleine taille</td></tr>
@@ -277,16 +284,20 @@
                                 <tr><td><code>/crypto [coin]</code></td><td>Prix des cryptomonnaies</td></tr>
                                 <tr><td><code>/weather [city]</code></td><td>Météo actuelle</td></tr>
                                 <tr><td><code>/afk [reason]</code></td><td>Définir/supprimer le statut AFK</td></tr>
-                                <tr><td><code>/remindme [duration] [message]</code></td><td>Créer un rappel (max 24h)</td></tr>
+                                <tr><td><code>/remindme [duration] [message]</code></td><td>Rappel (max 24h)</td></tr>
                                 <tr><td><code>/poll [question] [options]</code></td><td>Sondage interactif avec boutons</td></tr>
                                 <tr><td><code>/emoji</code></td><td>Gestion et infos des emojis</td></tr>
-                                <tr><td><code>/steal</code></td><td>Cloner des emojis/stickers</td></tr>
+                                <tr><td><code>/steal</code></td><td>Cloner des emojis ou stickers</td></tr>
+                                <tr><td><code>/snipe</code></td><td>Afficher le dernier message supprimé du salon</td></tr>
+                                <tr><td><code>/editsnipe</code></td><td>Afficher le dernier message modifié du salon</td></tr>
+                                <tr><td><code>/color [hex]</code></td><td>Aperçu d'une couleur</td></tr>
+                                <tr><td><code>/timestamp [date]</code></td><td>Convertir une date en timestamp Discord</td></tr>
                                 <tr><td>Menu contextuel : "Steal Sticker"</td><td>Clic droit sur un message pour cloner son sticker</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-fun">2.5 Fun (7 commandes)</h3>
+                    <h3 id="module-fun">2.5 Fun (10 commandes)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -301,13 +312,16 @@
                                 <tr><td><code>/coinflip</code></td><td>Lancer une pièce</td></tr>
                                 <tr><td><code>/dice [count] [sides]</code></td><td>Lancer des dés</td></tr>
                                 <tr><td><code>/trivia [category]</code></td><td>Question de trivia avec boutons</td></tr>
-                                <tr><td><code>/meme</code></td><td>Mème aléatoire depuis Reddit</td></tr>
+                                <tr><td><code>/meme [subreddit]</code></td><td>Mème aléatoire avec recherche de subreddit</td></tr>
                                 <tr><td><code>/guesssong</code></td><td>Jeu de devinette musicale</td></tr>
+                                <tr><td><code>/rps [choice]</code></td><td>Pierre, feuille, ciseaux</td></tr>
+                                <tr><td><code>/rate [thing]</code></td><td>Noter n'importe quoi de 0 à 10 avec barre de progression</td></tr>
+                                <tr><td><code>/how [adjective] [user]</code></td><td>Pourcentage amusant pour n'importe quoi</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-config">2.6 Configuration (admin uniquement)</h3>
+                    <h3 id="module-config">2.6 Configuration (7 sous-commandes) - Admin uniquement</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -320,144 +334,44 @@
                                 <tr><td><code>/config autorole [role]</code></td><td>Attribuer automatiquement un rôle aux nouveaux membres</td></tr>
                                 <tr><td><code>/config welcome [channel] [message]</code></td><td>Définir le message de bienvenue</td></tr>
                                 <tr><td><code>/config logs [channel]</code></td><td>Définir le salon de logs de modération</td></tr>
-                                <tr><td><code>/config show</code></td><td>Afficher la configuration actuelle du serveur</td></tr>
+                                <tr><td><code>/config tempvc [channel]</code></td><td>Définir le salon hub pour les salons vocaux temporaires</td></tr>
+                                <tr><td><code>/config automod [on/off]</code></td><td>Activer/désactiver l'auto-modération IA (basée sur Gemini)</td></tr>
+                                <tr><td><code>/config language [lang]</code></td><td>Définir la langue du serveur (12 langues supportées)</td></tr>
+                                <tr><td><code>/config show</code></td><td>Afficher la configuration actuelle</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <div class="docs-section" id="fonctionnalites-automatiques">
-                    <h2><span class="docs-section-num">3</span> Fonctionnalités automatiques</h2>
+                    <h2><span class="docs-section-num">3</span> Fonctionnalites automatiques</h2>
                     <p>Comportements déclenchés par des événements, sans commande slash :</p>
                     <ul>
-                        <li><strong>Auto-rôle</strong> - attribuer un rôle à chaque nouveau membre (requiert <code>/config autorole</code>)</li>
-                        <li><strong>Messages de bienvenue</strong> - accueillir les nouveaux membres dans un salon désigné</li>
+                        <li><strong>Auto-rôle</strong> - attribue un rôle à chaque nouveau membre via <code>/config autorole</code></li>
+                        <li><strong>Messages de bienvenue</strong> - accueille les nouveaux membres dans un salon désigné</li>
                         <li><strong>Salons vocaux temporaires</strong> - rejoindre un salon hub crée un salon vocal personnel, supprimé lorsqu'il est vide</li>
                         <li><strong>Journal des messages</strong> - les messages supprimés et modifiés sont consignés dans le salon de modération</li>
-                        <li><strong>Auto-modération IA</strong> - analyse optionnelle du contenu par Gemini avec délai anti-spam de 5s par utilisateur, consigne le contenu signalé</li>
+                        <li><strong>Auto-modération IA</strong> - analyse optionnelle du contenu par Gemini avec délai de 5s par utilisateur, signale et consigne le contenu suspect</li>
+                        <li><strong>Snipe de messages</strong> - conserve le dernier message supprimé ou modifié par salon</li>
                     </ul>
                 </div>
 
-                <div class="docs-section" id="installation">
-                    <h2><span class="docs-section-num">4</span> Installation</h2>
-                    <ol class="docs-steps">
-                        <li>
-                            <div>
-                                Cloner le dépôt et entrer dans le répertoire :
-                                <pre><code>git clone &lt;repository-url&gt;
-cd discord-bot</code></pre>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                Installer les dépendances :
-                                <pre><code>npm install</code></pre>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                Copier le modèle d'environnement :
-                                <pre><code>cp .env.example .env</code></pre>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                Modifier <code>.env</code> avec vos tokens et clés API.
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                Déployer les commandes slash sur Discord :
-                                <pre><code>npm run deploy</code></pre>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                Démarrer en mode développement :
-                                <pre><code>npm run dev</code></pre>
-                                Ou compiler et lancer en production :
-                                <pre><code>npm run build
-npm run start</code></pre>
-                            </div>
-                        </li>
-                    </ol>
-
-                    <h3 id="installation-pm2">Production avec PM2</h3>
-                    <pre><code>npm run build
-npm run deploy
-pm2 start dist/index.js --name specter
-pm2 save</code></pre>
-                </div>
-
-                <div class="docs-section" id="configuration">
-                    <h2><span class="docs-section-num">5</span> Configuration</h2>
-
-                    <h3 id="config-env">Variables d'environnement</h3>
-                    <p><strong>Requises :</strong></p>
-                    <div class="docs-table-wrap">
-                        <table class="docs-table">
-                            <thead>
-                                <tr>
-                                    <th>Variable</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>DISCORD_TOKEN</code></td><td>Token du bot depuis le Portail Développeur Discord</td></tr>
-                                <tr><td><code>CLIENT_ID</code></td><td>ID de l'application depuis le Portail Développeur Discord</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p><strong>Optionnelles :</strong></p>
-                    <div class="docs-table-wrap">
-                        <table class="docs-table">
-                            <thead>
-                                <tr>
-                                    <th>Variable</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><code>GUILD_ID</code></td><td>ID du serveur de développement pour un déploiement instantané des commandes</td></tr>
-                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Accès direct à l'API Claude (module IA désactivé si absent)</td></tr>
-                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>API Gemini + génération d'images /nanobanana</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_PROJECT</code></td><td>ID du projet GCP pour Vertex AI Claude</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_REGION</code></td><td>Région GCP pour Vertex AI (défaut : us-east5)</td></tr>
-                                <tr><td><code>GOOGLE_APPLICATION_CREDENTIALS</code></td><td>Chemin vers le fichier JSON du compte de service GCP</td></tr>
-                                <tr><td><code>SPOTIFY_CLIENT_ID</code></td><td>Résolution des liens Spotify</td></tr>
-                                <tr><td><code>SPOTIFY_CLIENT_SECRET</code></td><td>Résolution des liens Spotify</td></tr>
-                                <tr><td><code>NODE_ENV</code></td><td>development ou production</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 id="config-discord">Portail Développeur Discord</h3>
-                    <p>Paramètres requis dans le Portail Développeur Discord :</p>
+                <div class="docs-section" id="commandes-prefixe">
+                    <h2><span class="docs-section-num">4</span> Commandes par prefixe texte</h2>
+                    <p>Toutes les commandes fonctionnent aussi avec un préfixe texte, en plus des commandes slash :</p>
                     <ul>
-                        <li><strong>Intents privilégiés :</strong> Server Members, Message Content, Guild Members, Guild Presences</li>
-                        <li><strong>Scopes du bot :</strong> bot, applications.commands</li>
-                        <li><strong>Permissions recommandées :</strong> Administrateur, ou granulaires : Gérer les rôles, Gérer les salons, Expulser/Bannir des membres, Modérer des membres, Gérer les messages</li>
-                    </ul>
-                    <div class="docs-note">
-                        <strong>Note :</strong> Placez un fichier <code>cookies.txt</code> (format Netscape) à la racine du projet pour contourner la détection de bot de YouTube pour la musique.
-                    </div>
-                </div>
-
-                <div class="docs-section" id="prerequis">
-                    <h2><span class="docs-section-num">6</span> Prérequis</h2>
-                    <ul>
-                        <li><strong>Node.js</strong> 20+</li>
-                        <li><strong>FFmpeg</strong> - installation système recommandée ; ffmpeg-static utilisé en secours</li>
-                        <li>Au minimum <code>DISCORD_TOKEN</code> + <code>CLIENT_ID</code> pour démarrer - les modules IA et musique se dégradent gracieusement sans les clés API optionnelles</li>
+                        <li>Format : <code>.commande [args]</code> ou <code>specter commande [args]</code></li>
+                        <li>Exemple : <code>.play never gonna give you up</code> ou <code>specter ask what is rust</code></li>
+                        <li>Le préfixe et le nom du bot sont configurables via <code>.env</code></li>
                     </ul>
                 </div>
 
-            </article>
+                </article>
 
             <aside class="docs-toc">
                 <p class="docs-toc-title">Sommaire</p>
                 <ol class="docs-toc-list">
-                    <li><a href="#apercu">Aperçu</a></li>
+                    <li><a href="#apercu">Apercu</a></li>
                     <li>
                         <a href="#modules">Modules</a>
                         <ol class="docs-toc-sub">
@@ -469,7 +383,8 @@ pm2 save</code></pre>
                             <li><a href="#module-config">Configuration</a></li>
                         </ol>
                     </li>
-                    <li><a href="#fonctionnalites-automatiques">Fonctionnalités automatiques</a></li>
+                    <li><a href="#fonctionnalites-automatiques">Fonctionnalites automatiques</a></li>
+                    <li><a href="#commandes-prefixe">Commandes par prefixe texte</a></li>
                     <li>
                         <a href="#installation">Installation</a>
                         <ol class="docs-toc-sub">
@@ -483,7 +398,7 @@ pm2 save</code></pre>
                             <li><a href="#config-discord">Portail Développeur Discord</a></li>
                         </ol>
                     </li>
-                    <li><a href="#prerequis">Prérequis</a></li>
+                    <li><a href="#prerequis">Prerequis</a></li>
                 </ol>
             </aside>
 
