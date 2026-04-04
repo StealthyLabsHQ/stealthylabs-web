@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Hardening - Documentation | StealthyLabs</title>
+    <meta name="description" content="Documentation Security Hardening - Skills pour Claude axes sur la revue de securite du code, les patterns de durcissement, la detection de vulnerabilites et les bonnes pratiques de code securise.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/fr/docs/security-hardening">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/security-hardening">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/security-hardening">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=b79df374">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=8dbe76cf.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">A propos</a></li>
+                <li><a href="../network" data-key="nav_network">Reseau</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Jeux</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Parametres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Francais</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                            <option value="system">Systeme</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Defaut)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Forcer le rechargement</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">A propos</a>
+                <a href="../network" data-key="nav_network">Reseau</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Jeux</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Security</span><br>
+                <span class="gradient-text">Hardening</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Retour a la documentation
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Presentation</h2>
+                    <p>
+                        <strong>Security Hardening</strong> est une collection de skills pour Claude axes sur la revue de securite
+                        du code, les patterns de durcissement, la detection de vulnerabilites et les bonnes pratiques de code
+                        securise. Il integre une analyse de securite structuree directement dans le flux de developpement.
+                    </p>
+                    <p>
+                        Les skills couvrent les perspectives offensives et defensives : identification des vulnerabilites,
+                        application des correctifs et audit des dependances pour les problemes connus.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="features">
+                    <h2><span class="docs-section-num">2</span> Fonctionnalites</h2>
+                    <ul>
+                        <li><strong>Verifications OWASP Top 10</strong> - revue systematique contre les risques les plus critiques des applications web</li>
+                        <li><strong>Validation des entrees</strong> - detection des validations absentes ou insuffisantes qui ouvrent des chemins d'injection</li>
+                        <li><strong>Detection d'injection SQL</strong> - identification des constructions de requetes non securisees et des lacunes de parametrisation</li>
+                        <li><strong>Prevention XSS</strong> - identification des sorties non echappees, utilisation non securisee d'innerHTML et lacunes CSP</li>
+                        <li><strong>Audit des dependances</strong> - signalement des paquets obsoletes avec des CVE connus</li>
+                        <li><strong>Patterns de durcissement</strong> - recommandations d'en-tetes de securite, configurations avec moindre privilege et valeurs par defaut securisees</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="coverage">
+                    <h2><span class="docs-section-num">3</span> Perimetre de couverture</h2>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Categorie</th>
+                                    <th>Verifications incluses</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Injection</td>
+                                    <td>SQL, NoSQL, commande, patterns d'injection LDAP</td>
+                                </tr>
+                                <tr>
+                                    <td>XSS</td>
+                                    <td>Reflechi, stocke, base DOM - lacunes d'encodage des sorties</td>
+                                </tr>
+                                <tr>
+                                    <td>Authentification</td>
+                                    <td>Gestion de session, stockage des tokens, exposition aux attaques par force brute</td>
+                                </tr>
+                                <tr>
+                                    <td>Autorisation</td>
+                                    <td>IDOR, elevation de privileges, controles d'acces manquants</td>
+                                </tr>
+                                <tr>
+                                    <td>Dependances</td>
+                                    <td>Correspondance CVE, paquets obsoletes, risques de chaine d'approvisionnement</td>
+                                </tr>
+                                <tr>
+                                    <td>Configuration</td>
+                                    <td>En-tetes de securite, politique CORS, parametres TLS, exposition de secrets</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">4</span> Installation</h2>
+                    <ol class="docs-steps">
+                        <li><div>Ouvrir Claude Code</div></li>
+                        <li><div>Executer <code>/skills install security-hardening</code></div></li>
+                        <li><div>Les skills s'activent dans la session en cours</div></li>
+                        <li><div>Utiliser <code>/security-hardening</code> pour declencher une revue sur le fichier ou la selection en cours</div></li>
+                    </ol>
+                    <div class="docs-note">
+                        <strong>Note :</strong> Les skills fonctionnent avec tous les langages. Pointez-les vers un fichier, une fonction ou le chemin complet d'une base de code.
+                    </div>
+                </div>
+
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">5</span> Prerequis</h2>
+                    <ul>
+                        <li><strong>Claude Code</strong> avec support des skills</li>
+                        <li>Aucun outil externe requis - l'analyse s'effectue via Claude</li>
+                        <li>Pour les audits de dependances : un manifeste <code>package.json</code>, <code>requirements.txt</code> ou equivalent</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">6</span> Liens</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/security-hardening" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Code source sur GitHub</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Sommaire</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Presentation</a></li>
+                    <li><a href="#features">Fonctionnalites</a></li>
+                    <li><a href="#coverage">Perimetre de couverture</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#requirements">Prerequis</a></li>
+                    <li><a href="#links">Liens</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits reserves.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Confidentialite</a>
+                <a href="../terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="../legal" data-key="footer_legal">Mentions legales</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=bfc8571a" defer></script>
+    <script src="../../js/ux-enhancements.js?v=bb847a6a" defer></script>
+</body>
+
+</html>

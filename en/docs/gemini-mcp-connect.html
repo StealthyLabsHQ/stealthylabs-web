@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gemini-mcp-connect - Documentation | StealthyLabs</title>
+    <meta name="description" content="gemini-mcp-connect documentation - MCP server bridging Claude Code with Google Gemini as a second-opinion agent. Validate plans, review code, cross-check reasoning.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/en/docs/gemini-mcp-connect">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/gemini-mcp-connect">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/gemini-mcp-connect">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=b79df374">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=8dbe76cf.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Language</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Font</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">About me</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>gemini-mcp</span><br>
+                <span class="gradient-text">connect</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Back to docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Overview</h2>
+                    <p>
+                        <strong>gemini-mcp-connect</strong> is a Python MCP server that bridges Claude Code with Google Gemini,
+                        acting as a second-opinion agent directly inside your AI CLI. It lets you validate plans, review code,
+                        and cross-check reasoning without leaving your terminal.
+                    </p>
+                    <p>
+                        The server exposes four tools accessible from Claude Code: free-form queries, code review, plan validation,
+                        and quota status. Three reasoning tiers control the trade-off between speed and depth.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="features">
+                    <h2><span class="docs-section-num">2</span> Features</h2>
+                    <ul>
+                        <li><strong>Second-opinion agent</strong> - ask Gemini from inside Claude Code</li>
+                        <li><strong>Three reasoning tiers</strong> - lite, flash, pro for different use cases</li>
+                        <li><strong>Code review tool</strong> - language-aware critique via <code>review_code</code></li>
+                        <li><strong>Plan validation</strong> - validate architecture or approach before execution</li>
+                        <li><strong>Quota tracking</strong> - check remaining daily requests with <code>gemini_status</code></li>
+                        <li><strong>Zero-friction install</strong> - run with <code>uvx</code>, no clone required</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="tools">
+                    <h2><span class="docs-section-num">3</span> Tools</h2>
+                    <p>The server exposes four MCP tools:</p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Parameters</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>query_gemini</code></td>
+                                    <td><code>prompt, tier</code></td>
+                                    <td>Free-form question to Gemini</td>
+                                </tr>
+                                <tr>
+                                    <td><code>review_code</code></td>
+                                    <td><code>code, language, tier</code></td>
+                                    <td>Language-aware code review</td>
+                                </tr>
+                                <tr>
+                                    <td><code>validate_plan</code></td>
+                                    <td><code>plan, tier</code></td>
+                                    <td>Validate a plan before execution</td>
+                                </tr>
+                                <tr>
+                                    <td><code>gemini_status</code></td>
+                                    <td>-</td>
+                                    <td>Check remaining daily quota</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 id="tools-tiers">Reasoning tiers</h3>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Tier</th>
+                                    <th>Speed</th>
+                                    <th>Use case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>lite</code></td>
+                                    <td>Fast</td>
+                                    <td>Quick lookups, low-stakes queries</td>
+                                </tr>
+                                <tr>
+                                    <td><code>flash</code></td>
+                                    <td>Balanced</td>
+                                    <td>General code review and validation</td>
+                                </tr>
+                                <tr>
+                                    <td><code>pro</code></td>
+                                    <td>Max reasoning</td>
+                                    <td>Complex architecture, critical decisions (100 req/day)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">4</span> Installation</h2>
+
+                    <h3 id="installation-uvx">Option 1 - uvx (recommended)</h3>
+                    <p>No clone needed. Run directly with <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">uv</a>:</p>
+                    <pre><code>uvx gemini-mcp-connect</code></pre>
+
+                    <h3 id="installation-src">Option 2 - From source</h3>
+                    <p>Requires Python 3.10+.</p>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/gemini-mcp-connect.git
+cd gemini-mcp-connect
+pip install -e .</code></pre>
+                </div>
+
+                <div class="docs-section" id="configuration">
+                    <h2><span class="docs-section-num">5</span> Configuration</h2>
+                    <p>
+                        Set your Google AI Studio API key as an environment variable:
+                    </p>
+                    <pre><code>export GEMINI_API_KEY=your_api_key_here</code></pre>
+                    <p>
+                        Add the server to your Claude Code MCP configuration file (<code>~/.claude/settings.json</code> or equivalent):
+                    </p>
+                    <pre><code>{
+  "mcpServers": {
+    "gemini-mcp-connect": {
+      "command": "uvx",
+      "args": ["gemini-mcp-connect"],
+      "env": {
+        "GEMINI_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}</code></pre>
+                    <div class="docs-note">
+                        <strong>Note:</strong> If installing from source, replace <code>"uvx"</code> with <code>"python"</code>
+                        and adjust <code>args</code> to point to the module entry point.
+                    </div>
+                </div>
+
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">6</span> Requirements</h2>
+                    <ul>
+                        <li><strong>Python</strong> 3.10+</li>
+                        <li><strong>GEMINI_API_KEY</strong> environment variable - obtain from <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Google AI Studio</a></li>
+                        <li><strong>Claude Code</strong> or any MCP-compatible AI CLI</li>
+                        <li><code>uv</code> (for uvx install method)</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">7</span> Links</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/gemini-mcp-connect" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Source code on GitHub</a></li>
+                        <li><a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Google AI Studio - get API key</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li>
+                        <a href="#tools">Tools</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#tools-tiers">Reasoning tiers</a></li>
+                        </ol>
+                    </li>
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#installation-uvx">uvx</a></li>
+                            <li><a href="#installation-src">From source</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Privacy</a>
+                <a href="../terms-of-service" data-key="footer_tos">Terms</a>
+                <a href="../legal" data-key="footer_legal">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=bfc8571a" defer></script>
+    <script src="../../js/ux-enhancements.js?v=bb847a6a" defer></script>
+</body>
+
+</html>

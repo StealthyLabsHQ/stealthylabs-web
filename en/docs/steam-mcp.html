@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>steam-mcp - Documentation | StealthyLabs</title>
+    <meta name="description" content="steam-mcp documentation - MCP server exposing the Steam Web API. Player profiles, game library, achievements, VAC bans, store search and 8 slash commands.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/en/docs/steam-mcp">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/steam-mcp">
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/steam-mcp">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=b79df374">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=8dbe76cf.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">About me</a></li>
+                <li><a href="../network" data-key="nav_network">Network</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Games</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Language</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Font</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Default)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Force Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">About me</a>
+                <a href="../network" data-key="nav_network">Network</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Games</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>steam</span><br>
+                <span class="gradient-text">mcp</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Back to docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Overview</h2>
+                    <p>
+                        <strong>steam-mcp</strong> is a TypeScript MCP server that exposes the Steam Web API to any MCP-compatible
+                        AI client. Query player profiles, browse game libraries, check achievements, look up VAC ban status,
+                        search the store, and more - all through natural language from your terminal.
+                    </p>
+                    <p>
+                        Eight slash commands cover the most common Steam data operations, from profile lookups to co-op
+                        game discovery and playtime trend analysis.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="features">
+                    <h2><span class="docs-section-num">2</span> Features</h2>
+                    <ul>
+                        <li><strong>Player profiles</strong> - public Steam profile data</li>
+                        <li><strong>Game library</strong> - owned games and playtime</li>
+                        <li><strong>Achievements</strong> - per-game achievement progress</li>
+                        <li><strong>Game details</strong> - store information for any app</li>
+                        <li><strong>VAC ban status</strong> - check ban records for any Steam ID</li>
+                        <li><strong>Co-op discovery</strong> - find games shared between players</li>
+                        <li><strong>Playtime trends</strong> - analyze recent activity patterns</li>
+                        <li><strong>Raw API access</strong> - direct Steam Web API endpoint queries</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="commands">
+                    <h2><span class="docs-section-num">3</span> Commands</h2>
+                    <p>The server exposes 8 slash commands:</p>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>/steam:profile</code></td>
+                                    <td>Fetch a Steam player profile</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:library</code></td>
+                                    <td>List owned games and playtime</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:achievements</code></td>
+                                    <td>Get achievement progress for a game</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:game</code></td>
+                                    <td>Retrieve store details for an app</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:vac</code></td>
+                                    <td>Check VAC and game ban status</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:coop</code></td>
+                                    <td>Find games shared between multiple players</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:trend</code></td>
+                                    <td>Analyze recent playtime trends</td>
+                                </tr>
+                                <tr>
+                                    <td><code>/steam:api</code></td>
+                                    <td>Direct access to any Steam Web API endpoint</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">4</span> Installation</h2>
+
+                    <h3 id="installation-npx">Option 1 - npx (no build required)</h3>
+                    <p>Add directly to your MCP config using <code>npx</code>. See the Configuration section below.</p>
+
+                    <h3 id="installation-src">Option 2 - From source</h3>
+                    <p>Requires <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18+.</p>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/steam-mcp.git
+cd steam-mcp
+npm install
+npm run build</code></pre>
+                </div>
+
+                <div class="docs-section" id="configuration">
+                    <h2><span class="docs-section-num">5</span> Configuration</h2>
+                    <p>
+                        Set your Steam API key as an environment variable:
+                    </p>
+                    <pre><code>export STEAM_API_KEY=your_api_key_here</code></pre>
+                    <p>
+                        Add the server to your MCP configuration file. Using <code>npx</code>:
+                    </p>
+                    <pre><code>{
+  "mcpServers": {
+    "steam-mcp": {
+      "command": "npx",
+      "args": ["-y", "@stealthylabs/steam-mcp"],
+      "env": {
+        "STEAM_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}</code></pre>
+                    <p>Or if installed from source, point to the built output:</p>
+                    <pre><code>{
+  "mcpServers": {
+    "steam-mcp": {
+      "command": "node",
+      "args": ["/path/to/steam-mcp/dist/index.js"],
+      "env": {
+        "STEAM_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}</code></pre>
+                    <div class="docs-note">
+                        <strong>API key:</strong> Obtain a free Steam Web API key at <a href="https://steamcommunity.com/dev/apikey" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">steamcommunity.com/dev/apikey</a>.
+                        A Steam account is required.
+                    </div>
+                </div>
+
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">6</span> Requirements</h2>
+                    <ul>
+                        <li><strong>Node.js</strong> 18+</li>
+                        <li><strong>STEAM_API_KEY</strong> environment variable - obtain at <a href="https://steamcommunity.com/dev/apikey" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">steamcommunity.com/dev/apikey</a></li>
+                        <li>Claude Code, Claude Desktop, or any MCP-compatible AI client</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">7</span> Links</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/steam-mcp" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Source code on GitHub</a></li>
+                        <li><a href="https://steamcommunity.com/dev/apikey" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Steam Web API key registration</a></li>
+                        <li><a href="https://developer.valvesoftware.com/wiki/Steam_Web_API" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Steam Web API documentation</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Contents</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#commands">Commands</a></li>
+                    <li>
+                        <a href="#installation">Installation</a>
+                        <ol class="docs-toc-sub">
+                            <li><a href="#installation-npx">npx</a></li>
+                            <li><a href="#installation-src">From source</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#links">Links</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Privacy</a>
+                <a href="../terms-of-service" data-key="footer_tos">Terms</a>
+                <a href="../legal" data-key="footer_legal">Legal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=bfc8571a" defer></script>
+    <script src="../../js/ux-enhancements.js?v=bb847a6a" defer></script>
+</body>
+
+</html>

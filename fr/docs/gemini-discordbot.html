@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Discord Bot - Documentation | StealthyLabs</title>
+    <meta name="description" content="Documentation du Gemini Discord Bot - Chattez avec Google Gemini AI directement depuis votre serveur Discord via des slash commands. Installation, configuration et fonctionnalites.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://stealthylabs.eu/fr/docs/gemini-discordbot">
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="fr" href="https://stealthylabs.eu/fr/docs/gemini-discordbot">
+    <link rel="alternate" hreflang="en" href="https://stealthylabs.eu/en/docs/gemini-discordbot">
+
+    <link rel="stylesheet" href="../../css/style-main.css?v=b79df374">
+    <link rel="stylesheet" href="../../css/glass-theme.css?v=f1e34b68">
+    <link rel="stylesheet" href="../../css/theme-light.css?v=c1194e15">
+    <link rel="stylesheet" href="../../css/style-docs.css?v=8dbe76cf.0">
+    <link rel="icon" type="image/png" href="../../logos/favicon.png">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-lazy-css>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&family=Raleway:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" media="print" data-lazy-css>
+    <meta name="site-root" content="../../">
+</head>
+
+<body>
+
+    <nav class="main-navbar">
+        <div class="nav-left">
+            <a href="../" class="nav-logo nav-wordmark">STEALTHYLABS</a>
+            <ul class="nav-links desktop-only">
+                <li><a href="../about" data-key="nav_about">A propos</a></li>
+                <li><a href="../network" data-key="nav_network">Reseau</a></li>
+                <li><a href="./" data-key="nav_projects">Docs</a></li>
+                <li><a href="../games/" data-key="nav_games">Jeux</a></li>
+                <li><a href="../contact" data-key="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+
+            <div class="time-badge">
+                <span id="clockDisplay">--:--</span>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="settings-btn" title="Parametres">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_language">Langue</div>
+                        <select id="languageSelector">
+                            <option value="fr">Français</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_theme">Theme</div>
+                        <select id="themeSelector" class="font-select">
+                            <option value="dark" selected>Sombre</option>
+                            <option value="light">Clair</option>
+                            <option value="system">Systeme</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-label" data-key="settings_font">Police</div>
+                        <select id="fontSelector">
+                            <option value="'Inter', sans-serif" selected data-key="font_default">Inter (Defaut)</option>
+                            <option value="'Space Grotesk', 'Inter', sans-serif">Space Grotesk</option>
+                            <option value="'Raleway', sans-serif">Raleway</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label" data-key="settings_refresh">DEBUG</label>
+                        <button type="button" data-action="force-refresh" class="btn-force-refresh"
+                            data-key="btn_force_refresh">Forcer le rechargement</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="mobileMenu" class="mobile-menu-overlay">
+            <button class="close-menu-btn">&times;</button>
+            <div class="mobile-links">
+                <a href="../about" data-key="nav_about">A propos</a>
+                <a href="../network" data-key="nav_network">Reseau</a>
+                <a href="./" data-key="nav_projects">Docs</a>
+                <a href="../games/" data-key="nav_games">Jeux</a>
+                <a href="../contact" data-key="nav_contact">Contact</a>
+            </div>
+        </div>
+
+        <section class="hero hero-section">
+            <h1 class="hero-title hero-title--large">
+                <span>Gemini</span><br>
+                <span class="gradient-text">Discord Bot</span>
+            </h1>
+        </section>
+
+        <a href="./" class="docs-back">
+            <i class="fas fa-arrow-left"></i> Retour aux docs
+        </a>
+
+        <div class="docs-layout">
+
+            <article class="docs-main">
+
+                <div class="docs-section" id="overview">
+                    <h2><span class="docs-section-num">1</span> Vue d'ensemble</h2>
+                    <p>
+                        <strong>Gemini Discord Bot</strong> est un bot Discord propulse par l'IA Google Gemini. Il
+                        permet aux utilisateurs de dialoguer avec Gemini directement depuis n'importe quel serveur
+                        Discord via des slash commands, avec support du contexte de conversation entre les messages.
+                    </p>
+                    <p>
+                        Le bot est leger et concu pour un deploiement simple en auto-hebergement sur tout serveur
+                        disposant de Node.js 18+.
+                    </p>
+                </div>
+
+                <div class="docs-section" id="features">
+                    <h2><span class="docs-section-num">2</span> Fonctionnalites</h2>
+                    <ul>
+                        <li><strong>Chat Gemini AI</strong> - interagissez avec Google Gemini via des slash commands Discord</li>
+                        <li><strong>Contexte de conversation</strong> - le bot conserve le contexte au fil d'une conversation</li>
+                        <li><strong>Deployable sur serveur</strong> - fonctionne sur tout hebergeur ou VPS compatible Node.js</li>
+                        <li><strong>Leger</strong> - dependances minimales, aucune base de donnees requise</li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="installation">
+                    <h2><span class="docs-section-num">3</span> Installation</h2>
+                    <p>Necessite <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Node.js</a> 18 ou superieur.</p>
+                    <ol class="docs-steps">
+                        <li><div>Cloner le depot :
+                            <pre><code>git clone https://github.com/StealthyLabsHQ/gemini-discordbot.git
+cd gemini-discordbot</code></pre>
+                        </div></li>
+                        <li><div>Installer les dependances :
+                            <pre><code>npm install</code></pre>
+                        </div></li>
+                        <li><div>Creer un fichier <code>.env</code> et ajouter vos identifiants (voir <a href="#configuration" style="color: var(--accent);">Configuration</a>).</div></li>
+                        <li><div>Demarrer le bot :
+                            <pre><code>node index.js</code></pre>
+                        </div></li>
+                    </ol>
+                </div>
+
+                <div class="docs-section" id="configuration">
+                    <h2><span class="docs-section-num">4</span> Configuration</h2>
+                    <p>
+                        Toute la configuration se fait via un fichier <code>.env</code> a la racine du projet.
+                        Creer le fichier et definir les variables suivantes :
+                    </p>
+                    <pre><code>DISCORD_TOKEN=votre_token_de_bot_discord
+GEMINI_API_KEY=votre_cle_api_google_ai_studio</code></pre>
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Variable</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>DISCORD_TOKEN</code></td>
+                                    <td>Token du bot depuis le Discord Developer Portal</td>
+                                </tr>
+                                <tr>
+                                    <td><code>GEMINI_API_KEY</code></td>
+                                    <td>Cle API depuis Google AI Studio</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="docs-note">
+                        <strong>Note :</strong> Ne jamais commiter le fichier <code>.env</code> dans le controle de version. L'ajouter au <code>.gitignore</code>.
+                    </div>
+                </div>
+
+                <div class="docs-section" id="requirements">
+                    <h2><span class="docs-section-num">5</span> Prerequis</h2>
+                    <ul>
+                        <li><strong>Node.js</strong> 18 ou superieur</li>
+                        <li><strong>Application bot Discord</strong> - a creer via le <a href="https://discord.com/developers/applications" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Discord Developer Portal</a></li>
+                        <li><strong>Cle API Google AI Studio</strong> - disponible sur <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">aistudio.google.com</a></li>
+                    </ul>
+                </div>
+
+                <div class="docs-section" id="links">
+                    <h2><span class="docs-section-num">6</span> Liens</h2>
+                    <ul>
+                        <li><a href="https://github.com/StealthyLabsHQ/gemini-discordbot" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Code source sur GitHub</a></li>
+                    </ul>
+                </div>
+
+            </article>
+
+            <aside class="docs-toc">
+                <p class="docs-toc-title">Sommaire</p>
+                <ol class="docs-toc-list">
+                    <li><a href="#overview">Vue d'ensemble</a></li>
+                    <li><a href="#features">Fonctionnalites</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#requirements">Prerequis</a></li>
+                    <li><a href="#links">Liens</a></li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-row">
+            <p data-key="footer_text">&copy; 2026 StealthyLabs. Tous droits reserves.</p>
+            <div class="footer-links">
+                <a href="../privacy" data-key="footer_privacy">Confidentialite</a>
+                <a href="../terms-of-service" data-key="footer_tos">CGU</a>
+                <a href="../legal" data-key="footer_legal">Mentions legales</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../js/context-menu.js?v=e9f48ca5" defer></script>
+    <script src="../../js/settings-handler.js?v=8293d20f" defer></script>
+    <script src="../../js/cookie-utils.js?v=9ba4dd72" defer></script>
+    <script src="../../js/core.js?v=bfc8571a" defer></script>
+    <script src="../../js/ux-enhancements.js?v=bb847a6a" defer></script>
+</body>
+
+</html>

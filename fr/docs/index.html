@@ -164,8 +164,17 @@
             </p>
         </section>
 
-        <!-- Projects Grid -->
-        <h2 class="section-title">Dépôts</h2>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">Tout</button>
+            <button class="filter-btn" data-filter="apps">Apps &amp; Outils</button>
+            <button class="filter-btn" data-filter="mcp">Serveurs MCP</button>
+            <button class="filter-btn" data-filter="skills">Skills</button>
+            <button class="filter-btn" data-filter="learning">Apprentissage</button>
+        </div>
+
+        <!-- Apps & Tools -->
+        <div class="projects-section" data-section="apps">
+        <h2 class="section-title">Apps &amp; Outils</h2>
 
         <div class="cards-grid">
 
@@ -190,7 +199,7 @@
                     </div>
                     <div class="project-meta">
                         <span class="project-language">
-                            <span class="lang-dot python"></span> Python
+                            <span class="lang-dot javascript"></span> JavaScript
                         </span>
                         <div class="project-actions">
                             <div class="project-links-dropdown">
@@ -215,8 +224,7 @@
                         <h3>iframe-edge</h3>
                     </div>
                     <p class="project-description">
-                        Widgets HTML/CSS/JS tout-en-un dans un seul fichier. Conçu pour la productivité, les overlays de
-                        streaming, et plus encore.
+                        Widgets HTML/CSS/JS autonomes en fichier unique pour Corsair iCUE Edge &amp; navigateur — chat IA, tracker ISS, visualiseur Spotify, suite productivité, radar actualités. Zéro dépendances, bilingue EN/FR.
                     </p>
                     <div class="project-tags">
                         <span class="project-tag">Widgets</span>
@@ -241,9 +249,378 @@
                 </div>
             </div>
 
+            <!-- Specter Bot -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <h3>Specter</h3>
+                    </div>
+                    <p class="project-description">
+                        Bot Discord modulaire avec 61 commandes sur 6 modules - lecteur musical (YouTube, Spotify, SoundCloud), double IA (Claude + Gemini), génération d'images, modération serveur et outils utilitaires.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Discord</span>
+                        <span class="project-tag">Music</span>
+                        <span class="project-tag">AI</span>
+                        <span class="project-tag">TypeScript</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot typescript"></span> TypeScript
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="specter-bot" class="project-link">Documentation &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gemini Discord Bot -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Gemini Discord Bot</h3>
+                    </div>
+                    <p class="project-description">
+                        Un bot Discord propulsé par Google Gemini AI. Discutez avec Gemini directement depuis votre serveur Discord.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Discord</span>
+                        <span class="project-tag">Gemini</span>
+                        <span class="project-tag">Bot</span>
+                        <span class="project-tag">Node.js</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot javascript"></span> JavaScript
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="gemini-discordbot" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/gemini-discordbot" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompting Evaluator -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <h3>Prompting Evaluator</h3>
+                    </div>
+                    <p class="project-description">
+                        Outil professionnel d'ingénierie de prompts pour évaluer, noter et optimiser vos instructions IA via des modèles locaux (Ollama) ou des API cloud (Google Gemini, Anthropic Claude).
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Prompt Engineering</span>
+                        <span class="project-tag">Ollama</span>
+                        <span class="project-tag">Gemini</span>
+                        <span class="project-tag">Claude</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot python"></span> Python
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="prompting-evaluator" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/prompting-evaluator" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+        <!-- MCP Servers -->
+        <div class="projects-section" data-section="mcp">
+        <h2 class="section-title">Serveurs MCP</h2>
+
+        <div class="cards-grid">
+
+            <!-- Gemini MCP Connect -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <h3>Gemini MCP Connect</h3>
+                    </div>
+                    <p class="project-description">
+                        Serveur MCP reliant Claude Code à Google Gemini comme agent de second avis. Validez des plans, reviewez du code et vérifiez votre raisonnement directement depuis votre CLI IA.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">MCP</span>
+                        <span class="project-tag">Gemini</span>
+                        <span class="project-tag">Claude Code</span>
+                        <span class="project-tag">Python</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot python"></span> Python
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="gemini-mcp-connect" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/gemini-mcp-connect" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCP World of Tanks -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <h3>MCP World of Tanks</h3>
+                    </div>
+                    <p class="project-description">
+                        Serveur MCP connecté à Wargaming.net pour analyser les statistiques de compte. Compatible avec Gemini CLI, Claude Code, Claude Desktop et autres CLIs IA.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">MCP</span>
+                        <span class="project-tag">World of Tanks</span>
+                        <span class="project-tag">Wargaming</span>
+                        <span class="project-tag">TypeScript</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot typescript"></span> TypeScript
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="mcp-worldoftanks" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/mcp-worldoftanks" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steam MCP -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fab fa-steam"></i>
+                        </div>
+                        <h3>Steam MCP</h3>
+                    </div>
+                    <p class="project-description">
+                        Serveur MCP exposant l'API Web Steam à Claude Code et Gemini CLI — profils joueurs, bibliothèque de jeux, succès, bans VAC, recherche en boutique et 8 slash commands.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">MCP</span>
+                        <span class="project-tag">Steam</span>
+                        <span class="project-tag">Claude Code</span>
+                        <span class="project-tag">TypeScript</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot typescript"></span> TypeScript
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="steam-mcp" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/steam-mcp" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="projects-section" data-section="skills">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="cards-grid">
+
+            <!-- Caveman Lang -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Caveman Lang</h3>
+                    </div>
+                    <p class="project-description">
+                        Protocole de survie token extrême — réduisez le gaspillage de sortie LLM de 60 à 90 %. Règles et skills pour Claude, ChatGPT &amp; Gemini avec niveaux de compression L0 à L4.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Optimisation Token</span>
+                        <span class="project-tag">Claude</span>
+                        <span class="project-tag">Prompt Engineering</span>
+                        <span class="project-tag">Skills</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot skills"></span> Skills
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="caveman-lang" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/caveman-lang" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Edu Skills -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>AI Edu Skills</h3>
+                    </div>
+                    <p class="project-description">
+                        Skills pour ChatGPT &amp; Claude axés sur le soutien académique et le tutorat — aide à la recherche, rédaction, préparation aux examens et planification des révisions.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Éducation</span>
+                        <span class="project-tag">Claude</span>
+                        <span class="project-tag">ChatGPT</span>
+                        <span class="project-tag">Skills</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot skills"></span> Skills
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="ai-edu-skills" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/ai-edu-skills" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Edu Skills FR -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>AI Edu Skills <span style="font-size:0.75em;opacity:0.7;">FR</span></h3>
+                    </div>
+                    <p class="project-description">
+                        Skills ChatGPT &amp; Claude pour accompagner les étudiants dans leur rédaction académique et leurs révisions, du lycée au master, adapté aux normes françaises.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Éducation</span>
+                        <span class="project-tag">Claude</span>
+                        <span class="project-tag">ChatGPT</span>
+                        <span class="project-tag">Français</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot skills"></span> Skills
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="ai-edu-skills-fr" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/ai-edu-skills-FR" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Hardening -->
+            <div class="project-card">
+                <div class="card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Security Hardening</h3>
+                    </div>
+                    <p class="project-description">
+                        Skills pour Claude axés sur la sécurité du code — patterns de durcissement, détection de vulnérabilités et bonnes pratiques de codage sécurisé.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Sécurité</span>
+                        <span class="project-tag">Claude</span>
+                        <span class="project-tag">Claude Code</span>
+                        <span class="project-tag">Skills</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-language">
+                            <span class="lang-dot skills"></span> Skills
+                        </span>
+                        <div class="project-actions">
+                            <div class="project-links-dropdown">
+                                <button class="project-links-btn">Liens &rarr;</button>
+                                <div class="project-links-menu">
+                                    <a href="security-hardening" class="project-link">Documentation &rarr;</a>
+                                    <a href="https://github.com/StealthyLabsHQ/security-hardening" target="_blank" rel="noopener noreferrer" class="project-link">GitHub &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         </div>
 
         <!-- Learning Section -->
+        <div class="projects-section" data-section="learning">
         <h2 class="section-title">Apprentissage</h2>
 
         <div class="cards-grid">
@@ -351,6 +728,7 @@
             </div>
 
         </div>
+        </div>
 
         <!-- Releases Section -->
         <h2 class="section-title">Dernières Versions</h2>
@@ -415,6 +793,20 @@
             });
             document.addEventListener('click', function () {
                 document.querySelectorAll('.project-links-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+            });
+            document.querySelectorAll('.filter-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    var filter = btn.dataset.filter;
+                    document.querySelectorAll('.projects-section').forEach(function (section) {
+                        if (filter === 'all' || section.dataset.section === filter) {
+                            section.classList.remove('hidden');
+                        } else {
+                            section.classList.add('hidden');
+                        }
+                    });
+                });
             });
         });
     </script>
