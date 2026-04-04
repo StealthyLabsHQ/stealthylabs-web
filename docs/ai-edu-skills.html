@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>StealthyLabs Docs</title>
+    <script>
+        (function () {
+            function getCookie(name) {
+                var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+                return match ? decodeURIComponent(match[1]) : null;
+            }
+            var lang = getCookie('userLang');
+            if (!lang) {
+                var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+                lang = nav.startsWith('fr') ? 'fr' : 'en';
+            }
+            if (lang !== 'fr' && lang !== 'en') lang = 'en';
+            window.location.replace('/' + lang + '/docs/ai-edu-skills');
+        })();
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/en/docs/ai-edu-skills">
+    </noscript>
+</head>
+<body></body>
+</html>
