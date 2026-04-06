@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arklay - Documentation | StealthyLabs</title>
-    <meta name="description" content="Documentation du bot Discord open-source Arklay - 76 commandes slash, lecteur musical, assistant IA (Claude + Gemini), generation d'images, moderation et outils utilitaires.">
+    <meta name="description" content="Documentation du bot Discord open-source Arklay - 99 commandes slash, lecteur musical Lavalink, IA multi-fournisseurs (Claude, Gemini, ChatGPT, Ollama), generation d'images, moderation et outils utilitaires.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stealthylabs.eu/fr/docs/arklay-bot">
@@ -127,19 +127,21 @@
 
             <article class="docs-main">
 
+                <img src="../../img/arklay/arklay-banner.jpg" alt="Arklay Discord Bot" style="width:100%;border-radius:12px;margin-bottom:2rem;display:block;">
+
                 <div class="docs-section" id="apercu">
                     <h2><span class="docs-section-num">1</span> Apercu</h2>
                     <p>
-                        <strong>Arklay</strong> est un bot Discord open-source modulaire (v2.0.0) construit avec
-                        TypeScript et discord.js v14. Il propose 76 commandes slash reparties en 6 modules
-                        independants : lecteur musical, assistant IA, moderation, utilitaires, fun et configuration
-                        serveur.
+                        <strong>Arklay</strong> est un bot Discord open-source modulaire construit avec TypeScript et
+                        discord.js v14. Il propose 99 commandes slash reparties en 6 modules independants : lecteur
+                        musical, assistant IA, moderation, utilitaires, fun et configuration serveur.
                     </p>
                     <p>
-                        Toutes les donnees sont persistees via SQLite (8 tables) : configuration des serveurs,
-                        preferences utilisateur, historique des conversations, avertissements et reprise de la file
-                        musicale apres redemarrage. Supporte a la fois les commandes slash et le prefixe texte
-                        (<code>.commande</code> ou <code>arklay commande</code>).
+                        La musique est propulsee par Lavalink + Shoukaku avec SoundCloud comme source principale.
+                        L'IA supporte 4 fournisseurs : Claude (Anthropic), Gemini (Google), ChatGPT (OpenAI) et des
+                        modeles locaux via Ollama. Toutes les donnees sont persistees via SQLite. Supporte les
+                        commandes slash et le prefixe texte (<code>.commande</code> ou <code>arklay commande</code>).
+                        Repondre a un message IA continue la conversation.
                     </p>
                     <p>
                         Disponible sur <a href="https://github.com/StealthyLabsHQ/arklay-bot" target="_blank" rel="noopener noreferrer">github.com/StealthyLabsHQ/arklay-bot</a>.
@@ -149,11 +151,13 @@
                 <div class="docs-section" id="modules">
                     <h2><span class="docs-section-num">2</span> Modules</h2>
 
-                    <h3 id="module-music">2.1 Musique (22 commandes)</h3>
+                    <h3 id="module-music">2.1 Musique (27 commandes)</h3>
                     <p>
-                        Lecteur musical multi-source supportant YouTube, Spotify et SoundCloud via yt-dlp. La file
-                        reprend automatiquement apres un redemarrage. Embed interactif "En cours de lecture" avec
-                        boutons. Deconnexion automatique apres 5 minutes d'inactivite.
+                        Lecteur musical Lavalink + Shoukaku supportant YouTube, Spotify et SoundCloud. Embed "En cours
+                        de lecture" persistant avec boutons interactifs et menu de filtres. La file reprend
+                        automatiquement apres redemarrage. Deconnexion automatique apres 5 minutes d'inactivite.
+                        SoundCloud est la source principale, YouTube en secours. Si Lavalink n'est pas lance, les
+                        commandes musicales sont desactivees avec un message clair.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -164,7 +168,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/play [query]</code></td><td>Jouer depuis YouTube, Spotify ou SoundCloud</td></tr>
+                                <tr><td><code>/play [query]</code></td><td>Jouer depuis YouTube, Spotify ou SoundCloud (playlists, albums, YouTube Mixes)</td></tr>
                                 <tr><td><code>/pause</code></td><td>Mettre en pause</td></tr>
                                 <tr><td><code>/resume</code></td><td>Reprendre la lecture</td></tr>
                                 <tr><td><code>/skip</code></td><td>Passer au morceau suivant</td></tr>
@@ -175,28 +179,33 @@
                                 <tr><td><code>/nowplaying</code></td><td>Morceau en cours avec boutons interactifs</td></tr>
                                 <tr><td><code>/replay</code></td><td>Redemarrer le morceau actuel depuis le debut</td></tr>
                                 <tr><td><code>/loop [off/track/queue]</code></td><td>Definir le mode de repetition</td></tr>
-                                <tr><td><code>/volume [0-100]</code></td><td>Regler le volume de lecture</td></tr>
+                                <tr><td><code>/volume [0-100]</code></td><td>Regler le volume (conserve la position)</td></tr>
                                 <tr><td><code>/shuffle</code></td><td>Melanger la file</td></tr>
                                 <tr><td><code>/move [from] [to]</code></td><td>Deplacer un morceau dans la file</td></tr>
                                 <tr><td><code>/remove [position]</code></td><td>Retirer un morceau par sa position</td></tr>
                                 <tr><td><code>/save</code></td><td>Recevoir le lien du morceau actuel en MP</td></tr>
-                                <tr><td><code>/lyrics [search]</code></td><td>Paroles avec bouton d'explication IA</td></tr>
+                                <tr><td><code>/lyrics [search]</code></td><td>Paroles avec bouton d'explication IA optionnel</td></tr>
                                 <tr><td><code>/seek [timestamp]</code></td><td>Sauter a une position (ex. 1:30)</td></tr>
-                                <tr><td><code>/filter [type]</code></td><td>Filtres audio : bassboost, nightcore, vaporwave, 8d, slowed reverb, speed reverb, treble, karaoke, deep bass, chipmunk</td></tr>
-                                <tr><td><code>/ai-playlist [prompt]</code></td><td>Playlist generee par IA (ex. "chill lo-fi for studying")</td></tr>
+                                <tr><td><code>/filter [type]</code></td><td>Filtres audio : bassboost, nightcore, vaporwave, 8d, slowed_reverb, speed_reverb, treble, karaoke, deepbass, chipmunk</td></tr>
                                 <tr><td><code>/autoplay</code></td><td>Activer/desactiver l'autoplay - ajout automatique de titres similaires</td></tr>
-                                <tr><td><code>/disconnect</code></td><td>Deconnecter le bot du salon vocal</td></tr>
+                                <tr><td><code>/favorites add|list|play|remove|clear</code></td><td>Sauvegarder, parcourir et jouer vos morceaux favoris</td></tr>
+                                <tr><td><code>/playlist create|save|load|show|list|delete</code></td><td>Playlists personnelles - sauvegarder la file, charger plus tard</td></tr>
+                                <tr><td><code>/history</code></td><td>Afficher les 20 derniers morceaux joues</td></tr>
+                                <tr><td><code>/247</code></td><td>Activer le mode 24/7 - le bot reste dans le salon vocal</td></tr>
+                                <tr><td><code>/lyrics-translate [language]</code></td><td>Traduire les paroles du morceau en cours</td></tr>
+                                <tr><td><code>/stats</code></td><td>Statistiques musicales du serveur (top morceaux, top auditeurs)</td></tr>
+                                <tr><td><code>/recommend</code></td><td>L'IA recommande des titres bases sur votre file et historique</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-ai">2.2 IA (9 commandes)</h3>
+                    <h3 id="module-ai">2.2 IA (16 commandes)</h3>
                     <p>
-                        Systeme double fournisseur : Claude (Anthropic) et Gemini (Google). Selection de modele par
-                        utilisateur stockee dans SQLite. L'historique des conversations conserve les 25 derniers
-                        messages par utilisateur et par serveur. Limite de debit : cooldown de base 8s, etend a 60s
-                        quand l'API est surchargee. Limites journalieres par modele avec multiplicateur proprietaire
-                        configurable.
+                        Systeme IA multi-fournisseurs : Claude (Anthropic), Gemini (Google), ChatGPT (OpenAI :
+                        GPT-5.4 Nano/Mini, Codex, o4 Mini) et modeles locaux via Ollama. Selection de modele par
+                        utilisateur stockee dans SQLite. Historique des conversations par utilisateur et par serveur.
+                        Limites journalieres par modele avec multiplicateur proprietaire configurable. Repondre a un
+                        message IA continue la conversation.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -207,30 +216,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/ask [question] [provider] [lang]</code></td><td>Interroger Claude ou Gemini (10 langues supportees)</td></tr>
+                                <tr><td><code>/ask [question] [provider] [image]</code></td><td>Interroger Claude, Gemini, ChatGPT ou IA locale (image optionnelle pour la vision)</td></tr>
                                 <tr><td><code>/summarize [messages] [provider]</code></td><td>Resumer les messages recents d'un salon</td></tr>
                                 <tr><td><code>/tldr [url]</code></td><td>Resumer une page web</td></tr>
                                 <tr><td><code>/nanobanana [prompt] [image]</code></td><td>Generer des images avec Gemini (Nano Banana 2)</td></tr>
-                                <tr><td><code>/setmodel [model]</code></td><td>Choisir son modele IA personnel</td></tr>
+                                <tr><td><code>/setmodel cloud|local|show|reset</code></td><td>Choisir le modele IA (cloud : Claude/Gemini/ChatGPT, local : Ollama)</td></tr>
                                 <tr><td><code>/translate [language] [text]</code></td><td>Traduction assistee par IA</td></tr>
                                 <tr><td><code>/roast [user]</code></td><td>Roast contextuel via IA en analysant les messages recents de la cible</td></tr>
-                                <tr><td><code>/vision [image] [prompt]</code></td><td>Analyser une image avec Claude ou Gemini</td></tr>
+                                <tr><td><code>/vision [image] [prompt]</code></td><td>Analyser une image avec l'IA</td></tr>
                                 <tr><td><code>/catchup</code></td><td>Resume IA de l'activite recente du salon</td></tr>
+                                <tr><td><code>/code [prompt] [model] [file]</code></td><td>Generer ou analyser du code (temp 0, raisonnement complet) - supporte upload fichier/image</td></tr>
+                                <tr><td><code>/cloudai prompt|reset-prompt|status</code></td><td>Voir/definir le prompt systeme de l'IA cloud (proprietaire uniquement)</td></tr>
+                                <tr><td><code>/localai prompt|knowledge-add|knowledge-list|thinking|status</code></td><td>Config IA locale et base de connaissances RAG (proprietaire uniquement)</td></tr>
+                                <tr><td><code>/persona set|custom|show|reset</code></td><td>Definir la personnalite de l'IA (pirate, yoda, sarcastique, personnalisee...)</td></tr>
+                                <tr><td><code>/explain [topic] [level]</code></td><td>Expliquer un sujet (comme a 5 ans, debutant, intermediaire, expert)</td></tr>
+                                <tr><td><code>/debate [topic]</code></td><td>Regarder deux IA debattre d'un sujet</td></tr>
+                                <tr><td><code>/llm</code></td><td>Afficher votre modele IA actuel, fournisseur et limites d'utilisation</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <p><strong>Modeles disponibles :</strong></p>
-                    <ul>
-                        <li><strong>Claude :</strong> Sonnet 4.6 (recommande), Opus 4.6 (plus puissant), Haiku 4.5 (plus rapide)</li>
-                        <li><strong>Gemini :</strong> Flash 3 Preview (recommande), Pro 3.1 Preview (plus puissant), Flash Lite 3.1 (moins cher)</li>
-                    </ul>
-                    <p><strong>Generation d'images (/nanobanana) :</strong></p>
-                    <ul>
-                        <li><strong>Ratios d'aspect :</strong> 1:1, 16:9, 9:16, 4:3, 3:4</li>
-                        <li><strong>Resolutions :</strong> 512px, 1K, 2K, 4K</li>
-                        <li><strong>Styles :</strong> photorealistic, anime, cartoon, oil painting, sketch, pixel art, cinematic</li>
-                        <li>Cooldown adaptatif qui augmente quand l'API est surchargee</li>
-                    </ul>
 
                     <h3 id="module-moderation">2.3 Moderation (12 commandes) - Admin uniquement</h3>
                     <p>
@@ -263,7 +267,7 @@
                         </table>
                     </div>
 
-                    <h3 id="module-utility">2.4 Utilitaires (23 commandes + 1 menu contextuel)</h3>
+                    <h3 id="module-utility">2.4 Utilitaires (25 commandes + 1 menu contextuel)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -273,8 +277,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/help [command]</code></td><td>Centre d'aide interactif avec categories deroulantes</td></tr>
-                                <tr><td><code>/botinfo</code></td><td>Statistiques du bot, informations developpeur, liens</td></tr>
+                                <tr><td><code>/help [command]</code></td><td>Centre d'aide interactif avec categories deroulantes et details des commandes</td></tr>
+                                <tr><td><code>/botinfo</code></td><td>A propos d'Arklay - developpeur, stats et liens sociaux</td></tr>
                                 <tr><td><code>/ping</code></td><td>Latence du bot</td></tr>
                                 <tr><td><code>/userinfo [user]</code></td><td>Infos utilisateur (statut, badges, roles, permissions, activite)</td></tr>
                                 <tr><td><code>/serverinfo</code></td><td>Statistiques du serveur</td></tr>
@@ -297,12 +301,14 @@
                                 <tr><td><code>/editsnipe</code></td><td>Afficher la version precedente du dernier message modifie</td></tr>
                                 <tr><td><code>/color [hex]</code></td><td>Apercu d'une couleur avec valeurs hex et RGB</td></tr>
                                 <tr><td><code>/timestamp [date]</code></td><td>Convertir une date en tous les formats timestamp Discord</td></tr>
+                                <tr><td><code>/screenshot [url]</code></td><td>Prendre une capture d'ecran d'un site web</td></tr>
+                                <tr><td><code>/qrcode [text] [size]</code></td><td>Generer un QR code</td></tr>
                                 <tr><td>Menu contextuel : "Steal Sticker"</td><td>Clic droit sur un message pour ajouter son sticker au serveur</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-fun">2.5 Fun (10 commandes)</h3>
+                    <h3 id="module-fun">2.5 Fun (12 commandes)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -318,10 +324,12 @@
                                 <tr><td><code>/dice [count] [sides]</code></td><td>Lancer des des</td></tr>
                                 <tr><td><code>/trivia [category]</code></td><td>Quiz avec boutons (inclut une categorie generee par IA)</td></tr>
                                 <tr><td><code>/meme [search]</code></td><td>Meme aleatoire depuis Reddit avec recherche optionnelle</td></tr>
+                                <tr><td><code>/gif [query] [mode]</code></td><td>Rechercher des GIFs via Giphy (search, exact, random) - necessite GIPHY_API_KEY</td></tr>
                                 <tr><td><code>/guesssong</code></td><td>Deviner le morceau depuis un indice (necessite une file musicale active)</td></tr>
                                 <tr><td><code>/rps [choice]</code></td><td>Pierre feuille ciseaux contre le bot</td></tr>
                                 <tr><td><code>/rate [thing]</code></td><td>Noter n'importe quoi de 0 a 10 avec barre de progression</td></tr>
                                 <tr><td><code>/how [trait] [thing]</code></td><td>Pourcentage fun (ex. "how cool is @user")</td></tr>
+                                <tr><td><code>/quote</code></td><td>Citation inspirante aleatoire</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -371,12 +379,42 @@
                         <li>Prefixe par defaut : <code>.</code> (configurable via <code>BOT_PREFIX</code> dans .env)</li>
                         <li>Nom du bot par defaut : <code>arklay</code> (configurable via <code>BOT_NAME</code> dans .env)</li>
                         <li>Exemple : <code>.play never gonna give you up</code> ou <code>arklay ask what is rust</code></li>
+                        <li>Repondre a un message IA continue la conversation</li>
                         <li>Note : les groupes de sous-commandes complexes (<code>/config</code>, <code>/warn</code>, <code>/botrole</code>, <code>/nanobanana</code>) ne sont pas disponibles en prefixe texte</li>
                     </ul>
                 </div>
 
                 <div class="docs-section" id="installation">
                     <h2><span class="docs-section-num">5</span> Installation</h2>
+
+                    <h3 id="install-quick">Demarrage rapide</h3>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/arklay-bot.git
+cd arklay-bot
+npm install
+cp .env.example .env
+# Editer .env - ajouter au minimum DISCORD_TOKEN et CLIENT_ID
+npm run deploy
+npm run dev</code></pre>
+                    <p>Le bot fonctionne sans Lavalink - les commandes musicales affichent "Lavalink server is not running". Toutes les autres fonctionnalites sont independantes.</p>
+
+                    <h3 id="install-lavalink">Lavalink (requis pour la musique)</h3>
+                    <p>La musique est propulsee par Lavalink, un serveur audio independant. Java 17+ est requis.</p>
+                    <p><strong>Installer Java :</strong></p>
+                    <ul>
+                        <li>Ubuntu/Debian : <code>sudo apt install openjdk-17-jre-headless -y</code></li>
+                        <li>Windows : telecharger depuis <a href="https://adoptium.net/" target="_blank" rel="noopener noreferrer">adoptium.net</a> (Temurin 21 LTS), activer "Add to PATH" lors de l'installation</li>
+                        <li>macOS : <code>brew install openjdk@17</code></li>
+                    </ul>
+                    <p><strong>Installer et lancer Lavalink :</strong></p>
+                    <pre><code>mkdir lavalink &amp;&amp; cd lavalink
+wget https://github.com/lavalink-devs/Lavalink/releases/latest/download/Lavalink.jar
+cp ../lavalink/application.yml .
+java -jar Lavalink.jar</code></pre>
+                    <p>En production avec PM2 :</p>
+                    <pre><code>pm2 start "java -jar Lavalink.jar" --name lavalink --cwd /path/to/lavalink
+pm2 save</code></pre>
+
+                    <h3 id="install-steps">Installation complete</h3>
                     <ol class="docs-steps">
                         <li>
                             <div>
@@ -400,16 +438,6 @@ cd arklay-bot</code></pre>
                         <li>
                             <div>
                                 <strong>Editer <code>.env</code></strong> avec vos tokens et cles API (voir la section Configuration ci-dessous).
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>(Optionnel) Installer FFmpeg systeme</strong> pour une meilleure qualite audio. Sans cela, le ffmpeg-static integre est utilise en secours.
-                                <ul>
-                                    <li>Windows : telecharger depuis <a href="https://gyan.dev/ffmpeg/builds" target="_blank" rel="noopener noreferrer">gyan.dev/ffmpeg/builds</a></li>
-                                    <li>Linux : <code>sudo apt install ffmpeg</code></li>
-                                    <li>macOS : <code>brew install ffmpeg</code></li>
-                                </ul>
                             </div>
                         </li>
                         <li>
@@ -479,35 +507,40 @@ pm2 save</code></pre>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>GUILD_ID</code></td><td>ID du serveur de dev pour un deploiement instantane (sans GUILD_ID = deploiement global, jusqu'a 1 heure)</td></tr>
+                                <tr><td><code>GUILD_ID</code></td><td>ID du serveur de dev pour deploiement instantane (sans GUILD_ID = global, jusqu'a 1 heure)</td></tr>
+                                <tr><td><code>LAVALINK_HOST</code></td><td>Adresse du serveur Lavalink (defaut : localhost:2333)</td></tr>
+                                <tr><td><code>LAVALINK_PASSWORD</code></td><td>Mot de passe Lavalink (defaut : youshallnotpass)</td></tr>
+                                <tr><td><code>LAVALINK_SECURE</code></td><td>Utiliser WSS au lieu de WS (defaut : false)</td></tr>
                                 <tr><td><code>BOT_PREFIX</code></td><td>Prefixe des commandes texte (defaut : ".")</td></tr>
                                 <tr><td><code>BOT_NAME</code></td><td>Prefixe nom du bot pour les commandes texte (defaut : "arklay")</td></tr>
                                 <tr><td><code>BOT_OWNER_ID</code></td><td>ID Discord du proprietaire (obtient des limites IA elevees)</td></tr>
-                                <tr><td><code>BOT_OWNER_MULTIPLIER</code></td><td>Multiplicateur de limite de debit proprietaire 0-20 (defaut : 5)</td></tr>
-                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Acces direct a l'API Claude (module IA desactive si les deux cles IA sont absentes)</td></tr>
-                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Cle API Gemini + generation d'images /nanobanana</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_PROJECT</code></td><td>Projet GCP pour le routage Claude via Vertex AI</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_REGION</code></td><td>Region GCP pour Vertex AI (defaut : us-east5)</td></tr>
-                                <tr><td><code>GOOGLE_APPLICATION_CREDENTIALS</code></td><td>Chemin vers le fichier JSON du compte de service GCP</td></tr>
+                                <tr><td><code>BOT_OWNER_MULTIPLIER</code></td><td>Multiplicateur de limite proprietaire 0-20 (defaut : 5)</td></tr>
+                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Active les commandes IA Claude</td></tr>
+                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Active l'IA Gemini + generation d'images /nanobanana</td></tr>
+                                <tr><td><code>OPENAI_API_KEY</code></td><td>Active les modeles ChatGPT (GPT-5.4 Nano/Mini, Codex, o4 Mini)</td></tr>
+                                <tr><td><code>GIPHY_API_KEY</code></td><td>Active la commande /gif (gratuit sur developers.giphy.com)</td></tr>
+                                <tr><td><code>OLLAMA_ENABLED</code></td><td>Activer/desactiver l'IA locale (true/false, defaut : false)</td></tr>
+                                <tr><td><code>OLLAMA_HOST</code></td><td>Adresse du serveur Ollama (defaut : http://localhost:11434)</td></tr>
+                                <tr><td><code>OLLAMA_MODEL</code></td><td>Modele IA local (defaut : gemma4:26b)</td></tr>
+                                <tr><td><code>OLLAMA_KEEP_ALIVE</code></td><td>Duree de maintien du modele en RAM apres la derniere requete (defaut : 5m)</td></tr>
                                 <tr><td><code>SPOTIFY_CLIENT_ID</code></td><td>Resolution des liens Spotify</td></tr>
                                 <tr><td><code>SPOTIFY_CLIENT_SECRET</code></td><td>Resolution des liens Spotify</td></tr>
-                                <tr><td><code>NODE_ENV</code></td><td>development ou production</td></tr>
                             </tbody>
                         </table>
                     </div>
                     <p>
-                        Si ni <code>ANTHROPIC_API_KEY</code> ni <code>GOOGLE_AI_API_KEY</code> n'est definie, le module
-                        IA se desactive automatiquement et toutes les commandes IA seront indisponibles.
+                        Au moins un fournisseur IA (Anthropic, Google, OpenAI ou Ollama) est necessaire pour le module IA.
+                        Si aucun n'est configure, le module IA se desactive automatiquement.
                     </p>
                 </div>
 
                 <div class="docs-section" id="prerequis">
                     <h2><span class="docs-section-num">7</span> Prerequis</h2>
                     <ul>
-                        <li>Node.js 20+</li>
-                        <li>FFmpeg (installation systeme recommandee ; ffmpeg-static integre utilise en secours)</li>
+                        <li>Node.js 20+ (teste sur Node 24)</li>
+                        <li>Java 17+ et <a href="https://github.com/lavalink-devs/Lavalink" target="_blank" rel="noopener noreferrer">Lavalink</a> (pour la lecture musicale - optionnel, le bot fonctionne sans)</li>
                         <li>Token de bot Discord (obligatoire)</li>
-                        <li>Au moins une cle API IA (<code>ANTHROPIC_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code>) pour utiliser les commandes IA</li>
+                        <li>Au moins une cle API IA pour utiliser les commandes IA (Anthropic, Google, OpenAI ou Ollama)</li>
                     </ul>
                 </div>
 
@@ -541,6 +574,9 @@ pm2 save</code></pre>
                     <li>
                         <a href="#installation">Installation</a>
                         <ol class="docs-toc-sub">
+                            <li><a href="#install-quick">Demarrage rapide</a></li>
+                            <li><a href="#install-lavalink">Lavalink</a></li>
+                            <li><a href="#install-steps">Installation complete</a></li>
                             <li><a href="#install-pm2">Production avec PM2</a></li>
                             <li><a href="#install-discord-portal">Discord Developer Portal</a></li>
                         </ol>

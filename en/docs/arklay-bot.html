@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arklay - Documentation | StealthyLabs</title>
-    <meta name="description" content="Arklay open-source Discord bot documentation - 76 slash commands, music player, AI assistant (Claude + Gemini), image generation, server moderation, and utility tools.">
+    <meta name="description" content="Arklay open-source Discord bot documentation - 99 slash commands, Lavalink music player, multi-provider AI (Claude, Gemini, ChatGPT, Ollama), image generation, server moderation, and utility tools.">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stealthylabs.eu/en/docs/arklay-bot">
@@ -127,17 +127,21 @@
 
             <article class="docs-main">
 
+                <img src="../../img/arklay/arklay-banner.jpg" alt="Arklay Discord Bot" style="width:100%;border-radius:12px;margin-bottom:2rem;display:block;">
+
                 <div class="docs-section" id="overview">
                     <h2><span class="docs-section-num">1</span> Overview</h2>
                     <p>
-                        <strong>Arklay</strong> is an open-source modular Discord bot (v2.0.0) built with TypeScript
-                        and discord.js v14. It provides 76 slash commands across 6 independent modules: music player,
+                        <strong>Arklay</strong> is an open-source modular Discord bot built with TypeScript and
+                        discord.js v14. It provides 99 slash commands across 6 independent modules: music player,
                         AI assistant, moderation, utility, fun, and server configuration.
                     </p>
                     <p>
-                        All state persists via SQLite (8 tables): guild configuration, user preferences, conversation
-                        history, warning records, and music queue resume across bot restarts. Supports both slash
-                        commands and text prefix (<code>.command</code> or <code>arklay command</code>).
+                        Music is powered by Lavalink + Shoukaku with SoundCloud as the primary streaming source.
+                        AI supports 4 providers: Claude (Anthropic), Gemini (Google), ChatGPT (OpenAI), and local
+                        models via Ollama. All state persists via SQLite. Supports both slash commands and text prefix
+                        (<code>.command</code> or <code>arklay command</code>). Reply to any AI message to continue
+                        the conversation.
                     </p>
                     <p>
                         Available at <a href="https://github.com/StealthyLabsHQ/arklay-bot" target="_blank" rel="noopener noreferrer">github.com/StealthyLabsHQ/arklay-bot</a>.
@@ -147,11 +151,12 @@
                 <div class="docs-section" id="modules">
                     <h2><span class="docs-section-num">2</span> Modules</h2>
 
-                    <h3 id="module-music">2.1 Music (22 commands)</h3>
+                    <h3 id="module-music">2.1 Music (27 commands)</h3>
                     <p>
-                        Multi-source music player supporting YouTube, Spotify, and SoundCloud via yt-dlp. Queue
-                        auto-resumes across bot restarts. Interactive Now Playing embed with buttons. Auto-disconnects
-                        after 5 minutes of inactivity.
+                        Lavalink + Shoukaku music player supporting YouTube, Spotify, and SoundCloud. Persistent Now
+                        Playing embed with interactive buttons and filter dropdown. Queue auto-resumes after restart.
+                        Auto-disconnects after 5 minutes of inactivity. SoundCloud is the primary source, YouTube as
+                        fallback. If Lavalink is not running, music commands are gracefully disabled.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -162,38 +167,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/play [query]</code></td><td>Play from YouTube, Spotify or SoundCloud</td></tr>
+                                <tr><td><code>/play [query]</code></td><td>Play from YouTube, Spotify or SoundCloud (supports playlists, albums, YouTube Mixes)</td></tr>
                                 <tr><td><code>/pause</code></td><td>Pause playback</td></tr>
                                 <tr><td><code>/resume</code></td><td>Resume playback</td></tr>
                                 <tr><td><code>/skip</code></td><td>Skip to next track</td></tr>
                                 <tr><td><code>/skipto [position]</code></td><td>Skip to specific queue position</td></tr>
-                                <tr><td><code>/previous</code></td><td>Play previous track</td></tr>
+                                <tr><td><code>/previous</code></td><td>Play previous track again</td></tr>
                                 <tr><td><code>/stop</code></td><td>Stop and clear queue</td></tr>
                                 <tr><td><code>/queue</code></td><td>Show queue with pagination buttons</td></tr>
                                 <tr><td><code>/nowplaying</code></td><td>Current track with interactive player buttons</td></tr>
                                 <tr><td><code>/replay</code></td><td>Restart current track from beginning</td></tr>
                                 <tr><td><code>/loop [off/track/queue]</code></td><td>Set loop mode</td></tr>
-                                <tr><td><code>/volume [0-100]</code></td><td>Set playback volume</td></tr>
+                                <tr><td><code>/volume [0-100]</code></td><td>Set playback volume (preserves position)</td></tr>
                                 <tr><td><code>/shuffle</code></td><td>Shuffle the queue</td></tr>
                                 <tr><td><code>/move [from] [to]</code></td><td>Move a track to a different position</td></tr>
                                 <tr><td><code>/remove [position]</code></td><td>Remove track by position</td></tr>
-                                <tr><td><code>/save</code></td><td>DM yourself the current track link</td></tr>
-                                <tr><td><code>/lyrics [search]</code></td><td>Lyrics with AI explain button</td></tr>
+                                <tr><td><code>/save</code></td><td>DM yourself the current track</td></tr>
+                                <tr><td><code>/lyrics [search]</code></td><td>Lyrics with optional AI explain button</td></tr>
                                 <tr><td><code>/seek [timestamp]</code></td><td>Jump to position (e.g. 1:30)</td></tr>
-                                <tr><td><code>/filter [type]</code></td><td>Audio filters: bassboost, nightcore, vaporwave, 8d, slowed reverb, speed reverb, treble, karaoke, deep bass, chipmunk</td></tr>
-                                <tr><td><code>/ai-playlist [prompt]</code></td><td>AI-generated playlist (e.g. "chill lo-fi for studying")</td></tr>
+                                <tr><td><code>/filter [type]</code></td><td>Audio filters: bassboost, nightcore, vaporwave, 8d, slowed_reverb, speed_reverb, treble, karaoke, deepbass, chipmunk</td></tr>
                                 <tr><td><code>/autoplay</code></td><td>Toggle autoplay - auto-add similar tracks when queue ends</td></tr>
-                                <tr><td><code>/disconnect</code></td><td>Disconnect bot from voice channel</td></tr>
+                                <tr><td><code>/favorites add|list|play|remove|clear</code></td><td>Save, browse, and play your favorite tracks</td></tr>
+                                <tr><td><code>/playlist create|save|load|show|list|delete</code></td><td>Personal playlists - save queue, load later</td></tr>
+                                <tr><td><code>/history</code></td><td>Show the 20 most recently played tracks</td></tr>
+                                <tr><td><code>/247</code></td><td>Toggle 24/7 mode - bot stays in voice channel</td></tr>
+                                <tr><td><code>/lyrics-translate [language]</code></td><td>Translate the current track's lyrics</td></tr>
+                                <tr><td><code>/stats</code></td><td>Server music statistics (top tracks, top listeners)</td></tr>
+                                <tr><td><code>/recommend</code></td><td>AI recommends tracks based on your queue and history</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-ai">2.2 AI (9 commands)</h3>
+                    <h3 id="module-ai">2.2 AI (16 commands)</h3>
                     <p>
-                        Dual provider system: Claude (Anthropic) and Gemini (Google). Per-user model selection stored
-                        in SQLite. Conversation history retains the last 25 messages per user per guild. Rate limiting
-                        applies an 8s base cooldown that extends to 60s when the API is busy. Daily usage limits apply
-                        per model, with a configurable owner multiplier.
+                        Multi-provider AI system: Claude (Anthropic), Gemini (Google), ChatGPT (OpenAI: GPT-5.4
+                        Nano/Mini, Codex, o4 Mini), and local models via Ollama. Per-user model selection stored in
+                        SQLite. Conversation history per user per guild. Daily usage limits per model with configurable
+                        owner multiplier. Reply to any AI message to continue the conversation.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -204,35 +214,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/ask [question] [provider] [lang]</code></td><td>Ask Claude or Gemini (10 languages supported)</td></tr>
+                                <tr><td><code>/ask [question] [provider] [image]</code></td><td>Ask Claude, Gemini, ChatGPT, or local AI (optional image for vision)</td></tr>
                                 <tr><td><code>/summarize [messages] [provider]</code></td><td>Summarize recent channel messages</td></tr>
                                 <tr><td><code>/tldr [url]</code></td><td>Summarize a webpage</td></tr>
                                 <tr><td><code>/nanobanana [prompt] [image]</code></td><td>Generate images with Gemini (Nano Banana 2)</td></tr>
-                                <tr><td><code>/setmodel [model]</code></td><td>Choose personal AI model</td></tr>
+                                <tr><td><code>/setmodel cloud|local|show|reset</code></td><td>Choose AI model (cloud: Claude/Gemini/ChatGPT, local: Ollama)</td></tr>
                                 <tr><td><code>/translate [language] [text]</code></td><td>AI-powered translation</td></tr>
                                 <tr><td><code>/roast [user]</code></td><td>Contextual AI roast using target's recent messages</td></tr>
-                                <tr><td><code>/vision [image] [prompt]</code></td><td>Analyze an image with Claude or Gemini</td></tr>
+                                <tr><td><code>/vision [image] [prompt]</code></td><td>Analyze an image with AI</td></tr>
                                 <tr><td><code>/catchup</code></td><td>AI-powered summary of recent channel activity</td></tr>
+                                <tr><td><code>/code [prompt] [model] [file]</code></td><td>Generate or analyze code (temp 0, full reasoning) - supports file/image upload</td></tr>
+                                <tr><td><code>/cloudai prompt|reset-prompt|status</code></td><td>View/set custom system prompt for cloud AI (owner only)</td></tr>
+                                <tr><td><code>/localai prompt|knowledge-add|knowledge-list|thinking|status</code></td><td>Local AI config and RAG knowledge base (owner only)</td></tr>
+                                <tr><td><code>/persona set|custom|show|reset</code></td><td>Set AI personality (pirate, yoda, sarcastic, custom...)</td></tr>
+                                <tr><td><code>/explain [topic] [level]</code></td><td>Explain a topic (like I'm 5, beginner, intermediate, expert)</td></tr>
+                                <tr><td><code>/debate [topic]</code></td><td>Watch two AIs debate a topic</td></tr>
+                                <tr><td><code>/llm</code></td><td>Show your current AI model, provider, and usage limits</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <p><strong>Available models:</strong></p>
-                    <ul>
-                        <li><strong>Claude:</strong> Sonnet 4.6 (recommended), Opus 4.6 (most powerful), Haiku 4.5 (fastest)</li>
-                        <li><strong>Gemini:</strong> Flash 3 Preview (recommended), Pro 3.1 Preview (most powerful), Flash Lite 3.1 (cheapest)</li>
-                    </ul>
-                    <p><strong>Image generation (/nanobanana):</strong></p>
-                    <ul>
-                        <li><strong>Aspect ratios:</strong> 1:1, 16:9, 9:16, 4:3, 3:4</li>
-                        <li><strong>Resolutions:</strong> 512px, 1K, 2K, 4K</li>
-                        <li><strong>Styles:</strong> photorealistic, anime, cartoon, oil painting, sketch, pixel art, cinematic</li>
-                        <li>Adaptive cooldown increases when API is busy</li>
-                    </ul>
 
                     <h3 id="module-moderation">2.3 Moderation (12 commands) - Admin only</h3>
                     <p>
                         Admin-only module. Uses a custom admin role system via <code>/botrole</code>. Discord
-                        Administrator permission always grants full access. Admin roles are stored in SQLite per guild.
+                        Administrator permission always grants full access. Admin roles stored in SQLite per guild.
                     </p>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
@@ -249,7 +254,7 @@
                                 <tr><td><code>/kick [user] [reason]</code></td><td>Kick a user</td></tr>
                                 <tr><td><code>/warn add/list/clear [user]</code></td><td>Warning system</td></tr>
                                 <tr><td><code>/mute [user]</code></td><td>Server mute/unmute in voice</td></tr>
-                                <tr><td><code>/role [user] [role]</code></td><td>Toggle a role on a user</td></tr>
+                                <tr><td><code>/role [user] [role]</code></td><td>Toggle a role on a user (add or remove)</td></tr>
                                 <tr><td><code>/clear [amount]</code></td><td>Delete 1-100 messages</td></tr>
                                 <tr><td><code>/lockdown [channel]</code></td><td>Toggle channel lockdown</td></tr>
                                 <tr><td><code>/slowmode [seconds]</code></td><td>Set slowmode</td></tr>
@@ -259,7 +264,7 @@
                         </table>
                     </div>
 
-                    <h3 id="module-utility">2.4 Utility (23 commands + 1 context menu)</h3>
+                    <h3 id="module-utility">2.4 Utility (25 commands + 1 context menu)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -269,8 +274,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>/help [command]</code></td><td>Interactive help center with dropdown categories</td></tr>
-                                <tr><td><code>/botinfo</code></td><td>Bot statistics, developer info, links</td></tr>
+                                <tr><td><code>/help [command]</code></td><td>Interactive help center with dropdown categories and command details</td></tr>
+                                <tr><td><code>/botinfo</code></td><td>About Arklay - developer, stats, and social links</td></tr>
                                 <tr><td><code>/ping</code></td><td>Bot latency</td></tr>
                                 <tr><td><code>/userinfo [user]</code></td><td>User info (status, badges, roles, permissions, activity)</td></tr>
                                 <tr><td><code>/serverinfo</code></td><td>Server statistics</td></tr>
@@ -293,12 +298,14 @@
                                 <tr><td><code>/editsnipe</code></td><td>Show previous version of last edited message</td></tr>
                                 <tr><td><code>/color [hex]</code></td><td>Preview a color with hex and RGB values</td></tr>
                                 <tr><td><code>/timestamp [date]</code></td><td>Convert date to all Discord timestamp formats</td></tr>
+                                <tr><td><code>/screenshot [url]</code></td><td>Take a screenshot of a website</td></tr>
+                                <tr><td><code>/qrcode [text] [size]</code></td><td>Generate a QR code</td></tr>
                                 <tr><td>Context menu: "Steal Sticker"</td><td>Right-click any message to add its sticker to the server</td></tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3 id="module-fun">2.5 Fun (10 commands)</h3>
+                    <h3 id="module-fun">2.5 Fun (12 commands)</h3>
                     <div class="docs-table-wrap">
                         <table class="docs-table">
                             <thead>
@@ -314,10 +321,12 @@
                                 <tr><td><code>/dice [count] [sides]</code></td><td>Roll dice</td></tr>
                                 <tr><td><code>/trivia [category]</code></td><td>Trivia with buttons (includes AI-generated category)</td></tr>
                                 <tr><td><code>/meme [search]</code></td><td>Random meme from Reddit with optional search</td></tr>
+                                <tr><td><code>/gif [query] [mode]</code></td><td>Search GIFs via Giphy (search, exact, random) - requires GIPHY_API_KEY</td></tr>
                                 <tr><td><code>/guesssong</code></td><td>Guess the song from a hint (requires active music queue)</td></tr>
                                 <tr><td><code>/rps [choice]</code></td><td>Rock paper scissors vs bot</td></tr>
                                 <tr><td><code>/rate [thing]</code></td><td>Rate anything 0-10 with progress bar</td></tr>
                                 <tr><td><code>/how [trait] [thing]</code></td><td>Fun percentage (e.g. "how cool is @user")</td></tr>
+                                <tr><td><code>/quote</code></td><td>Random inspirational quote</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -367,12 +376,42 @@
                         <li>Default prefix: <code>.</code> (configurable via <code>BOT_PREFIX</code> in .env)</li>
                         <li>Default bot name: <code>arklay</code> (configurable via <code>BOT_NAME</code> in .env)</li>
                         <li>Example: <code>.play never gonna give you up</code> or <code>arklay ask what is rust</code></li>
+                        <li>Reply to any AI message to continue the conversation</li>
                         <li>Note: complex subcommand groups (<code>/config</code>, <code>/warn</code>, <code>/botrole</code>, <code>/nanobanana</code>) are not available as text prefix</li>
                     </ul>
                 </div>
 
                 <div class="docs-section" id="installation">
                     <h2><span class="docs-section-num">5</span> Installation</h2>
+
+                    <h3 id="install-quick">Quick Start</h3>
+                    <pre><code>git clone https://github.com/StealthyLabsHQ/arklay-bot.git
+cd arklay-bot
+npm install
+cp .env.example .env
+# Edit .env - add DISCORD_TOKEN and CLIENT_ID at minimum
+npm run deploy
+npm run dev</code></pre>
+                    <p>The bot runs without Lavalink - music commands show "Lavalink server is not running". All other features work independently.</p>
+
+                    <h3 id="install-lavalink">Lavalink (required for music)</h3>
+                    <p>Music is powered by Lavalink, a standalone audio server. Java 17+ is required.</p>
+                    <p><strong>Install Java:</strong></p>
+                    <ul>
+                        <li>Ubuntu/Debian: <code>sudo apt install openjdk-17-jre-headless -y</code></li>
+                        <li>Windows: download from <a href="https://adoptium.net/" target="_blank" rel="noopener noreferrer">adoptium.net</a> (Temurin 21 LTS), enable "Add to PATH" during install</li>
+                        <li>macOS: <code>brew install openjdk@17</code></li>
+                    </ul>
+                    <p><strong>Install and run Lavalink:</strong></p>
+                    <pre><code>mkdir lavalink &amp;&amp; cd lavalink
+wget https://github.com/lavalink-devs/Lavalink/releases/latest/download/Lavalink.jar
+cp ../lavalink/application.yml .
+java -jar Lavalink.jar</code></pre>
+                    <p>For production with PM2:</p>
+                    <pre><code>pm2 start "java -jar Lavalink.jar" --name lavalink --cwd /path/to/lavalink
+pm2 save</code></pre>
+
+                    <h3 id="install-steps">Full setup</h3>
                     <ol class="docs-steps">
                         <li>
                             <div>
@@ -396,16 +435,6 @@ cd arklay-bot</code></pre>
                         <li>
                             <div>
                                 <strong>Edit <code>.env</code></strong> with your tokens and API keys (see the Configuration section below).
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <strong>(Optional) Install system FFmpeg</strong> for best audio quality. Without it, the bundled ffmpeg-static is used as fallback.
-                                <ul>
-                                    <li>Windows: download from <a href="https://gyan.dev/ffmpeg/builds" target="_blank" rel="noopener noreferrer">gyan.dev/ffmpeg/builds</a></li>
-                                    <li>Linux: <code>sudo apt install ffmpeg</code></li>
-                                    <li>macOS: <code>brew install ffmpeg</code></li>
-                                </ul>
                             </div>
                         </li>
                         <li>
@@ -475,35 +504,40 @@ pm2 save</code></pre>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><code>GUILD_ID</code></td><td>Dev server ID for instant command deployment (no GUILD_ID = global deployment, up to 1 hour)</td></tr>
+                                <tr><td><code>GUILD_ID</code></td><td>Dev server ID for instant command deployment (no GUILD_ID = global, up to 1 hour)</td></tr>
+                                <tr><td><code>LAVALINK_HOST</code></td><td>Lavalink server address (default: localhost:2333)</td></tr>
+                                <tr><td><code>LAVALINK_PASSWORD</code></td><td>Lavalink password (default: youshallnotpass)</td></tr>
+                                <tr><td><code>LAVALINK_SECURE</code></td><td>Use WSS instead of WS (default: false)</td></tr>
                                 <tr><td><code>BOT_PREFIX</code></td><td>Text command prefix (default: ".")</td></tr>
                                 <tr><td><code>BOT_NAME</code></td><td>Bot name prefix for text commands (default: "arklay")</td></tr>
                                 <tr><td><code>BOT_OWNER_ID</code></td><td>Owner's Discord user ID (gets boosted AI rate limits)</td></tr>
                                 <tr><td><code>BOT_OWNER_MULTIPLIER</code></td><td>Owner rate limit multiplier 0-20 (default: 5)</td></tr>
-                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Direct Claude API access (AI module disabled if both AI keys absent)</td></tr>
-                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Gemini API key + /nanobanana image generation</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_PROJECT</code></td><td>GCP project for Vertex AI Claude routing</td></tr>
-                                <tr><td><code>GOOGLE_CLOUD_REGION</code></td><td>GCP region for Vertex AI (default: us-east5)</td></tr>
-                                <tr><td><code>GOOGLE_APPLICATION_CREDENTIALS</code></td><td>Path to GCP service account JSON</td></tr>
+                                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Enables Claude AI commands</td></tr>
+                                <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Enables Gemini AI + /nanobanana image generation</td></tr>
+                                <tr><td><code>OPENAI_API_KEY</code></td><td>Enables ChatGPT models (GPT-5.4 Nano/Mini, Codex, o4 Mini)</td></tr>
+                                <tr><td><code>GIPHY_API_KEY</code></td><td>Enables /gif command (free at developers.giphy.com)</td></tr>
+                                <tr><td><code>OLLAMA_ENABLED</code></td><td>Enable/disable local AI (true/false, default: false)</td></tr>
+                                <tr><td><code>OLLAMA_HOST</code></td><td>Ollama server address (default: http://localhost:11434)</td></tr>
+                                <tr><td><code>OLLAMA_MODEL</code></td><td>Local AI model (default: gemma4:26b)</td></tr>
+                                <tr><td><code>OLLAMA_KEEP_ALIVE</code></td><td>How long model stays in RAM after last request (default: 5m)</td></tr>
                                 <tr><td><code>SPOTIFY_CLIENT_ID</code></td><td>Spotify link resolution</td></tr>
                                 <tr><td><code>SPOTIFY_CLIENT_SECRET</code></td><td>Spotify link resolution</td></tr>
-                                <tr><td><code>NODE_ENV</code></td><td>development or production</td></tr>
                             </tbody>
                         </table>
                     </div>
                     <p>
-                        If neither <code>ANTHROPIC_API_KEY</code> nor <code>GOOGLE_AI_API_KEY</code> is set, the AI
-                        module auto-disables gracefully and all AI commands will be unavailable.
+                        At least one AI provider (Anthropic, Google, OpenAI, or Ollama) is needed for the AI module.
+                        If none is set, the AI module is disabled automatically.
                     </p>
                 </div>
 
                 <div class="docs-section" id="requirements">
                     <h2><span class="docs-section-num">7</span> Requirements</h2>
                     <ul>
-                        <li>Node.js 20+</li>
-                        <li>FFmpeg (system install recommended; bundled ffmpeg-static used as fallback)</li>
+                        <li>Node.js 20+ (tested on Node 24)</li>
+                        <li>Java 17+ and <a href="https://github.com/lavalink-devs/Lavalink" target="_blank" rel="noopener noreferrer">Lavalink</a> (for music playback - optional, bot runs without it)</li>
                         <li>Discord bot token (required)</li>
-                        <li>At least one AI API key (<code>ANTHROPIC_API_KEY</code> or <code>GOOGLE_AI_API_KEY</code>) to use AI commands</li>
+                        <li>At least one AI API key to use AI commands (Anthropic, Google, OpenAI, or Ollama)</li>
                     </ul>
                 </div>
 
@@ -537,6 +571,9 @@ pm2 save</code></pre>
                     <li>
                         <a href="#installation">Installation</a>
                         <ol class="docs-toc-sub">
+                            <li><a href="#install-quick">Quick Start</a></li>
+                            <li><a href="#install-lavalink">Lavalink</a></li>
+                            <li><a href="#install-steps">Full setup</a></li>
                             <li><a href="#install-pm2">Production with PM2</a></li>
                             <li><a href="#install-discord-portal">Discord Developer Portal</a></li>
                         </ol>
