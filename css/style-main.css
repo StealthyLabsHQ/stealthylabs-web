@@ -1009,7 +1009,7 @@ footer {
         transform: translateY(0);
     }
 
-    .close-menu-btn {
+    button.close-menu-btn {
         position: absolute;
         top: 24px;
         right: 20px;
@@ -1417,7 +1417,7 @@ body {
 }
 
 .close-menu,
-.close-menu-btn {
+button.close-menu-btn {
     position: absolute;
     top: 24px;
     right: 20px;
