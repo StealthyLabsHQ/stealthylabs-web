@@ -1,0 +1,495 @@
+/* StealthyLabs Design System — brand-aligned overrides
+ * Applied last so it wins the cascade over legacy component styles.
+ * Brand rules: OLED black #000, one accent #A8D8EA, Space Grotesk + Inter + JetBrains Mono.
+ */
+
+/* ========== Base ========== */
+html, body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--main-font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-size: var(--body-size);
+    line-height: var(--body-leading);
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--bg-primary);
+}
+
+/* ========== Typography ========== */
+h1, h2, h3, h4, h5, h6,
+.hero-title,
+.section-title {
+    font-family: var(--font-headline);
+    color: var(--text-primary);
+    letter-spacing: var(--h2-ls);
+    line-height: 1.15;
+}
+
+h1,
+.hero-title {
+    font-size: var(--h1-size);
+    font-weight: var(--h1-weight);
+    letter-spacing: var(--h1-ls);
+    line-height: var(--h1-leading);
+}
+
+h2 { font-size: var(--h2-size); font-weight: var(--h2-weight); }
+h3 { font-size: var(--h3-size); font-weight: var(--h3-weight); }
+
+p {
+    color: var(--text-secondary);
+    font-size: var(--body-size);
+    line-height: var(--body-leading);
+}
+
+/* Eyebrow / meta labels — signature brand pattern */
+.eyebrow,
+.meta,
+.docs-section-num,
+.section-label {
+    font-family: var(--font-headline);
+    font-size: var(--meta-size);
+    font-weight: var(--meta-weight);
+    color: var(--text-muted);
+    text-transform: var(--meta-transform);
+    letter-spacing: var(--meta-ls);
+}
+
+code, kbd, .mono,
+.time-badge,
+#clockDisplay {
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    color: var(--text-muted);
+}
+
+/* ========== Links ========== */
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--motion-fast);
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-md);
+}
+
+/* ========== Navbar ========== */
+.main-navbar {
+    height: var(--navbar-h);
+    padding: 0 var(--space-10);
+    background: var(--bg-primary);
+    backdrop-filter: none;
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-wordmark {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+}
+
+.nav-wordmark:hover {
+    color: var(--accent);
+}
+
+.nav-links {
+    gap: var(--space-8);
+}
+
+.nav-links a {
+    font-family: var(--main-font);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    position: relative;
+    padding: var(--space-2) 0;
+    transition: color var(--motion-fast);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: var(--accent);
+    transition: width var(--motion-fast);
+}
+
+.nav-links a:hover,
+.nav-links a.nav-active,
+.nav-links a.active {
+    color: var(--text-primary);
+}
+
+.nav-links a:hover::after,
+.nav-links a.nav-active::after,
+.nav-links a.active::after {
+    width: 100%;
+    background: var(--accent);
+}
+
+/* Time badge — monospace, clean border */
+.time-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-md);
+    background: transparent;
+    letter-spacing: 0.04em;
+}
+
+/* Icon buttons in nav (settings, future lucide-based) */
+.nav-icon-btn,
+.settings-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--motion-fast), border-color var(--motion-fast);
+}
+
+.nav-icon-btn:hover,
+.settings-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+.nav-icon-btn:focus-visible,
+.settings-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Hide time badge on mobile — save nav space */
+@media (max-width: 768px) {
+    .time-badge {
+        display: none !important;
+    }
+
+    .main-navbar {
+        padding: 0 var(--space-4);
+    }
+
+    .nav-right {
+        gap: var(--space-3);
+    }
+}
+
+/* ========== Mobile menu overlay ========== */
+#mobileMenu,
+.mobile-menu-overlay {
+    background: var(--bg-primary);
+    backdrop-filter: none;
+}
+
+.mobile-links a {
+    font-family: var(--font-headline);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--text-primary);
+    transition: color var(--motion-fast);
+}
+
+.mobile-links a:hover {
+    color: var(--accent);
+}
+
+.mobile-links a.nav-active {
+    color: var(--accent);
+}
+
+.mobile-links a.nav-active::after {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: var(--space-2) auto 0;
+}
+
+button.close-menu-btn {
+    color: var(--text-muted);
+    transition: color var(--motion-fast);
+}
+
+button.close-menu-btn:hover {
+    color: var(--text-primary);
+}
+
+/* ========== Cards — canonical pattern ========== */
+.card,
+.link-card,
+.discord-card,
+.creator-code,
+.music-player,
+.docs-card,
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color var(--motion-fast), transform var(--motion-fast);
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+.card:hover,
+.link-card:hover,
+a.discord-card:hover,
+.creator-code:hover,
+.music-player:hover,
+.docs-card:hover,
+.project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+
+.card:active,
+.link-card:active,
+a.discord-card:active {
+    transform: translateY(0);
+}
+
+/* ========== Buttons ========== */
+.btn,
+button.primary,
+.btn-primary {
+    font-family: var(--main-font);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: var(--space-3) var(--space-5);
+    background: var(--surface-low);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--motion-fast), border-color var(--motion-fast);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.btn:hover,
+.btn-primary:hover {
+    background: var(--surface-high);
+    border-color: var(--border-hover);
+}
+
+.btn:focus-visible,
+.btn-primary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ========== Footer ========== */
+.site-footer {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border);
+    padding: var(--space-6) var(--space-10);
+    margin-top: auto;
+    width: 100%;
+}
+
+.footer-row {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.footer-row p {
+    font-family: var(--font-headline);
+    font-size: var(--meta-size);
+    font-weight: var(--meta-weight);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--meta-ls);
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--space-8);
+}
+
+.footer-links a {
+    font-family: var(--font-headline);
+    font-size: var(--meta-size);
+    font-weight: var(--meta-weight);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--meta-ls);
+    transition: color var(--motion-fast);
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+/* ========== LIVE badge — only place shadow is allowed ========== */
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    font-family: var(--font-headline);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    box-shadow: var(--shadow-live);
+}
+
+.live-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ========== Form fields ========== */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea,
+select:not(.font-select) {
+    background: var(--surface-low);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--main-font);
+    font-size: var(--body-size);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    transition: border-color var(--motion-fast);
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+::placeholder {
+    color: var(--text-subtle);
+}
+
+/* ========== Lucide icons — baseline ========== */
+[data-lucide],
+.icon svg,
+svg.lucide {
+    stroke: currentColor;
+    stroke-width: 1.75;
+    fill: none;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
+/* ========== Tags / badges ========== */
+.card-badge,
+.tag,
+.badge {
+    font-family: var(--font-headline);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--surface-highest);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.badge-game {
+    background: var(--surface-highest) !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--border);
+}
+
+/* Games page hero + card polish */
+.game-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--motion-fast), transform var(--motion-fast);
+    display: block;
+    position: relative;
+}
+
+.game-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+/* ========== Decoration kill-switch ========== */
+/* Neutralise any gradient / large shadow drift from legacy code. */
+.main-navbar,
+.site-footer,
+.container,
+.card,
+.link-card,
+.discord-card,
+.docs-main,
+.hero-section {
+    background-image: none !important;
+}

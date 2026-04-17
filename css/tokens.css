@@ -1,0 +1,94 @@
+/* StealthyLabs Design System — single source of truth
+ * Derived from: github.com/StealthyLabsHQ/stealthylabs-webdesign (SKILL.md)
+ * Pure OLED black + one soft-cyan accent. No gradients, no shadows.
+ */
+
+:root {
+    /* ===== Surfaces (layered greys on pure black) ===== */
+    --bg-primary:      #000000; /* OLED — page bg, non-negotiable */
+    --surface-low:     #0A0A0A; /* cards, elevated surfaces */
+    --surface:         #111111; /* settings panel, modals */
+    --surface-high:    #1A1A1A; /* borders, darker hovers */
+    --surface-highest: #262626; /* tags, scroll thumbs */
+    --card-bg:         #0A0A0A;
+
+    /* ===== Foreground greys (never pure white) ===== */
+    --text-primary:   #E5E5E5; /* body */
+    --text-secondary: #ABABAB; /* sub-copy */
+    --text-muted:     #757575; /* meta, labels */
+    --text-subtle:    #484848; /* countdown, deepest grey */
+
+    /* ===== Accent — ONE hue only ===== */
+    --accent:     #A8D8EA; /* soft cyan — links, focus, LIVE, underlines */
+    --accent-alt: #ABABAB;
+
+    /* ===== Status (reserved for Discord/Spotify/Twitch widgets only) ===== */
+    --accent-green:  #1db954; /* Spotify / music */
+    --accent-red:    #f23f43; /* Discord DND, errors */
+    --accent-yellow: #f0b232; /* Discord idle, warnings */
+    --accent-online: #23a559; /* Discord online, success */
+
+    /* ===== Borders ===== */
+    --border:       #1A1A1A;
+    --border-hover: #484848;
+
+    /* ===== Type families ===== */
+    --font-headline: 'Space Grotesk', 'Inter', sans-serif;
+    --main-font:     'Inter', sans-serif;
+    --font-mono:     'JetBrains Mono', 'Space Mono', monospace;
+    --font-alt:      'Raleway', sans-serif;
+
+    /* ===== Radii — understated ===== */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+
+    /* ===== Shadows — intentionally absent ===== */
+    --shadow-glow: none;
+    --shadow-live: 0 0 24px rgba(168, 216, 234, 0.08); /* ONLY exception: LIVE badge */
+
+    /* ===== Spacing (8px base) ===== */
+    --space-1:  4px;
+    --space-2:  8px;
+    --space-3:  12px;
+    --space-4:  16px;
+    --space-5:  20px;
+    --space-6:  24px;
+    --space-8:  32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+
+    /* ===== Type scale ===== */
+    --h1-size:   clamp(3rem, 10vw, 8rem);
+    --h1-weight: 700;
+    --h1-ls:     -0.04em;
+    --h1-leading: 0.9;
+
+    --h2-size:   1.5rem;
+    --h2-weight: 700;
+    --h2-ls:     -0.03em;
+
+    --h3-size:   1.25rem;
+    --h3-weight: 600;
+
+    --body-size:    1rem;
+    --body-weight:  400;
+    --body-leading: 1.6;
+
+    --meta-size:      0.75rem;
+    --meta-weight:    500;
+    --meta-ls:        0.1em;
+    --meta-transform: uppercase;
+
+    --mono-size: 0.75rem;
+
+    /* ===== Motion ===== */
+    --motion-fast:    0.2s ease;
+    --motion-default: 0.3s ease;
+
+    /* ===== Layout ===== */
+    --max-content: 1200px;
+    --navbar-h:    64px;
+}
