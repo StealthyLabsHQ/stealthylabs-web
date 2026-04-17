@@ -4,6 +4,23 @@ All notable changes to the StealthyLabs website are documented here.
 
 ---
 
+## [2026-04-17]
+
+### Fixed
+- Mobile menu: `#mobileMenu` now relocated to `<body>` on load so `position: fixed` anchors to viewport instead of `.container`'s transformed containing block
+- Mobile menu overlay height: `100dvh` + `inset: 0` so it fills viewport on mobile browsers with dynamic URL bar
+- Cookie banner: OK button was never wired — added delegated click listener + `localStorage` fallback so consent persists on HTTP (Secure cookies dropped on localhost)
+- Contact page no longer scrolls (was caused by mobile menu taking layout space)
+- Network page: content vertically centered, footer anchored to bottom without large empty band
+
+### Added
+- Changelog link in desktop nav on EN + FR contact pages
+
+### Changed
+- Close menu button nudged (top 18→24, right 25→20)
+
+---
+
 ## [2026-04-06]
 
 ### Changed

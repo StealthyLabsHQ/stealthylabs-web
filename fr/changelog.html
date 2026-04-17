@@ -136,6 +136,29 @@
         <div class="docs-layout">
             <article class="docs-main">
 
+                <div class="docs-section" id="2026-04-17">
+                    <h2><span class="docs-section-num">2026-04-17</span></h2>
+
+                    <h3>Corrige</h3>
+                    <ul>
+                        <li>Menu mobile : <code>#mobileMenu</code> deplace vers <code>&lt;body&gt;</code> au chargement afin que <code>position: fixed</code> s'ancre au viewport au lieu du bloc conteneur transforme de <code>.container</code></li>
+                        <li>Hauteur de l'overlay du menu mobile : <code>100dvh</code> + <code>inset: 0</code> pour remplir le viewport sur les navigateurs mobiles avec barre d'URL dynamique</li>
+                        <li>Bandeau cookies : bouton OK non cable &mdash; listener de clic delegue ajoute et fallback <code>localStorage</code> pour que le consentement persiste en HTTP (cookies Secure ignores sur localhost)</li>
+                        <li>La page Contact ne scrolle plus (cause par le menu mobile qui prenait de la place dans le flux)</li>
+                        <li>Page Network : contenu centre verticalement, footer ancre en bas sans grand espace vide</li>
+                    </ul>
+
+                    <h3>Ajoute</h3>
+                    <ul>
+                        <li>Lien Changelog dans la nav desktop sur les pages Contact EN + FR</li>
+                    </ul>
+
+                    <h3>Modifie</h3>
+                    <ul>
+                        <li>Bouton de fermeture du menu repositionne (top 18&rarr;24, right 25&rarr;20)</li>
+                    </ul>
+                </div>
+
                 <div class="docs-section" id="2026-04-06">
                     <h2><span class="docs-section-num">2026-04-06</span></h2>
 
@@ -209,6 +232,7 @@
             <aside class="docs-toc">
                 <p class="docs-toc-title">Sommaire</p>
                 <ol class="docs-toc-list">
+                    <li><a href="#2026-04-17">2026-04-17</a></li>
                     <li><a href="#2026-04-06">2026-04-06</a></li>
                     <li><a href="#2026-03-20">2026-03-20</a></li>
                     <li><a href="#2026-03-10">2026-03-10</a></li>

@@ -136,6 +136,29 @@
         <div class="docs-layout">
             <article class="docs-main">
 
+                <div class="docs-section" id="2026-04-17">
+                    <h2><span class="docs-section-num">2026-04-17</span></h2>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Mobile menu: <code>#mobileMenu</code> now relocated to <code>&lt;body&gt;</code> on load so <code>position: fixed</code> anchors to viewport instead of <code>.container</code>'s transformed containing block</li>
+                        <li>Mobile menu overlay height: <code>100dvh</code> + <code>inset: 0</code> to fill viewport on mobile browsers with dynamic URL bar</li>
+                        <li>Cookie banner: OK button was never wired &mdash; added delegated click listener and <code>localStorage</code> fallback so consent persists on HTTP (Secure cookies dropped on localhost)</li>
+                        <li>Contact page no longer scrolls (was caused by mobile menu taking layout space)</li>
+                        <li>Network page: content vertically centered, footer anchored to bottom without large empty band</li>
+                    </ul>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Changelog link in desktop nav on EN + FR contact pages</li>
+                    </ul>
+
+                    <h3>Changed</h3>
+                    <ul>
+                        <li>Close menu button nudged (top 18&rarr;24, right 25&rarr;20)</li>
+                    </ul>
+                </div>
+
                 <div class="docs-section" id="2026-04-06">
                     <h2><span class="docs-section-num">2026-04-06</span></h2>
 
@@ -209,6 +232,7 @@
             <aside class="docs-toc">
                 <p class="docs-toc-title">Contents</p>
                 <ol class="docs-toc-list">
+                    <li><a href="#2026-04-17">2026-04-17</a></li>
                     <li><a href="#2026-04-06">2026-04-06</a></li>
                     <li><a href="#2026-03-20">2026-03-20</a></li>
                     <li><a href="#2026-03-10">2026-03-10</a></li>
