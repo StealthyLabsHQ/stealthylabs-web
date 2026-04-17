@@ -430,7 +430,7 @@ function updateServerStats() {
 // --- Cookie Banner ---
 
 function checkCookieConsent() {
-    if (!getCookie('cookieConsent')) {
+    if (!getCookie('cookieConsent') && !localStorage.getItem('cookieConsent')) {
         setTimeout(() => {
             document.getElementById('cookieBanner').style.transform = 'translateY(0)';
         }, 1000);
@@ -439,8 +439,13 @@ function checkCookieConsent() {
 
 function acceptCookies() {
     setCookie('cookieConsent', 'true');
+    localStorage.setItem('cookieConsent', 'true');
     document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
 }
+
+document.addEventListener('click', e => {
+    if (e.target.closest('[data-action="accept-cookies"]')) acceptCookies();
+});
 
 checkCookieConsent();
 

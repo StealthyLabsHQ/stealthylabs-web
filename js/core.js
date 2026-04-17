@@ -141,8 +141,15 @@ function updateClock() {
 
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
-    if (menu) menu.classList.toggle('active');
+    if (!menu) return;
+    if (menu.parentElement !== document.body) document.body.appendChild(menu);
+    menu.classList.toggle('active');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu && menu.parentElement !== document.body) document.body.appendChild(menu);
+});
 
 function toggleSettings(event) {
     if (event) event.stopPropagation();
